@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>rex &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=23" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 12 Dec 2015 14:06:31 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>rex advent——rex获得远程服务器信息</title>
+		<link>http://ijz.me/?p=842</link>
+					<comments>http://ijz.me/?p=842#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sat, 12 Dec 2015 14:06:31 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=842</guid>
+
+					<description><![CDATA[如何获得远程服务器的相关信息呢？比如系统的发行版本，版本好，内核的版本号，主机名，网络信息。Rex专门提供了一 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>如何获得远程服务器的相关信息呢？比如系统的发行版本，版本好，内核的版本号，主机名，网络信息。Rex专门提供了一个模块system_information来收集这些信息。</p>
+<p><span id="more-842"></span></p>
+<p>1、获得详细的系统信息</p><pre class="crayon-plain-tag">use Rex -feature =&gt; ['1.0'];
+
+task "sysinfo", group =&gt;"all", sub {
+
+say connection-&gt;server."::";
+   dump_system_information;
+say "==========================";
+};</pre><p>rex -qw sysinfo 就能打印相关信息。</p>
+<p>2、通过get_system_information获得特需的信息</p><pre class="crayon-plain-tag">task "get_hostname",group =&gt;"all" sub {
+   my %info = get_system_information;
+    say Dumper $info{Host};
+};</pre><p>3、在模板中插入环境信息</p>
+<p>可以在模板中插入这些环境信息，比如可以把ip地址或者hostname插入到一个模板文件中：</p><pre class="crayon-plain-tag">Listen &lt;%= $eth0_ip %&gt;:80</pre><p>做为配置文件，用以适应不同的环境情况。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=842</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent——rex批量替换被篡改的文件</title>
+		<link>http://ijz.me/?p=841</link>
+					<comments>http://ijz.me/?p=841#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 11 Dec 2015 14:02:08 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=841</guid>
+
+					<description><![CDATA[同事发现有部分系统的脚本执行有问题，自动清理的脚本不起作用了，后来发现是系统的find可能被替换了 登录系统发 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>同事发现有部分系统的脚本执行有问题，自动清理的脚本不起作用了，后来发现是系统的find可能被替换了</p>
+<p>登录系统发现find被替换为空文件了……</p>
+<p><span id="more-841"></span></p>
+<p>1、批量扫描有多少服务器有问题：很简单扫描远程服务目录find 如果大小为1（即使为空）。</p>
+<p>task &#8220;find&#8221;, group =&gt; &#8220;all&#8221;, sub {<br />
+my $output= run &#8216;ls -al /bin/find&#8217;;<br />
+say connection-&gt;server.&#8217;:&#8217;. $output;<br />
+};</p>
+<p>rex -qw find 1&gt;findlist.txt</p>
+<p>然后对findlist处理，当然是perloneline</p>
+<p>perl -lane &#8216;print $F[0] if $F[5]==1&#8217; findlist.txt|perl -pe &#8216;s/:$//&#8217;</p>
+<p>获得有问题的服务器列表。</p>
+<p>2、打印对服务器版本进行，以便找到相对应的find文件进行替换</p>
+<p>task &#8220;issue&#8221;, group =&gt; &#8220;all&#8221;, sub {<br />
+my $output= run &#8216;cat /etc/issue&#8217;;<br />
+say connection-&gt;server.&#8217;:&#8217;. $output;<br />
+};</p>
+<p>3、替换find文件,用upload上传，并改变其属主和分组，最后试着使用find命令搜索/root目录的文件，如果有输出即为替换成功。</p>
+<p>task &#8220;findchange&#8221;, group =&gt; &#8220;all&#8221;, sub {</p>
+<p>upload &#8220;/tmp/find&#8221;, &#8220;/bin/find&#8221;;<br />
+run &#8216;chown root.root /bin/find &#8216;;<br />
+my $output=run &#8216;find  /root -type f|wc -l &#8216;;<br />
+say connection-&gt;server.&#8217;:&#8217;. $output;</p>
+<p>};</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=841</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent——rex 利用Augeas模块进行文件配置</title>
+		<link>http://ijz.me/?p=832</link>
+					<comments>http://ijz.me/?p=832#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 10 Dec 2015 13:47:47 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=832</guid>
+
+					<description><![CDATA[1、Augeas是什么? Augeas基本上就是一个配置编辑工具。它以他们原生的格式解析配置文件并且将它们转换 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>1、Augeas是什么?</p>
+<p>Augeas基本上就是一个配置编辑工具。它以他们原生的格式解析配置文件并且将它们转换成树。配置的更改可以通过操作树来完成，并可以以原生配置文件格式保存配置。</p>
+<p><span id="more-832"></span><br />
+2、查找一个配置节点</p><pre class="crayon-plain-tag">use Rex::Commands::Augeas;
+ my $k = augeas exists =&gt; "/files/etc/hosts/*/ipaddr", "127.0.0.1";</pre><p>3、增加一个配置项目</p><pre class="crayon-plain-tag">augeas insert =&gt; "/files/etc/hosts",
+           label =&gt; "01",
+           after =&gt; "/7",
+           ipaddr =&gt; "192.168.2.23",
+           canonical =&gt; "test";</pre><p>结果：</p><pre class="crayon-plain-tag">192.168.1.1  tcentral localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+ 192.168.1.1 tv_central
+ 192.168.1.1 centralmysq
+ 192.168.1.1 centralmemecache
+ 192.168.1.1 memecache01
+ 192.168.1.1 redis
+192.168.2.23    test</pre><p>3、导出配置文件</p><pre class="crayon-plain-tag">augeas dump =&gt; "/files/etc/hosts";</pre><p>结果</p><pre class="crayon-plain-tag">/files/etc/hosts
+/files/etc/hosts/1
+/files/etc/hosts/1/ipaddr = " 192.168.1.1"
+/files/etc/hosts/1/canonical = "tv_central_platform01"
+/files/etc/hosts/1/alias[1] = "localhost"
+/files/etc/hosts/1/alias[2] = "localhost.localdomain"
+/files/etc/hosts/1/alias[3] = "localhost4"
+/files/etc/hosts/1/alias[4] = "localhost4.localdomain4"
+/files/etc/hosts/2
+/files/etc/hosts/2/ipaddr = "::1"
+/files/etc/hosts/2/canonical = "localhost"
+/files/etc/hosts/2/alias[1] = "localhost.localdomain"
+/files/etc/hosts/2/alias[2] = "localhost6"
+/files/etc/hosts/2/alias[3] = "localhost6.localdomain6"
+/files/etc/hosts/3</pre><p>4、修改文件</p><pre class="crayon-plain-tag">augeas modify =&gt;
+    "/files/etc/ssh/sshd_config/PermitRootLogin" =&gt; "without-password",
+    on_change =&gt; sub {
+       service ssh =&gt; "restart";
+    };</pre><p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=832</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent——  rex 批量部署sshd密码尝试攻击脚本</title>
+		<link>http://ijz.me/?p=827</link>
+					<comments>http://ijz.me/?p=827#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Wed, 09 Dec 2015 13:37:11 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=827</guid>
+
+					<description><![CDATA[1、首先是防攻击脚本，原理是扫描/var/log/secure文件，发现一小时内尝试密码错误超过30次的ip， [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>1、首先是防攻击脚本，原理是扫描/var/log/secure文件，发现一小时内尝试密码错误超过30次的ip，则<br />
+将该ip加入iptables黑名单drop掉。</p><pre class="crayon-plain-tag">#!/usr/bin/env perl
+my $LIMIT=30;
+my $log="/var/log/secure";
+my $LOGFILE="/data/block_ip.log";
+my $TIME=`date '+%b %e %H'`;
+chomp $TIME;
+my $BLOCK_IP;
+my %hash;
+open(FD,$log)||die("Can not open the file!$!n");
+
+while(&lt;FD&gt;){
+chomp;
+if ( /$TIME/ and /Failed password/ )
+{
+my @line=split;
+my $ip=$line[-4];
+$hash{$ip}++;
+}
+}
+close(FD);
+
+for(%hash)
+{
+
+if ($hash{$_} &gt; $LIMIT)
+{
+my $IP=$_;
+$ips= `iptables-save`;
+$mo= qr(/INPUT/ and /DROP/ and /$IP/);
+unless ($ips=~$mo)
+{
+`iptables -I INPUT -s $IP -j DROP`;
+my $NOW=`date '+%Y-%m-%d %H:%M'`;
+chomp $NOW;
+`echo -e "$NOW : $IP" &gt;&gt;$LOGFILE`;
+}
+}
+}</pre><p>2、将该脚本保存为block_ssh.sh<br />
+3、创建一个上传任务，把该文件上传到远程服务器，给予执行权限。加入crontab 每5分钟执行一次。</p><pre class="crayon-plain-tag">task "upload",  group =&gt;"all", sub {
+ say connection-&gt;server.":begin upload files!";
+   upload "block_ssh.sh", "/root/block_ssh.sh";
+    run "chmod 755 /root/block_ssh.sh";
+    run 'echo "*/5 * * * * root /root/block_ssh.sh" &gt;&gt;/etc/crontab';
+say connection-&gt;server.":upload success!";
+ };</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=827</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent——  rex 任务执行情况，错误信息等</title>
+		<link>http://ijz.me/?p=825</link>
+					<comments>http://ijz.me/?p=825#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 07 Dec 2015 13:34:22 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=825</guid>
+
+					<description><![CDATA[当批量远程执行任务时如何判断任务执行是否成功，以及错误信息呢？ 最简单是方法是在设定执行完一个任务后输出服务器 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>当批量远程执行任务时如何判断任务执行是否成功，以及错误信息呢？<br />
+最简单是方法是在设定执行完一个任务后输出服务器ip，然后根据输出信息来判断</p><pre class="crayon-plain-tag">task "task", group =&gt; "all",sub {
+
+ ...
+ say connection-&gt;server;
+
+  };</pre><p><span id="more-825"></span></p><pre class="crayon-plain-tag">rex -qw task 1&gt;info.txt 2&gt;error.txt</pre><p>这样根据inofo.txt输出信息就能判断执行成功的，服务器。而执行失败的情况则可以通过<br />
+error.txt来获得，比如远程连接有问题的和连接账号有问题的信息（0.55版本，最新版本错误提示<br />
+有问题，无法区别出来了）。这两类典型的信息输出为：</p><pre class="crayon-plain-tag">ESC[0mESC[33m[2015-12-01 11:26:05] WARN - Error running task/batch: Wrong username/password or wrong key on 192.168.1.2. at /usr/local/share/perl5/Rex/TaskList/Base.pm line 245.
+
+ESC[0mESC[33m[2015-12-01 11:26:07] WARN - Can't connect to 10.16.194.18
+ESC[0mESC[33m[2015-12-01 11:26:07] WARN - Error running task/batch: Couldn't connect to 10.16.194.18. at /usr/local/share/perl5/Rex/TaskList/Base.pm line 245.</pre><p>用两个单行命令就能到相关信息，首先是无法连接的服务器（可能网络有问题、防火墙限制或者端口设置错误了）。</p><pre class="crayon-plain-tag">perl -lane '/Can/ and print $F[-1]' error.txt</pre><p>然后是用户名密码错误的服务器</p><pre class="crayon-plain-tag">perl -lane '/Wrong/ and $F[-5]=~s/.$// and print $F[-5]' error.txt</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=825</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent—— rex 创建用户并追加本地多文件ssh公钥到远程服务器用户</title>
+		<link>http://ijz.me/?p=816</link>
+					<comments>http://ijz.me/?p=816#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 06 Dec 2015 13:24:23 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=816</guid>
+
+					<description><![CDATA[管理用户密钥比较繁琐，尤其是多密钥时候，下面给出一种方法： [crayon-67c32d57e959f0791 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>管理用户密钥比较繁琐，尤其是多密钥时候，下面给出一种方法：</p><pre class="crayon-plain-tag">task "my_user", sub {
+
+  my $local_keys = LOCAL{
+    my @key_files = qw(
+      /root/.ssh/id_rsa.pub
+      /home/user/.ssh/id_rsa.pub
+    );
+    my @tmp;
+    push ( @tmp, split "n", cat $_ ) foreach @key_files;
+    return @tmp;
+  };
+
+  my @remote_keys = split "n", cat '~/.ssh/authorized_keys';
+
+  create_user "myuser",
+              home        =&gt; '/home/myuser',
+              comment     =&gt; 'My user',
+              expire      =&gt; '2100-05-30',
+              password    =&gt; 'password',
+              system      =&gt; 1,
+              create_home =&gt; TRUE,
+              ssh_key     =&gt; join "n", @$local_keys, @remote_keys;
+ say connection-&gt;server;
+};</pre><p><span id="more-816"></span></p>
+<p>对于已经创建用户，并且远程证书文件已经存在的，追加时候直接追加用户证书</p><pre class="crayon-plain-tag">task "addkeys", group =&gt; "all", sub {
+
+  my $local_keys = LOCAL{
+    my @key_files = qw(
+      /root/.ssh/id_rsa.pub
+      /home/user/.ssh/id_rsa.pub
+    );
+    my @tmp;
+    push ( @tmp, split "n", cat $_ ) foreach @key_files;
+    return @tmp;
+  };
+
+  my @remote_keys = split "n", cat '~/.ssh/authorized_keys';
+
+  run  'echo @$local_keys &gt;&gt;/home/ZX_lz/.ssh/authorized_keys';
+
+
+    say connection-&gt;server;
+  }</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=816</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent—— rex 加密Rexfile中账号和证书信息</title>
+		<link>http://ijz.me/?p=820</link>
+					<comments>http://ijz.me/?p=820#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sat, 05 Dec 2015 13:28:50 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=820</guid>
+
+					<description><![CDATA[我们知道Rexfile的账号密码和证书路径都是密码的，容易泄漏了，我们可以用base94算法对进行一下加密 可 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>我们知道Rexfile的账号密码和证书路径都是密码的，容易泄漏了，我们可以用base94算法对进行一下加密<br />
+可以防止直接被泄露，虽然这不能保证被人反解密（可以用自己加密算法写模块，或者更底层的方法，这里不深入），<br />
+但是聊胜于无。好吧先看具体做法。</p>
+<p>基本原理用Base64基本算法，用两个函数encode_base64()和 decode_base64()。</p>
+<p><span id="more-820"></span></p>
+<p>1、加密账户和密码字段（格式用户::密码）程序：</p><pre class="crayon-plain-tag">use MIME::Base64;
+my($user,$pass)=@ARGV;
+my $str=$user.'::'.$pass;
+$encoded = encode_base64($str);
+printf("after base64 encoded is: %s", $encoded);</pre><p>2、把得到的字符串对放到Rexfile使用，就可以避免直接泄露了。</p><pre class="crayon-plain-tag">Rexfile：
+
+use MIME::Base64;
+
+...
+my $sky=q(L2hvbWUvbHovLmF1VGFzay91c2VybGlzdC9sbHp6OjovaG9tZS9sei8uYXVUYXNrL3VzZXJsaXN0L3p6bGw=);
+my $sup=q(dGVzdDo6dGVzdA==);
+
+my $dsky = decode_base64($sky);
+my ( $sk1, $sk2)= split /::/,$dsky;
+
+my $dsup = decode_base64($sup);
+my ( $usery, $userp)= split /::/,$dsup;
+
+user $usery;
+private_key $sk1;
+public_key $sk2;
+key_auth;
+
+sudo TRUE;
+sudo_password $userp
+... ...</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=820</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent—— 批量创建账号并添加sudo</title>
+		<link>http://ijz.me/?p=813</link>
+					<comments>http://ijz.me/?p=813#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 04 Dec 2015 04:23:23 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=793</guid>
+
+					<description><![CDATA[创建多个用户，创建的用户和密码键值对用上文章《 rex 加密Rexfile中账号和证书信息》生成hash字符串 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>  创建多个用户，创建的用户和密码键值对用上文章《 rex 加密Rexfile中账号和证书信息》生成hash字符串<br />
+每个账号一个，然后就可以。<br />
+<span id="more-813"></span></p>
+<p></p><pre class="crayon-plain-tag">task "butchuser", group =&gt; "all", sub {
+
+my @ustr=qw(dGVzdDo6dGVzdA== dGVzdDo6deVzdA== dGVzdDo6dGVeA==);
+
+for (@ustr)
+{
+my $str=$_;
+my $dst = decode_base64($str);
+my ( $userId, $pass)= split /::/,$dst;
+
+create_user $userId,
+       password =&gt; $pass,
+       home =&gt; '/home/'.$userId；
+
+append_if_no_such_line "/etc/sudoers", "$userId ALL=(ALL) ALL";
+}
+
+
+say connection-&gt;server;
+
+};</pre><p> </p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=813</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent ——rex 加密Rexfile中账号和证书信息</title>
+		<link>http://ijz.me/?p=812</link>
+					<comments>http://ijz.me/?p=812#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Wed, 02 Dec 2015 18:13:33 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=790</guid>
+
+					<description><![CDATA[rex 加密Rexfile中账号和证书信息 我们知道Rexfile的账号密码和证书路径都是密码的，容易泄漏了， [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>rex 加密Rexfile中账号和证书信息</p>
+<p>我们知道Rexfile的账号密码和证书路径都是密码的，容易泄漏了，我们可以用base94算法对进行一下加密<br />
+可以防止直接被泄露，虽然这不能保证被人反解密（可以用自己加密算法写模块，或者更底层的方法，这里不深入），<br />
+但是聊胜于无。好吧先看具体做法。<br />
+<span id="more-812"></span></p>
+<p>基本原理用Base64基本算法，用两个函数encode_base64()和 decode_base64()。</p>
+<p>1、加密账户和密码字段（格式用户::密码）程序：</p><pre class="crayon-plain-tag">use MIME::Base64;
+my($user,$pass)=@ARGV;
+my $str=$user.'::'.$pass;
+$encoded = encode_base64($str);
+printf("after base64 encoded is: %s", $encoded);</pre><p></p>
+<p>2、把得到的字符串对放到Rexfile使用，就可以避免直接泄露了。</p>
+<p>Rexfile：</p>
+<p></p><pre class="crayon-plain-tag">use MIME::Base64;
+
+...
+my $sky=q(L2hvbWUvbHovLmF1VGFzay91c2VybGlzdC9sbHp6OjovaG9tZS9sei8uYXVUYXNrL3VzZXJsaXN0L3p6bGw=);
+my $sup=q(dGVzdDo6dGVzdA==);
+
+my $dsky = decode_base64($sky);
+my ( $sk1, $sk2)= split /::/,$dsky;
+
+my $dsup = decode_base64($sup);
+my ( $usery, $userp)= split /::/,$dsup;
+
+user $usery;
+private_key $sk1;
+public_key $sk2;
+key_auth;
+
+sudo TRUE;
+sudo_password $userp
+... ...</pre><p> </p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=812</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>rex advent ——rex 做远程主机登录账号审计</title>
+		<link>http://ijz.me/?p=811</link>
+					<comments>http://ijz.me/?p=811#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Wed, 02 Dec 2015 14:33:43 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[advent]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=788</guid>
+
+					<description><![CDATA[1、账号，最经登录时间和ip [crayon-67c32d57e9fa7132093182/] 2、sshd尝 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>1、账号，最经登录时间和ip</p>
+<p></p><pre class="crayon-plain-tag">task "lastlog", group =&gt; "all", sub {
+my $lastlog= run "lastlog|grep -v 'Never logged in'";
+say connection-&gt;server.": $lastlog";
+};</pre><p><span id="more-811"></span><br />
+2、sshd尝试登陆失败的记录（/var/log/secure）</p>
+<p></p><pre class="crayon-plain-tag">task "sshdfail", group =&gt; "all", sub {
+
+# say connection-&gt;server;
+# my $time= run "date -d 'yesterday'  '+%b %e'"; # 昨天登录情况
+my $time= run "date   '+%b %e'";  # 今天情况
+my $sc=q(grep  'Failed password for' /var/log/secure|grep -v grep|grep ').$time."'";
+my $output= run $sc;
+say connection-&gt;server.": $output";
+};</pre><p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=811</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

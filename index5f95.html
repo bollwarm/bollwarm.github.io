@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ftp &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=ftp" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Fri, 21 Nov 2014 07:14:20 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>VSFTP配置虚拟用户/zz/</title>
+		<link>http://ijz.me/?p=688</link>
+					<comments>http://ijz.me/?p=688#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 21 Nov 2014 07:14:20 +0000</pubDate>
+				<category><![CDATA[工具]]></category>
+		<category><![CDATA[ftp]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=688</guid>
+
+					<description><![CDATA[     虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对F [&#8230;]]]></description>
+										<content:encoded><![CDATA[<h1 class="postTitle"></h1>
+<div id="cnblogs_post_body">
+<p>     虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。</p>
+<p>在VSFTP中，认证这些虚拟用户使用的是单独的口令库文件（pam_userdb），由可插入认证模块（PAM）认证。使用这种方式更加安全，并且配置更加灵活。<br />
+下面介绍配置过程。<br />
+<span id="more-688"></span><br />
+1．生成虚拟用户口令库文件。为了建立此口令库文件，先要生成一个文本文件。该文件的格式如下，单数行为用户名，偶数行为口令：</p>
+<p>#vi account.txt<br />
+ylg<br />
+1234<br />
+zhanghong<br />
+4321<br />
+gou<br />
+5678</p>
+<p>2．生成口令库文件，并修改其权限：</p>
+<p>#db_load -T -t hash -f ./account.txt /etc/vsftpd/account.db<br />
+#chmod 600 /etc/vsftpd/account.db</p>
+<p>3．新建一个虚拟用户的PAM文件。加上如下两行内容：</p>
+<p>#vi /etc/pam.d/vsftp.vu<br />
+auth required /lib/security/pam_userdb.so db=/etc/vsftpd/account<br />
+account required /lib/security/pam_userdb.so db=/etc/vsftpd/account</p>
+<p>4．建立虚拟用户，设置该用户所要访问的目录，并设置虚拟用户访问的权限：</p>
+<p>#useradd -d /home/ftpsite virtual_user<br />
+#chmod 700 /home/ftpsite</p>
+<p>经过该步骤的设置，/home/ftpsite就是virtual_user用户的主目录，该用户也是ftpsite目录的拥有者。除root用户之外，只有该用户具有对该目录的读、写和执行的权限。<br />
+5．编辑/etc/vsftpd/vsftpd.conf文件，使其整个文件内容如下所示（去掉了注释内容）：</p>
+<p>anonymous_enable=NO<br />
+local_enable=YES<br />
+local_umask=022<br />
+xferlog_enable=YES<br />
+connect_from_port_20=YES<br />
+xferlog_std_format=YES<br />
+listen=YES<br />
+write_enable=YES<br />
+anon_upload_enable=YES<br />
+anon_mkdir_write_enable=YES<br />
+anon_other_write_enable=YES<br />
+one_process_model=NO<br />
+chroot_local_user=YES<br />
+ftpd_banner=Welcom to my FTP server.<br />
+anon_world_readable_only=NO<br />
+guest_enable=YES<br />
+guest_username=virtual_user<br />
+pam_service_name=vsftp.vu</p>
+<p>上面代码中，guest_enable=YES表示启用虚拟用户；guest_username=virtual则是将虚拟用户映射为本地用户，这样虚拟 用户登录后才能进入本地用户virtual的目录/ftpsite；pam_service_name=vsftp.vu指定PAM的配置文件为 vsftp.vu。</p>
+<p>6．重新启动VSFTP：<br />
+#service vsftpd restart</p>
+<p>7．以虚拟用户gou（Linux中并无该账号）进行测试：</p>
+<p># ftp 127.0.0.1<br />
+Connected to 127.0.0.1 (127.0.0.1).<br />
+220 Welcom to my FTP server.<br />
+Name (127.0.0.1:root): gou<br />
+331 Please specify the password.<br />
+Password:<br />
+230 Login successful. Have fun.<br />
+Remote system type is UNIX.<br />
+Using binary mode to transfer files.</p>
+<p>在虚拟FTP服务器中，也可以对各个用户的权限进行设置。方法是在/etc/vsftpd.conf文件中添加如下一行：<br />
+user_config_dir=用户配置文件目录</p>
+<p>然后在用户配置文件目录下创建相应的用户配置文件，比如为上述名为gou的用户创建一个配置文件（假设配置文件目录为/etc/vsftpd_user_conf）：</p>
+<p>#vi /etc/vsftpd_user_conf/gou<br />
+write_enable=NO<br />
+anono_upload_enable=NO</p>
+<p>8.虚拟用户个人目录设置</p>
+<p>大家可以发现，无论是哪个虚拟用户，登录后所在的目录都是/home/ftpsite，即都是guest用户的自家目录。下面，介绍如何为每个虚拟用户建立自家目录。<br />
+一种作法是在虚拟用户的个人配置文件中使用local_root选项指定虚拟用户的自家目录。以gou为例，在第上步的基础上，首先/etc/vsftpd_user_conf/gou文件中加入：<br />
+local_root=/home/ftpsite/gou</p>
+<p>/home/ftpsite下新建gou目录，并将权限设为virtual_user：<br />
+9.添加FTP用户的步骤</p>
+<p>1.在account.txt中添加用户名和密码</p>
+<p>2.运行如下命令,将用户名和密码添加到数据库中</p>
+<p>db_load -T -t hash -f ./account.txt /etc/vsftpd/account.db</p>
+<p>3.在/home/ftpsite中新建一个文件夹,与用户明相同</p>
+<p>4.在vsftpd_user_conf文件夹下新建和用户名相同的文件,并在其中加入<br />
+local_root=/home/ftpsite/用户名</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=688</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

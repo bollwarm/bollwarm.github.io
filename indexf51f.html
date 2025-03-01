@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>tomcat &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=tomcat" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Tue, 18 Aug 2015 10:22:14 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>tomcat 只监听一个端口</title>
+		<link>http://ijz.me/?p=759</link>
+					<comments>http://ijz.me/?p=759#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 18 Aug 2015 10:22:14 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[tomcat]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=759</guid>
+
+					<description><![CDATA[tomcat默认会监听3个端口： 一个主端口，默认为8080 一个shutdown端口，默认8005 还有一个 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>tomcat默认会监听3个端口：</p>
+<p>一个主端口，默认为8080<br />
+一个shutdown端口，默认8005<br />
+还有一个AJP1.3端口，默认8003</p>
+<p>实际上后两个端口是非必须，尤其shutdown虽然默认是监听在127.0.0.1但是连接到这个端口，发送SHUTDOWN就可以无任何验证把tomcat关闭掉，有安全隐患的。<br />
+AJP端口用来在应用服务器交互时候用，比如apache链接tomcat等，一般也用不着，可以禁止掉。<br />
+<span id="more-759"></span></p>
+<p>这两个端口的禁止方法：</p>
+<p>AJP端口，直接注释掉server.xml 文件的配置行就行。</p><pre class="crayon-plain-tag">&lt;!--&lt;Connector port="8005" maxThreads="*" 
+enableLookups="false" redirectPort="*" protocol="AJP/1.3" /&gt;--&gt;</pre><p>shown端口是写在Server参数里的，直接去掉是不管用，也是会默认启动的，一般在安全设置时候建议把端口修改为其他端口，shutdown修改为其他复杂字串。实际上这个端口是可以直接屏蔽不监听的。设置时候将其port值修改为-1即可：</p><pre class="crayon-plain-tag">&lt;Server port="-1" shutdown="SHUTDOWN"&gt;</pre><p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=759</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

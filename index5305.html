@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>r语言 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=r%e8%af%ad%e8%a8%80" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:24:14 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>基于R语言DIY乐高拼图，以苏大强表情包为例</title>
+		<link>http://ijz.me/?p=1109</link>
+					<comments>http://ijz.me/?p=1109#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 28 Mar 2019 14:09:00 +0000</pubDate>
+				<category><![CDATA[大数据&算法]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[r语言]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1109</guid>
+
+					<description><![CDATA[概述 很多人喜欢乐高积木，但是苦于囊中羞涩，媳妇不给钱买，怎么办呢？不要愁！虫虫今天给大家介绍一个很有意思的项 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<h2 class="wp-block-heading">概述</h2>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="637" height="327" src="http://ijz.me/wp-content/uploads/2025/03/1-6.png" alt="" class="wp-image-1110" srcset="http://ijz.me/wp-content/uploads/2025/03/1-6.png 637w, http://ijz.me/wp-content/uploads/2025/03/1-6-300x154.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-6-624x320.png 624w" sizes="(max-width: 637px) 100vw, 637px" /></figure>
+
+
+
+<p>很多人喜欢乐高积木，但是苦于囊中羞涩，媳妇不给钱买，怎么办呢？不要愁！虫虫今天给大家介绍一个很有意思的项目brickr，利用它我们可以利用R语言编程来玩乐高积木，学习游戏两不误，何乐而不为呢？</p>
+
+
+
+<p>brickr是基于R tidyverse和rayshader包来创建LEGO 2D和3D模型的工具包。利用它我们可以：</p>
+
+
+
+<p>将图像文件转换为2D和3D LEGO马赛克</p>
+
+
+
+<p>从简单的数据框架构建3D乐高模型</p>
+
+
+
+<span id="more-1109"></span>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<h3 class="wp-block-heading">必备软件和包：</h3>
+
+
+
+<p>必须安装Rgui（或RStudio）,Rtools,基本依赖包devtools，tidyverse，rayshader，dplyr等。</p>
+
+
+
+<p>R和Rtools必须下载二进制安装包安装。</p>
+
+
+
+<p>依赖包的安装方法很简单直接利用install.packages（”XXX”）</p>
+
+
+
+<h3 class="wp-block-heading">安装brickr</h3>
+
+
+
+<p>安装brickr要利用devtools从github库安装，安装方法如下：</p>
+
+
+
+<p>devtools::install_githu（”ryantimpe/brickr”）</p>
+
+
+
+<h2 class="wp-block-heading">基本使用</h2>
+
+
+
+<h3 class="wp-block-heading">3D建模</h3>
+
+
+
+<p>3D模型可以用两种方法构建：bricks_from_table函数和或bricks_from_coords函数。</p>
+
+
+
+<p><strong>bricks_from_table()</strong>：将矩阵数组转换为乐高积木。对于简单模型，可以通过data.frame()或tibble::tribble()函数手动构建。对于更高级的模型，建议可以通过Excel或.csv文件导入数据。导入的表格数据中最左侧的列与模型的Level或z轴相关联。默认情况下，该功能会将此值转换为数字。其他列是x坐标，每行是y坐标。</p>
+
+
+
+<p><strong>bricks_from_coords()</strong>：则使用用带有x，y和z整数值以及颜色列的数据框，其中x，y和z的每个组合都是三维空间中的一个点。颜色必须是display_colors（）列出的官方乐高颜色名称。这种方法比bricks_from_table函数更灵活，还允许进行3D模型的编程开发。</p>
+
+
+
+<p>将任何brick_from _*()函数的输出传递给display_bricks()就可以查看其3D模型图。从一个简单例子开始：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="385" height="190" src="http://ijz.me/wp-content/uploads/2025/03/2-5.png" alt="" class="wp-image-1111" srcset="http://ijz.me/wp-content/uploads/2025/03/2-5.png 385w, http://ijz.me/wp-content/uploads/2025/03/2-5-300x148.png 300w" sizes="(max-width: 385px) 100vw, 385px" /></figure>
+
+
+
+<p>结果：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="396" height="219" src="http://ijz.me/wp-content/uploads/2025/03/3-5.png" alt="" class="wp-image-1112" srcset="http://ijz.me/wp-content/uploads/2025/03/3-5.png 396w, http://ijz.me/wp-content/uploads/2025/03/3-5-300x166.png 300w" sizes="(max-width: 396px) 100vw, 396px" /></figure>
+
+
+
+<p>打印这个图</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="308" height="100" src="http://ijz.me/wp-content/uploads/2025/03/4-4.png" alt="" class="wp-image-1113" srcset="http://ijz.me/wp-content/uploads/2025/03/4-4.png 308w, http://ijz.me/wp-content/uploads/2025/03/4-4-300x97.png 300w" sizes="auto, (max-width: 308px) 100vw, 308px" /></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="379" height="257" src="http://ijz.me/wp-content/uploads/2025/03/5-5.png" alt="" class="wp-image-1114" srcset="http://ijz.me/wp-content/uploads/2025/03/5-5.png 379w, http://ijz.me/wp-content/uploads/2025/03/5-5-300x203.png 300w" sizes="auto, (max-width: 379px) 100vw, 379px" /></figure>
+
+
+
+<h3 class="wp-block-heading">上色</h3>
+
+
+
+<p>有两种方法给brickr上色。display_colors()可以列出，支持的颜色标识ID和名称：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="484" src="http://ijz.me/wp-content/uploads/2025/03/6-5-1024x484.png" alt="" class="wp-image-1115" srcset="http://ijz.me/wp-content/uploads/2025/03/6-5-1024x484.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-5-300x142.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-5-768x363.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-5-624x295.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-5.png 1359w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>在模型输入表中使用brickrID值而不是“1”。值“0”表示空值。</p>
+
+
+
+<p>创建颜色分配表并将其传递给bricks_from_table()即可，比如：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="389" height="232" src="http://ijz.me/wp-content/uploads/2025/03/7-3.png" alt="" class="wp-image-1116" srcset="http://ijz.me/wp-content/uploads/2025/03/7-3.png 389w, http://ijz.me/wp-content/uploads/2025/03/7-3-300x179.png 300w" sizes="auto, (max-width: 389px) 100vw, 389px" /></figure>
+
+
+
+<p>结果显示：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="347" height="253" src="http://ijz.me/wp-content/uploads/2025/03/8-3.png" alt="" class="wp-image-1117" srcset="http://ijz.me/wp-content/uploads/2025/03/8-3.png 347w, http://ijz.me/wp-content/uploads/2025/03/8-3-300x219.png 300w" sizes="auto, (max-width: 347px) 100vw, 347px" /></figure>
+
+
+
+<h3 class="wp-block-heading">堆积</h3>
+
+
+
+<p>输入数组的Level列确定砖块的高度。bricks_from_table()会将字母数字级别转换为z坐标。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="396" height="116" src="http://ijz.me/wp-content/uploads/2025/03/9-3.png" alt="" class="wp-image-1118" srcset="http://ijz.me/wp-content/uploads/2025/03/9-3.png 396w, http://ijz.me/wp-content/uploads/2025/03/9-3-300x88.png 300w" sizes="auto, (max-width: 396px) 100vw, 396px" /></figure>
+
+
+
+<p>结果：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="524" height="456" src="http://ijz.me/wp-content/uploads/2025/03/10-4.png" alt="" class="wp-image-1119" srcset="http://ijz.me/wp-content/uploads/2025/03/10-4.png 524w, http://ijz.me/wp-content/uploads/2025/03/10-4-300x261.png 300w" sizes="auto, (max-width: 524px) 100vw, 524px" /></figure>
+
+
+
+<p>同理，我们可叠更多的层，不同的层使用不同的颜色</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="821" height="268" src="http://ijz.me/wp-content/uploads/2025/03/11-4.png" alt="" class="wp-image-1120" srcset="http://ijz.me/wp-content/uploads/2025/03/11-4.png 821w, http://ijz.me/wp-content/uploads/2025/03/11-4-300x98.png 300w, http://ijz.me/wp-content/uploads/2025/03/11-4-768x251.png 768w, http://ijz.me/wp-content/uploads/2025/03/11-4-624x204.png 624w" sizes="auto, (max-width: 821px) 100vw, 821px" /></figure>
+
+
+
+<p>结果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="526" height="494" src="http://ijz.me/wp-content/uploads/2025/03/12-4.png" alt="" class="wp-image-1121" srcset="http://ijz.me/wp-content/uploads/2025/03/12-4.png 526w, http://ijz.me/wp-content/uploads/2025/03/12-4-300x282.png 300w" sizes="auto, (max-width: 526px) 100vw, 526px" /></figure>
+
+
+
+<h2 class="wp-block-heading">一个比较的模型</h2>
+
+
+
+<p>对于较大的模型，可以使用<code>tibble::tribble()</code><code>，从而</code>更轻松地显示模型。如果在大一点的模型就需要从外部文件（exce）导入数据了。下面是一个使用<code>tibble::tribble()</code><code>的实例:</code></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="633" src="http://ijz.me/wp-content/uploads/2025/03/13-2.png" alt="" class="wp-image-1122" srcset="http://ijz.me/wp-content/uploads/2025/03/13-2.png 798w, http://ijz.me/wp-content/uploads/2025/03/13-2-300x238.png 300w, http://ijz.me/wp-content/uploads/2025/03/13-2-768x609.png 768w, http://ijz.me/wp-content/uploads/2025/03/13-2-624x495.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+
+<p>结果显示如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="422" height="353" src="http://ijz.me/wp-content/uploads/2025/03/14-2.png" alt="" class="wp-image-1123" srcset="http://ijz.me/wp-content/uploads/2025/03/14-2.png 422w, http://ijz.me/wp-content/uploads/2025/03/14-2-300x251.png 300w" sizes="auto, (max-width: 422px) 100vw, 422px" /></figure>
+
+
+
+<h2 class="wp-block-heading">以编程方式构建模型</h2>
+
+
+
+<p>使用bricks_from_coords()以编程方式构建3D LEGO模型，而不是通过表格手动绘。使用该函数，必须要提供x，y和z的坐标数组，以及每个点的颜色名称。比如：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="861" height="419" src="http://ijz.me/wp-content/uploads/2025/03/15-2.png" alt="" class="wp-image-1124" srcset="http://ijz.me/wp-content/uploads/2025/03/15-2.png 861w, http://ijz.me/wp-content/uploads/2025/03/15-2-300x146.png 300w, http://ijz.me/wp-content/uploads/2025/03/15-2-768x374.png 768w, http://ijz.me/wp-content/uploads/2025/03/15-2-624x304.png 624w" sizes="auto, (max-width: 861px) 100vw, 861px" /></figure>
+
+
+
+<p>结果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="523" height="409" src="http://ijz.me/wp-content/uploads/2025/03/16-2.png" alt="" class="wp-image-1125" srcset="http://ijz.me/wp-content/uploads/2025/03/16-2.png 523w, http://ijz.me/wp-content/uploads/2025/03/16-2-300x235.png 300w" sizes="auto, (max-width: 523px) 100vw, 523px" /></figure>
+
+
+
+<h2 class="wp-block-heading">马赛克</h2>
+
+
+
+<p>马赛克功能可以对导入的JPG或PNG图像文件用乐高颜色和brick渲染生成2D和3D的马赛克拼图。我们以最近流行的苏大强表情为原始图进行处理：</p>
+
+
+
+<p>原始图：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="488" height="305" src="http://ijz.me/wp-content/uploads/2025/03/17-2.png" alt="" class="wp-image-1126" srcset="http://ijz.me/wp-content/uploads/2025/03/17-2.png 488w, http://ijz.me/wp-content/uploads/2025/03/17-2-300x188.png 300w" sizes="auto, (max-width: 488px) 100vw, 488px" /></figure>
+
+
+
+<p>对原始图做渲染处理，渲染出蒙太奇拼图效果</p>
+
+
+
+<p>mosaic1 &lt;- jpeg::readJPEG(&#8220;sdq.jpg&#8221;) %&gt;%</p>
+
+
+
+<p>&nbsp; image_to_bricks(img_size = 148)</p>
+
+
+
+<p>mosaic1 %&gt;% display_set()</p>
+
+
+
+<p>显示效果图如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="624" height="515" src="http://ijz.me/wp-content/uploads/2025/03/18-2.png" alt="" class="wp-image-1127" srcset="http://ijz.me/wp-content/uploads/2025/03/18-2.png 624w, http://ijz.me/wp-content/uploads/2025/03/18-2-300x248.png 300w" sizes="auto, (max-width: 624px) 100vw, 624px" /></figure>
+
+
+
+<p>分辨率太高显示不出拼图效果来，我们把分辨率调小：</p>
+
+
+
+<p>mosaic1 &lt;- jpeg::readJPEG(&#8220;sdq.jpg&#8221;) %&gt;%</p>
+
+
+
+<p>&nbsp; scale_image(img_size = 48) %&gt;%</p>
+
+
+
+<p>&nbsp; legoize() %&gt;%&nbsp;</p>
+
+
+
+<p>&nbsp; collect_bricks()</p>
+
+
+
+<p>效果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="640" height="631" src="http://ijz.me/wp-content/uploads/2025/03/19-2.png" alt="" class="wp-image-1128" srcset="http://ijz.me/wp-content/uploads/2025/03/19-2.png 640w, http://ijz.me/wp-content/uploads/2025/03/19-2-300x296.png 300w, http://ijz.me/wp-content/uploads/2025/03/19-2-624x615.png 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<h3 class="wp-block-heading">2D马赛克</h3>
+
+
+
+<p>image_to_brick函数可以参数设置如下：</p>
+
+
+
+<p><strong>img_size</strong><strong>：</strong> 单个值（例如148）表示图像裁剪为正方形；2元素阵列c（56,48）将输出宽度*高度的矩形图像。</p>
+
+
+
+<p><strong>color_table</strong><strong>：</strong>马赛克中可能的拼块颜色的数据框。默认为包含的数据集lego_colors。</p>
+
+
+
+<p><code><strong>brightness</strong></code>：大于1的值将使图像变亮，而小于1的值将使图像变暗。</p>
+
+
+
+<p><strong>display_set():</strong> 引入的ggplot图像。</p>
+
+
+
+<h3 class="wp-block-heading">3D马赛克</h3>
+
+
+
+<p>另外两个函数可以以使用rayshader包将image_to_bricks数据输出转换为3D马赛克：</p>
+
+
+
+<p><strong>collect_3d(): </strong>将2D LEGO马赛克转换为两个矩阵:一个用于彩色图像，另一个用于图像上每个点的高度。默认情况下，生成的图像具有6个LEGO板（2个LEGO砖）的高度，颜色较浅，具有较高的高度。可以使用mosaic_height设置马赛克的高度，通过highest_el =&#8217;dark&#8217;设置最高的砖块以较暗的颜色。</p>
+
+
+
+<p><strong>display_3d:</strong> 调用rayshader::plot_3d()，但是从collect_3d的输出中提取山体阴影和高程矩阵并修复一些参数。更详细信息参考rayshader::plot_3d()的官方文档。比如：</p>
+
+
+
+<p>library(rayshader)</p>
+
+
+
+<p>mosaic1 %&gt;%</p>
+
+
+
+<p>&nbsp; collect_3d() %&gt;%</p>
+
+
+
+<p>&nbsp; display_3d(fov=0,theta=-20,phi=30,windowsize=c(1000,800),zoom=0.7)</p>
+
+
+
+<p>render_snapshot()&nbsp;</p>
+
+
+
+<p>3D拼图效果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="815" height="414" src="http://ijz.me/wp-content/uploads/2025/03/20-2.png" alt="" class="wp-image-1129" srcset="http://ijz.me/wp-content/uploads/2025/03/20-2.png 815w, http://ijz.me/wp-content/uploads/2025/03/20-2-300x152.png 300w, http://ijz.me/wp-content/uploads/2025/03/20-2-768x390.png 768w, http://ijz.me/wp-content/uploads/2025/03/20-2-624x317.png 624w" sizes="auto, (max-width: 815px) 100vw, 815px" /></figure>
+
+
+
+<h2 class="wp-block-heading">乐高马赛克IRL</h2>
+
+
+
+<p>该项目还支持，建立乐高马赛克拼图过程图集。具体功能介绍如下：</p>
+
+
+
+<p>使用generate_instructions()将LEGO马赛克图像分解为更易于阅读的构建集合的步骤。默认为6步，具体步骤可以通过整数参数设置。</p>
+
+
+
+<p>mosaic1 %&gt;% generate_instructions(9)</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="635" height="644" src="http://ijz.me/wp-content/uploads/2025/03/21-1.png" alt="" class="wp-image-1130" srcset="http://ijz.me/wp-content/uploads/2025/03/21-1.png 635w, http://ijz.me/wp-content/uploads/2025/03/21-1-296x300.png 296w, http://ijz.me/wp-content/uploads/2025/03/21-1-624x633.png 624w" sizes="auto, (max-width: 635px) 100vw, 635px" /></figure>
+
+
+
+<h2 class="wp-block-heading">实需部件计数</h2>
+
+
+
+<p>当然brickr实际上不是一个纯指上谈兵的项目，而是一个可以线下实操的项目，项目可以这些提供功能，包括display_piece和table_pieces函数。</p>
+
+
+
+<p>使用display_pieces()函数可以生成所有必需的插图块的形状和数量。这些按颜色和大小排序，可以适用男高级搜索选项在乐高官网的Pick-a-Brick购买，当然前提是你必须先让媳妇批准你的预算。也可以使用table_pieces()生成所有必需砖块的数据框表。</p>
+
+
+
+<p>mosaic1 %&gt;% display_pieces()</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="544" height="438" src="http://ijz.me/wp-content/uploads/2025/03/22-1.png" alt="" class="wp-image-1131" srcset="http://ijz.me/wp-content/uploads/2025/03/22-1.png 544w, http://ijz.me/wp-content/uploads/2025/03/22-1-300x242.png 300w" sizes="auto, (max-width: 544px) 100vw, 544px" /></figure>
+
+
+
+<p>mosaic1 %&gt;% table_pieces()</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="608" height="337" src="http://ijz.me/wp-content/uploads/2025/03/23-1.png" alt="" class="wp-image-1132" srcset="http://ijz.me/wp-content/uploads/2025/03/23-1.png 608w, http://ijz.me/wp-content/uploads/2025/03/23-1-300x166.png 300w" sizes="auto, (max-width: 608px) 100vw, 608px" /></figure>
+
+
+
+<p>怎么样，少年？是不是心动了，那就赶紧整一个，拼呗。什么？没钱！那好吧，今天的内容就到这里，欢迎关注虫虫。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1109</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

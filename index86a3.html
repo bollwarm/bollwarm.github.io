@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>vim &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=vim" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Mon, 24 Nov 2014 04:16:58 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>Linux用vim/vi给文件加密和解密/zz/</title>
+		<link>http://ijz.me/?p=692</link>
+					<comments>http://ijz.me/?p=692#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 24 Nov 2014 04:16:58 +0000</pubDate>
+				<category><![CDATA[vim]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=692</guid>
+
+					<description><![CDATA[linux文件为了防止被人随便打开收看，可以使用那个vim自带的加密功能，对文本文件进行加密，以防止人直接看到 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>linux文件为了防止被人随便打开收看，可以使用那个vim自带的加密功能，对文本文件进行加密，以防止人直接看到内容。</p>
+<p>然而在使用Vim编辑文件保存时时，有时候可能输入:X（shift键未及时按下松开），这时体统会提示：</p>
+<p><span id="more-692"></span></p>
+<blockquote><p><strong>Enter encryption key:</strong></p></blockquote>
+<p>原来:X命令是加密文本的命令。根据提示输入密钥，然后会再次提示：</p>
+<blockquote><p><strong>Enter same key again:</strong></p></blockquote>
+<p>加密后的文本需要密钥才可查看。</p>
+<p>有加密就需要有取消加密，取消密钥需在打开文件后（如果文件已加密，当然<strong>需要先输入密钥才能进行如下操作</strong>）</p>
+<p>在命令行模式下：</p>
+<blockquote><p><strong>: set key= </strong></p></blockquote>
+<p><strong>将密钥赋值为空（必须要有空格）即可。</strong></p>
+<p>问题是vim是如何加密文件的？答案是vim采用了BlowFish加密算法（7.3版本），密钥存储在key这个选项中。</p>
+<p>实际操作的过程中还遇到一个问题，在设置加密密钥后保存文件，只有用:wq才可以，用:x不可以。看了这两个命令不是完全等价的，查看帮助文档发现：:wq是将缓冲区中的内容写入文件，而:x则需要缓冲区内容被修改时才会将缓冲区中的内容写入文件。</p>
+<p>由此看来设置密钥不会改变缓冲区的内容，缓冲区的内容就不会被加密存入文件了。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=692</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

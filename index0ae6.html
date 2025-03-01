@@ -1,0 +1,2567 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>web &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=26" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:31:23 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>JavaScript代码整洁之道——好代码和坏代码</title>
+		<link>http://ijz.me/?p=1134</link>
+					<comments>http://ijz.me/?p=1134#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 23 May 2019 02:18:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1134</guid>
+
+					<description><![CDATA[概述 我们之道作为一个码农，不论其实现如何，功能怎样，写的一手清晰靠谱的代码是其代码功力的体现。好的、清洁的代 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading"></h1>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="659" height="451" src="http://ijz.me/wp-content/uploads/2025/03/1-7.png" alt="" class="wp-image-1135" srcset="http://ijz.me/wp-content/uploads/2025/03/1-7.png 659w, http://ijz.me/wp-content/uploads/2025/03/1-7-300x205.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-7-624x427.png 624w" sizes="(max-width: 659px) 100vw, 659px" /></figure>
+
+
+
+<h2 class="wp-block-heading">概述</h2>
+
+
+
+<p>我们之道作为一个码农，不论其实现如何，功能怎样，写的一手清晰靠谱的代码是其代码功力的体现。好的、清洁的代码可以方便自己以后维护，让你的继任者马上能接手维护它，而不是给你檫屁股，被人戳脊梁骨、被骂垃圾代码。所以，写清洁代码非常重要。</p>
+
+
+
+<span id="more-1134"></span>
+
+
+
+<p>那么什么才是清洁代码的呢？不言而喻，清洁的代码就是可以让人易于人理解、易于更改、方便扩展的代码。写清洁的代码要常扪心自问：</p>
+
+
+
+<p>为什么要这样写？</p>
+
+
+
+<p>为什么要在这儿写？</p>
+
+
+
+<p>为什么不换个写法？</p>
+
+
+
+<p>Robert C. Martin在《代码整洁之道》一书中说过：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="567" height="325" src="http://ijz.me/wp-content/uploads/2025/03/2-6.png" alt="" class="wp-image-1136" srcset="http://ijz.me/wp-content/uploads/2025/03/2-6.png 567w, http://ijz.me/wp-content/uploads/2025/03/2-6-300x172.png 300w" sizes="(max-width: 567px) 100vw, 567px" /></figure>
+
+
+<p>就算是的坏代码也能运行，但如果代码不干净，也能会让你的开发团队陷入困境。</p>
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="270" height="103" src="http://ijz.me/wp-content/uploads/2025/03/3-6.png" alt="" class="wp-image-1137"/></figure>
+
+
+<p>在本文中，虫虫就给大家讲讲JavaScript代码的整洁知道，全面对比下好的代码和坏的代码的写法。</p>
+
+
+<h2 class="wp-block-heading">强类型检查，使用“===”，不用“==”</h2>
+
+
+<p>类型的检查非常重要，使用强类型检查可以帮我理清程序逻辑，如果类型检查松懈了（使用==），有可能使你的逻辑“南辕北撤了”，试看下面的例子：</p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="563" height="169" src="http://ijz.me/wp-content/uploads/2025/03/4-5.png" alt="" class="wp-image-1138" srcset="http://ijz.me/wp-content/uploads/2025/03/4-5.png 563w, http://ijz.me/wp-content/uploads/2025/03/4-5-300x90.png 300w" sizes="auto, (max-width: 563px) 100vw, 563px" /></figure>
+
+
+<p>所以从现在开始就强类型检查，“亡羊补牢，犹未晚也”！</p>
+<p>const value = &#8220;520&#8221;;</p>
+<p>if (value === 520) {</p>
+<p>&nbsp; console.log(value);</p>
+<p>}</p>
+<p>条件不会满足。</p>
+<p>if (value === &#8220;520&#8221;) {</p>
+<p>&nbsp; console.log(value);</p>
+<p>}</p>
+<p>条件满足。</p>
+
+
+<h2 class="wp-block-heading">变量命名</h2>
+
+
+<p>变量的命名要有意义，而不是随意乱起。最好是“望文生义”，一看到变量名就知道是干嘛用的。</p>
+
+
+<h3 class="wp-block-heading">望文生义</h3>
+
+
+<p>坏代码：</p>
+<p>let<code> daysSLV</code>=<code> </code>10;<code></code></p>
+<p>let<code> y </code>=<code> </code>new<code> </code>Date().getFullYear();<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code>
+
+
+<p>let<code> ok</code>;<code></code></p>
+<p>if<code> </code>(<code>user</code>.<code>age </code>&gt;<code> </code>30)<code> </code>{<code></code></p>
+<p><code>&nbsp; ok </code>=<code> </code>true;<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>const<code> </code>MAX_AGE<code> </code>=<code> </code>30;<code></code><br />
+let<code> daysSinceLastVisit </code>=<code> </code>10;<code></code><br />
+let<code> currentYear </code>=<code> </code>new<code> </code>Date().getFullYear();<code></code><br />
+...<code></code><br />
+const<code> isUserOlderThanAllowed </code>=<code> user</code>.<code>age </code>&gt;<code> </code>MAX_AGE;</p>
+
+
+<h3 class="wp-block-heading">不要给变量添加额外不需要的单词</h3>
+
+
+<p>坏代码：</p>
+<p>let<code> nameValue</code>;<code></code><br />
+let<code> theProduct</code>;<code></code></p>
+<p>好代码：</p>
+<p>let<code> name</code>;<code></code></p>
+<p>let<code> product</code>;<code></code></p>
+
+
+<h3 class="wp-block-heading">不要让我们需要从上下文中了解变量的意思</h3>
+
+
+
+<p>坏代码：</p>
+
+
+
+<p>const ans = ["Chongchong", "maomaochong", "bollworm"];</p>
+
+
+
+<p>ans.forEach(an =&gt; {</p>
+
+
+
+<p>&nbsp; doSomething();</p>
+
+
+
+<p>&nbsp; doSomethingElse();</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; // 等等，这个u是干嘛用的？</p>
+
+
+
+<p>&nbsp; register(an);</p>
+
+
+
+<p>好代码：</p>
+
+
+
+<p>const animals = ["Chongchong", "maomaochong", "bollworm"];</p>
+
+
+
+<p>animals.forEach(animal =&gt; {</p>
+
+
+
+<p>&nbsp; doSomething();</p>
+
+
+
+<p>&nbsp; doSomethingElse();</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; register(animal);</p>
+
+
+
+<p>});</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="599" height="187" src="http://ijz.me/wp-content/uploads/2025/03/5-6.png" alt="" class="wp-image-1139" srcset="http://ijz.me/wp-content/uploads/2025/03/5-6.png 599w, http://ijz.me/wp-content/uploads/2025/03/5-6-300x94.png 300w" sizes="auto, (max-width: 599px) 100vw, 599px" /></figure>
+
+
+
+<h3 class="wp-block-heading">不添加多余的上下文</h3>
+
+
+<p>坏代码：</p>
+<p>const<code> user </code>=<code> </code>{<code></code><br />
+<code>&nbsp; userName</code>:<code> </code>"Chongchong",<code></code><br />
+<code>&nbsp; userNameAbb</code>:<code> </code>"CC",<code></code><br />
+<code>&nbsp; userAge</code>:<code> </code>"28"<code></code><br />
+};<code></code><br />
+...<code></code><br />
+<code>user</code>.<code>userName</code>;</p>
+<p>&nbsp;</p>
+<p>好代码：</p>
+<p>const<code> user </code>=<code> </code>{<code></code></p>
+<p><code>Name</code>:<code> </code>"Chongchong",<code></code><br />
+<code>NameAbb</code>:<code> </code>"CC",<code></code><br />
+<code>&nbsp; userAge</code>:<code> </code>"28"<code></code><br />
+};<code></code></p>
+<p>...<code></code><br />
+<code>user</code>.<code>userName</code>;</p>
+
+
+<h2 class="wp-block-heading">函数</h2>
+
+
+
+<h3 class="wp-block-heading">使用长而具有描述性的函数名。</h3>
+
+
+<p>由于函数一般来说表示某种行为，函数名称应该是动词或短​​语，这样可以显示功能以及参数的意义。</p>
+<p>坏代码：</p>
+<p>function<code> </code>notif(user)<code> </code>{<code></code><br />
+<code>&nbsp; </code>// 代码逻辑<code></code><br />
+}<code></code></p>
+<p>好代码：</p>
+<p>function notifyUser（emailAddress）{</p>
+<p>&nbsp;&nbsp;//代码逻辑</p>
+<p>}</p>
+
+
+<h3 class="wp-block-heading">避免使用大量参数。</h3>
+
+
+<p>理想情况下，函数应该指定两个或更少的参数。参数越少，函数单元测试就越容易。</p>
+<p>坏代码：</p>
+<p>function<code> </code>getUsers(fields, fromDate, toDate)<code> </code>{<code></code><br />
+<code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>getUsers({ fields, fromDate, toDate })<code> </code>{<code></code><br />
+<code>&nbsp; </code>// 码逻辑<code></code><br />
+}<code></code></p>
+<p>getUsers({<code></code><br />
+<code>&nbsp; fields</code>:<code> </code>['name',<code> </code>'surname',<code> </code>'email'],<code></code><br />
+<code>&nbsp; fromDate</code>:<code> </code>'2019-05-22',<code></code><br />
+<code>&nbsp; toDate</code>:<code> </code>'2019-05-31'<code></code><br />
+});<code></code></p>
+<p>getUsers（{</p>
+<p>&nbsp;&nbsp;字段：['name'，'surname'，'email']，</p>
+<p>&nbsp;&nbsp;fromDate：'2019-01-01'，</p>
+<p>&nbsp;&nbsp;toDate：'2019-01-18'</p>
+<p>}）;</p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<h3 class="wp-block-heading">使用默认参数，不用条件。</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>createShape(type)<code> </code>{<code></code><br />
+<code>&nbsp; </code>const<code> shapeType </code>=<code> type </code>||<code> </code>"circle";<code></code><br />
+<code>&nbsp; </code>// ...<code></code><br />
+}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>createShape(<code>type </code>=<code> </code>"circle")<code> </code>{<code></code><br />
+<code>&nbsp; </code>// ...<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">一个函数做一件事。避免在单个函数中执行多个操作,多种逻辑</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>notifyUsers(users)<code> </code>{<code></code><br />
+<code>&nbsp; users</code>.forEach(user<code> </code>=&gt;<code> </code>{<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>const<code> userRecord </code>=<code> database</code>.lookup(<code>user</code>);<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>if<code> </code>(<code>userRecord</code>.isVerified())<code> </code>{<code></code><br />
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>notify(<code>user</code>);<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>}<code></code><br />
+<code>&nbsp; </code>});<code></code><br />
+}<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="477" height="173" src="http://ijz.me/wp-content/uploads/2025/03/6-6.png" alt="" class="wp-image-1140" srcset="http://ijz.me/wp-content/uploads/2025/03/6-6.png 477w, http://ijz.me/wp-content/uploads/2025/03/6-6-300x109.png 300w" sizes="auto, (max-width: 477px) 100vw, 477px" /></figure>
+
+
+<p>好代码：</p>
+<p>function<code> </code>notifyVerifiedUsers(users)<code> </code>{<code></code><br />
+<code>&nbsp; users</code>.filter(<code>isUserVerified</code>).forEach(<code>notify</code>);<code></code><br />
+}<code></code></p>
+<p>function<code> </code>isUserVerified(user)<code> </code>{<code></code><br />
+<code>&nbsp; </code>const<code> userRecord </code>=<code> database</code>.lookup(<code>user</code>);<code></code><br />
+<code>&nbsp; </code>return<code> userRecord</code>.isVerified();<code></code><br />
+}<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="511" height="199" src="http://ijz.me/wp-content/uploads/2025/03/7-4.png" alt="" class="wp-image-1141" srcset="http://ijz.me/wp-content/uploads/2025/03/7-4.png 511w, http://ijz.me/wp-content/uploads/2025/03/7-4-300x117.png 300w" sizes="auto, (max-width: 511px) 100vw, 511px" /></figure>
+
+
+
+<h3 class="wp-block-heading">使用Object.assign配置默认对象</h3>
+
+
+<p>坏代码：</p>
+<p>const<code> shapeConfig </code>=<code> </code>{<code></code><br />
+<code>&nbsp; type</code>:<code> </code>"cube",<code></code><br />
+<code>&nbsp; width</code>:<code> </code>200,<code></code><br />
+<code>&nbsp; height</code>:<code> </code>null<code></code></p>
+<p>};<code></code></p>
+<p>function<code> </code>createShape(config)<code> </code>{<code></code></p>
+<p><code>&nbsp; config</code>.<code>type </code>=<code> config</code>.<code>type </code>||<code> </code>"cube";<code></code></p>
+<p><code>&nbsp; config</code>.<code>width </code>=<code> config</code>.<code>width </code>||<code> </code>250;<code></code></p>
+<p><code>&nbsp; config</code>.<code>height </code>=<code> config</code>.<code>width </code>||<code> </code>250;<code></code></p>
+<p>}<code></code></p>
+<p>createShape(<code>shapeConfig</code>);<code></code></p>
+<p>function createShape（config）{</p>
+<p>&nbsp;&nbsp;config.type = config.type || “立方体”;</p>
+<p>&nbsp;&nbsp;config.width = config.width || 250;</p>
+<p>&nbsp;&nbsp;config.height = config.width || 250;</p>
+<p>}</p>
+<p>createShape（shapeConfig）;</p>
+<p>好代码：</p>
+<p>const<code> shapeConfig </code>=<code> </code>{<code></code></p>
+<p><code>&nbsp; type</code>:<code> </code>"cube",<code></code></p>
+<p><code>&nbsp; width</code>:<code> </code>200<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;<br><br>&nbsp;</code></pre>
+
+
+<p>function<code> </code>createShape(config)<code> </code>{<code></code></p>
+<p><code>&nbsp; config </code>=<code> Object</code>.assign(<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type</code>:<code> </code>"cube",<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width</code>:<code> </code>250,<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height</code>:<code> </code>250<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>},<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;&nbsp;&nbsp; config</code></pre>
+
+
+<p><code>&nbsp; </code>);<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>...<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>createShape(<code>shapeConfig</code>);<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="571" height="395" src="http://ijz.me/wp-content/uploads/2025/03/8-4.png" alt="" class="wp-image-1142" srcset="http://ijz.me/wp-content/uploads/2025/03/8-4.png 571w, http://ijz.me/wp-content/uploads/2025/03/8-4-300x208.png 300w" sizes="auto, (max-width: 571px) 100vw, 571px" /></figure>
+
+
+
+<h3 class="wp-block-heading">不要使用标志作为参数。</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>createFile(name, isPublic)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(<code>isPublic</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; fs</code>.create(`./public/${name}`);<code></code></p>
+<p><code>&nbsp; </code>}<code> </code>else<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; fs</code>.create(<code>name</code>);<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>createFile(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; fs</code>.create(<code>name</code>);<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>function<code> </code>createPublicFile(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>createFile(`./public/${name}`);<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">不要让全局函数污染</h3>
+
+
+<p>如果需要扩展现有对象，请使用ES类和继承，不要在对象原型链上创建函数。</p>
+<p>坏代码：</p>
+<p>Array.<code>prototype</code>.myFunc<code> </code>=<code> </code>function<code> </code>myFunc()<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// 代码逻辑<code></code></p>
+<p>};<code></code></p>
+<p>好代码：</p>
+<p>class<code> </code>SuperArray<code> </code>extends<code> </code>Array<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>myFunc()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>//代码逻辑<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}</p>
+
+
+<h2 class="wp-block-heading">条件</h2>
+
+
+
+<h3 class="wp-block-heading">不要用负面条件</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>isUserNotBlocked(user)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(!isUserNotBlocked(<code>user</code>))<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>isUserBlocked(user)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(isUserBlocked(<code>user</code>))<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}</p>
+
+
+<h3 class="wp-block-heading">使用布尔变量直接判断，而不是条件语句</h3>
+
+
+<p>坏代码：</p>
+<p>if<code> </code>(<code>isValid </code>===<code> </code>true)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(<code>isValid </code>===<code> </code>false)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>if<code> </code>(<code>isValid</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(!<code>isValid</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">避免使用条件，用多态和继承。</h3>
+
+
+<p>坏代码：</p>
+<p>class<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>switch<code> </code>(this.<code>type</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"Ford":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>+<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"Benz":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"BYD":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>-<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>}<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>class<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>class<code> </code>Ford<code> </code>extends<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>+<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>class<code> </code>Benz<code> </code>extends<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor();<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<p>class<code> BYD </code>extends<code> </code>Car<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp; </code>// ...<code></code></p>
+
+
+
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>-<code> </code>this.anotherFactor();<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+
+<p>}</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="451" src="http://ijz.me/wp-content/uploads/2019/05/21.png" alt="" class="wp-image-1152" srcset="http://ijz.me/wp-content/uploads/2019/05/21.png 798w, http://ijz.me/wp-content/uploads/2019/05/21-300x170.png 300w, http://ijz.me/wp-content/uploads/2019/05/21-768x434.png 768w, http://ijz.me/wp-content/uploads/2019/05/21-624x353.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+
+<p></p>
+
+
+
+<h2 class="wp-block-heading">ES类</h2>
+
+
+<p>类是JavaScript中的新的语法糖。除了语法不同外，其他都和prototype一样工作。使用ES类可以让你的代码更加简洁清晰。</p>
+<p>坏代码：</p>
+<p>const<code> </code>Person<code> </code>=<code> </code>function(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(!(this<code> </code>instanceof<code> </code>Person))<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>throw<code> </code>new<code> </code>Error("Instantiate Person with `new` keyword");<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>Person.<code>prototype</code>.sayHello<code> </code>=<code> </code>function<code> </code>sayHello()<code> </code>{<code> </code>/**/<code> </code>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>const<code> </code>Student<code> </code>=<code> </code>function(name, school)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(!(this<code> </code>instanceof<code> </code>Student))<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>throw<code> </code>new<code> </code>Error("Instantiate Student with `new` keyword");<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>Person.call(this,<code> name</code>);<code></code></p>
+<p><code>&nbsp; </code>this.<code>school </code>=<code> school</code>;<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>Student.<code>prototype </code>=<code> Object</code>.create(Person.<code>prototype</code>);<code></code></p>
+<p>Student.<code>prototype</code>.<code>constructor </code>=<code> Student</code>;<code></code></p>
+<p>Student.<code>prototype</code>.printSchoolName<code> </code>=<code> </code>function<code> </code>printSchoolName()<code> </code>{<code> </code>/**/<code> </code>};<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="451" src="http://ijz.me/wp-content/uploads/2025/03/10-6.png" alt="" class="wp-image-1149" srcset="http://ijz.me/wp-content/uploads/2025/03/10-6.png 798w, http://ijz.me/wp-content/uploads/2025/03/10-6-300x170.png 300w, http://ijz.me/wp-content/uploads/2025/03/10-6-768x434.png 768w, http://ijz.me/wp-content/uploads/2025/03/10-6-624x353.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+<p>好代码：</p>
+<p>class<code> </code>Person<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>constructor(name)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code></code></pre>
+
+
+<p><code>&nbsp; </code>sayHello()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>/* ... */<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<p>class<code> </code>Student<code> </code>extends<code> </code>Person<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp; </code>constructor(name, school)<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>super(<code>name</code>);<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>school </code>=<code> school</code>;<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}</p>
+
+
+
+<p><code>&nbsp; </code>printSchoolName()<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>/* ... */<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+
+<p>}<code></code></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="598" height="405" src="http://ijz.me/wp-content/uploads/2025/03/11-6.png" alt="" class="wp-image-1148" srcset="http://ijz.me/wp-content/uploads/2025/03/11-6.png 598w, http://ijz.me/wp-content/uploads/2025/03/11-6-300x203.png 300w" sizes="auto, (max-width: 598px) 100vw, 598px" /></figure>
+
+
+
+<h3 class="wp-block-heading">使用方法链接</h3>
+
+
+<p>许多库如jQuery和Lodash都使用该模式。因此，该方法可以让的代码简洁。在主类中，只需在每个函数的末尾返回“this”，就可以将更多的类方法链接到该方法。</p>
+<p>坏代码：</p>
+<p>class<code> </code>Person<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>constructor(name)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code>
+
+
+<p><code>&nbsp; </code>setSurname(surname)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>surname </code>=<code> surname</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>setAge(age)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>age </code>=<code> age</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>save()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; console</code>.log(this.<code>name</code>,<code> </code>this.<code>surname</code>,<code> </code>this.<code>age</code>);<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>const<code> person </code>=<code> </code>new<code> </code>Person("Chongchong);<code></code></p>
+<p><code>person</code>.setSurname("CC");<code></code></p>
+<p><code>person</code>.setAge(29);<code></code></p>
+<p><code>person</code>.save();<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="689" height="449" src="http://ijz.me/wp-content/uploads/2025/03/12-5.png" alt="" class="wp-image-1147" srcset="http://ijz.me/wp-content/uploads/2025/03/12-5.png 689w, http://ijz.me/wp-content/uploads/2025/03/12-5-300x196.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-5-624x407.png 624w" sizes="auto, (max-width: 689px) 100vw, 689px" /></figure>
+
+
+<p>好代码：</p>
+<p>class Person {</p>
+<p>&nbsp; constructor(name) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.name = name;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; setSurname(surname) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.surname = surname;</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; setAge(age) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.age = age;</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; save() {</p>
+<p>&nbsp;&nbsp;&nbsp; console.log(this.name, this.surname, this.age);</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>}</p>
+<p>const person = new Person("Chongchong")</p>
+<p>&nbsp;&nbsp;&nbsp; .setSurname("CC")</p>
+<p>&nbsp;&nbsp;&nbsp; .setAge(29)</p>
+<p>.save();</p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="616" height="520" src="http://ijz.me/wp-content/uploads/2025/03/13-3.png" alt="" class="wp-image-1146" srcset="http://ijz.me/wp-content/uploads/2025/03/13-3.png 616w, http://ijz.me/wp-content/uploads/2025/03/13-3-300x253.png 300w" sizes="auto, (max-width: 616px) 100vw, 616px" /></figure>
+
+
+
+<h2 class="wp-block-heading">其他</h2>
+
+
+
+<p>通常情况下，尽量不要写不要重复代码，不要写不使用的函数和死代码。</p>
+
+
+
+<p>出于历史原因，可能会遇到重复的代码。例如，有两段你略有不同的低吗，但是又很多共同之处逻辑，为省事或者赶工期，导致你复制了大段代码，略做小改然后使用了。针对这种代码，后期一定要及早抽象出相同逻辑部分删除重复代码越早越好，不要欠死账，不然后越积越多就不好处理了。</p>
+
+
+
+<p>关于死代码，码如其名。就是啥事不干，删了可能引入错误，这和上面的一样处理，及早处理，不用了就早处理，早删除。</p>
+
+
+
+<h2 class="wp-block-heading">结论</h2>
+
+
+<p>上面只是代码整洁的部分原理，而且个别条款也可能需要商榷。这些大部分理论来源于《代码整洁之道》这本书。有什么建议意见请回复，一起学习讨论。</p>
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1134</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>是时候迁移到Java 11了，Java 7到11迁移实战 </title>
+		<link>http://ijz.me/?p=1012</link>
+					<comments>http://ijz.me/?p=1012#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 07 Aug 2018 07:19:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1012</guid>
+
+					<description><![CDATA[JDK 8将停止支持 Oracle JDK 8将于2019年1月（从现在起153天）停止发布公共更新，时间不多 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading"></h1>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="457" height="250" src="http://ijz.me/wp-content/uploads/2025/03/1.png" alt="" class="wp-image-1013" srcset="http://ijz.me/wp-content/uploads/2025/03/1.png 457w, http://ijz.me/wp-content/uploads/2025/03/1-300x164.png 300w" sizes="auto, (max-width: 457px) 100vw, 457px" /></figure>
+
+
+
+<h2 class="wp-block-heading">JDK 8将停止支持</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="882" height="418" src="http://ijz.me/wp-content/uploads/2025/03/2.png" alt="" class="wp-image-1014" srcset="http://ijz.me/wp-content/uploads/2025/03/2.png 882w, http://ijz.me/wp-content/uploads/2025/03/2-300x142.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-768x364.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-624x296.png 624w" sizes="auto, (max-width: 882px) 100vw, 882px" /></figure>
+
+
+
+<p>Oracle JDK 8将于2019年1月（从现在起153天）停止发布公共更新，时间不多了，所以虫虫认为现在是最好的时机迁移到最新版JDK版本，享受新版本的各种黑魔法和新功能了。</p>
+
+
+
+<span id="more-1012"></span>
+
+
+
+<p>另外，在虫虫以前的文章中也提到过，从JDK 11开始，其发布周期变为每6个月一个新版本，每3年发布一个新的LTS版本（下一个是JDK 11）。</p>
+
+
+
+<p>值得一提的是，发布的公开使用的Oracle JDK将支持OpenJDK源代码进行编译而无需更改。</p>
+
+
+
+<h2 class="wp-block-heading">Java会收费吗？</h2>
+
+
+
+<p>ORACLE确保，不会对Java公共开放不会收费。所有Java/JDK开发基于OpenJDK版本库中完成，所有修复和增强功能都将推送到该开放库。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="904" height="567" src="http://ijz.me/wp-content/uploads/2025/03/3.png" alt="" class="wp-image-1015" srcset="http://ijz.me/wp-content/uploads/2025/03/3.png 904w, http://ijz.me/wp-content/uploads/2025/03/3-300x188.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-768x482.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-624x391.png 624w" sizes="auto, (max-width: 904px) 100vw, 904px" /></figure>
+
+
+
+<p>另外，三方公司也都有自己JRE实现，比如谷歌，Azul和RedHat等，以及IBM开源的Java/JDK实现OpenJ9：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="636" height="321" src="http://ijz.me/wp-content/uploads/2025/03/4.png" alt="" class="wp-image-1016" srcset="http://ijz.me/wp-content/uploads/2025/03/4.png 636w, http://ijz.me/wp-content/uploads/2025/03/4-300x151.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-624x315.png 624w" sizes="auto, (max-width: 636px) 100vw, 636px" /></figure>
+
+
+
+<h2 class="wp-block-heading">向Java 11迁移</h2>
+
+
+
+<p>在Java 9,10和即将发布的Java 11 LTE，我们来着重介绍下如何迁移Java应用程序和模块及其可能存在的未解决的问题。虽然类似的文章问多，但是深入的太少，大多数文章都集中在简单的Hello World应用程序上。</p>
+
+
+
+<p>本文我们将介绍个基于Spring Boot框架的应用程序为实例分步介绍迁移具体过程。选择这样做的示例应用程序是Spring PetClinic，一个使用WebMVC，Actuator，Cache，Data JPA，Thymeleaf和Test starters的Spring Boot 2示例应用程序。完全迁移到Java 11基本上有三个主要过程：</p>
+
+
+
+<p>1.使用JDK 11运行现有Java应用程序。</p>
+
+
+
+<p>2.使用Java 11编译应用程序。</p>
+
+
+
+<p>3.模块化应用程序以使用模块系统。</p>
+
+
+
+<p>如果你还没有准备好同时做这三件事，那请追随虫虫脚本开始。</p>
+
+
+
+<h2 class="wp-block-heading">JDK 11开发环境构建</h2>
+
+
+
+<p>首先，你需要为你的操作系统下载并安装JDK 11。</p>
+
+
+
+<p>首先更新你喜欢的IDE以支持Java模块系统：</p>
+
+
+
+<p>根据各自的IDE官网下载相应模块（地址略）：</p>
+
+
+
+<p>Eclipse IDE，IntelliJ IDEA，Apache NetBeans</p>
+
+
+
+<h2 class="wp-block-heading">1.使用JDK 11运行现有Java应用程序</h2>
+
+
+
+<p>为什么要从JDK 8升级到JDK 11？因为我们将能享受到以下这些的黑魔法：</p>
+
+
+
+<h3 class="wp-block-heading">JDK 11 黑魔法</h3>
+
+
+
+<p>继Java 8后最新LTS长期支持版本（如果你拥有商业许可证）。</p>
+
+
+
+<p>完全支持Linux容器（包括Docker）。</p>
+
+
+
+<p>支持G1上的并行完全垃圾收集。</p>
+
+
+
+<p>免费应用程序类，数据共享功能。</p>
+
+
+
+<p>免费的低耗能飞行记录仪和堆分析仪。</p>
+
+
+
+<p>备用存储设备上的堆分配。</p>
+
+
+
+<p>新的默认根权限证书集。</p>
+
+
+
+<p>新的ZGC和Epsilon垃圾收集器。</p>
+
+
+
+<p>Ahead-of-time编译和GraalVM。</p>
+
+
+
+<p>最新的HTTPS安全协议TLS 1.3。</p>
+
+
+
+<p>JShell。</p>
+
+
+
+<p>支持“shebang”Java脚本文件！<strong><em>#!/bin/java</em></strong></p>
+
+
+
+<h3 class="wp-block-heading">运行你的应用程序</h3>
+
+
+
+<p>这是一个非常简单的步骤，使用早期Java版本创建的应用程序都可以在JDK 11上运行而不会出现重大问题，除非你得依赖模块中包括JEP-320中从JDK中删除的Java EE或CORBA模块。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="731" height="386" src="http://ijz.me/wp-content/uploads/2025/03/5.png" alt="" class="wp-image-1017" srcset="http://ijz.me/wp-content/uploads/2025/03/5.png 731w, http://ijz.me/wp-content/uploads/2025/03/5-300x158.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-624x329.png 624w" sizes="auto, (max-width: 731px) 100vw, 731px" /></figure>
+
+
+
+<p>如果缺少类，你可能需要显式添加java.activation，java.transaction和java.xml.bind依赖项。在类文件错误的情况下，你将需要更新Java字节码增强库，如ASM，bytebuddy，javassist或cglib等。</p>
+
+
+
+<h2 class="wp-block-heading">2.使用Java 11编译应用程序</h2>
+
+
+
+<p>为什么要将源代码升级到Java 11？</p>
+
+
+
+<p>局部变量类型推断（var关键字）。</p>
+
+
+
+<p>新的本机不可修改集合API。</p>
+
+
+
+<p>新的反应流API。</p>
+
+
+
+<p>改进的流/谓词/可选API。</p>
+
+
+
+<p>改进的系统过程API。</p>
+
+
+
+<p>改进的文件API。</p>
+
+
+
+<p>支持HTTP/2。</p>
+
+
+
+<p>标准Java异步HTTP客户端。</p>
+
+
+
+<p>多版本JAR。</p>
+
+
+
+<p>详细步骤：<strong></strong></p>
+
+
+
+<h3 class="wp-block-heading">1.克隆Spring PetClinic存储库</h3>
+
+
+
+<p>git clone github:spring-projects/spring-petclinic.git</p>
+
+
+
+<h3 class="wp-block-heading">2.更新版本信息</h3>
+
+
+
+<p>打开pom.xml并更新java.version属性</p>
+
+
+
+<p>&lt;<strong>java.version</strong>&gt;11&lt;/<strong>java.version</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>maven.compiler.source</strong>&gt;${java.version}&lt;/<strong>maven.compiler.source</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>maven.compiler.target</strong>&gt;${java.version}&lt;/<strong>maven.compiler.target</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">3.删除cobertura-maven-plugin引用</h3>
+
+
+
+<p>因为它不支持JDK 11，而且也有年头不维护了。你可以使用支持较新JDK版本的JaCoCo。</p>
+
+
+
+<h3 class="wp-block-heading">4.更新javassist和mockito-core依赖项</h3>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.javassist&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;javassist&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;3.23.1-GA&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.mockito&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;mockito-core&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;2.20.0&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>scope</strong>&gt;test&lt;/<strong>scope</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">5.包括mockito-core depende</h3>
+
+
+
+<p>&lt;plugin&gt;</p>
+
+
+
+<p>&#8230;</p>
+
+
+
+<p><strong>&lt;dependency&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.mockito&lt;/groupId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp; &lt;version&gt;2.20.0&lt;/version&gt;</strong></p>
+
+
+
+<p><strong>&lt;/dependency&gt;</strong></p>
+
+
+
+<p>&#8230;</p>
+
+
+
+<p>&lt;/plugin&gt;</p>
+
+
+
+<h3 class="wp-block-heading">6.使用最新的asm依赖项将maven-compiler-plugin更新到3.7.0+版本</h3>
+
+
+
+<p>&lt;plugin&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;version&gt;<strong>3.7.0</strong>&lt;/version&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;configuration&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;release&gt;${java.version}&lt;/release&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/configuration&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;dependencies&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&lt;dependency&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.ow2.asm&lt;/groupId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;asm&lt;/artifactId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;version&gt;6.2&lt;/version&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/dependency&gt;</strong></p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/dependencies&gt;</p>
+
+
+
+<p>&lt;/plugin&gt;</p>
+
+
+
+<h3 class="wp-block-heading">7.使用最新的asm依赖项将maven-surefire-plugin更新到2.21.0+版本</h3>
+
+
+
+<p>&lt;plugin&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;version&gt;<strong>2.21.0</strong>&lt;/version&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;dependencies&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&lt;dependency&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.ow2.asm&lt;/groupId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;asm&lt;/artifactId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;version&gt;6.2&lt;/version&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/dependency&gt;</strong></p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/dependencies&gt;</p>
+
+
+
+<p>&lt;/plugin&gt;</p>
+
+
+
+<h3 class="wp-block-heading">8.包含java.xml.bind模块依赖项，因为JEP-320在JDK 11中删除了这些模块</h3>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.glassfish.jaxb&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;jaxb-runtime&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;2.4.0-b180608.0325&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">9.在pom.xml中包含GlassFish JAXB存储库</h3>
+
+
+
+<p>&lt;<strong>repositories</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>repository</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>id</strong>&gt;jvnet-nexus-staging&lt;/<strong>id&gt;</strong></p>
+
+
+
+<p>&lt;<strong>url</strong>&gt;http://maven.java.net/content/repositories/staging/&lt;/<strong>url</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>layout</strong>&gt;default&lt;/<strong>layout</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>repository</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>repositories</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">10.使用spring-boot-maven-plugin运行应用程序</h3>
+
+
+
+<p>./mvnw spring-boot:run</p>
+
+
+
+<p>然后可以通过浏览器访问应用程序界面：localhost:8080</p>
+
+
+
+<h3 class="wp-block-heading">11.打包应用程序并运行测试</h3>
+
+
+
+<p>./mvnw clean package</p>
+
+
+
+<h3 class="wp-block-heading">12.使用打包的可执行jar运行应用程序</h3>
+
+
+
+<p>java -jar target/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar</p>
+
+
+
+<p>现在，你可以使用Java 11编译和运行应用程序，但还没用到模块系统。</p>
+
+
+
+<h2 class="wp-block-heading">3.模块化应用程序以使用模块系统</h2>
+
+
+
+<p>为什么要迁移到模块系统？</p>
+
+
+
+<p><strong>配置更可靠</strong>：用程序组件声明显式依赖的方法来替换脆弱的，容易出错的类路径机制。</p>
+
+
+
+<p><strong>强封装</strong>：允许组件声明其中哪些公共类型可供其他组件访问，哪些不可访问。</p>
+
+
+
+<p><strong>为你的应用程序创建最小的JRE映像</strong>。</p>
+
+
+
+<p><strong>•减少应用程序内存占用量。</strong></p>
+
+
+
+<p><strong>•优化应用程序启动时间。</strong></p>
+
+
+
+<p><strong>具体步骤如下：</strong></p>
+
+
+
+<h3 class="wp-block-heading">1.创建模块文件module-info.java</h3>
+
+
+
+<p>在src/main/java目录中创建一个名为module-info.java的文件，其中包含以下内容：</p>
+
+
+
+<p><strong>module</strong> spring.petclinic {</p>
+
+
+
+<p>}</p>
+
+
+
+<p>现在，当你尝试编译应用程序时，你会看到如下所示很多错误告警：</p>
+
+
+
+<p>Error:(19, 27) java: package org.springframework.boot is not visible</p>
+
+
+
+<p>(package org.springframework.boot is declared in module spring.boot, but module spring.petclinic does not read it)</p>
+
+
+
+<p>这表明应用程序已经表现为模块化布局，并且必须连接模块以进行编译和运行时。</p>
+
+
+
+<p>你可以使用Maven依赖项插件解析目标列出当前在类路径中的所有模块名称，并将它们添加到module-info中：</p>
+
+
+
+<p>./mvnw compile org.apache.maven.plugins:maven-dependency-plugin:3.1.1:resolve</p>
+
+
+
+<p>注意：上面的命令不排除传递依赖项或包括JDK模块。</p>
+
+
+
+<p>遗憾的是，由于许多原因，jdeps无法帮助你生成模块描述列表，但主要是因为第三方库尚未添加模块系统描述，它们被视为特殊的自动模块。</p>
+
+
+
+<p>最终的模块描述符应如下所示：</p>
+
+
+
+<p><strong>open module </strong>spring.petclinic {</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>cache.api;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.activation;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.instrument;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.persistence;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.sql;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.transaction;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.validation;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.xml.bind;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>org.hibernate.validator;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.beans;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.boot;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.boot.autoconfigure;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.context;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.core;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.data.commons;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.data.jpa;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.tx;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.web;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.webmvc;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>jdk.unsupported;</p>
+
+
+
+<p>}</p>
+
+
+
+<p>注意：由于Spring Framework和Hibernate JPA的反射要求，open关键字是必需的，jdk.unsupported是sun.misc.Unsafe的survivors。</p>
+
+
+
+<h3 class="wp-block-heading">2.构建并引入modules目录</h3>
+
+
+
+<p>引入maven-jar-plugin以创建应用程序jar（仅限类）并将其复制到modules目录。</p>
+
+
+
+<p>&lt;<strong>plugin</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;maven-jar-plugin&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;3.1.0&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${project.build.directory}/modules</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>plugin</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">3.引入maven-dependency-plugin以将运行时依赖项复制到模块目录。</h3>
+
+
+
+<p>&lt;<strong>plugin</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.apache.maven.plugins&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;maven-dependency-plugin&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;3.1.1&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>executions</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<strong>phase</strong>&gt;package&lt;/<strong>phase</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goal</strong>&gt;copy-dependencies&lt;/<strong>goal</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${project.build.directory}/modules</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>includeScope</strong>&gt;runtime&lt;/<strong>includeScope</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>excludeArtifactIds</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; spring-boot-devtools</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>excludeArtifactIds</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>executions</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>plugin</strong>&gt;</p>
+
+
+
+<p>注意：应该从模块中排除spring-boot-devtools依赖项。</p>
+
+
+
+<h3 class="wp-block-heading">4.包括java.persistence和java.transaction模块依赖项</h3>
+
+
+
+<p>它们修复了更新版本的自动模块问题：</p>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.hibernate.javax.persistence&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;hibernate-jpa-2.1-api&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;1.0.2.Final&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.jboss.spec.javax.transaction&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;jboss-transaction-api_1.2_spec&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;1.1.1.Final&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<p>同样增加<strong>javax.transaction</strong>依赖给 <strong>spring-boot-starter-data-jpa.</strong></p>
+
+
+
+<p>&lt;<strong>exclusions</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>exclusion</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;javax.transaction-api&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;javax.transaction&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>exclusion</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>exclusions</strong>&gt;</p>
+
+
+
+<p>注意：当存在module-info.java并且启用了fork进程时，surefire会创建一个包含模块和未命名模块的混合类路径，从而导致模块可见性问题，这会阻止应用程序启动。</p>
+
+
+
+<h3 class="wp-block-heading">6.打包并测试应用程序</h3>
+
+
+
+<p>./mvnw clean package</p>
+
+
+
+<h3 class="wp-block-heading">7.使用Java模块系统运行应用程序</h3>
+
+
+
+<p>java &#8211;add-opens java.base/java.lang=spring.core,javassist \</p>
+
+
+
+<p>&#8211;module-path target/modules \</p>
+
+
+
+<p>&#8211;module spring.petclinic/org.springframework.samples.petclinic.PetClinicApplication</p>
+
+
+
+<p>注意：由于Spring和Hibernate依赖项会有请求JDK反射访问，因此需要&#8211;add-opens。</p>
+
+
+
+<h3 class="wp-block-heading">8.设置main-class属性</h3>
+
+
+
+<p>使用以下命令设置模块main-class属性，删除使用module参数指定的主类：</p>
+
+
+
+<p>jar &#8211;update \</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &#8211;file=target/modules/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar \</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &#8211;main-class=org.springframework.samples.petclinic.PetClinicApplication</p>
+
+
+
+<h3 class="wp-block-heading">9.为了自动执行上一步，你可以添加exec-maven-plugin：</h3>
+
+
+
+<p>&lt;<strong>plugin</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.codehaus.mojo&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;exec-maven-plugin&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;1.6.0&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>executions</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>id</strong>&gt;module-main-class&lt;/<strong>id</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>phase</strong>&gt;package&lt;/<strong>phase</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goal</strong>&gt;exec&lt;/<strong>goal</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>executable</strong>&gt;jar&lt;/<strong>executable</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>arguments</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;update</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;file=${project.build.directory}/modules/${project.build.finalName}.jar</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;main-class=org.springframework.samples.petclinic.PetClinicApplication</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;module-version=${project.version}</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>arguments</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>executions</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>plugin</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">10.现在你可以在没有显式主类声明的情况下运行应用程序：</h3>
+
+
+
+<p>./mvnw clean package</p>
+
+
+
+<p>java &#8211;add-opens java.base/java.lang=spring.core,javassist \</p>
+
+
+
+<p>&#8211;module-path=target/modules \</p>
+
+
+
+<p>&#8211;module spring.petclinic</p>
+
+
+
+<p>注意：由于MJAR-238，Maven还不支持开箱即用。</p>
+
+
+
+<p>ok，整个迁移过程就完成。如果你对该文档和问题，请给虫虫留言，欢迎关注虫虫。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1012</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>关于Android WebView跨域访问（“应用克隆”）漏洞</title>
+		<link>http://ijz.me/?p=992</link>
+					<comments>http://ijz.me/?p=992#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 11 Jan 2018 09:46:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=992</guid>
+
+					<description><![CDATA[据腾讯玄武实验室研究，市面上 200 多款安卓应用中，27款 App 有此漏洞。漏洞列表及影响如下,其中18个 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>据腾讯玄武实验室研究，市面上 200 多款安卓应用中，27款 App 有此漏洞。漏洞列表及影响如下,其中18个可被远程攻击，9个只能从本地攻击。根据国家信息安全漏洞共享平台(cnvd)披露 ，截止到2018年1月9日，有11个 App 进行了修复，但其中3个修复存在缺陷。</p>
+
+
+
+<span id="more-992"></span>
+
+
+
+<p>攻击者利用该漏洞，可远程获取用户隐私数据(包括手机应用数据、照片、文档等敏感信息)，还可窃取用户登录凭证，在受害者毫无察觉的情况下实现对App用户账户的完全控制。由于该组件广泛应用于安卓平台，导致大量App受影响，构成较为严重的攻击威胁。该“应用克隆”的移动攻击威胁模型是基于移动应用的一些基本设计特点导致的，所以几乎所有移动应用都适用该攻击模型。在这个攻击模型的视角下，很多以前认为威胁不大、厂商不重视的安全问题，都可以轻松“克隆”用户账户，窃取隐私信息，盗取账号及资金等。</p>
+
+
+
+<h2 class="wp-block-heading">漏洞描述</h2>
+
+
+
+<p>WebView是Android用于显示网页的控件，是一个基于Webkit引擎、展现Web页面、解析并执行JavaScript代码的控件，Android应用可以使用WebView空间，灵活的扩展自身的业务功能。</p>
+
+
+
+<p>市面上大多数使用HTML5技术开发的应用均使用WebView进行HTML5页面的展示。除了从远程服务器加载Web页面，WebView还可以通过修改特定配置，从文件中进行HTML5页面的加载。在未正确配置WebView的情况下，会致使WebView同源策略失效，导致HTTP协议、file协议跨源攻击的发生。该漏洞使得WebView能够访问当前应用内部数据，如果WebView加载了来源不明的HTML文件，可能导致当前应用内部数据被攻击者窃取，如身份认证信息、加密密钥、用户隐私信息等。</p>
+
+
+
+<h2 class="wp-block-heading">漏洞分析</h2>
+
+
+
+<p>Android应用内部分可导出的Activity组件中，WebView允许通过file URL对http域进行访问，并且未对访问路径进行严格校验，由此导致了本次漏洞的出现。</p>
+
+
+
+<p>该漏洞的产生条件：</p>
+
+
+
+<p>（1）应用中存在设置为可被导出的Activity组件，并且组件中包含Webview调用。</p>
+
+
+
+<p>（2）Webview调用中setAllowFileAccessFromFileURLs 或</p>
+
+
+
+<p>setAllowUniversalAccessFromFileURLs 设置为true（minSdk&lt;=4.1 默认为true，minSdk&gt;4.1 默认为false）。</p>
+
+
+
+<h2 class="wp-block-heading">风险等级</h2>
+
+
+
+<p>高危</p>
+
+
+
+<h2 class="wp-block-heading">影响评估</h2>
+
+
+
+<p>漏洞影响使用WebView控件，开启file域访问且未按安全策略开发的安卓应用(App)。</p>
+
+
+
+<h3 class="wp-block-heading">解决方案</h3>
+
+
+
+<p>具备开发能力的企业，请按照如下检查步骤进行修复：</p>
+
+
+
+<p>（1） 严格限制包含WebView调用的Activity组件的导出权限，关闭导出权限或者限制导出组件的发起者。</p>
+
+
+
+<p>（2） 对于功能要求必须导出的Activity组件，手动设置</p>
+
+
+
+<p><code>setAllowFileAccessFromFileURLs（false）或<br>setAllowUniversalAccessFromFileURLs（false）</code></p>
+
+
+
+<p>（3） 对于必须使用file URL对http域进行访问时，可对传入的URL路径范围严格控制，例如建立URL白名单，设置允许访问的URL列表（不要遗漏路径中可能出现的特殊情况如“../../”等，避免限制被绕过）</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=992</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>/zz/修改浏览器的User-Agent来伪装你的浏览器和操作系统</title>
+		<link>http://ijz.me/?p=809</link>
+					<comments>http://ijz.me/?p=809#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 03 Nov 2015 00:18:28 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=780</guid>
+
+					<description><![CDATA[近期很多文章都提到了User-Agent (UA) 字符串，但大部分网友都不知道这个东西有什么用处。其实简单的 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<div class="entry-content">
+<p>近期很多文章都提到了User-Agent (UA) 字符串，但大部分网友都不知道这个东西有什么用处。其实简单的说User-Agent就是客户端浏览器等应用程序使用的一种特殊的网络协议，在每次浏览器 （邮件客户端/搜索引擎蜘蛛）进行 HTTP 请求时发送到服务器，服务器就知道了用户是使用什么浏览器（邮件客户端/搜索引擎蜘蛛）来访问的。既然是人为规定的协议，那么就是说不管什么浏览器，默认</p>
+<p>的UA都是可以更改的。<br />
+<span id="more-809"></span><br />
+有时候为了达到一些不可告人的目的，我就经常需要更改一下UA的设置，比如伪装一下浏览器类型，比如把浏览器伪装成手机上网。<span id="more-4251"></span></p>
+<p>得到HTTP_USER_AGENT 的方法很简单，比如php代码：</p><pre class="crayon-plain-tag">&lt;?php print_r($_SERVER);
+?&gt;
+&lt;?php print_r($_SERVER['HTTP_USER_AGENT']);
+?&gt;</pre><p>这两种都可以得到User-Agents和IP等信息，最好配合正则表达式，对信息进行筛选剔除。</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8211; User-Agents列表&#8212;&#8212;&#8212;&#8212;-</p>
+<p>Internet Explorer 6<br />
+Internet Explorer 7<br />
+Internet Explorer 8<br />
+Firefox<br />
+Chrome<br />
+Safari<br />
+Netscape<br />
+Opera<br />
+Maxthon<br />
+360SE<br />
+OmniWeb</p>
+<p>更多的User-Agents信息尽在<a href="http://www.iefans.net/wp-demo/useragents.xml">useragents.xml</a></p>
+<p>有了这个文件中的信息，什么样的<a href="http://www.iefans.net/">浏览器</a>和操作系系统都能伪装出来。</p>
+<p>使用User-Agents的方法：</p>
+<p>FireFox：[推荐使用User-Agent switcher 这个火狐扩展]<br />
+地址栏键入：about:config 回车<br />
+设置：general.useragent.override&#8211;&gt;自定义的 UA 信息 。</p>
+<p>Chrome<br />
+启动EXE图标属性中加上启动参数：&#8211;user-agent=&#8221;UA信息&#8221; 即可。</p>
+<p>Safari<br />
+菜单栏-&gt;Edit-&gt;Preferences-&gt;Advanced-&gt;Show Develop menu in menu bar；<br />
+菜单栏-&gt;Develop-&gt;User-Agent-&gt;UA信息。</p>
+<p>Maxthon<br />
+工具栏-&gt;工具-&gt;遨游设置中心-&gt;高级选项-&gt;自定义UA信息。</p>
+<p>Opera<br />
+地址栏键入：opera:config 回车<br />
+设置：User-Agent-&gt;自定义ID 0—5<br />
+注： [0 Default 1 Opera 2 Mozilla, Opera detectable 3 Internet Explorer, Opera detectable 4 Mozilla, Opera hidden 5 Internet Explorer, Opera hidden ]</p>
+<p>iPhone<br />
+替换 /System/Library/Frameworks/WebKit.framework/WebKit 这个文件的 Mozilla/5.0字符串 为自定义UA信息</p>
+<p><a href="http://www.iefans.net/">IE浏览器</a>的设置需要修改注册表</p>
+<p>User-Agent在注册表的位置<br />
+[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionInternet SettingsUser-AgentPost Platform] 下，新建字符串值，内容留空，名字为你想在 User-Agent 中加入的字符，这里以 &#8220;motorolarokre2&#8243;为例。修改注册表对应的 REG 文件如下：<br />
+Windows Registry Editor Version 5.00</p>
+<p>[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionInternet SettingsUser-AgentPost Platform]<br />
+&#8220;motorolarokre2&#8243;=&#8221;&#8221;</p>
+<p>修改后重启IE浏览器即可。</p>
+<p>IE的user-agent取值，下面是下列地址的组合+一些默认值<br />
+HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionInternet SettingsUser-AgentPost Platform<br />
+HKEY_LOCAL_MACHINESoftwareMicrosoftWindowsCurrentVersionInternet SettingsUser-AgentPost Platform<br />
+HKEY_LOCAL_MACHINESoftwareMicrosoftWindowsCurrentVersionInternet Settings5.0User-AgentPost Platform</p>
+<p><a href="http://www.iefans.net/">IE8</a>的User-Agents：</p>
+<p>IE8 on Windows Vista (兼容浏览)<br />
+Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.0)</p>
+<p>IE8 on Windows Vista<br />
+Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)</p>
+<p>IE8 on <a href="http://www.iefans.net/?tag=windows-7">Windows 7</a><br />
+Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)</p>
+<p>64-bit IE on 64-bit Windows 7:<br />
+Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Win64; x64; Trident/4.0)</p>
+<p>32-bit IE on 64-bit Windows 7:<br />
+Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0)</p>
+<p>通过修改User-Agent，你还可以完美的伪装：操作系统、浏览器、蜘蛛、邮件客户端、链接检查、分析器、RSS 阅读器等客户端的信息。</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=809</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>tomcat 只监听一个端口</title>
+		<link>http://ijz.me/?p=759</link>
+					<comments>http://ijz.me/?p=759#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 18 Aug 2015 10:22:14 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[tomcat]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=759</guid>
+
+					<description><![CDATA[tomcat默认会监听3个端口： 一个主端口，默认为8080 一个shutdown端口，默认8005 还有一个 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>tomcat默认会监听3个端口：</p>
+<p>一个主端口，默认为8080<br />
+一个shutdown端口，默认8005<br />
+还有一个AJP1.3端口，默认8003</p>
+<p>实际上后两个端口是非必须，尤其shutdown虽然默认是监听在127.0.0.1但是连接到这个端口，发送SHUTDOWN就可以无任何验证把tomcat关闭掉，有安全隐患的。<br />
+AJP端口用来在应用服务器交互时候用，比如apache链接tomcat等，一般也用不着，可以禁止掉。<br />
+<span id="more-759"></span></p>
+<p>这两个端口的禁止方法：</p>
+<p>AJP端口，直接注释掉server.xml 文件的配置行就行。</p><pre class="crayon-plain-tag">&lt;!--&lt;Connector port="8005" maxThreads="*" 
+enableLookups="false" redirectPort="*" protocol="AJP/1.3" /&gt;--&gt;</pre><p>shown端口是写在Server参数里的，直接去掉是不管用，也是会默认启动的，一般在安全设置时候建议把端口修改为其他端口，shutdown修改为其他复杂字串。实际上这个端口是可以直接屏蔽不监听的。设置时候将其port值修改为-1即可：</p><pre class="crayon-plain-tag">&lt;Server port="-1" shutdown="SHUTDOWN"&gt;</pre><p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=759</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>解决网站由于使用谷歌字体导致访问慢</title>
+		<link>http://ijz.me/?p=662</link>
+					<comments>http://ijz.me/?p=662#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sat, 20 Sep 2014 13:24:53 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[谷歌字体]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=662</guid>
+
+					<description><![CDATA[由于防火墙禁止了谷歌，所以谷歌所有服务在天朝无法访问。由于wp默认的会使用谷歌字体服务，导致站点访问非常的缓慢 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>由于防火墙禁止了谷歌，所以谷歌所有服务在天朝无法访问。由于wp默认的会使用谷歌字体服务，导致站点访问非常的缓慢，而好多站长都没有意识到这个问题（有很多解决方法和插件）。所以导致其站非常缓慢，解决方法只需要修改本机（网站用户）的hosts文件把谷歌字体网址解析到本地：</p>
+<p>&nbsp;</p>
+<p>127.0.0.1 fonts.googleapis.com</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=662</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>/zz/网站生成静态页面攻略 &#8212; 防采集而不防搜索引擎策略</title>
+		<link>http://ijz.me/?p=14</link>
+					<comments>http://ijz.me/?p=14#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=14</guid>
+
+					<description><![CDATA[从前面的我讲的采集原理大家可以看出，绝大多数采集程序都是靠分析规则来进行采集的，如分析分页文件名规则、分析页面 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>从前面的我讲的采集原理大家可以看出，绝大多数采集程序都是靠分析规则来进行采集的，如分析分页文件名规则、分析页面代码规则。</p>
+<p><strong>一、分页文件名规则防采集对策</strong></p>
+<p>大部分采集器都是靠分析分页文件名规则，进行批量、多页采集的。如果别人找不出你的分页文件的文件名规则，那么别人就无法对你的网站进行批量多页采集。</p>
+<p><span id="more-14"></span></p>
+<p>实现方法：</p>
+<p>我认为用MD5加密分页文件名是一个比较好的方法，说到这里，有人会说，你用MD5加密分页文件名，别人根据此规则也可以模拟你的加密规则得到你的分页文件名。</p>
+<p>我要指出的是我们加密分页文件名时，不要只加密文件名变化的部分</p>
+<p>如果I代表分页的页码，那么我们不要这样加密：page_name=Md5(I,16)&amp;&#8221;.htm&#8221;</p>
+<p>最好给要加密的页码上再跟进一个或多个字符，如：page_name=Md5(I&amp;&#8221;任意一个或几个字母&#8221;,16)&amp;&#8221;.htm&#8221;</p>
+<p>因为MD5是无法反解密的，别人看到的会页字母是MD5加密后的结果，所以加人也无法知道你在 I 后面跟进的字母是什么，除非他用暴力****MD5，不过不太现实。</p>
+<p>二、页面代码规则防采集对策</p>
+<p>如果说我们的内容页面无代码规则，那么别人就无法从你的代码中提取他们所需要的一条条内容。所以我们要的这一步做到防采集，就要使代码无规则。</p>
+<p>实现方法：</p>
+<p>使对方需要提取的标记随机化</p>
+<p>1、定制多个网页模板，每个网页模板里的重要HTML标记不同，呈现页面内容时，随机选取网页模板，有的页面用CSS+DIV布局，有的页面用table布局，此方法是麻烦了点，一个内容页面，要多做几个模板页面，不过防采集本身就是一件很烦琐的事情，多做一个模板，能起到防采集的作用，对很多人来说，都是值得的。<br />
+2、如果嫌上面的方法太麻烦，把网页里的重要HTML标记随机化，也可以。</p>
+<p>做的网页模板越多，html代码越是随机化，对方分析起内容代码时，就越麻烦，对方针对你的网站专门写采集策略时，难度就更大，在这个时候，绝大部分人，都会知难而退，因为这此人就是因为懒，才会采集别人网站数据嘛~~~再说一下，目前大部分人都是拿别人开发的采集程序去采集数据，自己开发采集程序去采集数据的人毕竟是少数。</p>
+<p>还有些简单的思路提供给大家：</p>
+<p>1、把对数据采集者重要，而对搜索引擎不重要的内容用客户端脚本显示<br />
+2、把一页数据，分为N个页面显示，也是加大采集难度的方法<br />
+3、用更深层的连接，因为目前大部分采集程序只能采集到网站内容的前3层，如果内容所在的连接层更深，也可以避免被采集。不过这样可能会给客户造成浏览上的不便。如：</p>
+<p>大多网站都是 首页&#8212;-内容索引分页&#8212;-内容页<br />
+如果改成：<br />
+首页&#8212;-内容索引分页&#8212;-内容页入口&#8212;-内容页<br />
+注：内容页入口最好能加上自动转入内容页的代码<br />
+&lt;meta http-equiv=&#8221;refresh&#8221; post_content=&#8221;6;url=内容页(<a href="http://www.netlian.com">http://www.netlian.com</a>)&#8221;&gt;<br />
+其实，只要做好防采集的第一步(加密分页文件名规则)，防采集的效果就已经不错了，还是建议两条反采集方法同时使用，给采集者增加采集难度，使得他们知难页退。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=14</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>div+css 布局浏览器兼容</title>
+		<link>http://ijz.me/?p=28</link>
+					<comments>http://ijz.me/?p=28#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=28</guid>
+
+					<description><![CDATA[最近做一个项目系统使用div+css来控制前台显示界面发现在各个浏览器下显示的效果由很大的出入，现在找一些关于 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>最近做一个项目系统使用div+css来控制前台显示界面发现在各个浏览器下显示的效果由很大的出入，现在找一些关于div+css关于浏览器的一些资料做一个汇总，也算是对div+css知识的一个学习。</p>
+<p><span id="more-28"></span></p>
+<p>区别火狐和IE时最常用的是<strong>!important</strong>方法,对于其他不同浏览器和浏览器的不同版本的的兼容性问题还有下面一些方法,比如<strong>:@import</strong>,<strong>注释</strong>,<strong>属性选择符</strong>,<strong>子对象选择符</strong>和<strong>voice-family</strong>等方法,这些方法在<strong>《css网站布局实录》</strong>中有讲述.</p>
+<p><strong>下面是IE和火狐的css兼容性问题</strong></p>
+<p>1.DOCTYPE 影响 CSS 处理</p>
+<p>2.FF: div 设置 margin-left, margin-right 为 auto 时已经居中, IE 不行</p>
+<p>3.FF: body 设置 text-align 时, div 需要设置 margin: auto(主要是 margin-left,margin-right) 方可居中</p>
+<p>4.FF: 设置 padding 后, div 会增加 height 和 width, 但 IE 不会, 故需要用 !important 多设一个 height 和 width</p>
+<p>5.FF: 支持 !important, IE 则忽略, 可用 !important 为 FF 特别设置样式，值得注意的是，一定要将xxxx !important 这句放置在另一句之上</p>
+<p>6.div 的垂直居中问题: vertical-align:middle; 将行距增加到和整个DIV一样高 line-height:200px; 然后插入文字，就垂直居中了。缺点是要控制内容不要换行</p>
+<p>7.cursor: pointer 可以同时在 IE FF 中显示游标手指状， hand 仅 I103fE 可以</p>
+<p>8.FF: 链接加边框和背景色，需设置 display: block, 同时设置 float: left 保证不换行。参照 menubar, 给 a 和 menubar 设置高度是为了避免底边显示错位, 若不设 height, 可以在 menubar 中插入一个空格。</p>
+<p>9.在mozilla firefox和IE中的BOX模型解释不一致导致相差2px解决方法：div{margin:30px!important;margin:28px;}<br />
+注意这两个margin的顺序一定不能写反，据阿捷的说法!important这个属性IE不能识别，但别的浏览器可以识别。所以在IE下其实解释成这样：div{maring:30px;margin:28px}<br />
+重复定义的话按照最后一个来执行，所以不可以只写margin:XXpx!important;</p>
+<p>10.IE5 和IE6的BOX解释不一致<br />
+IE5下div{width:300px;margin:0 10px 0 10px;}<br />
+div的宽度会被解释为300px-10px(右填充)-10px(左填充)最终div的宽度为280px，而在IE6和其他浏览器上宽度则是以 300px+10px(右填充)+10px(左填充)=320px来计算的。这时我们可以做如下修改div{width:300px! important;width /**/:340px;margin:0 10px 0 10px}</p>
+<p>关于这个/**/是什么我也不太明白，只知道IE5和firefox都支持但IE6不支持，如果有人理解的话，请告诉我一声，谢了！：）</p>
+<p>11.ul标签在Mozilla中默认是有padding值的,而在IE中只有margin有值所以先定义ul{margin:0;padding:0;}<br />
+就能解决大部分问题<br />
+<strong>注意事项：</strong></p>
+<p>1、float的div一定要闭合。</p>
+<p>例如：(其中floatA、floatB的属性已经设置为float:left;)&lt;#div id=”floatA” &gt;<br />
+&lt;#div id=”floatB” &gt;<br />
+&lt;#div id=”NOTfloatC” &gt;<br />
+这里的NOTfloatC并不希望继续平移，而是希望往下排。<br />
+这段代码在IE中毫无问题，问题出在FF。原因是NOTfloatC并非float标签，必须将float标签闭合。<br />
+在&lt;#div class=”floatB”&gt;<br />
+&lt;#div class=”NOTfloatC”&gt;<br />
+之间加上&lt;#div class=”clear”&gt;<br />
+这个div一定要注意声明位置，一定要放在最恰当的地方，而且必须与两个具有float属性的div同级，之间不能存在嵌套关系，否则会产生异常。<br />
+并且将clear这种样式定义为为如下即可：.clear{<br />
+clear:both;}</p>
+<p>此外，为了让高度能自动适应，要在wrapper里面加上overflow:hidden;<br />
+当包含float的box的时候，高度自动适应在IE下无效，这时候应该触发IE的layout私有属性(万恶的IE啊！)用zoom:1;可以做到，这样就达到了兼容。<br />
+例如某一个wrapper如下定义：.colwrapper{<br />
+overflow:hidden;<br />
+zoom:1;<br />
+margin:5px auto;}</p>
+<p>2、margin加倍的问题。</p>
+<p>设置为float的div在ie下设置的margin会加倍。这是一个ie6都存在的bug。<br />
+解决方案是在这个div里面加上display:inline;<br />
+例如：<br />
+&lt;#div id=”imfloat”&gt;</p>
+<p>相应的css为<br />
+#IamFloat{<br />
+float:left;<br />
+margin:5px;/*IE下理解为10px*/<br />
+display:inline;/*IE下再理解为5px*/}</p>
+<p>3、关于容器的包涵关系</p>
+<p>很多时候，尤其是容器内有平行布局，例如两、三个float的div时，宽度很容易出现问题。在IE中，外层的宽度会被内层更宽的div挤破。一定要用Photoshop或者Firework量取像素级的精度。</p>
+<p>4、关于高度的问题</p>
+<p>如果是动态地添加内容，高度最好不要定义。浏览器可以自动伸缩，然而如果是静态的内容，高度最好定好。（似乎有时候不会自动往下撑开，不知道具体怎么回事）</p>
+<p>5、最狠的手段 &#8211; !important;</p>
+<p>如果实在没有办法解决一些细节问题,可以用这个方法.FF对于”!important”会自动优先解析,然而IE则会忽略.如下.tabd1{<br />
+background:url(/res/images/up/tab1.gif) no-repeat 0px 0px !important; /*Style for FF*/<br />
+background:url(/res/images/up/tab1.gif) no-repeat 1px 0px; /* Style for IE */}<br />
+值得注意的是，一定要将xxxx !important 这句放置在另一103f句之上，上面已经提过</p>
+<p>IE7.0出来了，对CSS的支持又有新问题。浏览器多了，网页兼容性更差了，疲于奔命的还是我们 ，为解决IE7.0的兼容问题，找来了下面这篇文章：</p>
+<p>现在我大部分都是用!important来hack，对于ie6和firefox测试可以正常显示，但是ie7对!important可以正确解释，会导致页面没按要求显示！搜索了一下，找到一个针对IE7不错的hack方式就是使用“*+html”，现在用IE7浏览一下，应该没有问题了。</p>
+<p>现在写一个CSS可以这样：<br />
+#example { color: #333; } /* Moz */<br />
+* html #example { color: #666; } /* IE6 */<br />
+*+html #example { color: #999; } /* IE7 */</p>
+<p>那么在firefox下字体颜色显示为#333，IE6下字体颜色显示为#666，IE7下字体颜色显示为#999，他们都互不干扰。</p>
+<p><img decoding="async" style="margin: 0px 2px -6px 0px;" src="http://www_qibosoft_com/Tmp_updir/article/43/1_c4q8yxhn2_sunny.gif" alt="" /><img decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_wdothzhn2_t_sunny.gif" alt="" /><img decoding="async" style="margin: 0px 2px -1px 0px;" src="http://www_qibosoft_com/Tmp_updir/article/43/1_ustq7rlevel3.gif" alt="" />　　CSS对浏览器器的兼容性具有很高的价值，通常情况下IE和Firefox存在很大的解析差异，这里介绍一下兼容要点。</p>
+<p>常见兼容问题：</p>
+<p>1.DOCTYPE 影响 CSS 处理</p>
+<p>2.FF: div 设置 margin-left, margin-right 为 auto 时已经居中, IE 不行</p>
+<p>3.FF: body 设置 text-align 时, div 需要设置 margin: auto(主要是 margin-left,margin-right) 方可居中</p>
+<p>4.FF: 设置 padding 后, div 会增加 height 和 width, 但 IE 不会, 故需要用 !important 多设一个 height 和 width</p>
+<p>5.FF: 支持 !important, IE 则忽略, 可用 !important 为 FF 特别设置样式</p>
+<p>6.div 的垂直居中问题: vertical-align:middle; 将行距增加到和整个DIV一样高 line-height:200px; 然后插入文字，就垂直居中了。缺点是要控制内容不要换行</p>
+<p>7.cursor: pointer 可以同时在 IE FF 中显示游标手指状， hand 仅 IE 可以</p>
+<p>8.FF: 链接加边框和背景色，需设置 display: block, 同时设置 float: left 保证不换行。参照 menubar, 给 a 和 menubar 设置高度是为了避免底边显示错位, 若不设 height, 可以在 menubar 中插入一个空格。</p>
+<p>9.在mozilla firefox和IE中的BOX模型解释不一致导致相差2px解决方法：<br />
+div{margin:30px!important;margin:28px;}<br />
+注意这两个margin的顺序一定不能写反，据阿捷的说法!important这个属性IE不能识别，但别的浏览器可以识别。所以在IE下其实解释成这样：<br />
+div{maring:30px;margin:28px}<br />
+重复定义的话按照最后一个来执行，所以不可以只写margin:XXpx!important;</p>
+<p>10.IE5 和IE6的BOX解释不一致<br />
+IE5下<br />
+div{width:300px;margin:0 10px 0 10px;}<br />
+div的宽度会被解释为300px-10px(右填充)-10px(左填充)最终div的宽度为280px，而在IE6和其他浏览器上宽度则是以300px+10px(右填充)+10px(左填充)=320px来计算的。这时我们可以做如下修改<br />
+div{width:300px!important;width /**/:340px;margin:0 10px 0 10px}<br />
+关于这个/**/是什么我也不太明白，只知道IE5和firefox都支持但IE6不支持，如果有人理解的话，请告诉我一声，谢了！：）</p>
+<p>11.ul标签在Mozilla中默认是有padding值的,而在IE中只有margin有值所以先定义<br />
+ul{margin:0;padding:0;}<br />
+就能解决大部分问题</p>
+<p>注意事项：</p>
+<p>1、float的div一定要闭合。</p>
+<p>例如：(其中floatA、floatB的属性已经设置为float:left;)<br />
+&lt;#div id=&#8221;floatA&#8221; &gt;&lt;/#div&gt;<br />
+&lt;#div id=&#8221;floatB&#8221; &gt;&lt;/#div&gt;<br />
+&lt;#div id=&#8221;NOTfloatC&#8221; &gt;&lt;/#div&gt;<br />
+这里的NOTfloatC并不希望继续平移，而是希望往下排。<br />
+这段代码在IE中毫无问题，问题出103f在FF。原因是NOTfloatC并非float标签，必须将float标签闭合。<br />
+在<br />
+&lt;#div class=&#8221;floatB&#8221;&gt;&lt;/#div&gt;<br />
+&lt;#div class=&#8221;NOTfloatC&#8221;&gt;&lt;/#div&gt;<br />
+之间加上<br />
+&lt;#div class=&#8221;clear&#8221;&gt;&lt;/#div&gt;<br />
+这个div一定要注意声明位置，一定要放在最恰当的地方，而且必须与两个具有float属性的div同级，之间不能存在嵌套关系，否则会产生异常。<br />
+并且将clear这种样式定义为为如下即可：<br />
+.clear{<br />
+clear:both;}<br />
+此外，为了让高度能自动适应，要在wrapper里面加上overflow:hidden;<br />
+当包含float的box的时候，高度自动适应在IE下无效，这时候应该触发IE的layout私有属性(万恶的IE啊！)用zoom:1;可以做到，这样就达到了兼容。<br />
+例如某一个wrapper如下定义：<br />
+.colwrapper{<br />
+overflow:hidden;<br />
+zoom:1;<br />
+margin:5px auto;}</p>
+<p>2、margin加倍的问题。</p>
+<p>设置为float的div在ie下设置的margin会加倍。这是一个ie6都存在的bug。<br />
+解决方案是在这个div里面加上display:inline;<br />
+例如：<br />
+&lt;#div id=&#8221;imfloat&#8221;&gt;&lt;/#div&gt;</p>
+<p>相应的css为<br />
+#IamFloat{<br />
+float:left;<br />
+margin:5px;/*IE下理解为10px*/<br />
+display:inline;/*IE下再理解为5px*/}</p>
+<p>3、关于容器的包涵关系</p>
+<p>很多时候，尤其是容器内有平行布局，例如两、三个float的div时，宽度很容易出现问题。在IE中，外层的宽度会被内层更宽的div挤破。一定要用Photoshop或者Firework量取像素级的精度。</p>
+<p>4、关于高度的问题</p>
+<p>如果是动态地添加内容，高度最好不要定义。浏览器可以自动伸缩，然而如果是静态的内容，高度最好定好。（似乎有时候不会自动往下撑开，不知道具体怎么回事）</p>
+<p>5、最狠的手段 &#8211; !important;</p>
+<p>如果实在没有办法解决一些细节问题,可以用这个方法.FF对于&#8221;!important&#8221;会自动优先解析,然而IE则会忽略.如下<br />
+.tabd1{<br />
+background:url(/res/images/up/tab1.gif) no-repeat 0px 0px !important; /*Style for FF*/<br />
+background:url(/res/images/up/tab1.gif) no-repeat 1px 0px; /* Style for IE */}</p>
+<p>值得注意的是，一定要将xxxx !important 这句放置在另一句之上，上面已经提过<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;<br />
+先温习一下对于IE的box-model的破解<br />
+IE box-model这个臭名昭著的bug存在于IE6/Win以前的每一只版本，这个虫子直到tantak发布了流传最为广泛的那个hack才开始被驯服</p>
+<p><a href="http://www.tantek.com/CSS/Examples/boxmodelhack.html" target="_blank">http://www.tantek.com/CSS/Examples/boxmodelhack.html</a></p>
+<p>IE5.X/win对box-model的解析是一样的，他们认为width包括了边框(border)和补白(padding)，幸运的是这个情况在IE6中有了好转<br />
+但是IE6在向后兼容的同时也包容了以前的错误，IE6其实有两个核心，在旧的页面前他仍旧表现出对错误的宽容，只有在文档中严格地加上文档类型(DOCTYPE)声明，IE6才能够接受正确的box-model<br />
+所以，tantak的hack必须和正确的DOCTYPE同时包含在文档中才能够正常工作<br />
+Quote<br />
+div.post_content {<br />
+width:400px; //这个是错误的width，所有浏览器都读到了<br />
+voice-family: &#8220;&#8221;}&#8221;&#8221;; //IE5.X/win忽略了&#8221;&#8221;}&#8221;&#8221;后的内容<br />
+voice-family:inherit;<br />
+width:300px; //包括IE6/win在内的部分浏览器读到这句，新的数值(300px)覆盖掉了旧的<br />
+}<br />
+html&gt;body .post_content { //html&gt;body是CSS2的写法<br />
+width:300px; //支持CSS2该写法的浏览器有幸读到了这一句<br />
+}<br />
+现在回到主题，我们经常看到!important和(空格)/**/:组合在一起使用，这个写法</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=28</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Web 流量分析工具/zz/</title>
+		<link>http://ijz.me/?p=78</link>
+					<comments>http://ijz.me/?p=78#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[工具]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=78</guid>
+
+					<description><![CDATA[Web 流量分析工具多不胜数，从 WebTrends 这样专业而昂贵的，到 Google Analytics  [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Web 流量分析工具多不胜数，从 WebTrends 这样专业而昂贵的，到 Google Analytics 这样强大而免费的，从需要在服务器端单独部署的，到可以从前端集成的，不一而足。本 文收集并介绍了10个功能强大的开源 Web 流量分析工具，因为是开源的，因此可以免费部署到你的网站。</p>
+<p><strong><a href="http://www.tracewatch.com/">TraceWatch</a></strong></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px; display: block;" src="http://www.reencoded.com/wp-content/uploads/2010/05/twatch.jpg" alt="" /></p>
+<p>TraceWatch 是一个开源 Web 流量分析程序，支持实时分析，可以提供深度分析报告。</p>
+<p><strong><a href="http://slimstat.net/">SlimStat</a></strong></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px;" src="http://static.cnbetacdn.com/assets/images/placeholder.gif" alt="" /></p>
+<p>基于 PHP-MySQL，同时，可以像 Google Analytics 那样，通过 JavaScript 或 PHP 脚本集成到网站。</p>
+<p><a href="http://piwik.org/"><strong>Piwik</strong></a></p>
+<p><strong><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px; display: block;" src="http://www.reencoded.com/wp-content/uploads/2010/05/piwik.jpg" alt="" /><br />
+</strong></p>
+<p>可以生成站点的详细的实时访问报告，基于 PHP 和 MySQL，也可以像 Google Analytics 那样在前端集成。</p>
+<p><a href="http://www.openwebanalytics.com/"><strong>Open Web Analytics</strong></a></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px; display: block;" src="http://www.reencoded.com/wp-content/uploads/2010/05/owa.jpg" alt="" /></p>
+<p>基于 PHP，内置对 WordPress，Gallery 以及 MediaWiki 的支持。</p>
+<p><a href="http://www.w3perl.com/"><strong>W3Perl</strong></a></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px;" src="http://www.reencoded.com/wp-content/uploads/2010/05/w3perl.jpg" alt="" /></p>
+<p>W3Perl 是一个 Web Log 分析工具。</p>
+<p><strong><a href="http://www.crawltrack.net/">CrawlTrack</a></strong></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px;" src="http://www.reencoded.com/wp-content/uploads/2010/05/crawltrack.jpg" alt="" /></p>
+<p>CrawTrack 是一个很好的 Google Analytics 的开源替用品，提供非常独特的报告，比如，CrawTrack 可以帮你预防诸如 SQL 注射一类的攻击。</p>
+<p><strong><a href="http://www.bbclone.de/">BBClone</a></strong></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px;" src="http://static.cnbetacdn.com/assets/images/placeholder.gif" alt="" /></p>
+<p>BBClone 是一个 Web 计数器，可以提供很详细的访问报告。基于 PHP。</p>
+<p><a href="http://www.phpmyvisites.us/phpmv2/"><strong>PhpMyVisites</strong></a></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px; display: block;" src="http://www.reencoded.com/wp-content/uploads/2010/05/phpmyvisites.jpg" alt="" /><br />
+基于 GNU/GPL 开源协议，可以提供很详细的，有关访问者信息的报告，它的 GUI 界面很有趣而且实用，安装也很简单。</p>
+<p><strong><a href="http://awstats.sourceforge.net/">AWStats</a></strong></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px; display: block;" src="http://www.reencoded.com/wp-content/uploads/2010/05/awstats.jpg" alt="" /></p>
+<p>可以提供非常强大的，关于网站，FTP 站点，乃至 Email 服务器的访问分析报告，基于 CGI。</p>
+<p><strong><a href="http://www.quate.net/grape">Grape</a></strong></p>
+<p><img decoding="async" style="border: 1px solid #e0e0e0; padding: 15px; display: block;" src="http://www.reencoded.com/wp-content/uploads/2010/05/grape.jpg" alt="" /></p>
+<p>Grape 的界面比较简单，功能虽然不多，但很实用。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=78</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>web网页编辑器大全:比较编辑器</title>
+		<link>http://ijz.me/?p=80</link>
+					<comments>http://ijz.me/?p=80#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[html， js]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=80</guid>
+
+					<description><![CDATA[①Text Editor &#8212; 用flash作的,比較特別 ②TinyMCE    &#8212;  [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>①Text Editor &#8212; 用flash作的,比較特別<br />
+②TinyMCE    &#8212; 免費的編輯器,支援多種瀏覽器<br />
+③FCKeditor   &#8212; 免費的編輯器,支援多種瀏覽器<br />
+<span id="more-80"></span><br />
+配置文件 <a href="http://soft.yesky.com/lesson/148/2623648.shtml">http://soft.yesky.com/lesson/148/2623648.shtml</a><a href="http://homepage.yesky.com/152/2615652.shtml">http://homepage.yesky.com/152/2615652.shtml</a><br />
+④htmlArea      &#8212; 与FCKeditor 比较<br />
+FCKeditor的功能很多,只是&#8230;載入時比較慢,有時候要reload才會出現,<br />
+htmlArea的功能比較精簡,所以載入上比FCKeditor快多了,<br />
+不過FCKeditor有清除word標籤的功能</p>
+<p>⑤CuteEditor &#8212; 博客园用的就是这个<br />
+URL:[破解版：<a href="http://files.cnblogs.com/minsky/CuteEditor_for_NET4.5_Crack%20by%20Minsky.part1.rar">http://files.cnblogs.com/minsky/CuteEditor_for_NET4.5_Crack%20by%20Minsky.part1.rar</a>]<br />
+[URL <a href="http://files.cnblogs.com/minsky/CuteEditor_for_NET4.5_Crack%20by%20Minsky.part2.rar">http://files.cnblogs.com/minsky/CuteEditor_for_NET4.5_Crack%20by%20Minsky.part2.rar</a>]<br />
+[企业许可证：<a href="http://doublew.cnblogs.com/Files/doublew/cel.zip">http://doublew.cnblogs.com/Files/doublew/cel.zip</a>]<br />
+⑥FreeTextBox<br />
+URL: [ <a href="http://www.percyboy.com/w/ftb/down/FTB_1.6.3_zh.zip">http://www.percyboy.com/w/ftb/down/FTB_1.6.3_zh.zip</a>]<br />
+[源码：<a href="http://www.percyboy.com/w/f103ftb/down/FTB_1.6.3_zh_Source.zip">http://www.percyboy.com/w/ftb/down/FTB_1.6.3_zh_Source.zip</a>]<br />
+⑦eWebEditor &#8211;完全开放源代码的，允许无商业目的个人用户免费使用<br />
+=============================================================================<br />
+1.FCKeditor 编辑器</p>
+<p>FCKeditor is compatible with most internet browsers which include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+ and Netscape 7+.</p>
+<p>最新版本:FCKeditor 2.0</p>
+<p>语言环境:多国语言</p>
+<p>特性功能:所见所得,支持平台众多,支持XHTML 1.0,文本格式设置,常见的编辑,复制,粘贴,撤销,文件上传等功能</p>
+<p>授权方式:Open Source &amp; Free</p>
+<p>官方地址:http://www.fckeditor.net/</p>
+<p>下载地址:http://www.fckeditor.net/download/default.html</p>
+<p>演示:http://www.fckeditor.net/demo/default.html</p>
+<p>小节:FCKeditor的2.0版比1.6版有了许多的改进。首先是FCKeditor的文件结构更加清晰，</p>
+<p>可以更方便地将其部署在自己的系统中。另外2.0版开始支持了Firefox浏览器</p>
+<p>2.WebEditor</p>
+<p>WebEditor系列文档控件，采用了ESS专业电子签名和电子盖章的技术，除继续支持手写签名，电子印章，痕迹保留外，该版本采用了我们强大的B/S通讯技术，能够自由的将服务器数据库。</p>
+<p>最新版本：WebEditor[V4.3.0.0 OCX版]</p>
+<p>语言环境：简体中文</p>
+<p>技术特性：</p>
+<p>采用IE5.0以上版本内置的传输协议，通讯性能稳定，高效。</p>
+<p>采用标准HTTP通讯端口80，使用方便，无需特别配置、安全性好、更无需特别设置防火墙。</p>
+<p>采用插件技术，可以完全融入IE浏览器中，方便系统维护、方便用户操作。</p>
+<p>采用自定义协议包进行数据的组装和分析，系统开放性好，便于二次开发。</p>
+<p>采用了Com组件和JavaBean组件技术，很好的实现了跨平台系统，便于开发。</p>
+<p>官方地址:http://www.dragongod.com/</p>
+<p>演示:http://www.dragongod.com/WebEditor/Demo.asp</p>
+<p>下载:http://www.dragongod.com/download/index.asp#item1</p>
+<p>小节:这个编辑器很具有中国特色的,但必须支持安装WebEditor插件，才能正常运行</p>
+<p>对于很多用户来说,这个是无法接收的.</p>
+<p>3.InnovaStudio WYSIWYG Editor</p>
+<p>在线编辑器WYSIWYG 英文:What You See Is What You Get(所见所得)</p>
+<p>一款基于web的WYSIWYG(所见即所得)的HTML编辑器，支持ASP, PHP, ASP.NET</p>
+<p>最新版本:InnovaStudio WYSIWYG Editor version 2.9</p>
+<p>功能特性:快速加载,融合所有的HTML标签,全屏编辑模式,所见所得预览,拼写检查.</p>
+<p>特有的嵌入式WEB编辑.</p>
+<p>官方:http://www.innovastudio.com/</p>
+<p>演示:http://www.innovastudio.com/editor_tutorial.asp</p>
+<p>下载:官方好像都是收费的,,自己去网上搜索找找,好像有人已经做过有2.0的汉化版</p>
+<p>小节:采用DHTML, JavaScript 构件的WYSIWYG也有很多不足之处，由于代码放在远程服务器，</p>
+<p>一些控件事先没有下载到客户端，使得一些操作速度变慢，那些加入了ActiveX 控件的更慢，</p>
+<p>另外它无法在网页里直接调用CSS，所以在操作框里的界面效果和尺寸和实际上的界面有差距。</p>
+<p>有很多WYSIWYG对各种浏览器还不兼容,而且有的也要在IE的高版本下才能正常运行(此段出自老鬼的blog).</p>
+<p>4.eWebEditor在线编辑器</p>
+<p>eWebEditor是基于网页的、所见即所得的在线HTML编辑器。她能够在网页上实现许多桌面编辑软件</p>
+<p>(如:Word)所具有的强大可视编辑功能;她是一个真正的绿色软件，不需要在计算机上安装</p>
+<p>任何的客户端软件;她的易用使得WEB开发人员只要一行代码即可完成调用。</p>
+<p>最新版本:Version 3.6 (ASP版、PHP版、JSP版、ASP.NET版)</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=80</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

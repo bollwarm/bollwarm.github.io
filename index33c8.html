@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>php &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=php" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Fri, 29 Nov 2013 16:00:00 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>25个PHP游戏编程脚本代码/zz/</title>
+		<link>http://ijz.me/?p=19</link>
+					<comments>http://ijz.me/?p=19#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=19</guid>
+
+					<description><![CDATA[简单的掷骰器 许多游戏和游戏系统都需要骰子。让我们先从简单的部分入手：掷一个六面骰子。实际上，滚动一个六面骰子 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>简单的掷骰器<br />
+许多游戏和游戏系统都需要骰子。让我们先从简单的部分入手：掷一个六面骰子。实际上，滚动一个六面骰子就是从 1 到 6 之间选择一个随机数字。在 PHP 中，这十分简单：echo rand(1,6);。<br />
+在许多情况下，这基本上很简单。但是在处理机率游戏时，我们需要一些更好的实现。PHP 提供了更好的随机数字生成器：mt_rand()。在不深入研究两者差别的情况下，可以认为 mt_rand 是一个更快、更好的随机数字生成器：echo mt_rand(1,6);。如果把该随机数字生成器放入函数中，则效果会更好。</p>
+<p><span id="more-19"></span><br />
+清单 1. 使用 mt_rand() 随机数字生成器函数<br />
+function roll () {<br />
+return mt_rand(1,6);<br />
+}<br />
+echo roll();</p>
+<p>然后可以把需要滚动的骰子类型作为参数传递给函数。<br />
+清单 2. 将骰子类型作为参数传递<br />
+function roll ($sides) {<br />
+return mt_rand(1,$sides);<br />
+}<br />
+echo roll(6);  // roll a six-sided die<br />
+echo roll(10);  // roll a ten-sided die<br />
+echo roll(20);  // roll a twenty-sided die</p>
+<p>从这里开始，我们可以继续根据需要一次滚动多个骰子，返回结果数组；也可以一次性滚动多个不同类型的骰子。但是大多数任务都可以使用这个简单的脚本。<br />
+随机名称生成器<br />
+如果正在运行游戏、编写故事或者一次性</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=19</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>php curl的使用</title>
+		<link>http://ijz.me/?p=49</link>
+					<comments>http://ijz.me/?p=49#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=49</guid>
+
+					<description><![CDATA[在PHP开发中，有时候需要在内 部网中进行开发。对于数据收集项目，有时候服务器需要连接Internet网络来获 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>在PHP开发中，有时候需要在内 部网中进行开发。对于数据收集项目，有时候服务器需要连接Internet网络来获取Internet网络上的信息。但是，如果公司是通过防火墙上网，一 般的file_get_post_content函数就不行了。当然，通过一些socket操作，直接向proxy写http请求也是可以的，但是比较麻烦。本文讨 论用CURL库的简单代理实现。</p>
+<p><span id="more-49"></span><br />
+1. CURL库的安装<br />
+查Google可以发现很多关于CURL库安装的文档，但实际上，一般的Linux Installation都包含了CURL库。我们可以通过&lt;? phpinfo() ?&gt;检查php编译参数来获取是否安装CURL库的信息。<br />
+如下所示：<br />
+<em>./configure&#8217; &#8216;&#8211;host=i386-redhat-linux&#8217; &#8216;&#8211;build=i386-redhat-linux&#8217; &#8216;&#8211;target=i386-redhat-linux-gnu&#8217; &#8216;&#8211;program-prefix=&#8217; &#8216;&#8211;prefix=/usr&#8217; &#8216;&#8211;exec-prefix=/usr&#8217; &#8216;&#8211;bindir=/usr/bin&#8217; &#8216;&#8211;sbindir=/usr/sbin&#8217; &#8216;&#8211;sysconfdir=/etc&#8217; &#8216;&#8211;datadir=/usr/share&#8217; &#8216;&#8211;includedir=/usr/include&#8217; &#8216;&#8211;libdir=/usr/lib&#8217; &#8216;&#8211;libexecdir=/usr/libexec&#8217; &#8216;&#8211;localstatedir=/var&#8217; &#8216;&#8211;sharedstatedir=/usr/com&#8217; &#8216;&#8211;mandir=/usr/share/man&#8217; &#8216;&#8211;infodir=/usr/share/info&#8217; &#8216;&#8211;cache-file=../config.cache&#8217; &#8216;&#8211;with-config-file-path=/etc&#8217; &#8216;&#8211;with-config-file-scan-dir=/etc/php.d&#8217; &#8216;&#8211;enable-force-cgi-redirect&#8217; &#8216;&#8211;disable-debug&#8217; &#8216;&#8211;enable-pic&#8217; &#8216;&#8211;disable-rpath&#8217; &#8216;&#8211;enable-inline-optimization&#8217; &#8216;&#8211;with-bz2&#8217; &#8216;&#8211;with-db4=/usr&#8217; &#8216;<strong>&#8211;with-curl</strong>&#8216; &#8216;&#8211;with-exec-dir=/usr/bin&#8217; &#8216;&#8211;with-freetype-dir=/usr&#8217; &#8216;&#8211;with-png-dir=/usr&#8217; &#8216;&#8211;with-gd&#8217; &#8216;&#8211;enable-gd-native-ttf&#8217; &#8216;&#8211;without-gdbm&#8217; &#8216;&#8211;with-gettext&#8217; &#8216;&#8211;with-ncurses&#8217; &#8216;&#8211;with-gmp&#8217; &#8216;&#8211;with-iconv103f&#8217; &#8216;&#8211;with-jpeg-dir=/usr&#8217; &#8216;&#8211;with-openssl&#8217; &#8216;&#8211;with-png&#8217; &#8216;&#8211;with-pspell&#8217; &#8216;&#8211;with-regex=system&#8217; &#8216;&#8211;with-xml&#8217; &#8216;&#8211;with-expat-dir=/usr&#8217; &#8216;&#8211;with-dom=shared,/usr&#8217; &#8216;&#8211;with-dom-xslt=/usr&#8217; &#8216;&#8211;with-dom-exslt=/usr&#8217; &#8216;&#8211;with-xmlrpc=shared&#8217; &#8216;&#8211;with-pcre-regex=/usr&#8217; &#8216;&#8211;with-zlib&#8217; &#8216;&#8211;with-layout=GNU&#8217; &#8216;&#8211;enable-bcmath&#8217; &#8216;&#8211;enable-exif&#8217; &#8216;&#8211;enable-ftp&#8217; &#8216;&#8211;enable-magic-quotes&#8217; &#8216;&#8211;enable-safe-mode&#8217; &#8216;&#8211;enable-sockets&#8217; &#8216;&#8211;enable-sysvsem&#8217; &#8216;&#8211;enable-sysvshm&#8217; &#8216;&#8211;enable-track-vars&#8217; &#8216;&#8211;enable-trans-sid&#8217; &#8216;&#8211;enable-yp&#8217; &#8216;&#8211;enable-wddx&#8217; &#8216;&#8211;with-pear=/usr/share/pear&#8217; &#8216;&#8211;with-imap=shared&#8217; &#8216;&#8211;with-imap-ssl&#8217; &#8216;&#8211;with-kerberos&#8217; &#8216;&#8211;with-ldap=shared&#8217; &#8216;&#8211;with-mysql=shared,/usr&#8217; &#8216;&#8211;with-pgsql=shared&#8217; &#8216;&#8211;with-snmp=shared,/usr&#8217; &#8216;&#8211;with-snmp=shared&#8217; &#8216;&#8211;enable-ucd-snmp-hack&#8217; &#8216;&#8211;with-unixODBC=shared,/usr&#8217; &#8216;&#8211;enable-memory-limit&#8217; &#8216;&#8211;enable-bcmath&#8217; &#8216;&#8211;enable-shmop&#8217; &#8216;&#8211;enable-calendar&#8217; &#8216;&#8211;enable-dbx&#8217; &#8216;&#8211;enable-dio&#8217; &#8216;&#8211;enable-mcal&#8217; &#8216;&#8211;enable-mbstring&#8217; &#8216;&#8211;enable-mbstr-enc-trans&#8217; &#8216;&#8211;enable-mbregex&#8217; &#8216;&#8211;with-apxs2=/usr/sbin/apxs&#8217;</em></p>
+<p>2. 使用CURL库访问代理服务器<br />
+&lt;?<br />
+function curl_string ($url,$user_agent,$proxy){</p>
+<p>$ch = curl_init();<br />
+curl_setopt ($ch, CURLOPT_PROXY, $proxy);<br />
+curl_setopt ($ch, CURLOPT_URL, $url);<br />
+curl_setopt ($ch, CURLOPT_USERAGENT, $user_agent);<br />
+curl_setopt ($ch, CURLOPT_COOKIEJAR, &#8220;c:cookie.txt&#8221;);<br />
+curl_setopt ($ch, CURLOPT_HEADER, 1);<br />
+curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);<br />
+curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);<br />
+curl_setopt ($ch, CURLOPT_TIMEOUT, 120);<br />
+$result = curl_exec ($ch);<br />
+curl_close($ch);<br />
+return $result;</p>
+<p>}</p>
+<p>$url_page = &#8220;<a href="http://www.google.com/">http://www.google.com</a>&#8220;;<br />
+$user_agent = &#8220;Mozilla/4.0&#8221;;<br />
+$proxy = &#8220;<a href="http://192.11.222.124:8000/">http://192.11.222.124:8000</a>&#8220;;<br />
+$string = curl_string($url_page,$user_agent,$proxy);<br />
+echo $string;<br />
+?&gt;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=49</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>php5图心灵</title>
+		<link>http://ijz.me/?p=51</link>
+					<comments>http://ijz.me/?p=51#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=51</guid>
+
+					<description><![CDATA[很赞的一张图]]></description>
+										<content:encoded><![CDATA[<p>很赞的一张图</p>
+<p><span id="more-51"></span></p>
+<p><a href="http://ijz.me/wp-content/uploads/2013/11/108a6438f4b9313997ddd8f0.jpg"><img fetchpriority="high" decoding="async" class="alignnone size-full wp-image-447" src="http://ijz.me/wp-content/uploads/2013/11/108a6438f4b9313997ddd8f0.jpg" alt="108a6438f4b9313997ddd8f0" width="842" height="1600" /></a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=51</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>PHP下UTF-8编码问题</title>
+		<link>http://ijz.me/?p=52</link>
+					<comments>http://ijz.me/?p=52#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=52</guid>
+
+					<description><![CDATA[以前说过如果JS文件不是UTF8会在IE有bug，所以JS代码也要用UTF-8。还有数据库也都要用UTF-8。 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>以前说过如果JS文件不是UTF8会在IE有bug，所以JS代码也要用UTF-8。还有数据库也都要用UTF-8。<br />
+php(做为现在的主流开发语言)用UTF-8总结：</p>
+<p><span id="more-52"></span></p>
+<p>php(做为现在的主流开发语言)文件本身必须是UTF-8编码。不像Java会生成class文件，避免这个问题<br />
+php(做为现在的主流开发语言)要输出头：header(”post_content-Type: text/html; charset=UTF-8″)<br />
+meta标签无所谓，有header所有浏览器就会按header来解析<br />
+所有外围都得用UTF8，包括数据库、*.js、*.css(CSS影响倒不大)<br />
+php(做为现在的主流开发语言)本身不是Unicode的，所有substr之类的函数得改成mb_substr（需要装mbstring扩展）；或者用iconv转码（基本上的linux都装了，没装的话download、tar、make、make install，很简单的）<br />
+my.ini:<br />
+[MySQL(和PHP搭配之最佳组合)]<br />
+default-character-set=utf8<br />
+[MySQL(和PHP搭配之最佳组合)d]<br />
+default-character-set=utf8<br />
+default-storage-engine=MyISAM<br />
+在[MySQL(和PHP搭配之最佳组合)d]下加入:<br />
+default-collation=utf8_bin<br />
+init_connect=&#8217;SET NAMES utf8&#8242;<br />
+在需要做数据库操作的php(做为现在的主流开发语言)程序前面加上<br />
+mb_internal_encoding(&#8216;utf-8&#8217;);<br />
+create table最后边加上ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin<br />
+php(做为现在的主流开发语言)MyAdmin/config.inc.php(做为现在的主流开发语言)$cfg[&#8216;DefaultCharset&#8217;] = &#8216;utf-8&#8217;;<br />
+$cfg[&#8216;RecodingEngine&#8217;] = &#8216;iconv&#8217;;<br />
+php(做为现在的主流开发语言)Admin导出数据时<br />
+把&#8221;二进制区域使用十六进制显示&#8221;的勾去掉<br />
+特别郁闷的：文件系统函数不支持UTF-8！</p>
+<p>本文来源于 WEB开发网 原文链接：<a href="http://www.cncms.com.cn/php/458.htm">http://www.cncms.com.cn/php/458.htm</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=52</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>php和mysql时间互换</title>
+		<link>http://ijz.me/?p=53</link>
+					<comments>http://ijz.me/?p=53#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<category><![CDATA[mysql]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=53</guid>
+
+					<description><![CDATA[在mysql中有三种时间字段类型：DATETIME，DATE和TIMESTAMP。DATETIME以YYYY- [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>在mysql中有三种时间字段类型：DATETIME，DATE和TIMESTAMP。DATETIME以YYYY-MM-DD HH:MM:SS格式的字符串来保存数据；DATE则是只有年月日以YYYY-MM-DD形式的字串；TIMESTAMP类型和PHP中的TIMESTAMP类型名字一样，但是两者基本上是不同的。PHP是延用了UNIX时间签的类型为一个整数，而在mysql中TIMESTAMP字段则是随着记录变化而一个自动更新为当时时间的DATETIMP字段。在mysql4.1版本之后TIMESTAMP格式DATETIME格式基本上是一致了。</p>
+<p><span id="more-53"></span></p>
+<p>于是常常需要在php和msql中对两种格式的Timestamp进行转换。转换方法总结一下：</p>
+<p>第一种方法：使用 date（）和strtotime（）函数</p>
+<p>$mysqltime=date(&#8216;Y-m-d H:i:s&#8217;,$phptime);</p>
+<p>$phptime=strtotime($mysqldate);</p>
+<p>第二种方法：在查询语句中使用mysql函数转换：UNIX_TIMESTAMP(DATETIME=&gt;PHP TIMESTAMP)和FROM_UNIXTIME(PHP TIMESTAMP=&gt;DATETIME).</p>
+<p>$sql=&#8221;SELECT UNIX_TIMESTAMP(datetimefield) FROM table WHERE &#8230;&#8221;;</p>
+<p>$sql=&#8221;UPDATE table set datetimefield=FROM_UNIXTIME($phptime) WHERE ..&#8221;;</p>
+<p>第三种方法：就是mysql中使用整数字段来保存php的timestamp类型。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=53</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>从 PHP 代码分析 PHP 的 GC(垃圾回收) 机制/转自bbs.chinaunix.net/</title>
+		<link>http://ijz.me/?p=92</link>
+					<comments>http://ijz.me/?p=92#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=92</guid>
+
+					<description><![CDATA[作者: 永久链接: Email/MSN/Gtalk: Time: 2009.11.07 众所周知, PHP 引 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>作者:<br />
+永久链接:<br />
+Email/MSN/Gtalk:<br />
+Time: 2009.11.07</p>
+<p>众所周知, PHP 引擎本身是用 C 写的,提到 C 不能不提的就是 GC(垃圾回收).通过 <a href="http://cn.php.net/manual/en/index.php" target="_blank">PHP 手册</a>我们了解到, PHP 引擎会自动进行 GC 动作.那么我们不禁要问,到底它是怎么回收的, &amp; 引用操作是不是指针, unset()了一个变量时它是不是真的被回收了呢?这些看似手册有提及的问题,如果仔细分析会发现,远没有那么简单泛泛.也许有人会跳出来说:看 PHP源码不就知道了.是的,等你通读了 PHP 源码后这个问题肯定不在话下了,然本篇要仅从 PHP本身来分析这些看似平常却被忽视的小细节,当然了,其中难免水平所限,有所疏漏,热烈欢迎广大 phper 来共同讨论.</p>
+<p><span id="more-92"></span></p>
+<p>首先咱先看到例子,最简单不过的执行流程了:<br />
+Example 1: gc.php<br />
+&lt;?php<br />
+error_reporting(E_ALL);<br />
+$a = &#8216;I am test.&#8217;;<br />
+$b = &amp; $a;</p>
+<p>echo $b .&#8221;n&#8221;;<br />
+?&gt;</p>
+<p>不用说 % php -f gc.php 输出结果非常明了:<br />
+<em>hy0kl% php -f gc.php<br />
+I am test.</em></p>
+<p>好,下一个:<br />
+Example 2:<br />
+&lt;?php<br />
+error_reporting(E_ALL);<br />
+$a = &#8216;I am test.&#8217;;<br />
+$b = &amp; $a;</p>
+<p>$b = &#8216;I will change?&#8217;;              103f</p>
+<p>echo $a .&#8221;n&#8221;;<br />
+echo $b .&#8221;n&#8221;;<br />
+?&gt;<br />
+执行结果依然很明显:<br />
+<em>hy0kl% php -f gc.php<br />
+I will change?<br />
+I will change?</em></p>
+<p>君请看:<br />
+Example 3:<br />
+&lt;?php<br />
+error_reporting(E_ALL);<br />
+$a = &#8216;I am test.&#8217;;<br />
+$b = &amp; $a;</p>
+<p>unset($a);</p>
+<p>echo $a .&#8221;n&#8221;;<br />
+echo $b .&#8221;n&#8221;;<br />
+?&gt;<br />
+是不是得想一下下呢?<br />
+<em>hy0kl% php -f gc.php<br />
+Notice: Undefined variable: a in /usr/local/www/apache22/data/test/gc.php on line 8<br />
+I am test.<br />
+</em>有点犯迷糊了吗?</p>
+<p>君再看:<br />
+Example 4:<br />
+&lt;?php<br />
+error_reporting(E_ALL);<br />
+$a = &#8216;I am test.&#8217;;<br />
+$b = &amp; $a;</p>
+<p>unset($b);</p>
+<p>echo $a .&#8221;n&#8221;;<br />
+echo $b .&#8221;n&#8221;;<br />
+?&gt;<br />
+其实如果 Example 3 理解了,这个与之异曲同工.<br />
+<em>hy0kl% php -f gc.php<br />
+I am test.<br />
+Notice: Undefined variable: b in /usr/local/www/apache22/data/test/gc.php on line 9</em></p>
+<p>君且看:<br />
+Example 5:<br />
+&lt;?php<br />
+error_reporting(E_ALL);<br />
+$a = &#8216;I am test.&#8217;;<br />
+$b = &amp; $a;</p>
+<p>$a = null;</p>
+<p>echo &#8216;$a = &#8216;. $a .&#8221;n&#8221;;<br />
+echo &#8216;$b = &#8216;. $b .&#8221;n&#8221;;<br />
+?&gt;<br />
+猛的第一感觉是什么样的?<br />
+<em>hy0kl% php -f gc.php<br />
+$a =<br />
+$b =</em><br />
+没错,这就是输出结果,对 PHP GC 已有深入理解的 phper 不会觉得有什么奇怪,说实话,当我第一次运行这段代码时很意外,却让我对 PHP GC 有更深刻的理解了.那么下面与之同工的例子自然好理解了.</p>
+<p>Example 6:<br />
+&lt;?php<br />
+error_reporting(E_ALL);<br />
+$a = &#8216;I am test.&#8217;;<br />
+$b = &amp; $a;</p>
+<p>$b = null;</p>
+<p>echo &#8216;$a = &#8216;. $a .&#8221;n&#8221;;<br />
+echo &#8216;$b = &#8216;. $b .&#8221;n&#8221;;<br />
+?&gt;</p>
+<p>OK,如果上面的例子的结果对看官来说无任何细节可言,那您可关闭本窗口了,欢迎有空再来!</p>
+<p>下面我们来详细分析 GC 与引用.<br />
+1. 所有例子中,创建了一个变量,这个过程通俗一点讲:是在内存中开辟了一块空间,在里面存放了一个字符串 <strong>I am test.</strong> . PHP 内部有个符号表,用来记录各块内存引用计数,那么此时会将这块内存的引用计数 <strong>加 1</strong>, 并且用一个名为 $a 的标签(变量)<strong>指向</strong>这块内存,方便依标签名来操作内存.</p>
+<p>2. 对变量 $a 进行 <strong>&amp;</strong> 操作,我的理解是找到 $a 所指向的内存,并为 $b 建立同样的一引用指向,并将存放字符串 <strong>I am test.</strong> 的内存块在符号表中引用计数 加 1.换 言之,我们的脚本执行到这一行的时候,存放字符串 <strong>I am test.</strong> 的那块内存被引用了两次.这里要强调的是, <strong>&amp;</strong> 操作是建立了引用指向,而不是指针, PHP 没有指针的概念!同时有人提出说类似于 UNIX 的文件软链接.可以在一定程度上这么理解: 存放字符 <strong>I am test. </strong>的那块内存 是我们的一个真实的文件,而变量 $a 与 $b 是针对真实文件建立的软链接,但它们指向的是同一个真实文件. So, 我们看</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=92</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>优化PHP代码,不得不转的一篇PHP使用技巧/zz/</title>
+		<link>http://ijz.me/?p=95</link>
+					<comments>http://ijz.me/?p=95#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=95</guid>
+
+					<description><![CDATA[这篇杂文翻译整理自网络各路文档资料(见最末的参考资料)，尤其是 Ilia Alshanetsky (佩服之至) [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>这篇杂文翻译整理自网络各路文档资料(见最末的参考资料)，尤其是 Ilia Alshanetsky (佩服之至) 在多个 PHP 会议上的演讲，主要是各类提高 PHP 性能的技巧。为求精准，很多部分都有详细的效率数据，以及对应的版本等等。偷懒，数据就不一一给出了，直接给结论，如果需要看原文档，请到文末「参考资料」部分。橙色标题为推荐部分。</p>
+<p><span id="more-95"></span></p>
+<p><strong>静态调用的成员一定要定义成 static   (PHP5 ONLY)</strong><br />
+贴士：PHP 5 引入了静态成员的概念，作用和 PHP 4 的函数内部静态变量一致，但前者是作为类的成员来使用。静态变量和 Ruby 的类变量(class variable)差不多，所有类的实例共享同一个静态变量。</p>
+<p>// PHP CODE<br />
+&lt;?php<br />
+class foo {<br />
+function bar() {<br />
+echo &#8216;foobar&#8217;;<br />
+}<br />
+}</p>
+<p>$foo = new foo;<br />
+// instance way<br />
+$foo-&gt;bar();<br />
+// static way<br />
+foo::bar();<br />
+?&gt;</p>
+<p>静态地调用非 static 成员，效率会比静态地调用 static 成员慢 50-60%。主要是因为前者会产生 E_STRICT 警告，内部也需要做转换。</p>
+<p><strong>使用类常量 (PHP5 ONLY)</strong><br />
+贴士：PHP 5 新功能，类似于 C++ 的 const。</p>
+<p>使用类常103f量的好处是：</p>
+<p>&#8211; 编译时解析，没有额外开销<br />
+&#8211; 杂凑表更小，所以内部查找更快<br />
+&#8211; 类常量仅存在于特定「命名空间」，所以杂凑名更短<br />
+&#8211; 代码更干净，使除错更方便</p>
+<p><strong>(暂时)不要使用 require/include_once </strong><br />
+require/include_once 每次被调用的时候都会打开目标文件！</p>
+<p>&#8211; 如果用绝对路径的话，PHP 5.2/6.0 不存在这个问题<br />
+&#8211; 新版的 APC 缓存系统已经解决这个问题</p>
+<p>文件 I/O 增加 =&gt; 效率降低</p>
+<p>如果需要，可以自行检查文件是否已被 require/include。</p>
+<p><strong>不要调用毫无意义的函数</strong><br />
+有对应的常量的时候，不要使用函数。</p>
+<p>// PHP CODE<br />
+&lt;?php<br />
+php_uname(&#8216;s&#8217;) == PHP_OS;<br />
+php_version() == PHP_VERSION;<br />
+php_sapi_name() == PHP_SAPI;<br />
+?&gt;<br />
+虽然使用不多，但是效率提升大概在 3500% 左右。<br />
+<strong>最快的 Win32 检查</strong><br />
+// PHP CODE</p>
+<p>&lt;?php<br />
+$is_win = DIRECTORY_SEPARATOR == &#8221;;<br />
+?&gt;</p>
+<p>&#8211; 不用函数<br />
+&#8211; Win98/NT/2000/XP/Vista/Longhorn/Shorthorn/Whistler&#8230;通用<br />
+&#8211; 一直可用</p>
+<p><strong>时间问题 (PHP&gt;5.1.0 ONLY)</strong></p>
+<p>你如何在你的软件中得知现在的时间？简单，「time() time() again, you ask me&#8230;」。</p>
+<p>不过总归会调用函数，慢。</p>
+<p>现在好了，用 $_SERVER[&#8216;REQUEST_TIME&#8217;]，不用调用函数，又省了。</p>
+<p><strong>加速 PCRE</strong></p>
+<p>&#8211; 对于不用保存的结果，不用 ()，一律用 (?<img decoding="async" src="http://www.phpchina.com/bbs/images/smilies/smile.gif" alt="" width="20" height="20" /></p>
+<p>这样 PHP 不用为符合的内容分配内存，省。效率提升 15% 左右。</p>
+<p>&#8211; 能不用正则，就不用正则，在分析的时候仔细阅读手册「字符串函数」部分。有没有你漏掉的好用的函数？</p>
+<p>例如：</p>
+<p>strpbrk()<br />
+strncasecmp()<br />
+strpos()/strrpos()/stripos()/strripos()</p>
+<p><strong>加速 strtr</strong></p>
+<p>如果需要转换的全是单个字符的时候，用字符串而不是数组来做 strtr：</p>
+<p>// PHP CODE<br />
+&lt;?php<br />
+$addr = strtr($addr, &#8220;abcd&#8221;, &#8220;efgh&#8221;); // good<br />
+$addr = strtr($addr, array(&#8216;a&#8217; =&gt; &#8216;e&#8217;,<br />
+// &#8230;<br />
+)); // bad<br />
+?&gt;</p>
+<p>效率提升：10 倍。</p>
+<p><strong>不要做无谓的替换</strong></p>
+<p>即使没有替换，str_replace 也会为其参数分配内存。很慢！解决办法：</p>
+<p>&#8211; 用 strpos 先查找(非常快)，看是否需要替换，如果需要，再替换</p>
+<p>效率：</p>
+<p>&#8211; 如果需要替换：效率几乎相等，差别在 0.1% 左右。<br />
+&#8211; 如果不需要替换：用 strpos 快 200%。</p>
+<p><strong>邪恶的 @ 操作符</strong></p>
+<p>不要滥用 @ 操作符。虽然 @ 看上去很简单，但是实际上后台有很多操作。用 @ 比起不用 @，效率差距：3 倍。</p>
+<p>特别不要在循环中使用 @，在 5 次循环的测试中，即使是先用 error_reporting(0) 关掉错误，在循环完成后再打开，都比用 @ 快。</p>
+<p><strong>善用 strncmp</strong></p>
+<p>当需要对比「前 n 个字符」是否一样的时候，用 strncmp/strncasecmp，而不是 substr/strtolower，更不是 PCRE，更千万别提 ereg。strncmp/strncasecmp 效率最高(虽然高得不多)。</p>
+<p><strong>慎用 substr_compare (PHP5 ONLY)</strong></p>
+<p>按照上面的道理，substr_compare 应该比先 substr 再比较快咯。答案是否定的，除非：</p>
+<p>&#8211; 无视大小写的比较<br />
+&#8211; 比较较大的字符串</p>
+<p><strong>不要用常量代替字符串</strong></p>
+<p>为什么：</p>
+<p>&#8211; 需要查询杂凑表两次<br />
+&#8211; 需要把常量</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=95</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>利用单元测试对PHP代码进行检查 /zz/</title>
+		<link>http://ijz.me/?p=102</link>
+					<comments>http://ijz.me/?p=102#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=102</guid>
+
+					<description><![CDATA[利用单元测试在每个层上对 PHP 代码进行检查 在模块、数据库和 UI 层对 PHP 代码进行单元测试 测试驱 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong>利用单元测试在每个层上对 PHP 代码进行检查</strong></p>
+<p><em>在模块、数据库和 UI 层对 PHP 代码进行单元测试</em></p>
+<p>测试驱动的开发和单元测试是确保代码在经过修改和重大调整之后依然能如我们期望的一样工作的最新方法。在本文中，您将学习到如何在模块、数据库和用户界面（UI）层对自己的 PHP 代码进行单元测试。</p>
+<p><span id="more-102"></span></p>
+<p><a href="http://www.ibm.com/developerworks/cn/opensource/os-php-unit/#authorN10019">Jack D. Herrington</a>, 资深软件工程师, Leverage Software Inc.</p>
+<p>&nbsp;</p>
+<p>现在是凌晨 3 点。我们怎样才能知道自己的代码依然在工作呢？</p>
+<p>Web 应用程序是 24&#215;7 不间断运行的，因此我的程序是否还在运行这个问题会在晚上一直困扰我。单元测试已经帮我对自己的代码建立了足够的信心 —— 这样我就可以安稳地睡个好觉了。</p>
+<p><em>单元测试</em> 是一个为代码编写测试用例并自动运行这些测试的框架。<em>测试驱动的开发</em> 是一种单元测试方法，其思想是应该首先编写测试程序，并验证这些测试可以发现错误，然后才开始编写需要通过这些测试的代码。当所有测试都通过时，我们开发 的特性也就完成了。这些单元测试的价值是我们可以随时运行它们 —— 在签入代码之前，重大修改之后，或者部署到正在运行的系统之后都可以。</p>
+<p><strong>PHP </strong><strong>单元测试</strong></p>
+<p>对于 PHP 来说，单元测试框架是 PHPUnit2。可以使用 PEAR 命令行作为一个 PEAR 模块来安装这个系统：% pear install PHPUnit2。</p>
+<p>在安装这个框架之后，可以通过创建派生于 PHPUnit2_Framework_TestCase的测试类来编写单元测试。</p>
+<p><strong>模块单元测试</strong></p>
+<p>我发现开始单元测试最好的地方是在应用程序的业务逻辑模块中。我使用了一个简单的例子：这是一个对两个数字进行求和的函数。为了开始测试，我们首先编写测试用例，如下所示。</p>
+<p><strong>清单 1. TestAdd.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once &#8216;Add.php&#8217;;</p>
+<p>require_once &#8216;PHPUnit2/Framework/TestCase.php&#8217;;</p>
+<p>&nbsp;</p>
+<p>class TestAdd extends PHPUnit2_Framework_TestCase</p>
+<p>{</p>
+<p>function test1() { $this-&gt;assertTrue( add( 1, 2 ) == 3 ); }</p>
+<p>function test2() { $this-&gt;assertTrue( add( 1, 1 ) == 2 ); }</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>这个 TestAdd类有两个方法，都使用了 test前缀。每个方法都定义了一个测试，这个测试可以与清单 1 一样简单，也可以十分复杂。在本例中，我们在第一个测试中只是简单地断定 1 加 2 等于 3，在第二个测试中是 1 加 1 等于 2。</p>
+<p>PHPUnit2 系统定义了 assertTrue()方法，它用来测试参数中包含的条件值是否为真。然后，我们又编写了 Add.php 模块，最初让它产生错误的结果。</p>
+<p><strong>清单 2. Add.php</strong></p>
+<p>&lt;?php</p>
+<p>function add( $a, $b ) { return 0; }</p>
+<p>?&gt;</p>
+<p>现在运行单元测试时，这两个测试都会失败。</p>
+<p><strong>清单 3. 测试失败</strong></p>
+<p>% phpunit TestAdd.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>FF</p>
+<p>&nbsp;</p>
+<p>Time: 0.0031270980834961</p>
+<p>There were 2 failures:</p>
+<p>1) test1(TestAdd)</p>
+<p>&nbsp;</p>
+<p>2) test2(TestAdd)</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>FAILURES!!!</p>
+<p>Tests run: 2, Failures: 2, Errors: 0, Incomplete Tests: 0.</p>
+<p>现在我知道这两个测试都可以正常工作了。因此，可以修改 add()函数来真正地做实际的事情了。</p>
+<p>&lt;?php</p>
+<p>function add( $a, $b ) { return $a+$b; }</p>
+<p>?&gt;</p>
+<p>现在这两个测试都可以通过了。</p>
+<p><strong>清单 4. 测试通过</strong></p>
+<p>% phpunit TestAdd.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>..</p>
+<p>&nbsp;</p>
+<p>Time: 0.0023679733276367</p>
+<p>&nbsp;</p>
+<p>OK (2 tests)</p>
+<p>%</p>
+<p>尽管这个测试驱动开发的例子非常简单，但是我们可以从中体会到它的思想。我们首先创建了测试用例，并且有足够多的代码让这个测试运行起来，不过结果是错误的。然后我们验证测试的确是失败的，接着实现了实际的代码使这个测试能够通过。</p>
+<p>我发现在实现代码时我会一直不断地添加代码，直到拥有一个覆盖所有代码路径的完整测试为止。在本文的最后，您会看到有关编写什么测试和如何编写这些测试的一些建议。</p>
+<p><strong>数据库测试</strong></p>
+<p>在进行模块测试之后，就可以进行数据库访问测试了。<em>数据库访问测试</em> 带来了两个有趣的问题。首先，我们必须在每次测试之前将数据库恢复到某个已知点。其次，要注意这种恢复可能会对现有数据库造成破坏，因此我们必须对非生产数据库进行测试，或者在编写测试用例时注意不能影响现有数据库的内容。</p>
+<p>数据库的单元测试是从数据库开始的。为了阐述这个问题，我们需要使用下面的简单模式。</p>
+<p><strong>清单 5. Schema.sql</strong></p>
+<p>DROP TABLE IF EXISTS authors;</p>
+<p>CREATE TABLE authors (</p>
+<p>id MEDIUMINT NOT NULL AUTO_INCREMENT,</p>
+<p>name TEXT NOT NULL,</p>
+<p>PRIMARY KEY ( id )</p>
+<p>);</p>
+<p>清单 5 是一个 authors 表，每条记录都有一个相关的 ID。</p>
+<p>接下来，就可以编写测试用例了。</p>
+<p><strong>清单 6. TestAuthors.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once &#8216;dblib.php&#8217;;</p>
+<p>require_once &#8216;PHPUnit2/Framework/TestCase.php&#8217;;</p>
+<p>&nbsp;</p>
+<p>class TestAuthors extends PHPUnit2_Framework_TestCase</p>
+<p>{</p>
+<p>function test_delete_all() {</p>
+<p>$this-&gt;assertTrue( Authors::delete_all() );</p>
+<p>}</p>
+<p>function test_insert() {</p>
+<p>$this-&gt;assertTrue( Authors::delete_all() );</p>
+<p>$this-&gt;assertTrue( Authors::insert( &#8216;Jack&#8217; ) );</p>
+<p>}</p>
+<p>function test_insert_and_get() {</p>
+<p>$this-&gt;assertTrue( Authors::delete_all() );</p>
+<p>$this-&gt;assertTrue( Authors::insert( &#8216;Jack&#8217; ) );</p>
+<p>$this-&gt;assertTrue( Authors::insert( &#8216;Joe&#8217; ) );</p>
+<p>$found = Authors::get_all();</p>
+<p>$this-&gt;assertTrue( $found != null );</p>
+<p>$this-&gt;assertTrue( count( $found ) == 2 );</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>这组测试覆盖了从表中删除作者、向表中插入作者以及在验证作者是否存在的同时插入作者等功能。这是一个累加的测 试，我发现对于寻找错误来说这非常有用。观察一下哪些测试可以正常工作，而哪些测试不能正常工作，就可以快速地找出哪些地方出错了，然后就可以进一步理解 它们之间的区别。</p>
+<p>最初产生失败的 dblib.php PHP 数据库访问代码版本如下所示。</p>
+<p><strong>清单 7. dblib.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once(&#8216;DB.php&#8217;);</p>
+<p>&nbsp;</p>
+<p>class Authors</p>
+<p>{</p>
+<p>public static function get_db()</p>
+<p>{</p>
+<p>$dsn = &#8216;mysql://root:password@localhost/unitdb&#8217;;</p>
+<p>$db =&amp; DB::Connect( $dsn, array() );</p>
+<p>if (PEAR::isError($db)) { die($db-&gt;getMessage()); }</p>
+<p>return $db;</p>
+<p>}</p>
+<p>public static function delete_all()</p>
+<p>{</p>
+<p>return false;</p>
+<p>}</p>
+<p>public static function insert( $name )</p>
+<p>{</p>
+<p>return false;</p>
+<p>}</p>
+<p>public static function get_all()</p>
+<p>{</p>
+<p>return null;</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>对清单 8 中的代码执行单元测试会显示这 3 个测试全部失败了：</p>
+<p><strong>清单 8. dblib.php</strong></p>
+<p>% phpunit TestAuthors.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>FFF</p>
+<p>&nbsp;</p>
+<p>Time: 0.007500171661377</p>
+<p>There were 3 failures:</p>
+<p>1) test_delete_all(TestAuthors)</p>
+<p>&nbsp;</p>
+<p>2) test_insert(TestAuthors)</p>
+<p>&nbsp;</p>
+<p>3) test_insert_and_get(TestAuthors)</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>FAILURES!!!</p>
+<p>Tests run: 3, Failures: 3, Errors: 0, Incomplete Tests: 0.</p>
+<p>%</p>
+<p>现在我们可以开始添加正确访问数据库的代码 —— 一个方法一个方法地添加 —— 直到所有这 3 个测试都可以通过。最终版本的 dblib.php 代码如下所示。</p>
+<p><strong>清单 9. 完整的 dblib.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once(&#8216;DB.php&#8217;);</p>
+<p>&nbsp;</p>
+<p>class Authors</p>
+<p>{</p>
+<p>public static function get_db()</p>
+<p>{</p>
+<p>$dsn = &#8216;mysql://root:password@localhost/unitdb&#8217;;</p>
+<p>$db =&amp; DB::Connect( $dsn, array() );</p>
+<p>if (PEAR::isError($db)) { die($db-&gt;getMessage()); }</p>
+<p>return $db;</p>
+<p>}</p>
+<p>public static function delete_all()</p>
+<p>{</p>
+<p>$db = Authors::get_db();</p>
+<p>$sth = $db-&gt;prepare( &#8216;DELETE FROM authors&#8217; );</p>
+<p>$db-&gt;execute( $sth );</p>
+<p>return true;</p>
+<p>}</p>
+<p>public static function insert( $name )</p>
+<p>{</p>
+<p>$db = Authors::get_db();</p>
+<p>$sth = $db-&gt;prepare( &#8216;INSERT INTO authors VALUES (null,?)&#8217; );</p>
+<p>$db-&gt;execute( $sth, array( $name ) );</p>
+<p>return true;</p>
+<p>}</p>
+<p>public static function get_all()</p>
+<p>{</p>
+<p>$db = Authors::get_db();</p>
+<p>$res = $db-&gt;query( &#8220;SELECT * FROM authors&#8221; );</p>
+<p>$rows = array();</p>
+<p>while( $res-&gt;fetchInto( $row ) ) { $rows []= $row; }</p>
+<p>return $rows;</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>在对这段代码运行测试时，所有的测试都可以没有问题地运行，这样我们就可以知道自己的代码可以正确工作了。</p>
+<p><strong>HTML </strong><strong>测试</strong></p>
+<p>对整个 PHP 应用程序进行测试的下一个步骤是对前端的超文本标记语言（HTML）界面进行测试。要进行这种测试，我们需要一个如下所示的 Web 页面。</p>
+<p><strong>图 1. 测试 Web 页面</strong></p>
+<p>这个页面对两个数字进行求和。为了对这个页面进行测试，我们首先从单元测试代码开始入手。</p>
+<p><strong>清单 10. TestPage.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once &#8216;HTTP/Client.php&#8217;;</p>
+<p>require_once &#8216;PHPUnit2/Framework/TestCase.php&#8217;;</p>
+<p>&nbsp;</p>
+<p>class TestPage extends PHPUnit2_Framework_TestCase</p>
+<p>{</p>
+<p>function get_page( $url )</p>
+<p>{</p>
+<p>$client = new HTTP_Client();</p>
+<p>$client-&gt;get( $url );</p>
+<p>$resp = $client-&gt;currentResponse();</p>
+<p>return $resp[&#8216;body&#8217;];</p>
+<p>}</p>
+<p>function test_get()</p>
+<p>{</p>
+<p>$page = TestPage::get_page( &#8216;http://localhost/unit/add.php&#8217; );</p>
+<p>$this-&gt;assertTrue( strlen( $page ) &gt; 0 );</p>
+<p>$this-&gt;assertTrue( preg_match( &#8216;/&lt;html&gt;/&#8217;, $page ) == 1 );</p>
+<p>}</p>
+<p>function test_add()</p>
+<p>{</p>
+<p>$page = TestPage::get_page( &#8216;http://localhost/unit/add.php?a=10&amp;b=20&#8217; );</p>
+<p>$this-&gt;assertTrue( strlen( $page ) &gt; 0 );</p>
+<p>$this-&gt;assertTrue( preg_match( &#8216;/&lt;html&gt;/&#8217;, $page ) == 1 );</p>
+<p>preg_match( &#8216;/&lt;span id=&#8221;result&#8221;&gt;(.*?)&lt;/span&gt;/&#8217;, $page, $out );</p>
+<p>$this-&gt;assertTrue( $out[1]==&#8217;30&#8217; );</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>这个测试使用了 PEAR 提供的 HTTP Client 模块。我发现它比内嵌的 PHP Client URL Library（CURL）更简单一点儿，不过也可以使用后者。</p>
+<p>有一个测试会检查所返回的页面，并判断这个页面是否包含 HTML。第二个测试会通过将值放到请求的 URL 中来请求计算 10 和 20 的和，然后检查返回的页面中的结果。</p>
+<p>这个页面的代码如下所示。</p>
+<p><strong>清单 11. TestPage.php</strong></p>
+<p>&lt;html&gt;&lt;body&gt;&lt;form&gt;</p>
+<p>&lt;input type=&#8221;text&#8221; name=&#8221;a&#8221; value=&#8221;&lt;?php echo($_REQUEST[&#8216;a&#8217;]); ?&gt;&#8221; /&gt; +</p>
+<p>&lt;input type=&#8221;text&#8221; name=&#8221;b&#8221; value=&#8221;&lt;?php echo($_REQUEST[&#8216;b&#8217;]); ?&gt;&#8221; /&gt; =</p>
+<p>&lt;span id=&#8221;result&#8221;&gt;&lt;?php echo($_REQUEST[&#8216;a&#8217;]+$_REQUEST[&#8216;b&#8217;]); ?&gt;&lt;/span&gt;</p>
+<p>&lt;br/&gt;</p>
+<p>&lt;input type=&#8221;submit&#8221; value=&#8221;Add&#8221; /&gt;</p>
+<p>&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;</p>
+<p>这个页面相当简单。两个输入域显示了请求中提供的当前值。结果 span 显示了这两个值的和。&lt;span&gt;标记标出了所有区别：它对于用户来说是不可见的，但是对于单元测试来说却是可见的。因此单元测试并不需要复杂的逻辑来找到这个值。相反，它会检索一个特定 &lt;span&gt;标记的值。这样当界面发生变化时，只要 span 存在，测试就可以通过。</p>
+<p>与前面一样，首先编写测试用例，然后创建一个失败版本的页面。我们对失败情况进行测试，然后修改页面的内容使其可以工作。结果如下：</p>
+<p><strong>清单 12. 测试失败情况，然后修改页面</strong></p>
+<p>% phpunit TestPage.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>..</p>
+<p>&nbsp;</p>
+<p>Time: 0.25711488723755</p>
+<p>&nbsp;</p>
+<p>OK (2 tests)</p>
+<p>%</p>
+<p>这两个测试都可以通过，这就意味着测试代码可以正常工作。</p>
+<p>不过对 HTML 前端的测试有一个缺陷：JavaScript。超文本传输协议（HTTP）客户机代码对页面进行检索，但是却没有执行 JavaScript。因此如果我们在 JavaScript 中有很多代码，就必须创建用户代理级的单元测试。我发现实现这种功能的最佳方法是使用 Microsoft® Internet Explorer® 内嵌的自动化层功能。通过使用 PHP 编写的 Microsoft Windows® 脚本，可以使用组件对象模型（COM）接口来控制 Internet Explorer，让它在页面之间进行导航，然后使用文档对象模型（DOM）方法在执行特定用户操作之后查找页面中的元素。</p>
+<p>这是我了解的对前端 JavaScript 代码进行单元测试的惟一一种方法。我承认它并不容易编写和维护，这些测试即使在对页面稍微进行改动时也很容易遭到破坏。</p>
+<p><strong>编写哪些测试以及如何编写这些测试</strong></p>
+<p>在编写测试时，我喜欢覆盖以下情况：</p>
+<p><strong>所有正面测试</strong></p>
+<p>这组测试可以确保所有的东西都如我们期望的一样工作。</p>
+<p><strong>所有负面测试</strong></p>
+<p>逐一使用这些测试，从而确保每个失效或异常情况都被测试到了。</p>
+<p><strong>正面序列测试</strong></p>
+<p>这组测试可以确保按照正确顺序的调用可以像我们期望的一样工作。</p>
+<p><strong>负面序列测试</strong></p>
+<p>这组测试可以确保当不按正确顺序进行调用时就会失败。</p>
+<p><strong>负载测试</strong></p>
+<p>在适当情况下，可以执行一小组测试来确定这些测试的性能在我们期望的范围之内。例如，2,000 次调用应该在 2 秒之内完成。</p>
+<p><strong>资源测试</strong></p>
+<p>这些测试确保应用编程接口（API）可以正确地分配并释放资源 —— 例如，连续几次调用打开、写入以及关闭基于文件的 API，从而确保没有文件依然是被打开的。</p>
+<p><strong>回调测试</strong></p>
+<p>对于具有回调方法的 API 来说，这些测试可以确保如果没有定义回调函数，代码可以正常运行。另外，这些测试还可以确保在定义了回调函数但是这些回调函数操作有误或产生异常时，代码依然可以正常运行。</p>
+<p>这是有关单元测试的几点想法。有关如何编写单元测试，我也有几点建议：</p>
+<p><strong>不要使用随机数据</strong></p>
+<p>尽 管在一个界面中产生随机数据看起来貌似一个好主意，但是我们要避免这样做，因为这些数据会变得非常难以调试。如果数据是在每次调用时随机生成的，那么就可 能产生一次测试时出现了错误而另外一次测试却没有出现错误的情况。如果测试需要随机数据，可以在一个文件中生成这些数据，然后每次运行时都使用这个文件。 采用这种方法，我们就获得了一些 “噪音” 数据，但是仍然可以对错误进行调试。</p>
+<p><strong>分组测试</strong></p>
+<p>我们很容易累积起数千个测试，需要几个小时才能执行完。这没什么问题，但是对这些测试进行分组使我们可以快速运行某组测试并对主要关注的问题进行检查，然后晚上运行完整的测试。</p>
+<p><strong>编写稳健的 API 和稳健的测试</strong></p>
+<p>编写 API 和测试时要注意它们不能在增加新功能或修改现有功能时很容易就会崩溃，这一点非常重要。这里没有通用的绝招，但是有一条准则是那些 “振荡的” 测试（一会儿失败，一会儿成功，反复不停的测试）应该很快地丢弃。</p>
+<p><strong>结束语</strong></p>
+<p>单元测试对于工程师来说意义重大。它们是敏捷开发过程（这个过程非常强调编码的作用，因为文档需要一些证据证明代码是按照规范进行工作的）的一个基础。单元测试就提供了这种证据。这个过程从单元测试开始入手，这定义了代码<em>应该</em> 实现但目前<em>尚未</em> 实现的功能。因此，所有的测试最初都会失败。然后当代码接近完成时，测试就通过了。当所有测试全部通过时，代码也就变得非常完善了。</p>
+<p>我 从来没有在不使用单元测试的情况下编写大型代码或修改大型或复杂的代码块。我通常都是在修改代码之前就为现有代码编写了单元测试，这样可以确保自己清楚在 修改代码时破坏了什么（或者没有破坏什么）。这为我对自己提供给客户的代码提供了很大的信心，相信它们正在正确运行 —— 即便是在凌晨 3 点。</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=102</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>大话PHP之性能/zz/</title>
+		<link>http://ijz.me/?p=113</link>
+					<comments>http://ijz.me/?p=113#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=113</guid>
+
+					<description><![CDATA[1源起 关于PHP，很多人的直观感觉是PHP是一种灵活的脚本语言，库类丰富，使用简单，安全，非常适合WEB开发 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>1源起<br />
+关于PHP，很多人的直观感觉是PHP是一种灵活的脚本语言，库类丰富，使用简单，安全，非常适合WEB开发，但性能低下。PHP的性能是否真的就如同大家的感觉一样的差呢？本文就是围绕这么一个话题来进行探讨的。从源码、应用场景、基准性能、对比分析等几个方面深入分析PHP之性能问题，通过真实的性能数据来说话，最终找出影响PHP模块性能的关键因素。2从原理分析PHP性能<br />
+从原理分析PHP的性能，主要从以下几个方面：内存管理、变量、函数、运行机制、网络模型来进行分析。</p>
+<p><span id="more-113"></span></p>
+<div>2.1内存管理</div>
+<p>类似Nginx的内存管理方式，PHP在内部也是基于内存池，并且引入内存池的生命周期概念。在内存池方面，PHP对PHP脚本和扩展的所有内存相关操作都进行了托管。对大内存和小内存的管理采用了不同的实现方式和优化，具体可以参考以下文档：http://www.laruence.com /2011/11/09/2277.html。在内存分配和回收的生命周期内，PHP采用一次初始化申请+动态扩容+内存标识回收机制，并且在每次请求结束后直接对内存池进行重新mask。</p>
+<div>2.2变量</div>
+<p>总所周知，PHP是一种弱变量类型的语言，所以在PHP内部，所有的PHP变量都对应成一种类型Zval，其中具体定义如下：</p>
+<p style="text-align: center;"><img decoding="async" class="alignnone" src="http://www_qibosoft_com/Tmp_updir/article/43/1_rqd3re3b87e950352ac65ce03b3103fc47faf2b21193138acc.jpg" alt="" width="428" height="234" /></p>
+<p style="text-align: center;">图一、PHP变量</p>
+<p>在变量方面，PHP做了大量的优化工作，比如说Reference counting和copy on writer机制。这样能够保证内存使用上的优化，并且减少内存拷贝次数（请参考http://blog.xiuwz.com/2011/11/09 /php-using-internal-zval/）。在数组方面，PHP内部采用高效的hashtable来实现。</p>
+<div>2.3函数</div>
+<p>在PHP内部，所有的PHP函数都回转化成内部的一个函数指针。比如说扩展中函数</p>
+<p>ZEND_FUNCTION ( my_function );//类似function my_function(){}</p>
+<p>在内部展开后就会是一个函数</p>
+<p>void zif_my_function ( INTERNAL_FUNCTION_PARAMETERS );</p>
+<p>void zif_my_function(</p>
+<p>int ht,</p>
+<p>zval * return_value,</p>
+<p>zval * this_ptr,</p>
+<p>int return_value_used,</p>
+<p>zend_executor_globals * executor_globals</p>
+<p>);</p>
+<p>从这个角度来看，PHP函数在内部也是对应一个函数指针。</p>
+<div>2.4运行机制</div>
+<p>在话说PHP性能的时候，很多人都会说“C/C++是编译型，JAVA是半编译型，PHP是解释型”。也就是说PHP是先动态解析再代码运行的，所以从这个角度来看，PHP性能必然很差。</p>
+<p>的确，从PHP脚本运行来输出，的确是一个动态解析再代码运行的过程。具体来说，PHP脚本的运行机制如下图所示：</p>
+<p><img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_wkfrxt8cb1cb1349540923ec61394a9358d109b3de49fd.jpg" alt="" width="192" height="236" /></p>
+<p style="text-align: center;">图二、PHP运行机制</p>
+<p>PHP的运行阶段也分成三个阶段：<br />
+●Parse。语法分析阶段。<br />
+● Compile。编译产出opcode中间码。<br />
+● Execute。运行，动态运行进行输出。</p>
+<p>通过上图也可以看出，其实在PHP内部本身也是存在编译的过程。事实上，在标准的生产环境中，也都基本上利用了这个特点，比如说opcode cache工具apc、eacc、xcache等等。基于opcode cache，能到做到“<strong>PHP</strong><strong>脚本编译一次，多次运行</strong>”的效果。从这点上，PHP就和JAVA的半编译机制非常类似。</p>
+<p>所以，从运行机制上来看，PHP的运行模式和JAVA是非常类似的，都是先产生中间码，然后运行在不同虚拟机上。</p>
+<div>2.5动态运行</div>
+<p>从上面的几个分析来看，PHP在内存管理、变量、函数、运行机制等几个方面都做了大量的工作，所以从原理来看，<strong>PHP</strong><strong>不应该存在性能问题，性能至少也应该和JAVA</strong><strong>比较接近</strong>。</p>
+<p>但为什么还有很多人感觉PHP慢呢？尤其是一些计算量的性能对比上，总发现PHP处理的性能相对比较低效（http://shootout.alioth.debian.org/u32/php.php）。这个时候就不得不谈PHP动态语言的特性所带来的性能问题了，由于PHP是动态运行时，所以所有的变量、函数、对象调用、作用域实现等等都是在执行阶段中才确定的。这个从根本上决定了PHP性能中很难改变的一些东西：<strong>在</strong><strong>C/C++</strong><strong>等能够在静态编译阶段确定的变量、函数，在PHP</strong><strong>中需要在动态运行中确定，也就决定了PHP</strong><strong>中间码不能直接运行而需要运行在Zend Engine</strong><strong>上</strong>。</p>
+<p>说到PHP变量的具体实现，又不得不说一个东西了：hashtable。Hashtable可以说在PHP灵魂之一，在PHP内部广泛用到，包含变量符号栈、函数符号栈等等都是基于hashtable的。</p>
+<p>以PHP变量为例来说明下PHP的动态运行特点，比如说代码：</p>
+<p>&lt;?php</p>
+<p>$var = “hello, blog.xiuwz.com”;</p>
+<p>?&gt;</p>
+<p>该代码的执行结果就是在变量符号栈（是一个hashtable）中新增一个项</p>
+<p><img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updirarticle/43/1_44szl363d0f703918fa0ecb7aa3e39279759ee3d6ddb91.jpg" alt="" width="451" height="25" /></p>
+<p>当要使用到该变量时候，就去变量符合栈中去查找（也就是变量调用对出了一个hash查找的过程）。</p>
+<p>同样对于函数调用也基本上类似有一个函数符号栈（hashtable）。</p>
+<p>其实关于动态运行的变量查找特点，在PHP的运行机制中也能看出一些。PHP代码通过解释、编译后的流程下图：<br />
+<img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_rmp7myb17eca8065380cd76820f8d9a044ad34598281cc.jpg" alt="" width="558" height="422" /></p>
+<p style="text-align: center;">图3、PHP运行实例</p>
+<p>从上图可以看出，PHP代码在compile之后，产出的了类符号表、函数符号表、和OPCODE。在真正执行的时候，zend Engine会根据op code去对应的符号表中进行查找，处理。</p>
+<p>从某种程度上，在这种问题的上，很难找到解决方案。因为这是由于PHP语言的动态特性所决定的。但是在国内外也有不少的人在寻找解决方案。因为通过这样，能够从根本上完全的优化PHP。典型的列子有facebook的hiphop(<a href="https://github.com/facebook/hiphop-php" target="_blank">https://github.com/facebook/hiphop-php</a>)。</p>
+<p>但所有的这种编译优化方案，都基本上是牺牲了PHP动态运行的特性。当然可以在具体的编译优化中去对动态特性做一些折中，但很难做到完完全全的兼容。</p>
+<div>2.6网络模型</div>
+<p>目前采用PHP的方式，比较理想和通用的模式是采用fastcgi（PHP-FPM）。Php-fpm在网络模型上比较类似nginx，采用了多进程Master+多worker的模式。Php-fpm本身是基于libevent中的epoll模型。从网络模型来看，该方式也不会和其他网络模型存在性能差异。</p>
+<div>2.7结论</div>
+<p>从上面分析来看，在基础的内存管理、变量、函数、运行机制、网络模型方面，PHP本身并不会存在明显的性能差异，但由于PHP的动态运行特性，决定了PHP和其他的编译型语言相比，所有的变量查找、函数运行等等都会多一些hash查找的CPU开销和额外的内存开销，至于这种开销具体有多大，可以通过后续的基准性能和对比分析得出。</p>
+<p>因此，也可以大体看出PHP不太适合的一些场景：大量计算性任务、大数据量的运算、内存要求很严格的应用场景。如果要实现这些功能，也建议通过扩展的方式实现，然后再提供钩子函数给PHP调用。这样可以减低内部计算的变量、函数等系列开销。</p>
+<div>3基准性能</div>
+<p>对于PHP基准性能，目前缺少标准的数据。大多数同学都存在感性的认识，有人认为800QPS就是PHP的极限了。此外，对于框架的性能和框架对性能的影响很没有响应的权威数字。</p>
+<p>本章节的目的是给出一个基准的参考性能指标，通过数据给大家一个直观的了解。</p>
+<p>具体的基准性能有以下几个方面：</p>
+<p>1、  裸PHP性能。完成基本的功能。</p>
+<p>2、  裸框架的性能。只做最简单的路由分发，只走通核心功能。</p>
+<p>3、  标准模块的基准性能。所谓标准模块的基准性能，是指一个具有完整服务模块功能的基准性能。</p>
+<div>3.1环境说明</div>
+<p>测试环境：</p>
+<p>Uname -a</p>
+<p>Linux db-forum-test17.db01.baidu.com 2.6.9_5-7-0-0 #1 SMP Wed Aug 12 17:35:51 CST 2009 x86_64 x86_64 x86_64 GNU/Linux</p>
+<p>Red Hat Enterprise Linux AS release 4 (Nahant Update 3)</p>
+<p>8  Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz</p>
+<p>软件相关：</p>
+<p>Nginx：</p>
+<p>nginx version: nginx/0.8.54  built by gcc 3.4.5 20051201 (Red Hat 3.4.5-2)</p>
+<p>Php5：（采用php-fpm）</p>
+<p>PHP103f 5.2.8 (cli) (built: Mar  6 2011 17:16:18)</p>
+<p>Copyright (c) 1997-2008 The PHP Group</p>
+<p>Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies</p>
+<p>with eAccelerator v0.9.5.3, Copyright (c) 2004-2006 eAccelerator, by eAccelerator</p>
+<p>bingo2：</p>
+<p>PHP框架。</p>
+<p>其他说明：</p>
+<p>目标机器的部署方式：<img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_zomoxnb3b7d0a20cf431adc9eb190d4a36acaf2edd98cc.jpg" alt="" width="184" height="32" />脚本。</p>
+<p>测试压力机器和目标机器独立部署。</p>
+<div>3.2裸PHP性能</div>
+<p>最简单的PHP脚本。</p>
+<p>&lt;?php</p>
+<p>require_once ‘./actions/indexAction.php’;</p>
+<p>$objAction = new indexAction();</p>
+<p>$objAction-&gt;init();</p>
+<p>$objAction-&gt;execute();</p>
+<p>?&gt;</p>
+<p>Acitons/indexAction.php里面的代码如下</p>
+<p>&lt;?php</p>
+<p>class indexAction</p>
+<p>{</p>
+<p>public function execute()</p>
+<p>{</p>
+<p>echo ‘hello, world!’;</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>通过压力工具测试结果如下：</p>
+<p><img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_nocded3b87e950352ac65ce02a3c47faf2b21193138ad3.jpg" alt="" width="472" height="162" /></p>
+<div>3.3裸PHP框架性能</div>
+<p>为了和3.2的对比，基于bingo2框架实现了类似的功能。代码如下</p>
+<p>&lt;?php</p>
+<p>require_once ‘Bingo/Controller/Front.php’;</p>
+<p>$objFrontController = Bingo_Controller_Front::getInstance(array(</p>
+<p>‘actionDir’ =&gt; ‘./actions’,</p>
+<p>));</p>
+<p>$objFrontController-&gt;dispatch();</p>
+<p>?&gt;</p>
+<p>压力测试结果如下：</p>
+<p><img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_9v5to03c6d55fbb2fb4316aa72204e21a4462309f7d391.jpg" alt="" width="375" height="107" /></p>
+<p>从该测试结果可以看出：<strong>框架虽然有一定的消耗，但对整体的性能来说影响是非常小的</strong>。</p>
+<div>3.4标准PHP模块的基准性能</div>
+<p>所谓标准PHP模块，是指一个PHP模块所必须要具体的基本功能：</p>
+<p>●路由分发。</p>
+<p>●自动加载。</p>
+<p>●LOG初始化&amp;Notice日志打印。所以的UI请求都一条标准的日志。</p>
+<p>●错误处理。</p>
+<p>●时间校正。</p>
+<p>●自动计算每个阶段耗时开销。</p>
+<p>●编码识别&amp;编码转化。</p>
+<p>●标准配置文件的解析和调用</p>
+<p>采用bingo2的代码自动生成工具产生标准的测试PHP模块：test。</p>
+<p>测试结果如下：</p>
+<p><img loading="lazy" decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_ycnrza2934349b033b5bb52ff87aca37d3d539b600bcd3.jpg" alt="" width="372" height="182" /></p>
+<div>3.5结论</div>
+<p>从测试数据的结论来看，PHP本身的性能还是可以的。基准性能完全能够达到几千甚至上W的QPS。至于为什么在大多数的PHP模块中表现不佳，其实这个时候更应该去找出系统的瓶颈点，而不是简单的说OK，PHP不行，那我们换C来搞吧。（下一个章节，会通过一些例子来对比，采用C来处理不见得有特别的优势）</p>
+<p>通过基准数据，可以得出以下几个具体的结论：</p>
+<p>1、    PHP本身性能也很不错。简单功能下能够达到5000QPS（50CPU IDLE），极限也能过W。</p>
+<p>2、    PHP框架本身对性能影响非常有限。尤其是在有一定业务逻辑和数据交互的情况下，几乎可以忽略。</p>
+<p>3、    一个标准的PHP模块，基准性能能够达到2000QPS（80 cpu idle）。</p>
+<div>4PHP与C性能对比分析</div>
+<p>很多时候，大家发现PHP模块性能不行的时候，就来一句“ok，我们采用C重写吧”。在公司内，采用C/C++来写业务逻辑模块的现象到处都有，在前几年甚至几乎全部都是采用C来写。那时候大家写的真是一个痛苦：调试</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=113</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>常见的25个顶级PHP模板引擎</title>
+		<link>http://ijz.me/?p=118</link>
+					<comments>http://ijz.me/?p=118#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[php]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=118</guid>
+
+					<description><![CDATA[为了找到一个好的模板引擎，我在互联网上进行搜索，目前已经整理出了以下名单： Smarty Smarty的特点是 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>为了找到一个好的模板引擎，我在互联网上进行搜索，目前已经整理出了以下名单：</p>
+<p>Smarty<br />
+Smarty的特点是将模板编译成PHP脚本，然后执行这些脚本。很快，非常灵活。</p>
+<p>Heyes Template Class<br />
+一个非常容易使用，但功能强大并且快速的模板引擎，它帮助你把页面布局和设计从代码中分离。<br />
+<span id="more-118"></span><br />
+FastTemplate<br />
+一个简单的变量插值模板类，它分析你的模板，把变量的值从HTML代码中分离处理。</p>
+<p>ShellPage<br />
+一个简单易用的类，可以让你的整个网站布局基于模板文件，修改模板就能改变整个站点。</p>
+<p>STP Simple Template Parser<br />
+一个简单、轻量级并且易于使用的模板分析类。它可以从多个模板中组装一个页面，把结果页面输出到浏览器或者文件系统。</p>
+<p>OO Template Class<br />
+一个你可以用在自己程序中的面向兑现的模板类。</p>
+<p>SimpleTemplate<br />
+一个可以创建和结构化网站的模板引擎。它可以解析和编译模板。</p>
+<p>bTemplate<br />
+短小但是快速的模板类，允许你把PHP逻辑代码从HTML修饰代码中分离。</p>
+<p>Savant<br />
+一个强大且轻量级的PEAR兼容模板系统。它是非编译型的，使用PHP语言本身做为它的模板语言。</p>
+<p>ETS &#8211; easy template system<br />
+可以使用完全相同数据重组模板的模板系统。</p>
+<p>EasyTemplatePHP<br />
+适用于你的站点的一个简单但是强大的模板系统。</p>
+<p>vlibTemplate<br />
+一个快速、全能的模板系统，它包含一个缓存和调试类。</p>
+<p>AvanTemplate<br />
+多字节安全的模板引擎，占用很少系统资源。它支持变量替换，内容块可以设置显示或隐藏。</p>
+<p>Grafx Software’s Fast Template<br />
+一个修改版本的Fast Template系统，它包括缓存功能，调试控制台以及沉默去除为赋值块。</p>
+<p>TemplatePower<br />
+一个快速、简单、功能强大的模板类。主要功能有嵌套的动态块支持，块/文件包含支持以及显示/隐藏未赋值的变量。</p>
+<p>TagTemplate<br />
+这个库的功能被设计来使用模板文件，同时允许你从HTML文件检索信息。</p>
+<p>htmltmpl: templating engine<br />
+一个适用于Python和PHP的模板引擎。它面向希望在项目中分离代码和设计的web应用开发人员。</p>
+<p>PHP Class for Parsing Dreamweaver templates<br />
+一个分析Dreamweaver模板的简单类，被用于Gallery 2 和WordPress的自定义模块中。</p>
+<p>MiniTemplator (Template Engine)<br />
+针对HTML文件的一个紧凑型模板引擎。对于模板变量和块定义它具有简单的语法。其中块可以嵌套。</p>
+<p>Layout Solution<br />
+简化网站开发和维护。它拥有常用的变量和页面元素使你不需要重复做页面布局工作。</p>
+<p>Cached Fast Template<br />
+它已经纳入 FastTemplate ，允许你缓存模板文件，甚至可以在分离的块内容上缓存不同的规格。</p>
+<p>TinyButStrong<br />
+一个支持MySQL, Odbc, Sql-Server和ADODB的模板引擎。它包含7个方法和两个属性。</p>
+<p>Brian Lozier’s php based template engine<br />
+只有2K大小，非常快并且是面向对象设计。</p>
+<p>WACT<br />
+一个从设计中分离代码的模板引擎。</p>
+<p>PHPTAL<br />
+一个PHP下面的XML/XHTML模板库。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=118</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

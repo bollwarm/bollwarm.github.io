@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>perl6 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=perl6" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:26:09 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>通过Tomtit实现Perl6开发工作流程的自动化</title>
+		<link>http://ijz.me/?p=1076</link>
+					<comments>http://ijz.me/?p=1076#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 25 Dec 2018 07:51:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[perl6]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1076</guid>
+
+					<description><![CDATA[Perl6的开发如何做到自动化？其实很简单，只需要一个应用Tomtit。 Tomtit是一个全新的Perl6任 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>Perl6的开发如何做到自动化？其实很简单，只需要一个应用Tomtit。</p>
+
+
+
+<p>Tomtit是一个全新的Perl6任务运行器，可让你很便捷地自动执行日常任务。</p>
+
+
+
+<p>本文中，我们将展示如何使用Tomtit实现Perl6开发自动化，我们以实例展示Perl6开发中的典型场景：设置git存储库、测试本地源代码、安装本地源代码、发布CPAN模块。关于Tomtit的详细介绍请参考文章(<a href="https://dev.to/melezhik/one-tomtit-for-it--1j3f">https://dev.to/melezhik/one-tomtit-for-it&#8211;1j3f</a>)。</p>
+
+
+
+<span id="more-1076"></span>
+
+
+
+<p>本文译自<a href="https://dev.to/melezhik">Alexey Melezhik </a>的博客，原文链接 <a href="https://dev.to/melezhik/automation-of-perl6-development-workflow-through-the-tomtit-task-runner-10jj">https://dev.to/melezhik/automation-of-perl6-development-workflow-through-the-tomtit-task-runner-10jj</a></p>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<p>Tomit的安装很简单只需通过Perl6 模块生态系统命令zef：</p>
+
+
+
+<p>zef install Tomtit</p>
+
+
+
+<p>现在让我们从远程git存储库获得本实例应用程序源代码：</p>
+
+
+
+<p>git clone $ git-repo</p>
+
+
+
+<h2 class="wp-block-heading">Tomtit实例</h2>
+
+
+
+<p>本文的内容限制为在Perl6开发和发布时典型的应用场景：设置git存储库、测试本地源代码、安装本地源代码、发布CPAN模块。</p>
+
+
+
+<p>首先我们为每个涉及的实例定义tomtit场景。场景配置文件位于.tom目录中，配置文件为纯Perl6脚本，同这些脚本调用Tomtit API。</p>
+
+
+
+<h3 class="wp-block-heading">案例1.设置git存储库。</h3>
+
+
+
+<p>在新建应用时候，先要设置用户和电子邮件，这样可以支持push到远程git仓。我们也希望在缓存中保存git密码。防止每次手动输入，这些任务都可以在.tom文件中配置：</p>
+
+
+
+<p>.tom/set-get.pl6:</p>
+
+
+
+<p>task-run &#8220;set git&#8221;, &#8220;git-base&#8221;, %(</p>
+
+
+
+<p>&nbsp; email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong@ijz.me&#8217;,</p>
+
+
+
+<p>&nbsp; name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp; config_scope&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;local&#8217;,</p>
+
+
+
+<p>&nbsp; set_credential_cache =&gt; &#8216;on&#8217;</p>
+
+
+
+<p>);</p>
+
+
+
+<p>实例中的工作流程有点复杂，需要将源代码推送到GitHub和BitBucket两个远程库。</p>
+
+
+
+<p>为push操作的任务场景配置也很容易：</p>
+
+
+
+<p>.tom/push-gh.pl6:</p>
+
+
+
+<p># push到 github</p>
+
+
+
+<p>bash &#8220;git push origin master&#8221;;</p>
+
+
+
+<p>.tom/push-bb.pl6:</p>
+
+
+
+<p># push 到bitbucket</p>
+
+
+
+<p>bash &#8220;git push bb master&#8221;;</p>
+
+
+
+<p>.tom/push.pl6:</p>
+
+
+
+<p># push到github和bitbucket</p>
+
+
+
+<p>EVALFILE &#8220;.tom/push-bb.pl6&#8221;</p>
+
+
+
+<p>EVALFILE &#8220;.tom/push-gh.pl6&#8221;</p>
+
+
+
+<h3 class="wp-block-heading">案例2.测试本地源代码。</h3>
+
+
+
+<p>对于许多Perl6项目，会通过<code>zef test</code><code>测试</code>在t/目录中的单元测试用例，本例子中我们还要做Outthentic测试并且验证META6.json文件，看看是否有任何JSON语法错误,任务的配置实例如下：</p>
+
+
+
+<p>.tom/test.pl6:</p>
+
+
+
+<p>task-run &#8220;check json files&#8221;, &#8220;json-lint&#8221;, %( path =&gt;&nbsp; &#8220;{$*CWD}&#8221; );</p>
+
+
+
+<p>bash &#8220;zef test .&#8221;;</p>
+
+
+
+<p>bash &#8220;sh run-test.sh&#8221;;</p>
+
+
+
+<h3 class="wp-block-heading">案例3.安装源代码。</h3>
+
+
+
+<p>该操作简单，只是在当前工作目录的下执行zef install命令。</p>
+
+
+
+<p>.tom/install.pl6:</p>
+
+
+
+<p>bash &#8220;zef install . &#8211;force-install&#8221;;</p>
+
+
+
+<h3 class="wp-block-heading">案例4.打包成CPAN模块，并自动发布</h3>
+
+
+
+<p>实例中我们使用App::Mi6工具将Perl6模块打包并发布到CPAN，执行该操作首先要在它需要通过~/.pause配置CPAN Update的用户和密码，下面是该任务的配置文件：</p>
+
+
+
+<p>.tom/set-pause.pl6:</p>
+
+
+
+<p>my $password = prompt(&#8220;enter your CPAN password: &#8220;);</p>
+
+
+
+<p>template-create &#8220;/home/{%*ENV&lt;USER&gt;}/.pause&#8221;, %(</p>
+
+
+
+<p>&nbsp; mode =&gt; &#8216;700&#8217;,</p>
+
+
+
+<p>&nbsp; variables =&gt; %(</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; password&nbsp; =&gt; $password</p>
+
+
+
+<p>&nbsp; ),</p>
+
+
+
+<p>&nbsp; source =&gt; q:to /TEMPL/</p>
+
+
+
+<p>&nbsp; user&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;[%= user %]</p>
+
+
+
+<p>&nbsp; password&nbsp; [%= password %]</p>
+
+
+
+<p>&nbsp; TEMPL</p>
+
+
+
+<p>);</p>
+
+
+
+<p>发布的任务配置就简单了：</p>
+
+
+
+<p>.tom/release.pl6:</p>
+
+
+
+<p>zef &#8220;App::Mi6&#8221;;</p>
+
+
+
+<p>bash &#8220;mi6 release&#8221;;</p>
+
+
+
+<h2 class="wp-block-heading">工作流程</h2>
+
+
+
+<p>当tomtit场景准备就绪时，开发工作流就变的简单明了，当一切都配置到位的时候：</p>
+
+
+
+<p>1、chekout应用程序源代码：</p>
+
+
+
+<p>git clone $git-repo</p>
+
+
+
+<p>2、安装Tomtit：</p>
+
+
+
+<p>zef intall Tomtit</p>
+
+
+
+<p>3、列出可用的tomtits任务：</p>
+
+
+
+<p>tom &#8211;list</p>
+
+
+
+<p>4、修改源代码</p>
+
+
+
+<p>vim foo/bar/app.pl6</p>
+
+
+
+<p>5、运行测试：</p>
+
+
+
+<p>tom test</p>
+
+
+
+<p>安装应用：</p>
+
+
+
+<p>tom install</p>
+
+
+
+<p>6、设置git repo：</p>
+
+
+
+<p>tom git-setup</p>
+
+
+
+<p>7、提交更改</p>
+
+
+
+<p>git commit -a</p>
+
+
+
+<p>8、推送更改：</p>
+
+
+
+<p>tom push</p>
+
+
+
+<p>9、设置PAUSE帐户凭据：</p>
+
+
+
+<p>tom set-pause</p>
+
+
+
+<p>10、发布到CPAN：</p>
+
+
+
+<p>tom release</p>
+
+
+
+<h2 class="wp-block-heading">结论</h2>
+
+
+
+<p>本文中，我们实现了Perl6开发的自动化任务执行过程，所有操作只需要Tomtit就可以实现。更多典型任务请关注官方文档和探索。</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1076</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Perl 6的自动任务执行模块Tomtit ，勤快好用的趁手山雀！</title>
+		<link>http://ijz.me/?p=1078</link>
+					<comments>http://ijz.me/?p=1078#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 25 Dec 2018 02:53:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[perl6]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1078</guid>
+
+					<description><![CDATA[Tomtit介绍 Tomtit是基于Perl6语言开发的任务执行器，它方便好用、任务定义快捷简洁，内置数十个常 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="569" height="332" src="http://ijz.me/wp-content/uploads/2025/03/p61.png" alt="" class="wp-image-1079" srcset="http://ijz.me/wp-content/uploads/2025/03/p61.png 569w, http://ijz.me/wp-content/uploads/2025/03/p61-300x175.png 300w" sizes="(max-width: 569px) 100vw, 569px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Tomtit介绍</h2>
+
+
+
+<p>Tomtit是基于Perl6语言开发的任务执行器，它方便好用、任务定义快捷简洁，内置数十个常用场景任务插件，利用该雀儿帮我们自动化Perl/Perl6以及更多的语言开发任务。</p>
+
+
+
+<span id="more-1078"></span>
+
+
+
+<p>最适合Perl5/Perl6开发人员,也支持其他开发场景使用；</p>
+
+
+
+<p>支持Perl6语言的编程API；</p>
+
+
+
+<p>自带许多常见任务任务配置：运行Bash脚本、创建文件和启动/停止服务 ，更多的任务脚本详见：</p>
+
+
+
+<p><a href="https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md">https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md</a></p>
+
+
+
+<p>它有几十个插件，详细列表请访问<a href="http://sparrowhub.org">http://sparrowhub.org</a></p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="854" height="553" src="http://ijz.me/wp-content/uploads/2025/03/p62.png" alt="" class="wp-image-1080" srcset="http://ijz.me/wp-content/uploads/2025/03/p62.png 854w, http://ijz.me/wp-content/uploads/2025/03/p62-300x194.png 300w, http://ijz.me/wp-content/uploads/2025/03/p62-768x497.png 768w, http://ijz.me/wp-content/uploads/2025/03/p62-624x404.png 624w" sizes="(max-width: 854px) 100vw, 854px" /></figure>
+
+
+
+<p>支持扩展， 你可以使用自己喜欢的语言并编写新的插件来满足的特定需求。</p>
+
+
+
+<p></p>
+
+
+
+<p>最重要的是作为底线，它可以帮助我们轻松完成常见的任务，但不限于静态DSL，而是允许你使用现代化的强大的Perl6语言来配置任务场景。说这么多，你一定心动了把，那让咱们开始把。</p>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<p>Tomtit是一个标准的Perl6模块，可以使用Perl6模块生态系统包管理软件zef安装。</p>
+
+
+
+<p>zef install &nbsp;Tomtit</p>
+
+
+
+<p>成功安装后，Tomcatit在你的shell环境增加tom -命令行客户端来执行具体的任务。</p>
+
+
+
+<h2 class="wp-block-heading">启动</h2>
+
+
+
+<p>你需要一个系统引启动器（*）来引导Tomtit的内部任务器的运行，实际上就是一个简单的命令</p>
+
+
+
+<p>&nbsp;tom &#8211;bootstrap</p>
+
+
+
+<p>注意：你需要sudo权限来启动该任务器。</p>
+
+
+
+<p>完成启动后，你就可以执行任务脚本，接着让我们来看看典型的tomtit工作流程。</p>
+
+
+
+<h2 class="wp-block-heading">Tomtit工作流程</h2>
+
+
+
+<p>通常使用tomtit的工作流程是先定义方案（任务脚本），然后运行它们时。它基于任务为中心的方法非常便捷，我们可以检查应用程序的源代码并运行一些相关的任务。比如，我们有一个应用程序源代码，我们只需执行3个标准操作：</p>
+
+
+
+<p>build,测试和安装</p>
+
+
+
+<p>我们定以后任务方案后，我们命名他们然后构建，测试和安装。如果使用make程序来构建项目，则方案对应make对应参数的3次调用。让我们创建我们的第一个Tomtit场景：</p>
+
+
+
+<p>git checkout $git-repo</p>
+
+
+
+<p>mkdir .tom</p>
+
+
+
+<p>nano .tom/build.pl6</p>
+
+
+
+<p>nano .tom/test.pl6</p>
+
+
+
+<p>nano .tom/install.pl6</p>
+
+
+
+<p>每个场景的代码和bash命令运行make一样简单：</p>
+
+
+
+<p>.tom/build.pl6:</p>
+
+
+
+<p>bash &#8220;make&#8221;</p>
+
+
+
+<p>.tom/test.pl6:</p>
+
+
+
+<p>bash &#8220;make test&#8221;</p>
+
+
+
+<p>.tom/install.pl6:</p>
+
+
+
+<p>bash &#8220;sudo make install&#8221;</p>
+
+
+
+<h2 class="wp-block-heading">程序化API</h2>
+
+
+
+<p>tomtit的任务方案场景的脚本是用Perl6编写的，对应于调用不同的任务，但这些场景不一定是有限的任务调用，它们只是Perl6程序，基于Perl6的强大功能你可以使用它做任何事情。</p>
+
+
+
+<p>Tomtit中有两种语法不同的任务。你通过任务运行函数调用的第一个是快捷方式，它与task-run几乎相同但具有助记符名称，有时更容易签名。</p>
+
+
+
+<p>在上述make实用程序的场景中，我们使用bash快捷方式调用一段Bash代码。tomtie可调用的完整快捷方式列表，请浏览：</p>
+
+
+
+<p><a href="https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md">https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md</a></p>
+
+
+
+<h2 class="wp-block-heading">任务和插件</h2>
+
+
+
+<p>换句话说，任务运行和快捷方式只是一种调用任务块的方法，如果代码从SparrowHub下载，脚本存储库然后由sparrow内部脚本运行执行，虽然不之前没有提到过，但实际上zoo-repository支持更多的birds！</p>
+
+
+
+<p>这些小脚本或任务也叫Sparrow插件。Tomtits的任务场景基对应于一个执行的Sparrow插件或任务的列表。</p>
+
+
+
+<h2 class="wp-block-heading">命令行API</h2>
+
+
+
+<p>通过运行tom &#8211;list，你可以到当前可用的所有任务场景：</p>
+
+
+
+<p>[scenarios list]</p>
+
+
+
+<p>build</p>
+
+
+
+<p>test</p>
+
+
+
+<p>install</p>
+
+
+
+<p>一旦定义了任务方案，就可以通过tom &#8211;run=$scenario命令运行它们。例如：</p>
+
+
+
+<p>tom run = build，tom run = test等等。</p>
+
+
+
+<p>要回想一下你运行的最后一个场景是什么，可使用tom &#8211;last命令。更多文档，请参考tomtitgithub页面的tom命令行的相关说明。</p>
+
+
+
+<h2 class="wp-block-heading">自定义任务</h2>
+
+
+
+<p>就上上文中我们提到的，我们不必受限于Tomtit场景中运行Bash和官方一些标准的任务场景。我们可以下载和自己开发相关插件，可以实现各种形形色色的任务。</p>
+
+
+
+<p>例如，我们创建一个用用户参数（如用户名和电子邮件）配置本地git存储库的方案。你要clone一个新项目时，通常需要对其做修改并提交修改，最后push到远程库。那么本任务就是帮助你实现这个任务，并能自动缓存用户账号信息，以后不需要再输入用户名和密码（http/https）。</p>
+
+
+
+<p>.tom/git-setup.pl6:</p>
+
+
+
+<p>task-run &#8220;set git&#8221;, &#8220;git-base&#8221;, %(</p>
+
+
+
+<p>&nbsp; email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong@ijz.me&#8217;,</p>
+
+
+
+<p>&nbsp; name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp; config_scope&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;local&#8217;,</p>
+
+
+
+<p>&nbsp; set_credential_cache =&gt; &#8216;on&#8217;</p>
+
+
+
+<p>);</p>
+
+
+
+<p>通过设置config_scope，我们定义任务为对本地git存储库进行设置，并通过设置set_credential_cache为“on”，我们要求git缓存密码。</p>
+
+
+
+<p>可以在SparrowHub的sparrow插件存储库中找到可在Tomtit方案中使用的插件列表。</p>
+
+
+
+<p>在下面的场景示例中，我们创建任务以通过vsts-build插件远程运行VSTS构建：</p>
+
+
+
+<p>.tom/build-vsts.pl6:</p>
+
+
+
+<p>task_run &#8220;run my build&#8221;, &#8220;vsts-build&#8221;, %(</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; definition =&gt; &#8220;BackEndBuild&#8221;</p>
+
+
+
+<p>)</p>
+
+
+
+<p>你可以在Tomtit方案中使用许多其他插件作为任务。 关于更多的插件，请查看SparrowHub存储库<a href="http://sparrowhub.org">SparrowHub</a>。</p>
+
+
+
+<h2 class="wp-block-heading">总结</h2>
+
+
+
+<p>Tomtit为我们提供了大量可用于日常任务的小脚本或插件，尤其是在处理开发类的源代码管理和自动化构建的任务。Tomtit任务场景配置脚本使用的是普通Perl6脚本，用于生成执行任务的动态列表。任务脚本支持语法糖，你可以使用预定义的内置函数集，而不是引用插件，使代码更简洁，更容易阅读。</p>
+
+
+
+<p>如果由于某些原因你找不到解决你特定任务的插件，你可以随时创建自己的插件。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1078</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

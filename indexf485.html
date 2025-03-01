@@ -1,0 +1,1458 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>shell &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=shell" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:30:00 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>爱上命令行并深入</title>
+		<link>http://ijz.me/?p=1027</link>
+					<comments>http://ijz.me/?p=1027#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 24 Aug 2018 07:27:00 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[shell]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1027</guid>
+
+					<description><![CDATA[命令行是一个强大的工具，而我们大多数却都不会用，可以说没有命令行的世界等于你失去了一多半的乐趣和技能。 本文虫 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>命令行是一个强大的工具，而我们大多数却都不会用，可以说没有命令行的世界等于你失去了一多半的乐趣和技能。</p>
+
+
+
+<p>本文虫虫和大家一起来聊聊命令行，并教大家一起来学习命令，不管你是运维、开发、测试、DBA，甚至是项目经理、PM都能通过命令行获得很大的裨益。当然我们主要是以开发了主要受众来举例子说明。</p>
+
+
+
+<span id="more-1027"></span>
+
+
+
+<p>日常编码时，你是选择集成开发环境IDE呢，还是文本编辑器（Vim、Emacs、sublime）+插件+命令行呢？</p>
+
+
+
+<p>现代IDE（VS、Eclipse、IDEA等）可以一个界面提供给我们所有必需的开发工具：代码版本，语法高亮，自动格式化，自动补全，版本控制，编译，调试、可视化断点、还有运行时环境！一键编译、一键运行，那么，为什么选择简单的文本编辑器呢？</p>
+
+
+
+<p>对这个问题，有很多问题、当然可能有一个原因是IDE太慢了！就个人而言，主要是是对于简单的项目和脚本，使用轻量化的文本编辑以及一些插件，一方面可以节省我编译的时间，而且我更喜欢欢命令行的各个工具栈套件GCC+GDB等强大的编译调试套件，更加适合我的胃口。</p>
+
+
+
+<p>我更喜欢学习掌握每个工具，比如GDB强大的各种特性和命令，可以让你更加编辑的操作，用键盘而不是点鼠标，还有就是让你可以更深入到程序和开发的精髓之处。。</p>
+
+
+
+<p>听起来有点泛泛而谈，但在IDE中，我们时常会受到约束并受限于固定的功能项，而在命令行中，有许多工具，脚本，框架可以在借鉴，支持多环境，许多语言以及Linx下强大的Shell流水栈、Perl onelines等可以把许多最高效最优秀的工具连接起来，最主要你随时可以修改完善他们，甚至自己造个更趁手的工具。</p>
+
+
+
+<p>当然，如果你是在Windows使用命令行，虽然现在Powershell已经增强改善了很多很多，以及有WSL的Linux子系统，但是由于其终端模拟器的限制，你可能还是可能会有不爽之处，所以建议你来使用Linux,Mac也是个很棒的选择。</p>
+
+
+
+<p>为啥，我只举两个个例子Docker，时下最火的容器技术，以及Git服务器Gitlab都是只支持Linux的，你还想多学点技术，Linux是不好躲的。</p>
+
+
+
+<h2 class="wp-block-heading">Fish shell</h2>
+
+
+
+<p>Fish shell（或“fish”）是一个面向用户交互的shell，它是日常和交互式使用的良好候选者。我们很多人可能都用的是Bash，但是说实话Bash更适合做脚本而Fish则更加人性化，更适合做交互操作。</p>
+
+
+
+<p>Fish shell包括许多命令和工具的原生语法高亮，也原生支持自动完成。</p>
+
+
+
+<p>Zsh是这种用例的另一种可靠替代方案。</p>
+
+
+
+<p>以下是使用git自动完成的示例：</p>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="756" height="429" src="http://ijz.me/wp-content/uploads/2025/03/1-1.png" alt="" class="wp-image-1028" srcset="http://ijz.me/wp-content/uploads/2025/03/1-1.png 756w, http://ijz.me/wp-content/uploads/2025/03/1-1-300x170.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-1-624x354.png 624w" sizes="(max-width: 756px) 100vw, 756px" /></figure>
+
+
+
+<p>通过敲打<strong>git</strong>，空格，在输入<strong>&lt;tab&gt;</strong>，fish会列出git命令列表（<strong>checkout，commit，log，&#8230;</strong>）。通过反复敲<strong>&lt;tab&gt;</strong>建，可以浏览命令直到达到所需的命令，然后我们只需输入回车（例如git checkout），这时fish就显示它的强大的魔力，他可以自动列出你仓库的分支和Tag列表。当然对其他工具，fish也是有很多类似的魔力的，你需要做的就是安装并且使用探索它。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="109" src="http://ijz.me/wp-content/uploads/2025/03/2-1-1024x109.png" alt="" class="wp-image-1029" srcset="http://ijz.me/wp-content/uploads/2025/03/2-1-1024x109.png 1024w, http://ijz.me/wp-content/uploads/2025/03/2-1-300x32.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-1-768x82.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-1-624x66.png 624w, http://ijz.me/wp-content/uploads/2025/03/2-1.png 1223w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>这儿我推荐两个框架可以增强的fish的功能：oh-my-fish（github/oh-my-fish）和fisherman（github/fisherman）。</p>
+
+
+
+<p><strong>oh-my-fish</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="887" height="224" src="http://ijz.me/wp-content/uploads/2025/03/3-1.png" alt="" class="wp-image-1030" srcset="http://ijz.me/wp-content/uploads/2025/03/3-1.png 887w, http://ijz.me/wp-content/uploads/2025/03/3-1-300x76.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-1-768x194.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-1-624x158.png 624w" sizes="(max-width: 887px) 100vw, 887px" /></figure>
+
+
+
+<p><strong>fisherman</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="916" height="280" src="http://ijz.me/wp-content/uploads/2025/03/4-1.png" alt="" class="wp-image-1031" srcset="http://ijz.me/wp-content/uploads/2025/03/4-1.png 916w, http://ijz.me/wp-content/uploads/2025/03/4-1-300x92.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-1-768x235.png 768w, http://ijz.me/wp-content/uploads/2025/03/4-1-624x191.png 624w" sizes="auto, (max-width: 916px) 100vw, 916px" /></figure>
+
+
+
+<p>它们都可以用来给提示符和各种插件安装主题样式。</p>
+
+
+
+<h3 class="wp-block-heading">命令提示符主题</h3>
+
+
+
+<p>你可能会说，定制提示符能有啥蛋用呢，但当你只面对一个主窗口的时候，那么定制它就很有必要了。比如</p>
+
+
+
+<p>当你用git的时候,用他可以告诉我们：</p>
+
+
+
+<p>当前所处的分支；</p>
+
+
+
+<p>你要push/pull的远程仓库地址是啥；</p>
+
+
+
+<p>你的索引干净，有没有你有未提交或未跟踪的文件；</p>
+
+
+
+<p>等等。</p>
+
+
+
+<p>一般情况下时候：</p>
+
+
+
+<p>你当前目录（pwd）；</p>
+
+
+
+<p>你上一条执行的命令是啥（！）；</p>
+
+
+
+<p>上一条命令的状态（$?）；</p>
+
+
+
+<p>上一条命令的响应时间；</p>
+
+
+
+<p>等等。</p>
+
+
+
+<p>系统可以有几十个提示可供自由选择，因此大家都可以按照自己喜好和需求进行选择。我一般用两个：<strong>bobthefish</strong>和<strong>neolambda</strong>主题，你可以在<strong>oh-my-fish</strong><strong>框架下</strong>安装：<strong>omf install bobthefish</strong>。他可以提供：</p>
+
+
+
+<p>第一个主题<strong>bobthefish</strong>，高度可视化，基于powerline，Vim的状态行，包括许多模式和符号，使其更加用户友好：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="91" src="http://ijz.me/wp-content/uploads/2025/03/5-1-1024x91.png" alt="" class="wp-image-1032" srcset="http://ijz.me/wp-content/uploads/2025/03/5-1-1024x91.png 1024w, http://ijz.me/wp-content/uploads/2025/03/5-1-300x27.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-1-768x68.png 768w, http://ijz.me/wp-content/uploads/2025/03/5-1-624x55.png 624w, http://ijz.me/wp-content/uploads/2025/03/5-1.png 1339w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>后一个主题<strong>neolambda</strong>更时尚，功能更少，但有趣（omf install neolambda）：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="97" src="http://ijz.me/wp-content/uploads/2025/03/6-1024x97.png" alt="" class="wp-image-1033" srcset="http://ijz.me/wp-content/uploads/2025/03/6-1024x97.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-300x28.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-768x73.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-624x59.png 624w, http://ijz.me/wp-content/uploads/2025/03/6.png 1348w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 class="wp-block-heading">更多插件推荐</h3>
+
+
+
+<p>除了命令提示符，许多插件允许增强用户界面，值得推荐的有：</p>
+
+
+
+<p><strong>colorman</strong>，为man添加语法高亮显示（omf install colorman）</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="496" height="343" src="http://ijz.me/wp-content/uploads/2025/03/7.png" alt="" class="wp-image-1034" srcset="http://ijz.me/wp-content/uploads/2025/03/7.png 496w, http://ijz.me/wp-content/uploads/2025/03/7-300x207.png 300w" sizes="auto, (max-width: 496px) 100vw, 496px" /></figure>
+
+
+
+<pre class="wp-block-preformatted"><strong>grc</strong>为Linux命令添加语法高亮,比如cat，cvs，df，diff,dig,gcc,ping,ps...（omf install grc）</pre>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="894" height="304" src="http://ijz.me/wp-content/uploads/2025/03/8.png" alt="" class="wp-image-1035" srcset="http://ijz.me/wp-content/uploads/2025/03/8.png 894w, http://ijz.me/wp-content/uploads/2025/03/8-300x102.png 300w, http://ijz.me/wp-content/uploads/2025/03/8-768x261.png 768w, http://ijz.me/wp-content/uploads/2025/03/8-624x212.png 624w" sizes="auto, (max-width: 894px) 100vw, 894px" /></figure>
+
+
+
+<p><strong>g2</strong>是一个简化git命令的打包。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="841" height="417" src="http://ijz.me/wp-content/uploads/2025/03/9.png" alt="" class="wp-image-1036" srcset="http://ijz.me/wp-content/uploads/2025/03/9.png 841w, http://ijz.me/wp-content/uploads/2025/03/9-300x149.png 300w, http://ijz.me/wp-content/uploads/2025/03/9-768x381.png 768w, http://ijz.me/wp-content/uploads/2025/03/9-624x309.png 624w" sizes="auto, (max-width: 841px) 100vw, 841px" /></figure>
+
+
+
+<p><strong>weather</strong>在 Fish shell 中使用以下命令查看天气。(注意该插件依赖jq来处理json数据需要先安装yum install jq 安装，后面日志部分会介绍)。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="577" height="304" src="http://ijz.me/wp-content/uploads/2025/03/10.png" alt="" class="wp-image-1037" srcset="http://ijz.me/wp-content/uploads/2025/03/10.png 577w, http://ijz.me/wp-content/uploads/2025/03/10-300x158.png 300w" sizes="auto, (max-width: 577px) 100vw, 577px" /></figure>
+
+
+
+<p><strong>colorls</strong>（gem install colorls），这个美化的ls工具是必备的。他非常好看，使用用颜色变化来突出当前目录文件的修改工具期。它使文件大小做对人友好话适配（-h）；最重要的是，它显示可以当前文件/文件夹的git状态！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="557" height="241" src="http://ijz.me/wp-content/uploads/2025/03/11.png" alt="" class="wp-image-1038" srcset="http://ijz.me/wp-content/uploads/2025/03/11.png 557w, http://ijz.me/wp-content/uploads/2025/03/11-300x130.png 300w" sizes="auto, (max-width: 557px) 100vw, 557px" /></figure>
+
+
+
+<h3 class="wp-block-heading">让你的日志更好看</h3>
+
+
+
+<p>如果你是，运维或或者开发人员工程师，那么日志可视化是你日常一项重复性任务，你必须选择好的工具才能提高工作效率。</p>
+
+
+
+<p>现代IDE都不适合查看日志，因为它们已经被源文件过载，而且它日志文件通常尺寸都不小，会严重影响你编辑器的性能。一旦文件大小超过10Mb，大多数IDE和编辑器都会“卡壳”。</p>
+
+
+
+<p>解决方案：使用<strong>head</strong>和<strong>tail</strong>工具来得到最先或者最新的日志，同时从可用于shell中的<strong>grep、awk、sort、uniq</strong>等形成流水处理栈，你可以启用语法突出显示并执行搜索。</p>
+
+
+
+<p>根据日志类型，我们在还这推荐两个工具</p>
+
+
+
+<p><strong>ccze</strong>用于传统日志（Apache，syslog，php，&#8230;）</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="376" src="http://ijz.me/wp-content/uploads/2025/03/12-1024x376.png" alt="" class="wp-image-1039" srcset="http://ijz.me/wp-content/uploads/2025/03/12-1024x376.png 1024w, http://ijz.me/wp-content/uploads/2025/03/12-300x110.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-768x282.png 768w, http://ijz.me/wp-content/uploads/2025/03/12-624x229.png 624w, http://ijz.me/wp-content/uploads/2025/03/12.png 1344w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p><strong>jq</strong>用于JSON日志</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="589" height="235" src="http://ijz.me/wp-content/uploads/2025/03/13.png" alt="" class="wp-image-1040" srcset="http://ijz.me/wp-content/uploads/2025/03/13.png 589w, http://ijz.me/wp-content/uploads/2025/03/13-300x120.png 300w" sizes="auto, (max-width: 589px) 100vw, 589px" /></figure>
+
+
+
+<p><strong>jq</strong>的好处是，除了JSON语法突出显示之外，它还会自动格式化你的日志，以方便阅读。因此，如果你的ELK或任何其他数据分析栈如果有单行压缩的JSON日志，你可以用jq解压缩日志并使其做人性化阅读适配。jq是一个功能更强大的工具，它还自带有描述语言的JSON解析器，与XML的xpath类似，但JSON的最简单。</p>
+
+
+
+<p>因此，通过<strong>命令行</strong>的tail -f access 实时获取最新每个日志行，并根据类型将stdout传送到jq或ccze，你就可以快速得到所需信息，并以优雅人性化的格式呈现在你的眼前。</p>
+
+
+
+<h2 class="wp-block-heading">更多命令行工具推荐列表</h2>
+
+
+
+<p>命令行的世界丰富多彩，群芳流彩，虫虫在此列一些我收集到很好的工具。</p>
+
+
+
+<p><strong>ccat</strong>：cat的语法高亮显示</p>
+
+
+
+<p><strong>tig</strong>：允许增强许多已知git命令的输出（例如git log|tig）</p>
+
+
+
+<pre class="wp-block-preformatted"><strong>howdoi</strong>：常量格式化工具，可生成多种语言的格式，比如你需要python的格式，那么只需输入howdoi format date python。</pre>
+
+
+
+<pre class="wp-block-preformatted">你要显示tar命令你只需 howdoi create tar archive </pre>
+
+
+
+<pre class="wp-block-preformatted">会显示 &gt; tar -cf backup.tar --exclude "www/subf3" www</pre>
+
+
+
+<pre class="wp-block-preformatted">&nbsp;</pre>
+
+
+
+<p><strong>htop</strong>：炫酷当前进程列表展示。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="943" height="540" src="http://ijz.me/wp-content/uploads/2025/03/14.png" alt="" class="wp-image-1041" srcset="http://ijz.me/wp-content/uploads/2025/03/14.png 943w, http://ijz.me/wp-content/uploads/2025/03/14-300x172.png 300w, http://ijz.me/wp-content/uploads/2025/03/14-768x440.png 768w, http://ijz.me/wp-content/uploads/2025/03/14-624x357.png 624w" sizes="auto, (max-width: 943px) 100vw, 943px" /></figure>
+
+
+
+<p><strong>glances</strong>（pip install glances）：计算机的监控控制台（进程，内存，网络，磁盘I/O，绑定器&#8230;&#8230;）</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="950" height="492" src="http://ijz.me/wp-content/uploads/2025/03/15.png" alt="" class="wp-image-1042" srcset="http://ijz.me/wp-content/uploads/2025/03/15.png 950w, http://ijz.me/wp-content/uploads/2025/03/15-300x155.png 300w, http://ijz.me/wp-content/uploads/2025/03/15-768x398.png 768w, http://ijz.me/wp-content/uploads/2025/03/15-624x323.png 624w" sizes="auto, (max-width: 950px) 100vw, 950px" /></figure>
+
+
+
+<p><strong>clog</strong>（<code>cargo install clog</code>）：从你的git repo的元数据生成CHANGELOG。</p>
+
+
+
+<p><strong>googler</strong>：命令行下搜索，SSH肉身搜索。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="713" height="291" src="http://ijz.me/wp-content/uploads/2025/03/16.png" alt="" class="wp-image-1043" srcset="http://ijz.me/wp-content/uploads/2025/03/16.png 713w, http://ijz.me/wp-content/uploads/2025/03/16-300x122.png 300w, http://ijz.me/wp-content/uploads/2025/03/16-624x255.png 624w" sizes="auto, (max-width: 713px) 100vw, 713px" /></figure>
+
+
+
+<p><strong>you-get</strong><strong>和youtube-dl</strong>：命令行下载视频：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="495" height="271" src="http://ijz.me/wp-content/uploads/2025/03/17.png" alt="" class="wp-image-1044" srcset="http://ijz.me/wp-content/uploads/2025/03/17.png 495w, http://ijz.me/wp-content/uploads/2025/03/17-300x164.png 300w" sizes="auto, (max-width: 495px) 100vw, 495px" /></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="815" height="113" src="http://ijz.me/wp-content/uploads/2025/03/18.png" alt="" class="wp-image-1045" srcset="http://ijz.me/wp-content/uploads/2025/03/18.png 815w, http://ijz.me/wp-content/uploads/2025/03/18-300x42.png 300w, http://ijz.me/wp-content/uploads/2025/03/18-768x106.png 768w, http://ijz.me/wp-content/uploads/2025/03/18-624x87.png 624w" sizes="auto, (max-width: 815px) 100vw, 815px" /></figure>
+
+
+
+<p><strong>dockly</strong>（npm install -g dockly）：监控你的指定的容器及Docker镜像：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="882" height="504" src="http://ijz.me/wp-content/uploads/2025/03/19.png" alt="" class="wp-image-1046" srcset="http://ijz.me/wp-content/uploads/2025/03/19.png 882w, http://ijz.me/wp-content/uploads/2025/03/19-300x171.png 300w, http://ijz.me/wp-content/uploads/2025/03/19-768x439.png 768w, http://ijz.me/wp-content/uploads/2025/03/19-624x357.png 624w" sizes="auto, (max-width: 882px) 100vw, 882px" /></figure>
+
+
+
+<p><strong>newman</strong>（npm install -g newman）：你想将Postman集成到CI/CD Pipeline中吗？newman就是专门干这个的！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="887" height="507" src="http://ijz.me/wp-content/uploads/2025/03/20.png" alt="" class="wp-image-1047" srcset="http://ijz.me/wp-content/uploads/2025/03/20.png 887w, http://ijz.me/wp-content/uploads/2025/03/20-300x171.png 300w, http://ijz.me/wp-content/uploads/2025/03/20-768x439.png 768w, http://ijz.me/wp-content/uploads/2025/03/20-624x357.png 624w" sizes="auto, (max-width: 887px) 100vw, 887px" /></figure>
+
+
+
+<p><strong>ttyrec/ttygif</strong>：通过shell会话创建GIF动画。</p>
+
+
+
+<p>对于上面引用的每个命令/工具，我都在其名称后的括号里附上了安装命令（主要有yum pip npm等）。如果不能通过包管理器安装，请你下载源码安装。如果你有更好的工具也请留言告诉我和大家分享。炎炎夏日，让我们一起来命令行的世界沐浴来把！</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1027</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>生信单行脚本</title>
+		<link>http://ijz.me/?p=981</link>
+					<comments>http://ijz.me/?p=981#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 22 Jun 2017 12:01:00 +0000</pubDate>
+				<category><![CDATA[shell]]></category>
+		<category><![CDATA[awk]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=981</guid>
+
+					<description><![CDATA[本文总结了，生物信息处理过程中常见一些工具和单行命令等。 awk和sed基础 提取文件中的2, 4, and  [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>本文总结了，生物信息处理过程中常见一些工具和单行命令等。</p>
+
+
+
+<span id="more-981"></span>
+
+
+
+<p><strong>awk和sed基础</strong></p>
+
+
+
+<p>提取文件中的2, 4, and 5 列:</p>
+
+
+
+<p>awk &#8216;{print $2,$4,$5}&#8217; file.txt</p>
+
+
+
+<p>输出第五列等于abc123的行:</p>
+
+
+
+<p>awk &#8216;$5 == &#8220;abc123&#8243;&#8216; file.txt</p>
+
+
+
+<p>输出第五列不是abc123的行:</p>
+
+
+
+<p>awk &#8216;$5 != &#8220;abc123&#8243;&#8216; file.txt</p>
+
+
+
+<p>输出第七列以字母a-f开头的行:</p>
+
+
+
+<p>awk &#8216;$7 ~ /^[a-f]/&#8217; file.txt</p>
+
+
+
+<p>输出第七列不是以字母a-f开头的行:</p>
+
+
+
+<p>awk &#8216;$7 !~ /^[a-f]/&#8217; file.txt</p>
+
+
+
+<p>计算第二列不重复的值保存在哈希arr中 (一个值只保存一次):</p>
+
+
+
+<p>awk &#8216;!arr[$2]++&#8217; file.txt</p>
+
+
+
+<p>输出第三列的值比第五列大的行:</p>
+
+
+
+<p>计算文件中第一列的累加值，输出最后的结果:</p>
+
+
+
+<p>awk &#8216;{sum+=$1} END {print sum}&#8217; file.txt</p>
+
+
+
+<p>计算第二列的平均值:</p>
+
+
+
+<p>awk &#8216;{x+=$2}END{print x/NR}&#8217; file.txt</p>
+
+
+
+<p>用bar替换文件中所有的foo:</p>
+
+
+
+<p>sed &#8216;s/foo/bar/g&#8217; file.txt</p>
+
+
+
+<p>消除行开头空和格制表符:</p>
+
+
+
+<p>sed &#8216;s/^[ \t]*//&#8217; file.txt</p>
+
+
+
+<p>消除行结尾的空格和制表符:</p>
+
+
+
+<p>sed &#8216;s/[ \t]*$//&#8217; file.txt</p>
+
+
+
+<p>消除行中开头和结尾的空格和制表符:</p>
+
+
+
+<p>sed &#8216;s/^[ \t]<em>//;s/[ \t]</em>$//&#8217; file.txt</p>
+
+
+
+<p>删除空行:</p>
+
+
+
+<p>删除包含‘EndOfUsefulData’的行及其后所有的行:</p>
+
+
+
+<p>sed -n &#8216;/EndOfUsefulData/,$!p&#8217; file.txt<br>生信sed,awk单行应用</p>
+
+
+
+<p>Returns all lines on Chr 1 between 1MB and 2MB in file.txt. (assumes) chromosome in column 1 and position in column 3 (this same concept can be used to return only variants that above specific allele frequencies):</p>
+
+
+
+<p>输出Chr为1在1M和2M之间的所有行。（假设）染色体在第一列，位点在第三列（基于同样的假设可以用来返回类似特定等位基因频率的变异）</p>
+
+
+
+<p>cat file.txt | awk &#8216;$1==&#8221;1&#8243;&#8216; | awk &#8216;$3&gt;=1000000&#8217; | awk &#8216;$3&lt;=2000000&#8217;</p>
+
+
+
+<p>Basic sequence statistics. Print total number of reads, total number unique reads, percentage of unique reads, most abundant sequence, its frequency, and percentage of total in file.fq: 基本序列统计。输出总的reads数，不重复的reads总数，不重复reads百分比，最大冗余的序列及其频度以及总占比百分数。</p>
+
+
+
+<p>cat myfile.fq | awk ‘((NR-2)%4==0){read=$1;total++;count[read]++}END{for(read in count){if(!max||count[read]&gt;max) {max=count[read];maxRead=read};if(count[read]==1){unique++}};print total,unique,unique<em>100/total,maxRead,count[maxRead],count[maxRead]</em>100/total}’</p>
+
+
+
+<p>转换.bam为.fastq:</p>
+
+
+
+<p>samtools view file.bam | awk &#8216;BEGIN {FS=&#8221;\t&#8221;} {print &#8220;@&#8221; $1 &#8220;\n&#8221; $10 &#8220;\n+\n&#8221; $11}&#8217; &gt; file.fq</p>
+
+
+
+<p>Keep only top bit scores in blast hits (best bit score only): 只取blast采样中的顶级位点的分数（最高的位点分）</p>
+
+
+
+<p>awk &#8216;{ if(!x[$1]++) {print $0; bitscore=($14-1)} else { if($14&gt;bitscore) print $0} }&#8217; blastout.txt</p>
+
+
+
+<p>Keep only top bit scores in blast hits (5 less than the top): 只取blast采样中的顶级位点的分数（比顶级少于5的）</p>
+
+
+
+<p>awk &#8216;{ if(!x[$1]++) {print $0; bitscore=($14-6)} else { if($14&gt;bitscore) print $0} }&#8217; blastout.txt</p>
+
+
+
+<p>分割多序列FASTA文件为单序列FASTA文件</p>
+
+
+
+<p>awk &#8216;/^&gt;/{s=++d&#8221;.fa&#8221;} {print &gt; s}&#8217; multi.fa</p>
+
+
+
+<p>输出fasta文件中的每条序列的序列名称和长度</p>
+
+
+
+<p>cat file.fa | awk &#8216;$0 ~ &#8220;&gt;&#8221; {print c; c=0;printf substr($0,2,100) &#8220;\t&#8221;; } $0 !~ &#8220;&gt;&#8221; {c+=length($0);} END { print c; }&#8217;</p>
+
+
+
+<p>转化FASTQ文件为FASTA:</p>
+
+
+
+<p>sed -n &#8216;1~4s/^@/&gt;/p;2~4p&#8217; file.fq &gt; file.fa</p>
+
+
+
+<p>从第二行开始每四行取值（从FASTQ文件提取序列）。</p>
+
+
+
+<p>输出中剔除第一行：</p>
+
+
+
+<p>输出20-80行:</p>
+
+
+
+<p>awk &#8216;NR&gt;=20&amp;&amp;NR&lt;=80&#8217; input.txt</p>
+
+
+
+<p>计算二，三行列的和并追加到每行后输出</p>
+
+
+
+<p>awk &#8216;{print $0,$2+$3}&#8217; input.txt</p>
+
+
+
+<p>计算fastq文件平均reads的长度</p>
+
+
+
+<p>awk &#8216;NR%4==2{sum+=length($0)}END{print sum/(NR/4)}&#8217; input.fastq</p>
+
+
+
+<p>转化VSF文件为BED文件</p>
+
+
+
+<p>sed -e &#8216;s/chr//&#8217; file.vcf | awk &#8216;{OFS=&#8221;\t&#8221;; if (!/^#/){print 1,2-1,2,4&#8243;/&#8221;$5,&#8221;+&#8221;}}&#8217;<br>sort, uniq, cut等杂项</p>
+
+
+
+<p>输出带行号的内容:</p>
+
+
+
+<p>去重复行计数</p>
+
+
+
+<p>cat file.txt | sort -u | wc -l</p>
+
+
+
+<p>找到两文件都有的行（假设两个文件都是无重复行，重定向执行‘wd -l’计算同样行的行数）</p>
+
+
+
+<p>sort file1 file2 | uniq -d</p>
+
+
+
+<h1 class="wp-block-heading">安全的方法</h1>
+
+
+
+<p>sort -u file1 &gt; a</p>
+
+
+
+<p>sort -u file2 &gt; b</p>
+
+
+
+<p>sort a b | uniq -d</p>
+
+
+
+<h1 class="wp-block-heading">用comm的方法</h1>
+
+
+
+<p>comm -12 file1 file2</p>
+
+
+
+<p>对文件按照第九列数字顺序排序（g按照常规数值，k列）</p>
+
+
+
+<p>找到第二列出现最多的字符串</p>
+
+
+
+<p>cut -f2 file.txt | sort | uniq -c | sort -k1nr | head</p>
+
+
+
+<p>从文件中随机取10行</p>
+
+
+
+<p>shuf file.txt | head -n 10</p>
+
+
+
+<p>输出所有三个所可能的DNA序列</p>
+
+
+
+<p>echo {A,C,T,G}{A,C,T,G}{A,C,T,G}</p>
+
+
+
+<p>Untangle an interleaved paired-end FASTQ file. If a FASTQ file has paired-end reads intermingled, and you want to separate them into separate /1 and /2 files, and assuming the /1 reads precede the /2 reads:</p>
+
+
+
+<p>解开一列交错paired-end fastq文件。如果fastq文件有乱序paired-end reads，你想将其分离成单独的/1，/2的文件保存，这里假设/1 reads 在/2 前面：</p>
+
+
+
+<p>cat interleaved.fq |paste &#8211; &#8211; &#8211; &#8211; &#8211; &#8211; &#8211; &#8211; | tee &gt;(cut -f 1-4 | tr &#8220;\t&#8221; &#8220;\n&#8221; &gt; deinterleaved_1.fq) | cut -f 5-8 | tr &#8220;\t&#8221; &#8220;\n&#8221; &gt; deinterleaved_2.fq</p>
+
+
+
+<p>Take a fasta file with a bunch of short scaffolds, e.g., labeled &gt;Scaffold12345, remove them, and write a new fasta without them:</p>
+
+
+
+<p>将一个fasta文件转成一系列短的scaffolds。比如，标签 “&gt;Scaffold12345″，然后移出他们，保存一个去掉他们的新文件：</p>
+
+
+
+<p>samtools faidx genome.fa &amp;&amp; grep -v Scaffold genome.fa.fai | cut -f1 | xargs -n1 samtools faidx genome.fa &gt; genome.noscaffolds.fa</p>
+
+
+
+<p>Display hidden control characters:</p>
+
+
+
+<p>显示一个隐藏的控制字符：</p>
+
+
+
+<p>python -c &#8220;f = open(&#8216;file.txt&#8217;, &#8216;r&#8217;); f.seek(0); file = f.readlines(); print file&#8221;<br>find, xargs,和GNU parallel</p>
+
+
+
+<p>通过 https://www.gnu.org/software/parallel/. 载 GNU parallel</p>
+
+
+
+<p>搜索文件夹及其子目录中名称为 .bam 文件（目录也算）:</p>
+
+
+
+<p>删除上面搜到的文件列表(不可逆的危险操作，谨慎使用！删除之前请自习确认)</p>
+
+
+
+<p>find . -name &#8220;*.bam&#8221; | xargs rm</p>
+
+
+
+<p>将所有.txt 文件修改为.bak(例如在对*.txt做操作之前用于文件备份)</p>
+
+
+
+<p>find . -name &#8220;*.txt&#8221; | sed &#8220;s/.txt$//&#8221; | xargs -i echo mv {}.txt {}.bak | sh</p>
+
+
+
+<p>Chastity filter raw Illumina data (grep reads containing :N:, append (-A) the three lines after the match containing the sequence and quality info, and write a new filtered fastq file):</p>
+
+
+
+<p>对Illumina数据做Chastity过滤（grep 查询 包含:N:，用（-A）选项第三列信息附加在匹配的包含一个序列质量信息后，并保存为一个新的fasta文件）</p>
+
+
+
+<p>find <em>fq | parallel &#8220;cat {} | grep -A 3 &#8216;^@.</em>[^:]<em>:N:[^:]</em>:&#8217; | grep -v &#8216;^&#8211;$&#8217; &gt; {}.filt.fq&#8221;</p>
+
+
+
+<p>通过parallel并行运行12个FASTQC任务</p>
+
+
+
+<p>find *.fq | parallel -j 12 &#8220;fastqc {} &#8211;outdir .&#8221;</p>
+
+
+
+<p>通过parallel给bam做索引，通过–dry-run打印测试这些命令，实际上并未做执行。</p>
+
+
+
+<p>find *.bam | parallel &#8211;dry-run &#8216;samtools index {}&#8217;<br>seqtk</p>
+
+
+
+<p>Seqtk项目托管地址https://github.com/lh3/seqtk。Seqtk是一个快捷轻量的处理FASTA和FASTQ格式基因序列的工具。他可以是先FASTA和FASTQ无缝处理和转化，同时支持gzip格式的压缩文件。</p>
+
+
+
+<p>把FASTQ转化为FASTA:</p>
+
+
+
+<p>seqtk seq -a in.fq.gz &gt; out.fa</p>
+
+
+
+<p>转化ILLUMINA 1.3+ 格式FASTQ为FASTA，并且以小于20的mask bases获得小写字母(第一命令行)或者到N（第二）。 seqtk seq -aQ64 -q20 in.fq &gt; out.fa seqtk seq -aQ64 -q20 -n N in.fq &gt; out.fa</p>
+
+
+
+<p>折叠长FASTA/Q行，并且去除其注释：</p>
+
+
+
+<p>seqtk seq -Cl60 in.fa &gt; out.fa</p>
+
+
+
+<p>转化多行FASTQ到四行FASTQ:</p>
+
+
+
+<p>seqtk seq -l0 in.fq &gt; out.fq</p>
+
+
+
+<p>反转FASTA/Q序列:</p>
+
+
+
+<p>seqtk seq -r in.fq &gt; out.fq</p>
+
+
+
+<p>用序列文件中的名称（比如name.1st）提取序列,一个虚列名一行:</p>
+
+
+
+<p>seqtk subseq in.fq name.lst &gt; out.fq</p>
+
+
+
+<p>利用序列文件中的”reg.bed“r信息提取地理信息的序列:</p>
+
+
+
+<p>seqtk subseq in.fa reg.bed &gt; out.fa</p>
+
+
+
+<p>编码‘reg.bed’信息为小写</p>
+
+
+
+<p>seqtk seq -M reg.bed in.fa &gt; out.fa</p>
+
+
+
+<p>从两个大的paired FASTQ文件提取10000个read pairs（记得用同样的随机种子保持 paire）</p>
+
+
+
+<p>seqtk sample -s100 read1.fq 10000 &gt; sub1.fq</p>
+
+
+
+<p>seqtk sample -s100 read2.fq 10000 &gt; sub2.fq</p>
+
+
+
+<p>利用Phred公式从两头修剪低质量bases:</p>
+
+
+
+<p>seqtk trimfq in.fq &gt; out.fq</p>
+
+
+
+<p>从左端修剪5bp，从右端修剪10bp的。</p>
+
+
+
+<p>seqtk trimfq -b 5 -e 10 in.fa &gt; out.fa</p>
+
+
+
+<p>seqtk seq -l0 -1 interleaved.fq &gt; deinterleaved_1.fq</p>
+
+
+
+<p>seqtk seq -l0 -2 interleaved.fq &gt; deinterleaved_2.fq<br>GFF3 Annotations</p>
+
+
+
+<p>输出GFF3文件中标注的所有的序列</p>
+
+
+
+<p>cut -s -f 1,9 yourannots.gff3 | grep $&#8217;\t&#8217; | cut -f 1 | sort | uniq</p>
+
+
+
+<p>检测GFF3文件中标注的所有性状类型。</p>
+
+
+
+<p>grep -v &#8216;^#&#8217; yourannots.gff3 | cut -s -f 3 | sort | uniq</p>
+
+
+
+<p>检测GFF3文件中标注的基因数量。</p>
+
+
+
+<p>grep -c $&#8217;\tgene\t&#8217; yourannots.gff3</p>
+
+
+
+<p>从GFF3文件中提取所有的基因ID</p>
+
+
+
+<p>grep $&#8217;\tgene\t&#8217; yourannots.gff3 | perl -ne &#8216;/ID=([^;]+)/ and printf(&#8220;%s\n&#8221;, $1)&#8217;</p>
+
+
+
+<p>输出GFF3文件每个基因的长度</p>
+
+
+
+<p>grep $&#8217;\tgene\t&#8217; yourannots.gff3 | cut -s -f 4,5 | perl -ne &#8216;@v = split(/\t/); printf(&#8220;%d\n&#8221;, $v[1] &#8211; $v[0] + 1)&#8217;</p>
+
+
+
+<p>FASTA头列转化为GFF格式（假设头的长度，附加在”_length“ ,和Velvet assembled transcripts)）</p>
+
+
+
+<p>grep &#8216;&gt;&#8217; file.fasta | awk -F &#8220;<em>&#8221; &#8216;BEGIN{i=1; print &#8220;##gff-version 3&#8243;}{ print $0&#8243;\t BLAT\tEXON\t1\t&#8221;$10&#8243;\t95\t+\t.\tgene_id=&#8221;$0&#8221;;transcript_id=Transcript</em>&#8220;i;i++ }&#8217; &gt; file.gff<br>有用的别名(.bashrc)</p>
+
+
+
+<p>提示符修改为user@hostname:/full/path/cwd/:$ 形式</p>
+
+
+
+<p>export PS1=”\u@\h:\w\$ ”</p>
+
+
+
+<p>避免反复敲诸如cd ../../..的命令（也可以用[autojump](https://github.com/joelthelion/autojump），让你在飞速的转换目录</p>
+
+
+
+<p>alias ..=&#8217;cd ..&#8217;</p>
+
+
+
+<p>alias …=&#8217;cd ../../&#8217;</p>
+
+
+
+<p>alias ….=&#8217;cd ../../../&#8217;</p>
+
+
+
+<p>alias …..=&#8217;cd ../../../../&#8217;</p>
+
+
+
+<p>alias ……=&#8217;cd ../../../../../&#8217;</p>
+
+
+
+<p>向前和向后浏览</p>
+
+
+
+<p>alias u=&#8217;clear; cd ../; pwd; ls -lhGgo&#8217;</p>
+
+
+
+<p>alias d=&#8217;clear; cd -; ls -lhGgo&#8217;</p>
+
+
+
+<p>覆盖文件时候，先确认</p>
+
+
+
+<p>alias mv=&#8221;mv -i&#8221;</p>
+
+
+
+<p>alias cp=&#8221;cp -i&#8221;</p>
+
+
+
+<p>alias rm=&#8221;rm -i&#8221;</p>
+
+
+
+<p>我最喜欢的”ls“别名</p>
+
+
+
+<p>alias ls=&#8221;ls -1p &#8211;color=auto&#8221;</p>
+
+
+
+<p>alias l=&#8221;ls -lhGgo&#8221;</p>
+
+
+
+<p>alias ll=&#8221;ls -lh&#8221;</p>
+
+
+
+<p>alias la=&#8221;ls -lhGgoA&#8221;</p>
+
+
+
+<p>alias lt=&#8221;ls -lhGgotr&#8221;</p>
+
+
+
+<p>alias lS=&#8221;ls -lhGgoSr&#8221;</p>
+
+
+
+<p>alias l.=&#8221;ls -lhGgod .*&#8221;</p>
+
+
+
+<p>alias lhead=&#8221;ls -lhGgo | head&#8221;</p>
+
+
+
+<p>alias ltail=&#8221;ls -lhGgo | tail&#8221;</p>
+
+
+
+<p>alias lmore=&#8217;ls -lhGgo | more&#8217;</p>
+
+
+
+<p>对cut空格和逗号，分割文件</p>
+
+
+
+<p>alias cuts=&#8221;cut -d \&#8221; \&#8221;&#8221;</p>
+
+
+
+<p>alias cutc=&#8221;cut -d \&#8221;,\&#8221;&#8221;</p>
+
+
+
+<p>解压缩tar包</p>
+
+
+
+<p>alias tarup=&#8221;tar -zcf&#8221;</p>
+
+
+
+<p>alias tardown=&#8221;tar -zxf&#8221;</p>
+
+
+
+<p>或者可以用更普遍的‘extract’函数</p>
+
+
+
+<p>源于ABSG(Advanced Bash Scripting Guide)中 Mendel Cooper的建议</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p>extract () {</p>
+
+
+
+<p>if [ -f $1 ] ; then</p>
+
+
+
+<p>case $1 in</p>
+
+
+
+<p>*.tar.bz2) tar xvjf $1 ;;</p>
+
+
+
+<p>*.tar.gz) tar xvzf $1 ;;</p>
+
+
+
+<p>*.tar.xz) tar Jxvf $1 ;;</p>
+
+
+
+<p>*.bz2) bunzip2 $1 ;;</p>
+
+
+
+<p>*.rar) unrar x $1 ;;</p>
+
+
+
+<p>*.gz) gunzip $1 ;;</p>
+
+
+
+<p>*.tar) tar xvf $1 ;;</p>
+
+
+
+<p>*.tbz2) tar xvjf $1 ;;</p>
+
+
+
+<p>*.tgz) tar xvzf $1 ;;</p>
+
+
+
+<p>*.zip) unzip $1 ;;</p>
+
+
+
+<p>*.Z) uncompress $1 ;;</p>
+
+
+
+<p>*.7z) 7z x $1 ;;</p>
+
+
+
+<p>*) echo &#8220;don&#8217;t know how to extract &#8216;$1&#8217;&#8230;&#8221; ;;</p>
+
+
+
+<p>esac</p>
+
+
+
+<p>else</p>
+
+
+
+<p>echo &#8220;&#8216;$1&#8217; is not a valid file!&#8221;</p>
+
+
+
+<p>fi</p>
+
+
+
+<p>}</p>
+</blockquote>
+
+
+
+<p>使用别名”mcd”创建一个目录，并且cd到该目录</p>
+
+
+
+<p>function mcd { mkdir -p &#8220;$1&#8221; &amp;&amp; cd &#8220;$1&#8221;;}</p>
+
+
+
+<p>跳转到上级目录，并且列出其内容</p>
+
+
+
+<p>一个好看的grep</p>
+
+
+
+<p>alias grep=&#8221;grep &#8211;color=auto&#8221;</p>
+
+
+
+<p>刷新你的.bashrc</p>
+
+
+
+<p>alias refresh=&#8221;source ~/.bashrc&#8221;</p>
+
+
+
+<p>编辑你的.bashrc</p>
+
+
+
+<p>常用错误别称</p>
+
+
+
+<p>alias mf=&#8221;mv -i&#8221;</p>
+
+
+
+<p>alias mroe=&#8221;more&#8221;</p>
+
+
+
+<p>alias c=&#8217;clear&#8217;</p>
+
+
+
+<p>使用 pandoc转化markdown文档为PDF格式:</p>
+
+
+
+<h1 class="wp-block-heading">用法: mdpdf document.md document.md.pdf</h1>
+
+
+
+<p>alias mdpdf=&#8221;pandoc -s -V geometry:margin=1in -V documentclass:article -V fontsize=12pt&#8221;</p>
+
+
+
+<p>对当前目录搜索关键词(ft “mytext” *.txt):</p>
+
+
+
+<p>function ft { find . -name &#8220;$2&#8221; -exec grep -il &#8220;$1&#8221; {} \;; }</p>
+
+
+
+<p>Etc</p>
+
+
+
+<p>重复运行上一条命令:</p>
+
+
+
+<p>sudo !!</p>
+
+
+
+<p>&#8216;ALT+.&#8217; or &#8216;&lt;ESC&gt; .&#8217;</p>
+
+
+
+<p>敲出了部分命令，删除这些输入，查你忘记的明亮，拉回命令，继续输入(删除光标之前的输入，恢复上个C-U删除字符)</p>
+
+
+
+<p>&lt;CTRL+u&gt; […] &lt;CTRL+y&gt;</p>
+
+
+
+<p>跳到一个目录，执行命令，然后返回当前目录(()的用法)</p>
+
+
+
+<p>记时秒表 (输入Enter or ctrl-d 停止):</p>
+
+
+
+<p>把上次执行的命令生成一个脚本</p>
+
+
+
+<p>重用上次命令的所有参数</p>
+
+
+
+<p>列出或者删除一个目录中所有不匹配的特定后缀的文件（例如，列出所有不是压缩的文件，删除所有不以.foo和.bar后缀的文件）</p>
+
+
+
+<p>ls !(*.gz)</p>
+
+
+
+<p>rm !(<em>.foo|</em>.bar)</p>
+
+
+
+<p>利用上次的命令，但是不需要他的的参数（重新输入参数）:</p>
+
+
+
+<p>!:- &lt;new_last_argument&gt;</p>
+
+
+
+<p>激活一个快捷的编辑器，输入，编辑长的，复杂，巧妙的命令:</p>
+
+
+
+<p>输出一个特定的行（比如 42行）</p>
+
+
+
+<p>终结一个冻结的ssh session(会车换行，敲~键，在敲下.键）</p>
+
+
+
+<p>利用grep去除文件的空行，结果保存到新文件</p>
+
+
+
+<p>grep . filename &gt; newfilename</p>
+
+
+
+<p>查找大文件（例如，大于500M的）</p>
+
+
+
+<p><code>find . -type f -size +500M</code></p>
+
+
+
+<p>利用截取列（例如，一个tab分割文件的第五个域）</p>
+
+
+
+<p><code>cut -f5 --complement</code></p>
+
+
+
+<p>查找包含特定字符的文件（-l 只输出文件名, -i 忽略大小写 -r 遍历子目录）</p>
+
+
+
+<p><code>grep -lir "some text" *</code></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=981</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>屏蔽ssh恶意扫描ip的脚本</title>
+		<link>http://ijz.me/?p=731</link>
+					<comments>http://ijz.me/?p=731#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 16 Aug 2015 09:39:15 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<category><![CDATA[shell]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=731</guid>
+
+					<description><![CDATA[近来发现有ip恶意扫描服务器，写个脚本自动对恶意攻击的ip进行封禁。主要原理是定期crontab任务分析sec [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>近来发现有ip恶意扫描服务器，写个脚本自动对恶意攻击的ip进行封禁。主要原理是定期crontab任务分析secure日志（扫描尝试登陆的会有错误日志），超过错误次数就将其加入iptables DROP 链接。可以在一定程度上访问恶意攻击提供，安全性。附上脚本（代码另存为<code>/root/block_ssh.sh</code>。执行<code>echo "*/5 * * * * root /root/block_ssh.sh" &gt;&gt;/etc/crontab</code> 每5分钟检查一次文件。）<span id="more-731"></span></p><pre class="crayon-plain-tag">#!/bin/bash
+#echo "*/5 * * * * root /root/block_ssh.sh" &gt;&gt;/etc/crontab
+LIMIT=30
+LOGFILE="/data/block_ip.log"
+TIME=$(date '+%b %e %H')
+BLOCK_IP=`perl -lane 'print $F[-4] if /Failed password/' /var/log/secure|sort|uniq -c|perl -lane  'print "$F[0]:$F[1]"  if ($F[0] &gt; "'$LIMIT'")'`
+
+for i in $BLOCK_IP
+do
+
+  echo $i
+     IP=`echo $i|perl -F: -lane 'print $F[1]'`
+     echo $IP
+     iptables-save|grep INPUT|grep DROP|grep $IP&gt;/dev/null     #先判断下是否已经被屏蔽
+     if [ $? -gt 0 ];then
+          iptables -I INPUT -s $IP -j DROP     #屏蔽ip
+          NOW=$(date '+%Y-%m-%d %H:%M')
+          echo -e "$NOW : $IP" &gt;&gt;${LOGFILE}
+     fi
+done</pre><p>&nbsp;</p>
+<p><code> </code></p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=731</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Linux下通过FTP来备份Mysql数据/zz/</title>
+		<link>http://ijz.me/?p=35</link>
+					<comments>http://ijz.me/?p=35#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[shell]]></category>
+		<category><![CDATA[mysql]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=35</guid>
+
+					<description><![CDATA[#!/bin/bash host=202.100.222.2   #FTP主机 UserName=test   [&#8230;]]]></description>
+										<content:encoded><![CDATA[<section class="mod-page-body">
+<div class="mod-page-main wordwrap clearfix">
+<div class="x-page-container">
+<div class="mod-blogpage-wraper">
+<div class="grid-80 mod-blogpage">
+<div class="mod-text-post_content mod-post-post_content mod-cs-post_contentblock">
+<div id="post_content" class="post_content mod-cs-post_content text-post_content clearfix">#!/bin/bash</div>
+<div class="post_content mod-cs-post_content text-post_content clearfix">host=202.100.222.2   #FTP主机<br />
+UserName=test    #FTP用户名<br />
+Passwd=test        #FTP密码</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<p> <span id="more-35"></span></p>
+<p>function Iint() #处理涵数<br />
+{<br />
+backup_path=/home/mysqlbackup   #压缩文件存放的目录<br />
+file=$path-mysql-$(date +%Y-%m-%d).tar.gz #文件名<br />
+backupCWD=/usr/local/mysql/data/$path   #需备份的path<br />
+tar -Pczf $backup_path/$file $backupCWD #执行备份操作</p>
+<p>cd $backup_path<br />
+ftp -i -n &lt;&lt;!<br />
+open $host<br />
+user $UserName $Passwd</p>
+<p>cd MYSQL-BACK/$path<br />
+put   $file<br />
+bye<br />
+!<br />
+}<br />
+/etc/init.d/mysqld stop &gt;/dev/null 2&gt;&amp;1 #停止Mysql服务<br />
+path=database1 #需备份的数据名<br />
+Iint #调用处理涵数<br />
+path=datebase2<br />
+Iint<br />
+/etc/init.d/mysqld start &gt;/dev/null 2&gt;&amp;1 #启动Mysql服务</p>
+<p>rm -rf $backup_path/*.tar.gz #删除压缩文件<br />
+echo &#8220;ftp back ok!&#8221;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=35</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

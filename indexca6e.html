@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>数据库 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=8" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 11 Oct 2014 06:53:54 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>mysql忘记root密码重置</title>
+		<link>http://ijz.me/?p=675</link>
+					<comments>http://ijz.me/?p=675#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sat, 11 Oct 2014 06:53:54 +0000</pubDate>
+				<category><![CDATA[mysql]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=675</guid>
+
+					<description><![CDATA[如果忘记了root密码，通过禁止认证模式启动mysql 然后重置root密码 win下： 1：进入cmd，停止 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>如果忘记了root密码，通过禁止认证模式启动mysql 然后重置root密码</p>
+<p><span id="more-675"></span></p>
+<p>win下：</p>
+<p>1：进入cmd，停止mysql服务：Net stop mysql</p>
+<p>2：执行：mysqld-nt &#8211;skip-grant-tables<br />
+3：然后另外打开一个命入令行窗口，执行mysql（或者直接进入Mysql Command Line Cilent），此时无需输入密码即可进入。</p>
+<p>&gt;use mysql</p>
+<p>&gt;update user set password=password(&#8220;新密码&#8221;) where user=&#8221;root&#8221;;</p>
+<p>&gt;flush privileges;</p>
+<p>&gt;exit</p>
+<p>4：重新启动mysql-nt服务，就可以用新密码登录了。</p>
+<p><strong>linux下：</strong></p>
+<p>/etc/init.d/mysqld stop</p>
+<p>启动 msyql ：/usr/bin/safe_mysqld &#8211;skip-grant-tables &amp;</p>
+<p>mysql 进入</p>
+<p>&gt;use mysql</p>
+<p>&gt;update user set password=password(&#8220;new_pass&#8221;) where user=&#8221;root&#8221;;</p>
+<p>&gt;flush privileges</p>
+<p>重启mysql : /etc/init.d/mysqld restart。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=675</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Linux下彻底删除Oracle</title>
+		<link>http://ijz.me/?p=32</link>
+					<comments>http://ijz.me/?p=32#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[oracle]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=32</guid>
+
+					<description><![CDATA[1. 用 oracle 用户登录 如果要再次安装， 最好先做一些备份工作。 包括用户的登录脚本，数据库自动启动 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>1. 用 oracle 用户登录</p>
+<p>如果要再次安装， 最好先做一些备份工作。<br />
+包括用户的登录脚本，数据库自动启动关闭的脚本，和 Listener 自动启动的脚本。<br />
+要是有可能连创建数据库的脚本也保存下来</p>
+<p>2. 使用 SQL*PLUS 停止数据库<br />
+[oracle@ora920 oracle]$ sqlplus /nolog<br />
+SQL&gt; connect / as sysdba<br />
+SQL&gt; shutdown<br />
+SQL&gt; exit</p>
+<p><span id="more-32"></span></p>
+<p>3. 停止 Listener<br />
+[oracle@ora920 oracle]$ lsnrctl stop</p>
+<p>4. 停止 HTTP 服务<br />
+[oracle@ora920 oracle]$ $ORACLE_HOME/Apache/Apache/bin/apachectl stop</p>
+<p>5. 用 su 或者重新登录到 root( 如想重新安装可以保留 oracle 用户，省得输入环境变量了 )</p>
+<p>6. 将安装目录删除 # rm -rf /opt/oracle/</p>
+<p>7. 将 /usr/bin 下的文件删除 # rm /usr/bin/dbhome# rm /usr/bin/oraenv<br />
+# rm /usr/bin/coraenv</p>
+<p>8. 将 /etc/oratab 删除<br />
+# rm /etc/oratab</p>
+<p>9. 将 /etc/oraInst.loc 删除<br />
+# rm /etc/oraInst.loc</p>
+<p>10. 将 oracle 用户删除 ( 若要重新安装 , 可以不删除 )<br />
+# userdel –r oracle</p>
+<p>11. 将用户组删除 ( 若要重新安装 , 可以不删除 )<br />
+# groupdel oinstall<br />
+# groupdel dba</p>
+<p>12. 将启动服务删除<br />
+# chkconfig &#8211;del dbora</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=32</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Oracle主要配置文件(linux)</title>
+		<link>http://ijz.me/?p=44</link>
+					<comments>http://ijz.me/?p=44#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[oracle]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=44</guid>
+
+					<description><![CDATA[Oracle 主要配置文件介绍： profile文件，oratab 文件，数据库实例初始化文件 initSID [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Oracle 主要配置文件介绍：</p>
+<p>profile文件，oratab 文件，数据库实例初始化文件 initSID.ora，监听配置文件， sqlnet.ora 文件，tnsnames.ora 文件</p>
+<p><span id="more-44"></span></p>
+<p>1.2 Oracle 主要配置文件介绍<br />
+1.2.1 /etc/profile 文件<br />
+系统级的环境变量一般在/etc/profile 文件中定义 在 CAMS 系统 与数据库<br />
+相关的环境变量就定义在/etc/profile 文件中 如下所示<br />
+export ORACLE_BASE=/u01/app/oracle<br />
+export ORACLE_HOME=$ORACLE_BASE/product/8.1.7<br />
+export PATH=$PATH:$ORACLE_HOME/bin<br />
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/usr/lib<br />
+export ORACLE_SID=cams<br />
+export ORACLE_TERM=vt100<br />
+export ORA_NLS33=$ORACLE_HOME/ocommon/nls/admin/data<br />
+export NLS_LANG=AMERICAN.ZHS16CGB231280<br />
+&amp; 说明<br />
+1 配置上述环境变量要注意定义的先后顺序 如 定义 ORACLE_HOME<br />
+时 用 到 了 ORACLE_BASE         那 么 ORACLE_HOME 的 定 义 应 该 在<br />
+ORACLE_BASE之后<br />
+2   在使用中文版 CAMS 时 环境变量 NLS_LANG 的值应该设置为<br />
+AMERICAN.ZHS16CGB231280 如上所示             在使用英文版 CAMS时 可<br />
+以不设置 NLS_LANG 即去掉 export NLS_LANG=&#8230; &#8230; 那一行 也可以<br />
+设置 NLS_LANG 的值为 AMERICAN_AMERICA.US7ASCII</p>
+<p>1.2.2 /etc/oratab 文件<br />
+/etc/oratab 文件描述目前系统中创建的数据库实例 以及是否通过 dbstart 和<br />
+dbshut 来103f控制该实例的启动与关闭 如下所示 忽略以#开头的注释部分 :<br />
+cams:/u01/app/oracle/product/8.1.7:Y<br />
+其中 cams 为实例 ID /u01/app/oracle/product/8.1.7为 ORACLE_HOME目<br />
+录 Y表示允许使用 dbstart和 dbshut 启动和关闭该实例数据库 如果设置为<br />
+N 表示不通过 dbstart 和 dbshut 启动和关闭实例数据库 CAMS 系统要求在<br />
+安装完 ORACLE 后要求将该参数修改为 Y 以保证 ORACLE 数据库自启动<br />
+和关闭</p>
+<p>1.2.3 数据库实例初始化文件 initSID.ora<br />
+每个数据库实例都有一个初始化 参数文件 其缺省 存放的路径为<br />
+$ORACLE_BASE/admin/&lt;SID&gt;/pfile 其名称为 init&lt;SID&gt;.ora 如 cams 实<br />
+例 对 应 的 参 数 文 件 为 initcams.ora 缺 省 存 放 路 径 为<br />
+$ORACLE_BASE/admin/cams/pfile 即/u01/app/oracle/admin/cams/pfile<br />
+但 在 CAMS 应 用 中 initcams.ora 的 存 放 路 径 为<br />
+/u02/app/oracle/admin/cams/pfile 这是基于数据与应用程序分开存放更好地<br />
+保护数据考虑的 尤其在 CAMS 双机应用模式下 能够保证数据的一致性<br />
+具体的修改操作可参考 Linux与 Oracle 安装手册<br />
+初始化参数文件是一个包含实例配置参数的文本文件 这些参数被设置为特<br />
+定的值 用于初始化 Oracle 实例的多数内存和进程设置 以下是一些主要参<br />
+数的说明<br />
+1 实例的数据库名称<br />
+db_name = &#8220;cams&#8221;<br />
+2 实例名称<br />
+instance_name = cams<br />
+3 数据库控制文件的名称和位置<br />
+control_files = (&#8220;/u02/app/oracle/oradata/cams/control01.ctl&#8221;,<br />
+&#8220;/u02/app/oracle/oradata/cams/control02.ctl&#8221;,<br />
+&#8220;/u02/app/oracle/oradata/cams/control03.ctl&#8221;)<br />
+4 调度作业队列的 SNP 进程的数量以及 SNP 进程觉醒时间间隔 秒<br />
+JOB_QUEUE_PROCESSES=2<br />
+JOB_QUEUE_INTERVAL=60</p>
+<p>5 存储追踪和告警文件的路径<br />
+user_dump_dest 指定记录 Oracle 用户进程产生的追踪和告警信息的文件的<br />
+存放路径 background_dump_dest 指定记录 Oracle 后台进程产生的追踪和<br />
+告警信息的文件的存放路径 core_dump_dest指定Oracle运行所产生的core<br />
+dump 信息的文件的存放路径<br />
+background_dump_dest = /u02/app/oracle/admin/cams/bdump<br />
+core_dump_dest = /u02/app/oracle/admin/cams/cdump<br />
+user_dump_dest = /u02/app/oracle/admin/cams/udump</p>
+<p>6 UTL_FILE_DIR 参数<br />
+UTL_FILE_DIR = *<br />
+UTL_FILE_DIR 参数指定一个或多个目录用于 Oracle 应用的文件 I/O 如备<br />
+份数据到文件 在 CAMS 系统中将该值设置为 * 表示可供 Oracle 应<br />
+用进行文件 I/O操作的目录为任意目录 因此 只要空间允许 可以将备份数<br />
+据存放到任意目录下</p>
+<p>1.2.4 监听配置文件<br />
+为了使得外部进程 如 CAMS后台程序 能够访问 Oracle 数据库 必须配<br />
+置 Oracle 网络服务器环境 配置 Oracle 网络服务器环境是通过配置<br />
+listener.ora sqlnet.ora 和 tnsnames.ora 共三个文件来进行的 listener.ora<br />
+即监听配置文件 在本小节说明 另两个文件分别在随后的两个小节说明<br />
+监听配置文件 listener.ora 的存放路径为 $ORACLE_HOME/network/admin<br />
+以下是一个示例<br />
+LISTENER =                          #监听器名称<br />
+(DESCRIPTION_LIST =<br />
+(DESCRIPTION =<br />
+(ADDRESS_LIST =<br />
+(ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC))<br />
+)<br />
+(ADDRESS_LIST =<br />
+(ADDRESS =<br />
+(PROTOCOL = TCP)<br />
+(HOST = localhost.localdomain)<br />
+(PORT = 1521))<br />
+)<br />
+)<br />
+(DESCRIPTION =<br />
+(PROTOCOL_STACK =<br />
+(PRESENTATION = GIOP)<br />
+(SESSION = RAW)<br />
+)<br />
+(ADDRESS =<br />
+(PROTOCOL = TCP)<br />
+(HOST = localhost.localdomain)<br />
+(PORT = 2481))</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=44</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Oracle常用语句1</title>
+		<link>http://ijz.me/?p=46</link>
+					<comments>http://ijz.me/?p=46#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[oracle]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=46</guid>
+
+					<description><![CDATA[第一章：日志管理 1.forcing log switches sql&#62; alter system sw [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong>第一章：日志管理</strong><br />
+1.forcing log switches<br />
+sql&gt; alter system switch logfile;<br />
+2.forcing checkpoints<br />
+sql&gt; alter system checkpoint;<br />
+3.adding online redo log groups<br />
+sql&gt; alter database add logfile [group 4]<br />
+sql&gt; (‘/disk3/log4a.rdo‘,‘/disk4/log4b.rdo‘) size 1m;<br />
+4.adding online redo log members<br />
+sql&gt; alter database add logfile member<br />
+sql&gt; ‘/disk3/log1b.rdo‘ to group 1,<br />
+sql&gt; ‘/disk4/log2b.rdo‘ to group 2;<br />
+5.changes the name of the online redo logfile<br />
+sql&gt; alter database rename file ‘c:/oracle/oradata/oradb/redo01.log‘<br />
+sql&gt; to ‘c:/oracle/oradata/redo01.log‘;<br />
+6.drop online redo log groups<br />
+sql&gt; alter database drop logfile group 3;<br />
+7.drop online redo log members<br />
+sql&gt; alter database drop logfile member ‘c:/oracle/oradata/redo01.log‘;<br />
+8.clearing online redo log files<br />
+sql&gt; alter database clear [unarchived] logfile ‘c:/oracle/log2a.rdo‘;<br />
+9.using logminer analyzing redo logfiles<br />
+a. in the init.ora specify utl_file_dir = ‘ ‘<br />
+b. sql&gt; execute dbms_logmnr_d.build(‘oradb.ora‘,‘c:oracleoradblog‘);<br />
+c. sql&gt; execute dbms_logmnr_add_logfile(‘c:oracleoradataoradbredo01.log‘,<br />
+sql&gt; dbms_logmnr.new);<br />
+d. sql&gt; execute dbms_logmnr.add_logfile(‘c:oracleoradataoradbredo02.log‘,<br />
+sql&gt; dbms_logmnr.addfile103f);<br />
+e. sql&gt; execute dbms_logmnr.start_logmnr(dictfilename=&gt;‘c:oracleoradblogoradb.ora‘);<br />
+f. sql&gt; select * from v$logmnr_post_contents(v$logmnr_dictionary,v$logmnr_parameters<br />
+sql&gt; v$logmnr_logs);<br />
+g. sql&gt; execute dbms_logmnr.end_logmnr;</p>
+<p><span id="more-46"></span></p>
+<p><strong>第二章：表空间管理</strong><br />
+1.create tablespaces<br />
+sql&gt; create tablespace tablespace_name datafile ‘c:oracleoradatafile1.dbf‘ size 100m,<br />
+sql&gt; ‘c:oracleoradatafile2.dbf‘ size 100m minimum extent 550k [logging/nologging]<br />
+sql&gt; default storage (initial 500k next 500k maxextents 500 pctinccease 0)<br />
+sql&gt; [online/offline] [permanent/temporary] [extent_management_clause]<br />
+2.locally managed tablespace<br />
+sql&gt; create tablespace user_data datafile ‘c:oracleoradatauser_data01.dbf‘<br />
+sql&gt; size 500m extent management local uniform size 10m;<br />
+3.temporary tablespace<br />
+sql&gt; create temporary tablespace temp tempfile ‘c:oracleoradatatemp01.dbf‘<br />
+sql&gt; size 500m extent management local uniform size 10m;<br />
+4.change the storage setting<br />
+sql&gt; alter tablespace app_data minimum extent 2m;<br />
+sql&gt; alter tablespace app_data default storage(initial 2m next 2m<br />
+axextents 999);<br />
+5.taking tablespace offline or online<br />
+sql&gt; alter tablespace app_data offline;<br />
+sql&gt; alter tablespace app_data online;<br />
+6.read_only tablespace<br />
+sql&gt; alter tablespace app_data read only|write;<br />
+7.droping tablespace<br />
+sql&gt; drop tablespace app_data including post_contents;<br />
+8.enableing automatic extension of data files<br />
+sql&gt; alter tablespace app_data add datafile ‘c:oracleoradataapp_data01.dbf‘ size 200m<br />
+sql&gt; autoextend on next 10m maxsize 500m;<br />
+9.change the size fo data files manually<br />
+sql&gt; alter database datafile ‘c:oracleoradataapp_data.dbf‘ resize 200m;<br />
+10.Moving data files: alter tablespace<br />
+sql&gt; alter tablespace app_data rename datafile ‘c:oracleoradataapp_data.dbf‘<br />
+sql&gt; to ‘c:oracleapp_data.dbf‘;<br />
+11.moving data files:alter database<br />
+sql&gt; alter database rename file ‘c:oracleoradataapp_data.dbf‘<br />
+sql&gt; to ‘c:oracleapp_data.dbf‘;</p>
+<p><strong>第三章：表</strong><br />
+1.create a table<br />
+sql&gt; create table table_name (column datatype,column datatype]&#8230;.)<br />
+sql&gt; tablespace tablespace_name [pctfree integer] [pctused integer]<br />
+sql&gt; [initrans integer] [maxtrans integer]<br />
+sql&gt; storage(initial 200k next 200k pctincrease 0 maxextents 50)<br />
+sql&gt; [logging|nologging] [cache|nocache]<br />
+2.copy an existing table<br />
+sql&gt; create table table_name [logging|nologging] as subquery<br />
+3.create temporary table<br />
+sql&gt; create global temporary table xay_temp as select * from xay;<br />
+on commit preserve rows/on commit delete rows<br />
+4.pctfree = (average row size &#8211; initial row size) *100 /average row size<br />
+pctused = 100-pctfree- (average row size*100/available data space)<br />
+5.change storage and block utilization parameter<br />
+sql&gt; alter table table_name pctfree=30 pctused=50 storage(next 500k<br />
+sql&gt; minextents 2 maxextents 100);<br />
+6.manually allocating extents<br />
+sql&gt; alter table table_name allocate extent(size 500k datafile ‘c:/oracle/data.dbf‘);<br />
+7.move tablespace<br />
+sql&gt; alter table employee move tablespace users;<br />
+8.deallocate of unused space<br />
+sql&gt; alter table table_name deallocate unused [keep integer]<br />
+9.truncate a table<br />
+sql&gt; truncate table table_name;<br />
+10.drop a table<br />
+sql&gt; drop table table_name [cascade constraints];<br />
+11.drop a column<br />
+sql&gt; alter table table_name103f drop column comments cascade constraints checkpoint 1000;<br />
+alter table table_name drop columns continue;<br />
+12.mark a column as unused<br />
+sql&gt; alter table table_name set unused column comments cascade constraints;<br />
+alter table table_name drop unused columns checkpoint 1000;<br />
+alter table orders drop columns continue checkpoint 1000<br />
+data_dictionary : dba_unused_col_tabs</p>
+<p><strong>第四章：索引</strong><br />
+1.creating function-based indexes<br />
+sql&gt; create index summit.item_quantity on summit.item(quantity-quantity_shipped);<br />
+2.create a B-tree index<br />
+sql&gt; create [unique] index index_name on table_name(column,.. asc/desc)<br />
+tablespace<br />
+sql&gt; tablespace_name [pctfree integer] [initrans integer] [maxtrans integer]<br />
+sql&gt; [logging | nologging] [nosort] storage(initial 200k next 200k pctincrease 0<br />
+sql&gt; maxextents 50);<br />
+3.pctfree(index)=(maximum number of rows-initial number of rows)*100/maximum number of rows<br />
+4.creating reverse key indexes<br />
+sql&gt; create unique index xay_id on xay(a) reverse pctfree 30 storage(initial 200k<br />
+sql&gt; next 200k pctincrease 0 maxextents 50) tablespace indx;<br />
+5.create bitmap index<br />
+sql&gt; create bitmap index xay_id on xay(a) pctfree 30 storage( initial 200k next 200k<br />
+sql&gt; pctincrease 0 maxextents 50) tablespace indx;<br />
+6.change storage parameter of index<br />
+sql&gt; alter index xay_id storage (next 400k maxextents 100);<br />
+7.allocating index space<br />
+sql&gt; alter index xay_id allocate extent(size 200k datafile<br />
+‘c:/oracle/index.dbf‘);<br />
+8.alter index xay_id deallocate unused;</p>
+<p><strong>第五章：约束</strong><br />
+1.define constraints as immediate or deferred<br />
+sql&gt; alter session set constraint[s] = immediate/deferred/default;<br />
+set constraint[s] constraint_name/all immediate/deferred;<br />
+2. sql&gt; drop table table_name cascade constraints<br />
+sql&gt; drop tablespace tablespace_name including post_contents cascade constraints<br />
+3. define constraints while create a table<br />
+sql&gt; create table xay(id number(7) constraint xay_id primary key deferrable<br />
+sql&gt; using index storage(initial 100k next 100k) tablespace indx);<br />
+primary key/unique/references table(column)/check<br />
+4.enable constraints<br />
+sql&gt; alter table xay enable novalidate constraint xay_id;<br />
+5.enable constraints<br />
+sql&gt; alter table xay enable validate constraint xay_id;</p>
+<p><strong>第六章：</strong><strong>LOAD</strong><strong>数据</strong><br />
+1.loading data using direct_load insert<br />
+sql&gt; insert /*+append */ into emp nologging<br />
+sql&gt; select * from emp_old;<br />
+2.parallel direct-load insert<br />
+sql&gt; alter session enable parallel dml;<br />
+sql&gt; insert /*+parallel(emp,2) */ into emp nologging<br />
+sql&gt; select * from emp_old;<br />
+3.using sql*loader<br />
+sql&gt; sqlldr scott/tiger sql&gt; control = ulcase6.ctl sql&gt; log = ulcase6.log direct=true</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=46</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>oracle和 mysql的几点区别/zz/</title>
+		<link>http://ijz.me/?p=45</link>
+					<comments>http://ijz.me/?p=45#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[数据库]]></category>
+		<category><![CDATA[mysql]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=45</guid>
+
+					<description><![CDATA[Oracle数据库与MySQL数据库的区别是本文我们主要介绍的内容，希望能够对您有所帮助。 1.组函数用法规则 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Oracle数据库与MySQL数据库的区别是本文我们主要介绍的内容，希望能够对您有所帮助。</p>
+<p><strong>1.组函数用法规则</strong></p>
+<p>mysql中组函数在select语句中可以随意使用，但在oracle中如果查询语句中有组函数，那其他列名必须是组函数处理过的，或者是group by子句中的列否则报错</p>
+<p>eg：</p>
+<p>select name,count(money) from user；这个放在mysql中没有问题在oracle中就有问题了。</p>
+<p><strong>2.自动增长的数据类型处理</strong></p>
+<p>MYSQL有自动增长的数据类型，插入记录时不用操作此字段，会自动获得数据值。ORACLE没有自动增长的数据类型，需要建立一个自动增长的序列号，插入记录时要把序列号的下一个值赋于此字段。</p>
+<p>CREATE SEQUENCE序列号的名称(最好是表名+序列号标记)INCREMENT BY 1 START WITH 1 MAXVALUE 99999 CYCLE NOCACHE;</p>
+<p>其中最大的值按字段的长度来定，如果定义的自动增长的序列号NUMBER(6)，最大值为999999</p>
+<p>INSERT语句插入这个字段值为：序列号的名称.NEXTVAL</p>
+<p><strong>3.单引号的处理</strong></p>
+<p>MYSQL里可以用双引号包起字符串，ORACLE里只可以用单引号包起字符串。在插入和修改字符串前必须做单引号的替换：把所有出现的一个单引号替换成两个单引号。</p>
+<p><strong>4.翻页的SQL语句的处理</strong></p>
+<p>MYSQL处理翻页的SQL语句比较简单，用LIMIT开始位置，记录个数；PHP里还可以用SEEK定位到结果集的位置。ORACLE处理翻页的 SQL语句就比较繁琐了。每个结果集只有一个ROWNUM字段标明它的位置，并且只能用ROWNUM&lt;100，不能用ROWNUM&gt;80。</p>
+<p>以下是经过分析后较好的两种ORACLE翻页SQL语句(ID是唯一关键字的字段名)：</p>
+<p>语句一：</p>
+<p>SELECT ID, [FIELD_NAME,&#8230;] FROM TABLE_NAME WHERE ID IN ( SELECT ID FROM (SELECT ROWNUM AS NUMROW, ID FROM TABLE_NAME WHERE 条件1 ORDER BY 条件2) WHERE NUMROW &gt; 80 AND NUMROW &lt; 100 ) ORDER BY 条件3;</p>
+<p>语句二：</p>
+<p>SELECT * FROM (( SELECT ROWNUM AS NUMROW, c.* from (select [FIELD_NAME,&#8230;] FROM TABLE_NAME WHERE 条件1 ORDER BY 条件2) c) WHERE NUMROW &gt; 80 AND NUMROW &lt; 100 ) ORDER BY 条件3;</p>
+<p><strong>5.长字符串的处理</strong></p>
+<p>长字符串的处理ORACLE也有它特殊的地方。INSERT和UPDATE时最大可操作的字符串长度小于等于4000个单字节，如果要插入更长的字 符串，请考虑字段用CLOB类型，方法借用ORACLE里自带的DBMS_LOB程序包。插入修改记录前一定要做进行非空和长度判断，不能为空的字段值和 超出长度字段值都应该提出警告，返回上次操作。</p>
+<p><strong>6.日期字段的处理</strong></p>
+<p>MYSQL日期字段分DATE和TIME两种，ORACLE日期字段只有DATE，包含年月日时分秒信息，用当前数据库的系统时间为 SYSDATE，精确到秒，或者用字符串转换成日期型函数TO_DATE(‘2001-08-01’,’YYYY-MM-DD’)年-月-日24小时:分 钟:秒的格式YYYY-MM-DD HH24:MI:SS TO_DATE()还有很多种日期格式，可以参看ORACLE DOC.日期型字段转换成字符串函数TO_CHAR(‘2001-08-01’,’YYYY-MM-DD HH24:MI:SS’)</p>
+<p>日期字段的数学运算公式有很大的不同。MYSQL找到离当前时间7天用DATE_FIELD_NAME &gt; SUBDATE(NOW()，INTERVAL 7 DAY)ORACLE找到离当前时间7天用 DATE_FIELD_NAME &gt;SYSDATE &#8211; 7;</p>
+<p>MYSQL中插入当前时间的几个函数是：NOW()函数以`&#8217;YYYY-MM-DD HH:MM:SS&#8217;返回当前的日期时间，可以直接存到DATETIME字段中。CURDATE()以’YYYY-MM-DD’的格式返回今天的日期，可以 直接存到DATE字段中。CURTIME()以’HH:MM:SS’的格式返回当前的时间，可以直接存到TIME字段中。例：insert into tablename (fieldname) values (now())</p>
+<p>而oracle中当前时间是sysdate</p>
+<p><strong>7.空字符的处理</strong></p>
+<p>MYSQL的非空字段也有空的内容，ORACLE里定义了非空字段就不容许有空的内容。按MYSQL的NOT NULL来定义ORACLE表结构，导数据的时候会产生错误。因此导数据时要对空字符进行判断，如果为NULL或空字符，需要把它改成一个空格的字符串。</p>
+<p><strong>8.字符串的模糊比较</strong></p>
+<p>MYSQL里用字段名like%‘字符串%’，ORACLE里也可以用字段名like%‘字符串%’但这种方法不能使用索引，速度不快，用字符串比较函数instr(字段名，‘字符串’)&gt;0会得到更精确的查找结果。</p>
+<p><strong>9.程序和函数里，操作数据库的工作完成后请注意结果集和指针的释放。</strong></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=45</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>oracle常用语句2</title>
+		<link>http://ijz.me/?p=47</link>
+					<comments>http://ijz.me/?p=47#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[oracle]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=47</guid>
+
+					<description><![CDATA[第七章：reorganizing data 1.using expoty $exp scott/tiger t [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong>第七章：</strong><strong>reorganizing data</strong><br />
+1.using expoty<br />
+$exp scott/tiger tables(dept,emp) file=c:emp.dmp log=exp.log compress=n direct=y<br />
+2.using import<br />
+$imp scott/tiger tables(dept,emp) file=emp.dmp log=imp.log ignore=y<br />
+3.transporting a tablespace<br />
+sql&gt;alter tablespace sales_ts read only;<br />
+$exp sys/.. file=xay.dmp transport_tablespace=y tablespace=sales_ts<br />
+triggers=n constraints=n<br />
+$copy datafile<br />
+$imp sys/.. file=xay.dmp transport_tablespace=y datafiles=(/disk1/sles01.dbf,/disk2<br />
+/sles02.dbf)<br />
+sql&gt; alter tablespace sales_ts read write;<br />
+4.checking transport set<br />
+sql&gt; DBMS_tts.transport_set_check<br />
+(ts_list =&gt;‘sales_ts‘ ..,incl_constraints=&gt;true);<br />
+在表transport_set_violations 中查看<br />
+sql&gt; dbms_tts.isselfcontained 为true 是， 表示自包含<br />
+<span id="more-47"></span><br />
+<strong>第八章：</strong><strong> managing password security and resources</strong><br />
+1.controlling account lock and password<br />
+sql&gt; alter user juncky identified by oracle account unlock;<br />
+2.user_provided password function<br />
+sql&gt; function_name(userid in varchar2(30),password in varchar2(30),<br />
+old_password in varchar2(30)) return boolean<br />
+3.create a profile : password setting<br />
+sql&gt; create profile grace_5 limit failed_login_attempts 3<br />
+sql&gt; password_lock_time unlimited password_life_time 30<br />
+sql&gt;password_reuse_tim103fe 30 password_verify_function verify_function<br />
+sql&gt; password_grace_time 5;<br />
+4.altering a profile<br />
+sql&gt; alter profile default failed_login_attempts 3<br />
+sql&gt; password_life_time 60 password_grace_time 10;<br />
+5.drop a profile<br />
+sql&gt; drop profile grace_5 [cascade];<br />
+6.create a profile : resource limit<br />
+sql&gt; create profile developer_prof limit sessions_per_user 2<br />
+sql&gt; cpu_per_session 10000 idle_time 60 connect_time 480;<br />
+7. view =&gt; resource_cost : alter resource cost<br />
+dba_Users,dba_profiles<br />
+8. enable resource limits<br />
+sql&gt; alter system set resource_limit=true;</p>
+<p><strong>第九章：</strong><strong>Managing users</strong><br />
+1.create a user: database authentication<br />
+sql&gt; create user juncky identified by oracle default tablespace users<br />
+sql&gt; temporary tablespace temp quota 10m on data password expire<br />
+sql&gt; [account lock|unlock] [profile profilename|default];<br />
+2.change user quota on tablespace<br />
+sql&gt; alter user juncky quota 0 on users;<br />
+3.drop a user<br />
+sql&gt; drop user juncky [cascade];<br />
+4. monitor user<br />
+view: dba_users , dba_ts_quotas</p>
+<p><strong>第十章：</strong><strong>managing privileges</strong><br />
+1.system privileges: view =&gt; system_privilege_map ,dba_sys_privs,session_privs<br />
+2.grant system privilege<br />
+sql&gt; grant create session,create table to managers;<br />
+sql&gt; grant create session to scott with admin option;<br />
+with admin option can grant or revoke privilege from any user or role;<br />
+3.sysdba and sysoper privileges:<br />
+sysoper: startup,shutdown,alter database open|mount,alter database backup controlfile,<br />
+alter tablespace begin/end backup,recover database<br />
+alter database archivelog,restricted session<br />
+sysdba: sysoper privileges with admin option,create database,recover database until<br />
+4.password file members: view:=&gt; v$pwfile_users<br />
+5.O7_dictionary_accessibility =true restriction access to view or tables in other schema<br />
+6.revoke system privilege<br />
+sql&gt; revoke create table from karen;<br />
+sql&gt; revoke create session from scott;<br />
+7.grant object privilege<br />
+sql&gt; grant execute on dbms_pipe to public;<br />
+sql&gt; grant update(first_name,salary) on employee to karen with grant option;<br />
+8.display object privilege : view =&gt; dba_tab_privs, dba_col_privs<br />
+9.revoke object privilege<br />
+sql&gt; revoke execute on dbms_pipe from scott [cascade constraints];<br />
+10.audit record view :=&gt; sys.aud$<br />
+11. protecting the audit trail<br />
+sql&gt; audit delete on sys.aud$ by access;<br />
+12.statement auditing<br />
+sql&gt; audit user;<br />
+13.privilege auditing<br />
+sql&gt; audit select any table by summit by access;<br />
+14.schema object auditing<br />
+sql&gt; audit lock on summit.employee by access whenever successful;<br />
+15.view audit option : view=&gt; all_def_audit_opts,dba_stmt_audit_opts,dba_priv_audit_opts,dba_obj_audit_opts<br />
+16.view audit result: view=&gt; dba_audit_trail,dba_audit_exists,dba_audit_object,<br />
+dba_audit_session,dba_audit_statement</p>
+<p><strong>第十一章：</strong><strong> manager role</strong><br />
+1.create roles<br />
+sql&gt; create role sales_clerk;<br />
+sql&gt; create role hr_clerk identified by bonus;<br />
+sql&gt; create role hr_manager identified externally;<br />
+2.modify role<br />
+sql&gt; alter role sales_clerk identified by commission;<br />
+sql&gt; alter role hr_clerk identified externally;<br />
+sql&gt; alter role hr_manager not identified;<br />
+3.assigning roles<br />
+sql&gt; grant sales_clerk to scott;<br />
+sql&gt; grant hr_clerk to hr_manager;<br />
+sql&gt; grant hr_manager to scott with admi103fn option;<br />
+4.establish default role<br />
+sql&gt; alter user scott default role hr_clerk,sales_clerk;<br />
+sql&gt; alter user scott default role all;<br />
+sql&gt; alter user scott default role all except hr_clerk;<br />
+sql&gt; alter user scott default role none;<br />
+5.enable and disable roles<br />
+sql&gt; set role hr_clerk;<br />
+sql&gt; set role sales_clerk identified by commission;<br />
+sql&gt; set role all except sales_clerk;<br />
+sql&gt; set role none;<br />
+6.remove role from user<br />
+sql&gt; revoke sales_clerk from scott;<br />
+sql&gt; revoke hr_manager from public;<br />
+7.remove role<br />
+sql&gt; drop role hr_manager;<br />
+8.display role information<br />
+view: =&gt;dba_roles,dba_role_privs,role_role_privs,dba_sys_privs,<br />
+role_sys_privs,role_tab_privs,session_roles</p>
+<p><strong>第十二章</strong><strong>: BACKUP and RECOVERY</strong><br />
+1. v$sga,v$instance,v$process,v$bgprocess,v$database,v$datafile,v$sgastat<br />
+2. Rman need set dbwr_IO_slaves or backup_tape_IO_slaves and large_pool_size<br />
+3. Monitoring Parallel Rollback<br />
+&gt; v$fast_start_servers , v$fast_start_transactions<br />
+4.perform a closed database backup (noarchivelog)<br />
+&gt; shutdown immediate<br />
+&gt; cp files /backup/<br />
+&gt; startup<br />
+5.restore to a different location<br />
+&gt; connect system/manager as sysdba<br />
+&gt; startup mount<br />
+&gt; alter database rename file ‘/disk1/../user.dbf‘ to ‘/disk2/../user.dbf‘;<br />
+&gt; alter database open;<br />
+6.recover syntax<br />
+&#8211;recover a mounted database<br />
+&gt;recover database;<br />
+&gt;recover datafile ‘/disk1/data/df2.dbf‘;<br />
+&gt;alter database recover database;<br />
+&#8211;recover an opened database<br />
+&gt;recover tablespace user_data;<br />
+&gt;recover datafile 2;<br />
+&gt;alter database recover datafile 2;<br />
+7.how to apply redo log files automatically<br />
+&gt;set autorecovery on<br />
+&gt;recover automatic datafile 4;<br />
+8.complete recovery:<br />
+&#8211;method 1(mounted databae)<br />
+&gt;copy c:backupuser.dbf c:oradatauser.dbf<br />
+&gt;startup mount<br />
+&gt;recover datafile ‘c:oradatauser.dbf;<br />
+&gt;alter database open;<br />
+&#8211;method 2(opened database,initially opened,not system or rollback datafile)<br />
+&gt;copy c:backupuser.dbf c:oradatauser.dbf (alter tablespace offline)<br />
+&gt;recover datafile ‘c:oradatauser.dbf‘ or<br />
+&gt;recover tablespace user_data;<br />
+&gt;alter database datafile ‘c:oradatauser.dbf‘ online or<br />
+&gt;alter tablespace user_data online;<br />
+&#8211;method 3(opened database,initially closed not system or rollback datafile)<br />
+&gt;startup mount<br />
+&gt;alter database datafile ‘c:oradatauser.dbf‘ offline;<br />
+&gt;alter database open<br />
+&gt;copy c:backupuser.dbf d:oradatauser.dbf<br />
+&gt;alter database rename file ‘c:oradatauser.dbf‘ to ‘d:oradatauser.dbf‘<br />
+&gt;recover datafile ‘e:oradatauser.dbf‘ or recover tablespace user_data;<br />
+&gt;alter tablespace user_data online;<br />
+&#8211;method 4(loss of data file with no backup and have all archive log)<br />
+&gt;alter tablespace user_data offline immediate;<br />
+&gt;alter database create datafile ‘d:oradatauser.dbf‘ as ‘c:oradatauser.dbf‘‘<br />
+&gt;recover tablespace user_data;<br />
+&gt;alter tablespace user_data online<br />
+5.perform an open database backup<br />
+&gt; alter tablespace user_data begin backup;<br />
+&gt; copy files /backup/<br />
+&gt; alter database datafile ‘/c:/../data.dbf‘ end backup;<br />
+&gt; alter system switch logfile;<br />
+6.backup a control file<br />
+&gt; alter database backup controlfile to ‘control1.bkp‘;<br />
+&gt; alter database backup controlfile to trace;<br />
+7.recovery 103f(noarchivelog mode)<br />
+&gt; shutdown abort<br />
+&gt; cp files<br />
+&gt; startup<br />
+8.recovery of file in backup mode<br />
+&gt;alter database datafile 2 end backup;<br />
+9.clearing redo log file<br />
+&gt;alter database clear unarchived logfile group 1;<br />
+&gt;alter database clear unarchived logfile group 1 unrecoverable datafile;<br />
+10.redo log recovery<br />
+&gt;alter database add logfile group 3 ‘c:oradataredo03.log‘ size 1000k;<br />
+&gt;alter database drop logfile group 1;<br />
+&gt;alter database open;<br />
+or &gt;cp c:oradataredo02.log‘ c:oradataredo01.log<br />
+&gt;alter database clear logfile ‘c:oradatalog01.log‘;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=47</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>PL/SQL与T-SQL的区别</title>
+		<link>http://ijz.me/?p=54</link>
+					<comments>http://ijz.me/?p=54#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[数据库]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=54</guid>
+
+					<description><![CDATA[PL/SQL也是一种程序语言，叫做过程化SQL语言（Procedural Language/SQL）。PL/S [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>PL/SQL也是一种程序语言，叫做过程化SQL语言（Procedural Language/SQL）。PL/SQL是Oracle数据库对SQL语句的扩展。在普通SQL语句的使用上增加了编程语言的特点，所以PL/SQL就 是把数据操作和查询语句组织在PL/SQL代码的过程性单元中，通过逻辑判断、循环等操作实现复杂的功能或者计算的程序语言。</p>
+<p><span id="more-54"></span></p>
+<p>T-SQL是微软对SQL 程式设计语言的增强版，它是用来让应用程式与 SQL Server 沟通的主要语言。T-SQL 提供标准 SQL的DDL 和 DML 功能，加上延伸的函数、系统预存程序以及程式设计结构(例如 IF 和 WHILE)让程式设计更有弹性。<br />
+两者在各个方面还是有着比较大的区别的，下面对两者做个比较总结方便大家学习：<img decoding="async" src="http://www_qibosoft_com/Tmp_updir/article/43/1_aiugyoC_0003.gif" alt="" /></p>
+<p><strong>字符串连接</strong></p>
+<p>Oracle用|| 符号作为连接符，而SQL Server的连接符是加号：+ 。<br />
+Oracle查询如下所示：Select ‘Name’ || ‘Last Name’ From tableName<br />
+SQL Server查询如下：Select ‘Name’ + ‘Last Name’</p>
+<p><strong>GUID</strong></p>
+<p>Oracle用SYS_GUID()生成GUID，不含{}和-；getregguidstring 生成 GUID 含{}和-；</p>
+<p>SQL Server用NEWID生成GUID；</p>
+<p><strong>数字取舍</strong><br />
+Oracle数据库内有一个TRUNC函数，该函数返回m位十进制数的n位；如果省略m则n就是0位。m的值可以为负，表示截去小数点左边m位数字。<br />
+在SQL Server下可以用Round或者Floor。Oracle查询如下所示：SELECT  TRUNC(15.79,1) &#8220;Truncate&#8221; FROM DUAL;<br />
+SQL Server查询如下：SELECT ROUND(15.79, 0) rounded , ROUND(15.79, 0,1) truncated<br />
+SELECT FLOOR(ROUND(15.79, 0)), FLOOR(ROUND(15.79, 0,1) )</p>
+<p><strong>数字转换</strong><br />
+Oracle的TO_CHAR函数可以把n位NUMBER数据类型转换为VARCHAR2 数据类型，同时采用可选的数字格式。<br />
+SQL Server则通过STR函数返回数字转换之后的字符数据。不过，该函数不具方便的Format参数。<br />
+Oracle查询如下所示：SELECT to_char(123.45 ,99999999999999) from tab<br />
+SELECT to_char(EXPIRY_DATE,&#8217;DDMONYYYY&#8217;) from tab<br />
+SQL Server查询如下：SELECT STR(123.45, 14)<br />
+SELECT STR(round(123.455 , 2),12,2)<br />
+SELECT CAST(REPLACE((CONVERT(varchar(12) , EXPIRYDATE, 106 )),&#8217; &#8216; , &#8221;) as varchar(9))</p>
+<p><strong>LENGTH</strong><strong>和LEN</strong><br />
+Oracle查询如下所示：SELECT LENGTH(&#8216;SQLMAG&#8217;) &#8220;Length in characters&#8221; FROM DUAL;<br />
+SQL Server查询如下：SELECT LEN(&#8216;SQLMAG&#8217;) &#8220;Length in characters&#8221;</p>
+<p><strong>日期</strong><br />
+两种系统都具有各自的当前日期和时间格式。<br />
+Oracle取得日期和采用如下方式：SYSDATE<br />
+SQL Server则是这样的：GETDATE()<br />
+你可以用各种语法操作日期。</p>
+<p>以下的代码对Oracle日期值中的月份进行了格式调整（返回日期再加上n月）：Select   add_months(sysdate,12) from dual<br />
+SQL Server则是如下完成同等功能的：Select dateadd(mm,12,getdate())<br />
+数据的减法也不同。</p>
+<p>Oracle中直接对数据进行减法操作：SELECT sysdate -add_months(sysdate,12) FROM dual<br />
+SQL Server则是这样做的：SELECT  datediff(dd, GetDate(),dateadd(mm,12,getdate()))</p>
+<p><strong>执行查询时</strong><br />
+PLSQL执行查询的时候，FROM子句是必须的，而SQL SERVER不一定<br />
+如ORACLE中select 2*5 from dual<br />
+而SQL SERVER中select 2*5</p>
+<p style="text-align: left;">
+<p style="text-align: left;"><strong>更新语句的区别</strong></p>
+<p style="text-align: left;">SQLserver与Oralce中的两表关联更新是区别的。</p>
+<p style="text-align: left;">在T-SQL中更新相对简单些，直接用下面的语句都是可以：</p>
+<p style="text-align: left;">Update b<br />
+Set b.processflag = a.processflag<br />
+From temp_1 a Join temp_2 b<br />
+On a.msgid_db = b.msgid</p>
+<p style="text-align: left;">Update temp_2<br />
+Set Usertime = b.Usertime<br />
+From temp_2 a Join temp_1 b<br />
+On a.msgid = b.msgid_db</p>
+<p style="text-align: left;">Update temp_2<br />
+Set Usertime = b.Usertime<br />
+From temp_1 b<br />
+where msgid = b.msgid_db</p>
+<p style="text-align: left;">PL/SQL中应该这样表达：</p>
+<p style="text-align: left;">Update Temp_2 a<br />
+Set a.Usertime = (Select b.Usertime<br />
+From Temp_1 b<br />
+Where b.Msgid_Db = a.Msgid)<br />
+Where Exists (Select 1 From Temp_1 b Where b.Msgid_Db = a.Msgid);</p>
+<p style="text-align: left;"><strong>更新多个字段：</strong></p>
+<p style="text-align: left;">Update Temp_2 a<br />
+Set a.Usertime = (Select b.Usertime<br />
+From Temp_1 b<br />
+Where b.Msgid_Db = a.Msgid),<br />
+a.processflag = (Select b.processflag<br />
+From Temp_1 b<br />
+Where b.Msgid_Db = a.Msgid)<br />
+Where Exists (Select 1 From Temp_1 b Where b.Msgid_Db = a.Msgid);</p>
+<p style="text-align: left;"><strong>多表关系更新：</strong></p>
+<p style="text-align: left;">Update Temp_2 a<br />
+Set a.Usertime = (Select b.Usertime<br />
+From Temp_1 b<br />
+Where b.Msgid_Db = a.Msgid),<br />
+a.processflag = (Select c.processflag<br />
+From Temp_3 c<br />
+Where c.Msgid = a.Msgid)<br />
+Where Exists (Select 1 From Temp_1 b Where b.Msgid_Db = a.Msgid)<br />
+And Exists (Select 1 From Temp_3 c Where c.Msgid = a.Msgid);</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=54</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>T-SQL数据库备份与还原</title>
+		<link>http://ijz.me/?p=68</link>
+					<comments>http://ijz.me/?p=68#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[oracle]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=68</guid>
+
+					<description><![CDATA[体现了SQL Server中的四个知识点： 1． 获取SQL Server服务器上的默认目录 2． 备份SQL [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>体现了SQL Server中的四个知识点：</p>
+<p>1． 获取SQL Server服务器上的默认目录</p>
+<p>2． 备份SQL语句的使用</p>
+<p>3． 恢复SQL语句的使用，同时考虑了强制恢复时关闭其他用户进程的处理</p>
+<p>4． 作业创建SQL语句的使用</p>
+<p><span id="more-68"></span></p>
+<p>/*1.&#8211;得到数据库的文件目录</p>
+<p>@dbname 指定要取得目录的数据库名<br />
+如果指定的数据不存在,返回安装SQL时设置的默认数据目录<br />
+如果指定NULL,则返回默认的SQL备份目录名<br />
+*/</p>
+<p>/*&#8211;调用示例<br />
+select 数据库文件目录=dbo.f_getdbpath(&#8216;tempdb&#8217;)<br />
+,[默认SQL SERVER数据目录]=dbo.f_getdbpath(&#8221;)<br />
+,[默认SQL SERVER备份目录]=dbo.f_getdbpath(null)<br />
+&#8211;*/<br />
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[f_getdbpath]&#8217;) and xtype in (N&#8217;FN&#8217;, N&#8217;IF&#8217;, N&#8217;TF&#8217;))<br />
+drop function [dbo].[f_getdbpath]<br />
+GO</p>
+<p>create function f_getdbpath(@dbname sysname)<br />
+returns nvarchar(260)<br />
+as<br />
+begin<br />
+declare @re nvarchar(260)<br />
+if @dbname is null or db_id(@dbname) is null<br />
+select @re=rtrim(reverse(filename)) from master..sysdatabases where name=&#8217;master&#8217;<br />
+else<br />
+select @re=rtrim(reverse(filename)) from master..sysdatabases where name=@dbname</p>
+<p>if @dbname is null<br />
+set @re=reverse(substring(@re,charindex(&#8221;,@re)+5,260))+&#8217;BACKUP&#8217;<br />
+else<br />
+set @re=reverse(substring(@re,charindex(&#8221;,@re),260))<br />
+return(@re)<br />
+end<br />
+go</p>
+<p>/*2.&#8211;备份数据</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=68</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>在linux上使用rlwrap实现像shell的命令history</title>
+		<link>http://ijz.me/?p=111</link>
+					<comments>http://ijz.me/?p=111#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[数据库]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=111</guid>
+
+					<description><![CDATA[在linux 上的oracle sqlplus 不能利用 上, 下键来查看命令，md指头都敲破了，键盘都换了好 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>在linux 上的oracle sqlplus 不能利用 上, 下键来查看命令，md指头都敲破了，键盘都换了好几个了。</p>
+<p>. rlwarp 工具可以帮助我们解决这个问题.</p>
+<p>官方下载地址:<a href="http://utopia.knoware.nl/%7Ehlub/uck/rlwrap/" target="_blank">http://utopia.knoware.nl/~hlub/uck/rlwrap/</a></p>
+<p><span id="more-111"></span></p>
+<p>安装过程:</p>
+<p>[root@oradb temp]# tar -xvf rlwrap-0.28.tar<br />
+[root@oradb temp]# cd rlwrap-0.28<br />
+[root@oradb rlwrap-0.28]# ./configure<br />
+[root@oradb rlwrap-0.28]# make<br />
+[root@oradb rlwrap-0.28]# make install</p>
+<p>这样就可以使用 rlwarp 了.</p>
+<p>[oracle@oradb ~]$ rlwrap sqlplus &#8220;/ as sysdba&#8221;</p>
+<p>这样登录数据库 , 就可以使用上 下 键查找上次执行的命令.</p>
+<p>如果每次都需要输入 rlwrap 感觉麻烦的话 , 还可以加入到 .bash_profile 中, 就不用每次都输入了.</p>
+<p>alias sqlplus=&#8217;rlwrap sqlplus&#8217;<br />
+alias rman=&#8217;rlwrap rman&#8217;</p>
+<p>ok可以体验一下了。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=111</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>终于在redhat9.0上成功安装oracle9.2/zz/</title>
+		<link>http://ijz.me/?p=150</link>
+					<comments>http://ijz.me/?p=150#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[oracle]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=150</guid>
+
+					<description><![CDATA[经过若干次的失败，开始意识到按照oracle的安装手册是行不通的了，转向internet搜索，再次证明互联网是 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>经过若干次的失败，开始意识到按照oracle的安装手册是行不通的了，转向internet搜索，再次证明互联网是一个最大的知识库，相关的文档真是不可胜数（虽然大多数出自同一个源头）。我怎么不早点动手搜呢？</p>
+<p><span id="more-150"></span></p>
+<p>我的安装环境是：vmware 4.5.1+redhat9.0+oracle 9.2.0.4，虚机上只有120M内存、6G硬盘，资源非常紧张。</p>
+<p>首先必须把ORACLE发行介质的3张光盘放到公司的270主机上，解开生成STAGE文件，然后再通过NFS访问（解决NFS访问的问题花了老鼻子劲了）。</p>
+<p>然后要忍受ORACLE安装期间超低的系统性能，即使关闭所有不必要的应用，还是需要等待数秒的窗口切换时间，到最后安装完毕，笔记本电脑靠近硬盘的地方竟然微微发热（声明一下，公司空调挺猛的）。</p>
+<p>最后还不得不取消ORACLE建库，因为一个数据库实例的最低内存要求是我实存的114%！</p>
+<p>安装过程参阅的文档如下（不同的地方用红色标出）：</p>
+<p>在安装之前有几个地方需要注意的：<br />
+你的交换分区最好有一个G左右那么大，第二你的硬盘分区最好也要有足够大的空间。<br />
+&#8212; 我的swap空间251m，使用率一度接近80%</p>
+<p>下面我那个转贴的中译本：<br />
+&#8212; 也是舶来品<img decoding="async" src="http://www.0x3f.com/mixer/admin/editor/plugins/emotions/images/smiley-laughing.gif" alt="" /><br />
+1、创建用户和组：[roko@miniroko] su &#8211;</p>
+<p>[root@miniroko]# groupadd oinstall<br />
+[root@miniroko]# groupadd dba<br />
+[root@miniroko]# useradd -g oinstall -G dba oracle<br />
+[root@miniroko]# passwd oracle</p>
+<p>2、准备文件目录：<br />
+&#8212; 这步可以省略，runInstaller会替你做的<br />
+[root@miniroko]# mkdir -p /opt/ora9/product/9.2<br />
+[root@miniroko]# mkdir /var/opt/oracle<br />
+[root@miniroko]# chown oracle.dba /var/opt/oracle<br />
+[root@miniroko]# chown -R oracle.dba /opt/ora9</p>
+<p>3、调节系统内核参数及安装支持软件包：<br />
+3.1、首先用命令rpm -qa|grep compat 查看系统中是否安有以下几个软件包：</p>
+<p>compat-gcc-7.3-2.96.118.i386.rpm<br />
+compat-libgcj-7.3-2.96.118.i386.rpm<br />
+compat-libgcj-devel-7.3-2.96.118.i386.rpm<br />
+nss_db-compat-2.2-20.i386.rpm</p>
+<p>如果没有，请拿出你的安装盘，安装以上的包。不要用原文给的那个APT的东东，不熟的人遇上没有解决的依赖性问题的话，就特别讨厌。<br />
+&#8212; 我去下载这些包的url地址：http://download.fedoralegacy.org/redhat/9/os/i386/</p>
+<p>3.2、设置内核参数，调节信号灯及共享内存：<br />
+[root@miniroko]# echo 250 32000 100 128 &gt; /proc/sys/kernel/sem<br />
+[root@miniroko]# echo 536870912 &gt; /proc/sys/kernel/shmmax<br />
+[root@miniroko]# echo 4096 &gt; /proc/sys/kernel/shmmni<br />
+[root@miniroko]# echo 2097152 &gt; /proc/sys/kernel/shmall<br />
+[root@miniroko]# echo 65536 &gt; /proc/sys/fs/file-max<br />
+[root@miniroko]# echo 1024 65000 &gt; /proc/sys/net/ipv4/ip_local_port_range</p>
+<p>当然为了一开机系统就能自动帮你设好这些参数，也可改动 /etc/sysctl.conf 这个文件，加入以下的语句：<br />
+kernel.shmmax = 536870912<br />
+kernel.shmmni = 4096<br />
+kernel.shmall = 2097152<br />
+kernel.sem = 250 32000 100 128<br />
+fs.file-max = 65536<br />
+net.ipv4.ip_local_port_range = 1024 65000</p>
+<p>保存后，即可。建议关于net.ipv4.ip_local_port_range不要改动，可以用cat /proc/sys/net/ipv4/ip_local_port_range 看到红帽子对这个所定义的范围已经符合，而且端口范围比这个小。</p>
+<p>3.3、设置oracle对文件的要求：<br />
+编辑文件：/etc/security/limits.conf 加入以下语句：<br />
+oracle soft nofile 65536<br />
+oracle hard nofile 65536<br />
+oracle soft nproc 16384<br />
+oracle hard nproc 16384</p>
+<p>这个需要重启后才能生效的。但是安装的时候无所谓了。<br />
+&#8212; 这是作者的臆断了，re-login就生效了</p>
+<p>4、设置oracle的系统环境：<br />
+以oracle用户的身份登录：<br />
+su oracle</p>
+<p>cd ~</p>
+<p>编辑它的.bashrc文件加入以的东东：<br />
+#oracle 9i<br />
+export ORACLE_BASE=/opt/ora9<br />
+export ORACLE_HOME=/opt/ora9/product/9.2<br />
+export PATH=$ORACLE_HOME/bin:$ORACLE_HOME/Apache/Apache/bin:$PATH<br />
+export ORACLE_OWNER=oracle<br />
+export ORACLE_SID=ora9i<br />
+export ORACLE_TERM=vt100<br />
+export LD_ASSUME_KERNEL=2.4.1<br />
+export THREADS_FLAG=native<br />
+export LD_LIBRARY_PATH=/opt/ora9/product/9.2/lib:$LD_LIBRARY_PATH<br />
+export PATH=/opt/ora9/product/9.2/bin:$PATH<br />
+#<br />
+# change this NLS settings to suit your country:<br />
+# example:<br />
+# german_germany.we8iso8859p15, american_america.we8iso8859p2 etc.<br />
+#<br />
+#export NLS_LANG=&#8217;croatian_croatia.ee8iso8859p2&#8242; (注意这个东东把它注释掉，因为我们用的是中文系统。然而为了能够显示中文加入以下一行：<br />
+export LC=en_US<br />
+&#8212; 非oracle的几个环境变量设置应该很关键</p>
+<p>退出，将你下载的三个iso文件准备好。<br />
+5、解压你下载的文件：<br />
+5.1、新建一个目录：mkdir /mnt/Oracle<br />
+5.2、将三个文件拷入新建的目录：cp ln_* /mnt/Oracle<br />
+5.3、解压三个文件： cd /mnt/Oracle<br />
+gunzip gunzip lnx_920_disk1.cpio.gz<br />
+gunzip lnx_920_disk2.cpio.gz<br />
+gunzip lnx_920_disk3.cpio.gz<br />
+cpio -idmv &lt; lnx_920_disk1.cpio<br />
+cpio -idmv &lt; lnx_920_disk2.cpio<br />
+cpio -idmv &lt; lnx_920_disk3.cpio<br />
+5.4、这个将生成三个文件夹：DISK1, DISK2, DISK3<br />
+6、开始安装：<br />
+以oracle的用户身份进入：<br />
+su oracle<br />
+cd ~/mnt/Oracle/DSIK1/runInstall.sh</p>
+<p>&#8212; 以下省略，原文见<a href="http://www.blueidea.com/computer/system/2003/473.asp">链接</a>。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=150</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

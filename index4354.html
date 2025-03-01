@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>linux &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=linux" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Mon, 23 Mar 2015 01:47:23 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>linux 一条语句查杀php木马</title>
+		<link>http://ijz.me/?p=712</link>
+					<comments>http://ijz.me/?p=712#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 23 Mar 2015 01:47:23 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[find]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=712</guid>
+
+					<description><![CDATA[根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。   fi [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。<br />
+<code>  find ./ -name "*.php" |xargs egrep "phpspy|c99sh|milw0rm|eval(gunerpress|eval(base64_decoolcode|spider_bc"&gt; /tmp/php.txt</code></p>
+<p><span id="more-712"></span></p>
+<p>如果只列出含木马的文件</p>
+<p><code>      find ./ -name "*.php" -type f -print0 | xargs -0 egrep "(phpspy|c99sh|milw0rm|eval(gzuncompress(base64_decoolcode|eval(base64_decoolcode|spider_bc|gzinflate)" | awk -F: '{print $1}' | sort | uniq</code></p>
+<p><code>    find . -type f -name "*.php"|xargs grep  'versio:b.01'  -l &gt;list.0320</code></p>
+<p>需要注意的是，以上查出来的文件，有可能是正常的php文件，需要你根据实际甄别处理（批量替换），不要误杀了（处理以前注意备份俄）。</p>
+<p>grep方法：<br />
+# grep -r &#8211;include=*.php  &#8216;[^a-z]eval($_POST&#8217; . &gt; /tmp/eval.txt</p>
+<p># grep -r &#8211;include=*.php  &#8216;file_put_contents(.*$_POST[.*]);&#8217; . &gt; /tmp/file_put_contents.txt</p>
+<p>查找最近一天被修改的PHP文件</p>
+<p>#   find -mtime -1 -type f -name *.php</p>
+<p>修改网站的权限</p>
+<p># find -type f -name *.php -exec chmod 444 {} ;</p>
+<p># find ./ -type d -exec chmod 555{} ;</p>
+<p>附：linux下的批量查找和替换。<br />
+find . -type f -name &#8220;*.html&#8221;|xargs grep ‘yourstring’</p>
+<p>2：查找并用perl One-liners替换</p>
+<p>find -name &#8216;要查找的文件名&#8217; | xargs perl -pi -e &#8216;s|被替换的字符串|替换后的字符串|g&#8217;<br />
+下 面这个例子就是将当前目录及所有子目录下的所有*.shtml文件中的”&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;“替换为”(空)“.</p>
+<p>find . -type f -name &#8220;*.shtml&#8221;|xargs perl -pi -e &#8216;s|&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;| |g&#8217;</p>
+<p>perl -pi -e<br />
+在Perl 命令中加上-e 选项，后跟一行代码，那它就会像运行一个普通的Perl 脚本那样运行该代码.</p>
+<p>从命令行中使用Perl 能够帮助实现一些强大的、实时的转换。认真研究正则表达式，并正确地使用，将会为您省去大量的手工编辑工作。</p>
+<div id="main"></div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=712</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>如何判断 Linux 是否运行在虚拟机上/zz/</title>
+		<link>http://ijz.me/?p=685</link>
+					<comments>http://ijz.me/?p=685#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 14 Nov 2014 07:56:25 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[硬件]]></category>
+		<category><![CDATA[虚拟化]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=685</guid>
+
+					<description><![CDATA[  在 WebHostingTalk 论坛上有些国外奸商会把虚拟机当作独立服务器卖，去年7月份的时候就有一位中 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong> </strong></p>
+<p>在 WebHostingTalk 论坛上有些国外奸商会把虚拟机当作独立服务器卖，去年7月份的时候就有一位中国同胞上当受骗， 并在 WHT 上发帖声讨，证据确凿，甚至连服务商自己也承认，回帖达355篇。这家独立服务器/VPS 提供商 HostATree.com 居然大胆的把 OpenVZ VPS 这种一看就知道是虚拟机的虚拟机当作独立服务器卖，晕，至少也要弄个 VMWare/KVM/Xen HVM 吧（更难发现是虚拟机），用 OpenVZ 这种容器也太欺负人了：）昨天恰好收到网友一封邮件问到了如何判断自己买的是独立服务器还是虚拟机的问题。这里 VPSee 简单介绍一下市面上常用虚拟技术（包括容器技术）的判别小技巧。</p>
+<p><span id="more-685"></span></p>
+<p><strong>判断 OpenVZ/Xen PV/UML</strong></p>
+<p>判断 OpenVZ/Xen PV/UML 是最容易的，直接检查 /proc 下的相关目录和文件就可以知道，比如 OpenVZ VPS 上会有 /proc/vz 这个文件；Xen PV 虚拟机上会有 /proc/xen/ 这个目录，并且目录下有一些东西；UML 上打印 /proc/cpuinfo 会找到 UML 标志。写了一个简单的 Python 脚本来检测：</p>
+<p>#!/usr/bin/python</p>
+<p># check if a linux system running on a virtual machine (openvz/xen pv/uml)</p>
+<p># written by http://www.vpsee.com</p>
+<p>&nbsp;</p>
+<p>import sys, os</p>
+<p>&nbsp;</p>
+<p>def main():</p>
+<p>if os.getuid() != 0:</p>
+<p>print &#8220;must be run as root&#8221;</p>
+<p>sys.exit(0)</p>
+<p>&nbsp;</p>
+<p># check OpenVZ/Virtuozzo</p>
+<p>if os.path.exists(&#8220;/proc/vz&#8221;):</p>
+<p>if not os.path.exists(&#8220;/proc/bc&#8221;):</p>
+<p>print &#8220;openvz container&#8221;</p>
+<p>else:</p>
+<p>print &#8220;openvz node&#8221;</p>
+<p>&nbsp;</p>
+<p># check Xen</p>
+<p>if os.path.exists(&#8220;/proc/xen/capabilities&#8221;):</p>
+<p>if (os.path.getsize(&#8220;/proc/xen/capabilities&#8221;) &gt; 0):</p>
+<p>print &#8220;xen dom0&#8221;</p>
+<p>else:</p>
+<p>print &#8220;xen domU&#8221;</p>
+<p>&nbsp;</p>
+<p># check User Mode Linux (UML)</p>
+<p>f = open(&#8220;/proc/cpuinfo&#8221;, &#8220;r&#8221;); t = f.read(); f.close()</p>
+<p>if (t.find(&#8220;UML&#8221;) &gt; 0):</p>
+<p>print &#8220;uml&#8221;</p>
+<p>&nbsp;</p>
+<p>if __name__==&#8221;__main__&#8221;:</p>
+<p>main()</p>
+<p><strong>判断 VMware/Xen HVM/KVM</strong></p>
+<p>如果使用的是 VMware/Xen HVM/KVM 这样的全虚拟就更难判断一些，最准确的办法是读取 CPUID 来判断，Xen 源代码下面有一段检测是否是 Xen 的 C 语言代码 tools/misc/xen-detect.c，这段代码提供了一个很好的例子，VPSee 重写了代码，用宏替代了函数，增加了对 VMware 和 KVM 的识别，用 gcc 编译后就可以运行：</p>
+<p>/*</p>
+<p>* check if a linux system running on a virtual machine (vmware/xen hvm/kvm)</p>
+<p>* written by http://www.vpsee.com</p>
+<p>*/</p>
+<p>#include stdio.h</p>
+<p>#include string.h</p>
+<p>&nbsp;</p>
+<p>#define HYPERVISOR_INFO 0x40000000</p>
+<p>&nbsp;</p>
+<p>#define CPUID(idx, eax, ebx, ecx, edx) </p>
+<p>asm volatile ( </p>
+<p>&#8220;test %1,%1 ; jz 1f ; ud2a ; .ascii &#8220;xen&#8221; ; 1: cpuid&#8221; </p>
+<p>: &#8220;=b&#8221; (*ebx), &#8220;=a&#8221; (*eax), &#8220;=c&#8221; (*ecx), &#8220;=d&#8221; (*edx) </p>
+<p>: &#8220;0&#8221; (idx) );</p>
+<p>&nbsp;</p>
+<p>int main(void)</p>
+<p>{</p>
+<p>unsigned int eax, ebx, ecx, edx;</p>
+<p>char string[13];</p>
+<p>&nbsp;</p>
+<p>CPUID(HYPERVISOR_INFO, &amp;eax, &amp;ebx, &amp;ecx, &amp;edx);</p>
+<p>*(unsigned int *)(string+0) = ebx;</p>
+<p>*(unsigned int *)(string+4) = ecx;</p>
+<p>*(unsigned int *)(string+8) = edx;</p>
+<p>&nbsp;</p>
+<p>string[12] = 0;</p>
+<p>if (strncmp(string, &#8220;XenVMMXenVMM&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;xen hvmn&#8221;);</p>
+<p>} else if (strncmp(string, &#8220;VMwareVMware&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;vmwaren&#8221;);</p>
+<p>} else if (strncmp(string, &#8220;KVMKVMKVM&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;kvmn&#8221;);</p>
+<p>} else</p>
+<p>printf(&#8220;bare hardwaren&#8221;);</p>
+<p>&nbsp;</p>
+<p>return 0;</p>
+<p>}</p>
+<p><strong>判断 VirtualBox/Virtual PC</strong></p>
+<p>什么？这种家用桌面虚拟机自己装的还会不知道？！如果不知道的话也有办法，在 Linux 下运行 dmidecode 工具然后查找 Manufacturer: innotek GmbH, Manufacturer: Microsoft Corporation 关键字就能对应上 VirtualBox 和 Virtual PC.</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=685</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>bash重大漏洞用rex批量升级服务器</title>
+		<link>http://ijz.me/?p=666</link>
+					<comments>http://ijz.me/?p=666#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 25 Sep 2014 07:06:08 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=666</guid>
+
+					<description><![CDATA[9月25日消息，继“心脏流血”漏洞之后，安全研究专家又发现了一个危险级别为“毁灭级”（catastrophic [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>9月25日消息，继“心脏流血”漏洞之后，安全研究专家又发现了一个危险级别为“毁灭级”（catastrophic）的漏洞，开源软件公司Red Hat在一份报告中称，在Linux系统中广泛使用的Bash软件漏洞有可能让黑客利用攻击一切连入互联网的设备。</p>
+<p>美国国土安全部下属的美国电脑紧急响应团队(以下简称“US-CERT”)发出警告称，这一漏洞可能影响基于Unix的操作系统，包括Linux和Mac OS X</p>
+<p>用rex强大的工具可以在短时间内批量升级大量的服务器，只需安装rex创建如下的task，即可。</p>
+<p></p><pre class="crayon-plain-tag">task "update_bash", group = "all",  sub {
+
+say connection-server.":begin update bash!";
+pkg "bash",
+ensure = "latest";
+say connection-server.":upate success!";
+};</pre><p> </p>
+<p>执行 rex -qw update_bash</p>
+<p><span id="more-666"></span></p>
+<p><strong>漏洞详情页面</strong>：http://seclists.org/oss-sec/2014/q3/650<br />
+<strong>漏洞级别</strong>:非常严重<br />
+<strong>redhat官方提供漏洞详情</strong></p>
+<p>A flaw was found in the way Bash evaluated certain specially crafted environment variables. An attacker could use this flaw to override or bypass environment restrictions to execute shell commands. Certain services and applications allow remote unauthenticated attackers to provide environment variables, allowing them to exploit this issue.</p>
+<p><strong style="text-indent: 2em;">redhat官方提供检测方式</strong></p>
+<p><strong style="text-indent: 2em;">运行命令：  </strong></p><pre class="crayon-plain-tag">$ env x='() { :;}; echo vulnerable'  bash -c &quot;echo this is a test&quot;</pre><p></p><pre class="crayon-plain-tag">如果返回以下内容：则请尽快升级。</pre><p></p><pre class="crayon-plain-tag">vulnerable</pre><p></p><pre class="crayon-plain-tag">this is a test</pre><p></p><pre class="crayon-plain-tag">目前官方已经提供了升级包请运行：yum update -y bash 进行升级处理！</pre><p></p>
+<p>RedHat, CentOS or Fedora bash版本将升级到bash-4.1.2-15.el6_5.1.x86_64</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=666</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

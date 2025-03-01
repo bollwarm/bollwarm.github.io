@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>汇编 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=%e6%b1%87%e7%bc%96" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Thu, 11 Jul 2013 08:42:55 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>计算农历的函数汇编原码（1）/zz/</title>
+		<link>http://ijz.me/?p=160</link>
+					<comments>http://ijz.me/?p=160#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 11 Jul 2013 08:42:55 +0000</pubDate>
+				<category><![CDATA[编程]]></category>
+		<category><![CDATA[汇编]]></category>
+		<guid isPermaLink="false">http://localhost/?p=160</guid>
+
+					<description><![CDATA[;&#62;&#62;&#62;&#62;&#62;&#62;&#62;&#62;&#62;&#62;&#62;农历计算函数原代码&#038; [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;农历计算函数原代码&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br />
+;=============检测阳历对应年份是否闰年==========<br />
+;       输入：年份<br />
+;       输出：eax = 1 是闰年，否则 eax = 0<br />
+_IsLeapYear proto dwYear:dword<br />
+;=============取阳历对应年月的天数==============<br />
+;       输入：年份，月份<br />
+;       输出：eax = 天数<br />
+_GetMonthDays proto dwYear:dword,dwMonth:dword<br />
+;=============取阳历对应星期几==================<br />
+;       输入：年份，月份，日<br />
+;       输出：eax=星期，星期日=0，星期一=1&#8230;<br />
+_GetWeekDay proto dwYear:dword,dwMonth:dword,dwDay:dword<br />
+;=============取对应阳历月的节气日==============<br />
+;       输入：年份，月份<br />
+;       输出：al =第一节气日，ah =第二节气日<br />
+_sTermOff proto dwYear:dword,dwMonth:dword<br />
+;=============取对应阳历日期的节气序号==========<br />
+;       输入：年份，月份，日<br />
+;       输出：eax=节气序号，小寒=1，大寒=2&#8230;<br />
+_GetHolDay proto dwYear:dword,dwMonth:dword,dwDay:dword<br />
+;=103f============取两个阳历日期之间的天数==========<br />
+;       输入：年份1，月份1，日1，年份2，月份2，日2(第一个为被减数)<br />
+;       输出：天数</p>
+<p><span id="more-160"></span><br />
+_GetBetweenDays proto dwYear1:dword,dwMonth1:dword,dwDay1:dword,dwYear2:dword,dwMonth2:dword,dwDay2:dword<br />
+;=============取农历年的天数====================<br />
+;       输入：年份<br />
+;       输出：天数<br />
+_GetLunarYearDays proto dwYear:dword<br />
+;=============取农历月的天数====================<br />
+;       输入：年份，月份<br />
+;       输出：天数<br />
+_GetLunarMonthDays proto dwYear:dword,dwMonth:dword<br />
+;=============填充农历数据结构==================<br />
+;       输入：农历数据结构指针（其中阳历必须已填好）<br />
+_GetLunarData proto _lpstLunarData:dword<br />
+;=============取农历月日字符串==================<br />
+;       输入：已填充好农历数据结构指针<br />
+;       输出：字符串缓冲区指针（最少13字节）<br />
+_GetLunarStr proto _lpstLunarData:dword,lpBuffer:dword<br />
+;=============干支序号转换成字符==================<br />
+;       输入：干支序号<br />
+;       输出：eax=字符<br />
+_GetGzStr proto GzNumber:dword<br />
+;=============干支序号转换五行生肖==============<br />
+;       输入：干支序号<br />
+;       输出：eax=低16位生肖，高16位五行<br />
+_GetSxStr proto GzNumber:dword<br />
+;=============节气序号转换字符=================<br />
+;       输入：节气序号<br />
+;       输出：eax=节气序号字符<br />
+_GetHDStr proto HdNumber:dword<br />
+;**************************************************<br />
+LUNARDATA       struct<br />
+dwYear          dw      ?       ;输入参数 &#8211; 年，十进制，例如 2000<br />
+dwMonth         dw      ?       ;输入参数 &#8211; 月，十进制，例如 10<br />
+dwDay           dw      ?       ;输入参数 &#8211; 日，十进制，例如 1</p>
+<p>dwLunarYear     dw      ?               ;农历年，如 2000<br />
+dbLunarMonth    db      ?               ;农历月，如 12<br />
+dbLunarDay      db      ?               ;农历日，如 31<br />
+dbWeekDay       db      ?               ;星期，星期日=0，星期一=1&#8230;<br />
+dbIsLeapMonth   db      ?               ;是否是闰月，返回 1 为农历闰月</p>
+<p>noLunarYear     db      ?               ;干支年，甲子=0，乙丑=1&#8230;<br />
+noLunarMonth    db      ?               ;干支月，甲子=0，乙丑=1&#8230;<br />
+noLunarDay&amp;nbs103fp;     db      ?               ;干支日，甲子=0，乙丑=1&#8230;<br />
+noLunarHolDay   db      ?               ;农历节气，小寒=1，大寒=2<br />
+LUNARDATA       ends<br />
+;**************************************************<br />
+.code<br />
+LunarInfo       dw      04bd8h,04ae0h,0a570h,054d5h,0d260h,0d950h,06554h,056a0h,09ad0h,055d2h<br />
+dw      04ae0h,0a5b6h,0a4d0h,0d250h,0d255h,0b540h,0d6a0h,0ada2h,095b0h,04977h<br />
+dw      04970h,0a4b0h,0b4b5h,06a50h,06d40h,0ab54h,02b60h,09570h,052f2h,04970h<br />
+dw      06566h,0d4a0h,0ea50h,06e95h,05ad0h,02b60h,086e3h,092e0h,0c8d7h,0c950h<br />
+dw      0d4a0h,0d8a6h,0b550h,056a0h,0a5b4h,025d0h,092d0h,0d2b2h,0a950h,0b557h<br />
+dw      06ca0h,0b550h,05355h,04da0h,0a5d0h,04573h,052d0h,0a9a8h,0e950h,06aa0h<br />
+dw      0aea6h,0ab50h,04b60h,0aae4h,0a570h,05260h,0f263h,0d950h,05b57h,056a0h<br />
+dw      096d0h,04dd5h,04ad0h,0a4d0h,0d4d4h,0d250h,0d558h,0b540h,0b5a0h,095a6h<br />
+dw      095b0h,049b0h,0a974h,0a4b0h,0b27ah,06a50h,06d40h,0af46h,0ab60h,09570h<br />
+dw      04af5h,04970h,064b0h,074a3h,0ea50h,06b58h,055c0h,0ab60h,096d5h,092e0h<br />
+dw      0c960h,0d954h,0d4a0h,0da50h,07552h,056a0h,0abb7h,025d0h,092d0h,0cab5h<br />
+dw      0a950h,0b4a0h,0baa4h,0ad50h,055d9h,04ba0h,0a5b0h,05176h,052b0h,0a930h<br />
+dw      07954h,06aa0h,0ad50h,05b52h,04b60h,0a6e6h,0a4e0h,0d260h,0ea65h,0d530h<br />
+dw      05aa0h,076a3h,096d0h,04bd7h,04ad0h,0a4d0h,0d0b6h,0d250h,0d520h,0dd45h<br />
+dw      0b5a0h,056d0h,055b2h,049b0h,0a577h,0a4b0h,0aa50h,0b255h,06d20h,0ada0h<br />
+dw      04b63h<br />
+leapBigTab      db      00000010b,00000010b,00010000b,01000000b,00001010b<br />
+db      01001000b,00001001b,00000000b,00000000b,00000001b<br />
+&amp;nbs103fp; db      00000000b,00000000b,00000000b,00000000b,00000100b<br />
+db      00000000b,00000000b,10000000b,00010010b<br />
+;=============检测对应年份是否闰年=============<br />
+;       输入：年份<br />
+;       输出：eax = 1 是闰年，否则 eax = 0<br />
+_IsLeapYear     proc dwYear:dword<br />
+xor     eax,eax<br />
+pushad<br />
+mov     ebx,dwYear<br />
+mov     eax,ebx<br />
+xor     edx,edx<br />
+mov     ecx,400<br />
+div     ecx<br />
+or      edx,edx<br />
+je      loc002<br />
+mov     eax,ebx<br />
+xor     edx,edx<br />
+mov     ecx,100<br />
+div     ecx<br />
+or      edx,edx<br />
+je      loc001<br />
+mov     eax,ebx<br />
+xor     edx,edx<br />
+mov     ecx,4<br />
+div     ecx<br />
+&amp;n103fbsp;       or      edx, edx<br />
+jne     loc001<br />
+loc002:                 inc     dword ptr [esp+1Ch]             ;returnEAX<br />
+loc001:                 popad<br />
+ret<br />
+_IsLeapYear     endp<br />
+;==============取对应阳历年月的天数============<br />
+;       输入：年份，月份<br />
+;       输出：eax = 天数<br />
+_GetMonthDays   proc dwYear:dword,dwMonth:dword<br />
+mov     ah,byte ptr dwMonth<br />
+cmp     ah,8<br />
+setnc   al<br />
+add     al,ah                   ;1~12月得数：(1),2,(3),4,(5),6,(7),(9),10,(11),12,(13)<br />
+and     al,1<br />
+add     al,30<br />
+cmp     ah,2<br />
+jne     l01<br />
+invoke  _IsLeapYear,dwYear<br />
+add     al,28<br />
+l01:                    movzx   eax,al<br />
+ret<br />
+_GetMonthDays   endp<br />
+;==================================<br />
+_GetWeekDay             proc dwYear:dword,dwMonth:dword,dwDay:dword<br />
+pushad<br />
+movzx   esi,word ptr dwYear<br />
+mov     bh,byte ptr dwMonth<br />
+&amp;nbsp103f;                      mov     bl,byte ptr dwDay<br />
+dec     esi<br />
+mov     edi,esi                 ;每年加1天(365/7余数是1)<br />
+cmp     bh,3                    ;以下计算闰年数<br />
+cmc<br />
+adc     esi,0                   ;2月份之前不含本年<br />
+mov     eax,esi<br />
+shr     eax,2<br />
+add     edi,eax                 ;每4年一闰<br />
+mov     eax,esi<br />
+xor     edx,edx<br />
+mov     ecx,100<br />
+div     ecx<br />
+sub     edi,eax                 ;被100整除不闰<br />
+mov     eax,esi<br />
+xor     edx,edx<br />
+mov     ecx,400<br />
+div     ecx<br />
+add     edi,eax           &amp;nbs103fp;     ;被400整除还是要闰<br />
+movzx   eax,bh                  ;以下计算前一月到年头的天数<br />
+dec     al<br />
+shl     eax,1<br />
+add     edi,eax                 ;每月先以30计算(30/7余数是2)<br />
+cmp     bh,8<br />
+setnc   al<br />
+add     al,bh                   ;1~12月得数：(1),2,(3),4,(5),6,(7),(9),10,(11),12,(13)<br />
+shr     al,1                    ;1~12月得数：(0),1,(1),2,(2),3,(3),(4),5,(5),6,(6)<br />
+add     edi,eax                 ;大月天数<br />
+cmp     bh,3<br />
+setnc   al<br />
+shl     al,1<br />
+sub     edi,eax                 ;平月减二<br />
+mov     al,bl<br />
+add     eax,edi                 ;日数<br />
+xor     edx,edx<br />
+mov     ecx,7<br />
+&amp;nb103fsp;           div     ecx<br />
+mov     dword ptr [esp+1Ch],edx         ;returnEAX<br />
+popad<br />
+ret<br />
+_GetWeekDay             endp</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=160</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>计算农历的函数汇编原码（2）/zz/</title>
+		<link>http://ijz.me/?p=161</link>
+					<comments>http://ijz.me/?p=161#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 11 Jul 2013 08:02:31 +0000</pubDate>
+				<category><![CDATA[编程]]></category>
+		<category><![CDATA[汇编]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=161</guid>
+
+					<description><![CDATA[;=============================================== HgnMs  [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>;===============================================<br />
+HgnMs           dq      31556925.9747   ;每回归年秒数<br />
+OneDay          dd      86400           ;每天秒数<br />
+sTermInfo       dw      0,0,51,212,505,974,1619,2465,3485,4679,5992,7405,8847,10285,<br />
+11651,12913,14022,14958,15703,16258,16635,16856,16956,16974<br />
+_sTermOff       proc    dwYear:dword,dwMonth:dword<br />
+local   @Temp1:dword,@Temp2<br />
+local   @Rag1:word,@Rag2:word</p>
+<p><span id="more-161"></span><br />
+pushad<br />
+xor     eax,eax<br />
+mov &amp;103fnbsp;   @Temp1,eax<br />
+mov     @Temp2,eax<br />
+cmp     dwYear,1900<br />
+jb      l002<br />
+cmp     dwMonth,12<br />
+jae     l002<br />
+finit<br />
+fstcw   @Rag1<br />
+fwait<br />
+mov     ax,@Rag1<br />
+and     ah,0F3h                 ;清圆整控制<br />
+or      ah,8                    ;圆整控制=10(舍入)<br />
+mov     @Rag2,ax<br />
+fldcw   @Rag2</p>
+<p>mov     eax,dwYear<br />
+sub     eax,1900<br />
+mov     @Temp2,eax<br />
+fild    @Temp2<br />
+fmul    HgnMs                   ;回归年换算成秒</p>
+<p>mov     ebx,dwMonth<br />
+shl     ebx,1<br />
+mov     eax,21208<br />
+&amp;nbsp103f;                    mul     ebx<br />
+add     eax,7325                ;5-2&#8243;5&#8242;<br />
+mov     edx,eax<br />
+movzx   ecx,sTermInfo[ebx*2]<br />
+add     eax,ecx                 ;该月第一个节气距小寒的分数<br />
+imul    eax,60<br />
+mov     @Temp1,eax<br />
+fild    @Temp1<br />
+fadd    st,st(1)<br />
+fidiv   OneDay<br />
+fwait<br />
+fistp   @Temp1                  ;输出<br />
+;====<br />
+mov     eax,edx<br />
+add     eax,21208<br />
+movzx   ecx,sTermInfo[ebx*2+2]<br />
+add     eax,ecx                 ;该月第一个节气距小寒的分数<br />
+imul    eax,60<br />
+mov     @Temp2,eax<br />
+fiadd   @Temp2<br />
+fidiv   OneDay<br />
+fwait<br />
+&amp;nbsp103f;                     fistp   @Temp2                  ;输出<br />
+;====<br />
+mov     esi,dwYear<br />
+dec     esi<br />
+mov     edi,esi<br />
+imul    edi,365                 ;每年365天<br />
+cmp     dwMonth,2<br />
+cmc<br />
+adc     esi,0<br />
+mov     eax,esi<br />
+shr     eax,2<br />
+add     edi,eax                 ;每4年一闰<br />
+mov     eax,esi<br />
+xor     edx,edx<br />
+mov     ecx,100<br />
+div     ecx<br />
+sub     edi,eax                 ;被100整除不闰<br />
+mov     eax,esi<br />
+xor     edx,edx<br />
+mov     ecx,400<br />
+div     ecx<br />
+add     edi,eax&amp;nb103fsp;                ;被400整除还是要闰<br />
+mov     ah,byte ptr dwMonth<br />
+mov     al,ah<br />
+inc     al<br />
+cmp     ah,2<br />
+jb      l001<br />
+cmp     ah,7<br />
+setnc   al<br />
+inc     al<br />
+add     al,ah<br />
+shr     al,1<br />
+dec     al<br />
+l001:                   movzx   ebx,al<br />
+dec     ebx<br />
+mov     al,30<br />
+mul     ah<br />
+add     bx,ax<br />
+add     edi,ebx<br />
+sub     edi,693595              ;1900.1.1总天数<br />
+fwait<br />
+sub     @Temp1,edi<br />
+sub     @Temp2,edi<br />
+fldcw   @Rag1<br />
+l002:             &amp;nbsp103f;     popad<br />
+mov     eax,@Temp1<br />
+mov     ah,byte ptr @Temp2<br />
+ret<br />
+_sTermOff       endp<br />
+;=======================================<br />
+_GetHolDay      proc    dwYear:dword,dwMonth:dword,dwDay:dword<br />
+mov     eax,dwMonth<br />
+dec     eax<br />
+invoke  _sTermOff,dwYear,eax<br />
+push    ecx<br />
+mov     ecx,eax<br />
+xor     eax,eax<br />
+cmp     cl,byte ptr dwDay<br />
+je      loc01<br />
+cmp     ch,byte ptr dwDay<br />
+jne     loc02<br />
+inc     eax<br />
+loc01:                  inc     eax<br />
+mov     ecx,dwMonth<br />
+dec     ecx<br />
+shl     ecx,1<br />
+add     eax,ecx<br />
+loc02:                  pop     ecx<br />
+ret<br />
+_GetHolDay      endp<br />
+;===================================<br />
+_GetBetweenDays         proc    dwYear1:dword,dwMonth1:dword,dwDay1:dword,dwYear2:dword,dwMonth2:d103fword,dwDay2:dword<br />
+pushad<br />
+movzx   esi,word ptr dwYear1<br />
+mov     bh,byte ptr dwMonth1<br />
+mov     bl,byte ptr dwDay1<br />
+mov     ebp,1<br />
+l01:                    dec     esi<br />
+mov     edi,esi<br />
+imul    edi,365                 ;每年365天<br />
+cmp     bh,3                    ;以下计算闰年数<br />
+cmc<br />
+adc     esi,0                   ;2月份之前不含本年<br />
+mov     eax,esi<br />
+shr     eax,2<br />
+add     edi,eax                 ;每4年一闰<br />
+mov     eax,esi<br />
+xor     edx,edx<br />
+mov     ecx,100<br />
+div     ecx<br />
+sub     edi,eax                 ;被100整除不闰<br />
+mov     eax,esi<br />
+&amp;nb103fsp;                       xor     edx,edx<br />
+mov     ecx,400<br />
+div     ecx<br />
+add     edi,eax                 ;被400整除还是要闰<br />
+movzx   eax,bh                  ;以下计算前一月到年头的天数<br />
+dec     al<br />
+imul    eax,30                  ;每月先以30计算<br />
+add     edi,eax<br />
+cmp     bh,8<br />
+setnc   al<br />
+mov     ah,0<br />
+add     al,bh                   ;1~12月得数：(1),2,(3),4,(5),6,(7),(9),10,(11),12,(13)<br />
+shr     al,1<br />
+add     edi,eax                 ;加大月天数<br />
+cmp     bh,3<br />
+setnc   al<br />
+shl     al,1<br />
+sub     edi,eax                 ;平月减二<br />
+mov     al,bl<br />
+&amp;n103fbsp;                 add     edi,eax                 ;日数<br />
+or      ebp,ebp<br />
+jz      l02<br />
+mov     [esp+1Ch],edi           ;returnEAX<br />
+mov     ebp,[esp+8]<br />
+movzx   esi,word ptr dwYear2<br />
+mov     bh,byte ptr dwMonth2<br />
+mov     bl,byte ptr dwDay2<br />
+xor     ebp,ebp<br />
+jmp     l01<br />
+l02:                    sub     [esp+1Ch],edi           ;returnEAX<br />
+popad<br />
+ret<br />
+_GetBetweenDays         endp</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=161</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>计算农历的函数汇编原码（4）/zz/</title>
+		<link>http://ijz.me/?p=163</link>
+					<comments>http://ijz.me/?p=163#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 11 Jul 2013 07:54:46 +0000</pubDate>
+				<category><![CDATA[编程]]></category>
+		<category><![CDATA[汇编]]></category>
+		<guid isPermaLink="false">http://localhost/?p=163</guid>
+
+					<description><![CDATA[;=========================== Hz_NumStr       db      &# [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>;===========================<br />
+Hz_NumStr       db      &#8216;一二三四五六七八九&#8217;<br />
+Hz_TenStr       db      &#8216;十&#8217;<br />
+Hz_NumHStr      db      &#8216;初十廿&#8217;<br />
+_GetLunarStr    proc    _lpstLunarData:dword,lpBuffer:dword<br />
+assume esi:ptr LUNARDATA<br />
+pushad</p>
+<p><span id="more-163"></span><br />
+mov     esi,_lpstLunarData<br />
+mov     edi,lpBuffer<br />
+cmp     [esi].dbIsLeapMonth,1<br />
+jne     l_002<br />
+&amp;n103fbsp;     mov     ax,0F2C8h                       ;&#8217;闰&#8217;<br />
+stosw<br />
+l_002:                  movzx   ebx,[esi].dbLunarMonth<br />
+cmp     bl,12<br />
+ja      l_005<br />
+cmp     bl,1<br />
+jb      l_005<br />
+mov     ax,0FDD5h                       ;&#8217;正&#8217;<br />
+je      l_004<br />
+cmp     bl,11<br />
+jb      l_003<br />
+mov     ax,word ptr Hz_TenStr           ;&#8217;十&#8217;<br />
+stosw<br />
+sub     bl,10<br />
+l_003:                  dec     bl<br />
+mov     ax, word ptr Hz_NumStr[2*ebx]<br />
+l_004:                  stosw<br />
+mov     ax, 0C2D4h                      ;&#8217;月&#8217;<br />
+stosw<br />
+l_005:                  mov     bl,[esi].dbLunarDay<br />
+cmp     bl,30<br />
+ja      l_008<br />
+103f                      mov     edx,9<br />
+mov     ax, word ptr Hz_NumStr[4]<br />
+je      l_007<br />
+mov     ax, word ptr Hz_NumStr[2]<br />
+cmp     bl,20<br />
+je      l_007<br />
+mov     al,bl<br />
+dec     al<br />
+js      l_008<br />
+movzx   eax,al<br />
+cdq<br />
+mov     ecx,10<br />
+div     ecx<br />
+mov     ax, word ptr Hz_NumHStr[2*eax]<br />
+l_007:                  stosw<br />
+mov     ax, word ptr Hz_NumStr[2*edx]<br />
+stosw<br />
+l_008:                  mov     al,0<br />
+stosb<br />
+popad<br />
+assume  esi:nothing<br />
+ret<br />
+_GetLunarStr    endp<br />
+;**************************************************<br />
+Tg_Str          db      &#8216;甲乙丙丁戊己庚辛壬癸&#8217;<br />
+Dz_Str          db      &#8216;子丑寅卯辰巳午未申酉戌亥&#8217;<br />
+_GetGzStr               proc    GzNumber:dword                        pushad<br />
+mov     eax,GzNumber<br />
+mov     cl,10<br />
+div     cl<br />
+movzx   ebx,ah<br />
+mov     eax,GzNumber<br />
+mov     cl,12<br />
+div     cl<br />
+movzx   edx,ah<br />
+mov     ax, word ptr Tg_Str[2*ebx]<br />
+mov     word ptr [esp+1Ch],ax<br />
+mov     ax, word ptr Dz_Str[2*edx]<br />
+mov     word ptr [esp+1Ch][2],ax<br />
+popad<br />
+ret<br />
+_GetGzStr               endp<br />
+;**************************************************<br />
+Sx_Str          db      &#8216;鼠牛虎免龙蛇马羊猴鸡狗猪&#8217;<br />
+Wx_Str          db      &#8216;金木水火土&#8217;<br />
+_GetSxStr               proc    GzNumber:dword<br />
+xor     eax,eax<br />
+pushad<br />
+mov     eax,GzNumber<br />
+mov     cl,12<br />
+div     cl<br />
+&amp;nbs103fp;          movzx   edx,ah<br />
+mov     ax, word ptr Sx_Str[2*edx]<br />
+mov     word ptr [esp+1Ch],ax<br />
+mov     ecx,GzNumber<br />
+shr     ecx,1<br />
+cmp     cl,15<br />
+jb      l001<br />
+sub     cl,15<br />
+l001:                   mov     eax,42304130h<br />
+cmp     cl,8<br />
+jb      l002<br />
+sub     cl,8<br />
+mov     eax,2134210h<br />
+l002:                   shl     cl,2<br />
+shr     eax,cl<br />
+and     al,0Fh<br />
+movzx   eax,al<br />
+mov     ax,word ptr Wx_Str[eax*2]<br />
+mov     word ptr [esp+1Ch][2],ax<br />
+popad<br />
+ret<br />
+_GetSxStr               endp<br />
+;=======================================<br />
+Hd_str  db      &#8216;小寒大寒立春雨水惊蛰春分清明谷雨立夏小满芒种夏至&#8217;,<br />
+&#8216;小暑大暑立秋处暑白露秋分寒露霜降立冬小雪大雪冬至&#8217;<br />
+_GetHDStr       proc    HdNumb103fer:dword<br />
+mov     eax,HdNumber<br />
+or      eax,eax<br />
+jz      l001<br />
+dec     eax<br />
+mov     eax,dword ptr Hd_str[eax*4]<br />
+l001:                   ret<br />
+_GetHDStr       endp</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=163</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>计算农历的函数汇编原码（3）/zz/</title>
+		<link>http://ijz.me/?p=162</link>
+					<comments>http://ijz.me/?p=162#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 11 Jul 2013 07:53:39 +0000</pubDate>
+				<category><![CDATA[编程]]></category>
+		<category><![CDATA[汇编]]></category>
+		<guid isPermaLink="false">http://localhost/?p=162</guid>
+
+					<description><![CDATA[;============================= _GetLunarYearDays        [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>;=============================<br />
+_GetLunarYearDays       proc    dwYear:dword<br />
+pushad<br />
+mov     edx,dwYear<br />
+cmp     edx,2050<br />
+ja      toerr<br />
+sub     dx,1900<br />
+jb      toerr</p>
+<p><span id="more-162"></span><br />
+mov     bx,LunarInfo[edx*2]<br />
+&amp;n103fbsp;   mov     ecx,12<br />
+xor     eax,eax<br />
+loc3:                   shl     bx,1<br />
+adc     eax,29<br />
+loop    loc3<br />
+or      bx,bx<br />
+jz      loc4<br />
+mov     cl,dl<br />
+and     cl,7<br />
+inc     cl<br />
+shr     edx,3<br />
+mov     dl,leapBigTab[edx]<br />
+shl     dl,cl<br />
+adc     eax,29<br />
+loc4:                   jmp     toRet<br />
+toerr:                  mov     eax,12*30<br />
+toRet:                  mov     [esp+1Ch],eax                   ;returnEAX<br />
+popad<br />
+ret<br />
+_GetLunarYearDays       endp<br />
+;=============================<br />
+_GetLunarMonthDays      proc    dwYear:dword,dwMonth:dword<br />
+pushad<br />
+mov     edx,dwYear<br />
+cmp     edx,2050<br />
+ja      toerr<br />
+103f                     sub     dx,1900<br />
+jb      toerr<br />
+mov     ecx,dwMonth<br />
+cmp     ecx,12<br />
+ja      toerr<br />
+cmp     cl,1<br />
+jb      toerr<br />
+movzx   ebx,LunarInfo[edx*2]<br />
+mov     esi,ebx<br />
+xor     eax,eax<br />
+shl     bx,cl<br />
+adc     eax,29<br />
+and     esi,0Fh<br />
+cmp     esi,ecx<br />
+jnz     toRet<br />
+mov     cl,dl<br />
+and     cl,7<br />
+inc     cl<br />
+shr     edx,3<br />
+mov     dl,leapBigTab[edx]<br />
+shl     dl,cl<br />
+adc     ah,29<br />
+jmp     toRet<br />
+toerr:     &amp;103fnbsp;            mov     eax,30<br />
+toRet:                  mov     [esp+1Ch],eax                   ;returnEAX<br />
+popad<br />
+ret<br />
+_GetLunarMonthDays      endp<br />
+;=====================================<br />
+_GetLunarData           proc    _lpstLunarData:dword<br />
+assume esi:ptr LUNARDATA<br />
+local   AllDay:dword,ThisYear,ThisMonth,ThisDay,AllDays<br />
+mov     eax,-1<br />
+pushad<br />
+mov     esi,_lpstLunarData<br />
+lea     edi,[esi].dwLunarYear<br />
+mov     ecx,sizeof LUNARDATA-6<br />
+inc     eax<br />
+cld<br />
+rep     stosb<br />
+movzx   edx,[esi].dwYear<br />
+cmp     edx,1901<br />
+jb      OverErr<br />
+cmp     edx,2050<br />
+ja      OverErr<br />
+movzx   ebx,[esi].dwMonth<br />
+cmp     ebx,1<br />
+jb      OverErr<br />
+cmp     ebx,12<br />
+&amp;nbs103fp;                     ja      OverErr<br />
+invoke  _GetMonthDays,edx,ebx<br />
+movzx   ecx,[esi].dwDay<br />
+cmp     ecx,1<br />
+jb      OverErr<br />
+cmp     ecx,31<br />
+ja      OverErr<br />
+invoke  _GetBetweenDays,edx,ebx,ecx,1901,1,1<br />
+mov     AllDays,eax<br />
+mov     ThisYear,1900<br />
+mov     ThisMonth,11<br />
+mov     ecx,eax<br />
+add     cl,11<br />
+mov     ThisDay,ecx<br />
+cmp     eax,19<br />
+jb      loc07<br />
+sub     eax,18<br />
+inc     ThisMonth<br />
+mov     ThisDay,eax<br />
+cmp     eax,31<br />
+jb      loc07<br />
+sub     eax,31<br />
+inc     103fThisYear<br />
+mov     ThisMonth,1<br />
+mov     ThisDay,1<br />
+mov     AllDay,eax<br />
+loc01:                  invoke  _GetLunarYearDays,ThisYear<br />
+cmp     AllDay,eax<br />
+jb      loc02<br />
+sub     AllDay,eax<br />
+inc     ThisYear<br />
+jmp     loc01<br />
+loc02:                  invoke  _GetLunarMonthDays,ThisYear,ThisMonth<br />
+movzx   edx,ah<br />
+mov     ah,0<br />
+cmp     AllDay,eax<br />
+jb      loc06<br />
+sub     AllDay,eax<br />
+cmp     AllDay,edx<br />
+jb      loc05<br />
+sub     AllDay,edx<br />
+loc04:                  inc     ThisMonth<br />
+jmp     loc02<br />
+loc05:                  mov     [esi].dbIsLeapMonth,1<br />
+loc06:                  mov     eax,AllDay<br />
+add     ThisDay,eax<br />
+loc07:              &amp;nbs103fp;   mov     eax,ThisYear<br />
+mov     [esi].dwLunarYear,ax<br />
+mov     eax,ThisMonth<br />
+mov     [esi].dbLunarMonth,al<br />
+mov     eax, dword ptr ThisDay<br />
+mov     [esi].dbLunarDay,al<br />
+movzx   edx,[esi].dwYear<br />
+movzx   ebx,[esi].dwMonth<br />
+movzx   ecx,[esi].dwDay<br />
+invoke  _GetWeekDay,edx,ebx,ecx<br />
+mov     [esi].dbWeekDay,al<br />
+invoke  _GetHolDay,edx,ebx,ecx<br />
+mov     [esi].noLunarHolDay,al<br />
+mov     ecx,60<br />
+movzx   eax,[esi].dwLunarYear<br />
+add     eax,56<br />
+cdq<br />
+div     ecx<br />
+mov     [esi].noLunarYear,dl<br />
+movzx   eax,[esi].dwLunarYear<br />
+imul    eax,12<br />
+movzx   edx,[esi].dbLunarMonth<br />
+add     eax,edx<br />
+103f            add     eax,13<br />
+cdq<br />
+div     ecx<br />
+mov     [esi].noLunarMonth,dl<br />
+mov     eax,AllDays<br />
+add     eax,15<br />
+cdq<br />
+div     ecx<br />
+mov     [esi].noLunarDay,dl<br />
+mov     dword ptr [esp+1Ch],0           ;returnEAX<br />
+OverErr:                popad<br />
+ret<br />
+assume  esi:nothing<br />
+_GetLunarData           endp</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=162</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>汇编版Hello</title>
+		<link>http://ijz.me/?p=134</link>
+					<comments>http://ijz.me/?p=134#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 11 Jul 2013 07:53:10 +0000</pubDate>
+				<category><![CDATA[编程]]></category>
+		<category><![CDATA[汇编]]></category>
+		<guid isPermaLink="false">http://localhost/?p=134</guid>
+
+					<description><![CDATA[DATAS SEGMENT ；数据段开始 STRING DB &#8216;hello Wowrld!&#82 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>DATAS SEGMENT ；数据段开始<br />
+STRING DB &#8216;<b>hello</b> Wowrld!&#8217;,&#8217;$&#8217; ；定义一个字符串，以$为结束标志<br />
+DATAS ENDS ； 数据段结束</p>
+<p>CODES SEGMENT ；代码段开始<br />
+ASSUME CS:CODES,DS:DATAS ；通知<b>汇编</b>程序，源程序中定义的组由对应的段寄存器进行段的寻址<br />
+START:<br />
+MOV AX,DATAS ；实现段址DATAS加载到DS<br />
+MOV DS,AX<br />
+LEA DX,STRING ；取STRING的偏移地址存到DX中<br />
+MOV AH,9 ；调用9号功能号输出字符串<br />
+INT 21H</p>
+<p>MOV AH,4CH ；实现返回MS-DOS<br />
+INT 21H<br />
+CODES ENDS ；代码段结束<br />
+END START ；源程序模块结束</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=134</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

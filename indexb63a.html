@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>linux &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=2" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:27:14 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>爱上命令行并深入</title>
+		<link>http://ijz.me/?p=1027</link>
+					<comments>http://ijz.me/?p=1027#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 24 Aug 2018 07:27:00 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[shell]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1027</guid>
+
+					<description><![CDATA[命令行是一个强大的工具，而我们大多数却都不会用，可以说没有命令行的世界等于你失去了一多半的乐趣和技能。 本文虫 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>命令行是一个强大的工具，而我们大多数却都不会用，可以说没有命令行的世界等于你失去了一多半的乐趣和技能。</p>
+
+
+
+<p>本文虫虫和大家一起来聊聊命令行，并教大家一起来学习命令，不管你是运维、开发、测试、DBA，甚至是项目经理、PM都能通过命令行获得很大的裨益。当然我们主要是以开发了主要受众来举例子说明。</p>
+
+
+
+<span id="more-1027"></span>
+
+
+
+<p>日常编码时，你是选择集成开发环境IDE呢，还是文本编辑器（Vim、Emacs、sublime）+插件+命令行呢？</p>
+
+
+
+<p>现代IDE（VS、Eclipse、IDEA等）可以一个界面提供给我们所有必需的开发工具：代码版本，语法高亮，自动格式化，自动补全，版本控制，编译，调试、可视化断点、还有运行时环境！一键编译、一键运行，那么，为什么选择简单的文本编辑器呢？</p>
+
+
+
+<p>对这个问题，有很多问题、当然可能有一个原因是IDE太慢了！就个人而言，主要是是对于简单的项目和脚本，使用轻量化的文本编辑以及一些插件，一方面可以节省我编译的时间，而且我更喜欢欢命令行的各个工具栈套件GCC+GDB等强大的编译调试套件，更加适合我的胃口。</p>
+
+
+
+<p>我更喜欢学习掌握每个工具，比如GDB强大的各种特性和命令，可以让你更加编辑的操作，用键盘而不是点鼠标，还有就是让你可以更深入到程序和开发的精髓之处。。</p>
+
+
+
+<p>听起来有点泛泛而谈，但在IDE中，我们时常会受到约束并受限于固定的功能项，而在命令行中，有许多工具，脚本，框架可以在借鉴，支持多环境，许多语言以及Linx下强大的Shell流水栈、Perl onelines等可以把许多最高效最优秀的工具连接起来，最主要你随时可以修改完善他们，甚至自己造个更趁手的工具。</p>
+
+
+
+<p>当然，如果你是在Windows使用命令行，虽然现在Powershell已经增强改善了很多很多，以及有WSL的Linux子系统，但是由于其终端模拟器的限制，你可能还是可能会有不爽之处，所以建议你来使用Linux,Mac也是个很棒的选择。</p>
+
+
+
+<p>为啥，我只举两个个例子Docker，时下最火的容器技术，以及Git服务器Gitlab都是只支持Linux的，你还想多学点技术，Linux是不好躲的。</p>
+
+
+
+<h2 class="wp-block-heading">Fish shell</h2>
+
+
+
+<p>Fish shell（或“fish”）是一个面向用户交互的shell，它是日常和交互式使用的良好候选者。我们很多人可能都用的是Bash，但是说实话Bash更适合做脚本而Fish则更加人性化，更适合做交互操作。</p>
+
+
+
+<p>Fish shell包括许多命令和工具的原生语法高亮，也原生支持自动完成。</p>
+
+
+
+<p>Zsh是这种用例的另一种可靠替代方案。</p>
+
+
+
+<p>以下是使用git自动完成的示例：</p>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="756" height="429" src="http://ijz.me/wp-content/uploads/2025/03/1-1.png" alt="" class="wp-image-1028" srcset="http://ijz.me/wp-content/uploads/2025/03/1-1.png 756w, http://ijz.me/wp-content/uploads/2025/03/1-1-300x170.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-1-624x354.png 624w" sizes="(max-width: 756px) 100vw, 756px" /></figure>
+
+
+
+<p>通过敲打<strong>git</strong>，空格，在输入<strong>&lt;tab&gt;</strong>，fish会列出git命令列表（<strong>checkout，commit，log，&#8230;</strong>）。通过反复敲<strong>&lt;tab&gt;</strong>建，可以浏览命令直到达到所需的命令，然后我们只需输入回车（例如git checkout），这时fish就显示它的强大的魔力，他可以自动列出你仓库的分支和Tag列表。当然对其他工具，fish也是有很多类似的魔力的，你需要做的就是安装并且使用探索它。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="109" src="http://ijz.me/wp-content/uploads/2025/03/2-1-1024x109.png" alt="" class="wp-image-1029" srcset="http://ijz.me/wp-content/uploads/2025/03/2-1-1024x109.png 1024w, http://ijz.me/wp-content/uploads/2025/03/2-1-300x32.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-1-768x82.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-1-624x66.png 624w, http://ijz.me/wp-content/uploads/2025/03/2-1.png 1223w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>这儿我推荐两个框架可以增强的fish的功能：oh-my-fish（github/oh-my-fish）和fisherman（github/fisherman）。</p>
+
+
+
+<p><strong>oh-my-fish</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="887" height="224" src="http://ijz.me/wp-content/uploads/2025/03/3-1.png" alt="" class="wp-image-1030" srcset="http://ijz.me/wp-content/uploads/2025/03/3-1.png 887w, http://ijz.me/wp-content/uploads/2025/03/3-1-300x76.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-1-768x194.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-1-624x158.png 624w" sizes="(max-width: 887px) 100vw, 887px" /></figure>
+
+
+
+<p><strong>fisherman</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="916" height="280" src="http://ijz.me/wp-content/uploads/2025/03/4-1.png" alt="" class="wp-image-1031" srcset="http://ijz.me/wp-content/uploads/2025/03/4-1.png 916w, http://ijz.me/wp-content/uploads/2025/03/4-1-300x92.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-1-768x235.png 768w, http://ijz.me/wp-content/uploads/2025/03/4-1-624x191.png 624w" sizes="auto, (max-width: 916px) 100vw, 916px" /></figure>
+
+
+
+<p>它们都可以用来给提示符和各种插件安装主题样式。</p>
+
+
+
+<h3 class="wp-block-heading">命令提示符主题</h3>
+
+
+
+<p>你可能会说，定制提示符能有啥蛋用呢，但当你只面对一个主窗口的时候，那么定制它就很有必要了。比如</p>
+
+
+
+<p>当你用git的时候,用他可以告诉我们：</p>
+
+
+
+<p>当前所处的分支；</p>
+
+
+
+<p>你要push/pull的远程仓库地址是啥；</p>
+
+
+
+<p>你的索引干净，有没有你有未提交或未跟踪的文件；</p>
+
+
+
+<p>等等。</p>
+
+
+
+<p>一般情况下时候：</p>
+
+
+
+<p>你当前目录（pwd）；</p>
+
+
+
+<p>你上一条执行的命令是啥（！）；</p>
+
+
+
+<p>上一条命令的状态（$?）；</p>
+
+
+
+<p>上一条命令的响应时间；</p>
+
+
+
+<p>等等。</p>
+
+
+
+<p>系统可以有几十个提示可供自由选择，因此大家都可以按照自己喜好和需求进行选择。我一般用两个：<strong>bobthefish</strong>和<strong>neolambda</strong>主题，你可以在<strong>oh-my-fish</strong><strong>框架下</strong>安装：<strong>omf install bobthefish</strong>。他可以提供：</p>
+
+
+
+<p>第一个主题<strong>bobthefish</strong>，高度可视化，基于powerline，Vim的状态行，包括许多模式和符号，使其更加用户友好：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="91" src="http://ijz.me/wp-content/uploads/2025/03/5-1-1024x91.png" alt="" class="wp-image-1032" srcset="http://ijz.me/wp-content/uploads/2025/03/5-1-1024x91.png 1024w, http://ijz.me/wp-content/uploads/2025/03/5-1-300x27.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-1-768x68.png 768w, http://ijz.me/wp-content/uploads/2025/03/5-1-624x55.png 624w, http://ijz.me/wp-content/uploads/2025/03/5-1.png 1339w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>后一个主题<strong>neolambda</strong>更时尚，功能更少，但有趣（omf install neolambda）：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="97" src="http://ijz.me/wp-content/uploads/2025/03/6-1024x97.png" alt="" class="wp-image-1033" srcset="http://ijz.me/wp-content/uploads/2025/03/6-1024x97.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-300x28.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-768x73.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-624x59.png 624w, http://ijz.me/wp-content/uploads/2025/03/6.png 1348w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 class="wp-block-heading">更多插件推荐</h3>
+
+
+
+<p>除了命令提示符，许多插件允许增强用户界面，值得推荐的有：</p>
+
+
+
+<p><strong>colorman</strong>，为man添加语法高亮显示（omf install colorman）</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="496" height="343" src="http://ijz.me/wp-content/uploads/2025/03/7.png" alt="" class="wp-image-1034" srcset="http://ijz.me/wp-content/uploads/2025/03/7.png 496w, http://ijz.me/wp-content/uploads/2025/03/7-300x207.png 300w" sizes="auto, (max-width: 496px) 100vw, 496px" /></figure>
+
+
+
+<pre class="wp-block-preformatted"><strong>grc</strong>为Linux命令添加语法高亮,比如cat，cvs，df，diff,dig,gcc,ping,ps...（omf install grc）</pre>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="894" height="304" src="http://ijz.me/wp-content/uploads/2025/03/8.png" alt="" class="wp-image-1035" srcset="http://ijz.me/wp-content/uploads/2025/03/8.png 894w, http://ijz.me/wp-content/uploads/2025/03/8-300x102.png 300w, http://ijz.me/wp-content/uploads/2025/03/8-768x261.png 768w, http://ijz.me/wp-content/uploads/2025/03/8-624x212.png 624w" sizes="auto, (max-width: 894px) 100vw, 894px" /></figure>
+
+
+
+<p><strong>g2</strong>是一个简化git命令的打包。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="841" height="417" src="http://ijz.me/wp-content/uploads/2025/03/9.png" alt="" class="wp-image-1036" srcset="http://ijz.me/wp-content/uploads/2025/03/9.png 841w, http://ijz.me/wp-content/uploads/2025/03/9-300x149.png 300w, http://ijz.me/wp-content/uploads/2025/03/9-768x381.png 768w, http://ijz.me/wp-content/uploads/2025/03/9-624x309.png 624w" sizes="auto, (max-width: 841px) 100vw, 841px" /></figure>
+
+
+
+<p><strong>weather</strong>在 Fish shell 中使用以下命令查看天气。(注意该插件依赖jq来处理json数据需要先安装yum install jq 安装，后面日志部分会介绍)。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="577" height="304" src="http://ijz.me/wp-content/uploads/2025/03/10.png" alt="" class="wp-image-1037" srcset="http://ijz.me/wp-content/uploads/2025/03/10.png 577w, http://ijz.me/wp-content/uploads/2025/03/10-300x158.png 300w" sizes="auto, (max-width: 577px) 100vw, 577px" /></figure>
+
+
+
+<p><strong>colorls</strong>（gem install colorls），这个美化的ls工具是必备的。他非常好看，使用用颜色变化来突出当前目录文件的修改工具期。它使文件大小做对人友好话适配（-h）；最重要的是，它显示可以当前文件/文件夹的git状态！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="557" height="241" src="http://ijz.me/wp-content/uploads/2025/03/11.png" alt="" class="wp-image-1038" srcset="http://ijz.me/wp-content/uploads/2025/03/11.png 557w, http://ijz.me/wp-content/uploads/2025/03/11-300x130.png 300w" sizes="auto, (max-width: 557px) 100vw, 557px" /></figure>
+
+
+
+<h3 class="wp-block-heading">让你的日志更好看</h3>
+
+
+
+<p>如果你是，运维或或者开发人员工程师，那么日志可视化是你日常一项重复性任务，你必须选择好的工具才能提高工作效率。</p>
+
+
+
+<p>现代IDE都不适合查看日志，因为它们已经被源文件过载，而且它日志文件通常尺寸都不小，会严重影响你编辑器的性能。一旦文件大小超过10Mb，大多数IDE和编辑器都会“卡壳”。</p>
+
+
+
+<p>解决方案：使用<strong>head</strong>和<strong>tail</strong>工具来得到最先或者最新的日志，同时从可用于shell中的<strong>grep、awk、sort、uniq</strong>等形成流水处理栈，你可以启用语法突出显示并执行搜索。</p>
+
+
+
+<p>根据日志类型，我们在还这推荐两个工具</p>
+
+
+
+<p><strong>ccze</strong>用于传统日志（Apache，syslog，php，&#8230;）</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="376" src="http://ijz.me/wp-content/uploads/2025/03/12-1024x376.png" alt="" class="wp-image-1039" srcset="http://ijz.me/wp-content/uploads/2025/03/12-1024x376.png 1024w, http://ijz.me/wp-content/uploads/2025/03/12-300x110.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-768x282.png 768w, http://ijz.me/wp-content/uploads/2025/03/12-624x229.png 624w, http://ijz.me/wp-content/uploads/2025/03/12.png 1344w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p><strong>jq</strong>用于JSON日志</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="589" height="235" src="http://ijz.me/wp-content/uploads/2025/03/13.png" alt="" class="wp-image-1040" srcset="http://ijz.me/wp-content/uploads/2025/03/13.png 589w, http://ijz.me/wp-content/uploads/2025/03/13-300x120.png 300w" sizes="auto, (max-width: 589px) 100vw, 589px" /></figure>
+
+
+
+<p><strong>jq</strong>的好处是，除了JSON语法突出显示之外，它还会自动格式化你的日志，以方便阅读。因此，如果你的ELK或任何其他数据分析栈如果有单行压缩的JSON日志，你可以用jq解压缩日志并使其做人性化阅读适配。jq是一个功能更强大的工具，它还自带有描述语言的JSON解析器，与XML的xpath类似，但JSON的最简单。</p>
+
+
+
+<p>因此，通过<strong>命令行</strong>的tail -f access 实时获取最新每个日志行，并根据类型将stdout传送到jq或ccze，你就可以快速得到所需信息，并以优雅人性化的格式呈现在你的眼前。</p>
+
+
+
+<h2 class="wp-block-heading">更多命令行工具推荐列表</h2>
+
+
+
+<p>命令行的世界丰富多彩，群芳流彩，虫虫在此列一些我收集到很好的工具。</p>
+
+
+
+<p><strong>ccat</strong>：cat的语法高亮显示</p>
+
+
+
+<p><strong>tig</strong>：允许增强许多已知git命令的输出（例如git log|tig）</p>
+
+
+
+<pre class="wp-block-preformatted"><strong>howdoi</strong>：常量格式化工具，可生成多种语言的格式，比如你需要python的格式，那么只需输入howdoi format date python。</pre>
+
+
+
+<pre class="wp-block-preformatted">你要显示tar命令你只需 howdoi create tar archive </pre>
+
+
+
+<pre class="wp-block-preformatted">会显示 &gt; tar -cf backup.tar --exclude "www/subf3" www</pre>
+
+
+
+<pre class="wp-block-preformatted">&nbsp;</pre>
+
+
+
+<p><strong>htop</strong>：炫酷当前进程列表展示。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="943" height="540" src="http://ijz.me/wp-content/uploads/2025/03/14.png" alt="" class="wp-image-1041" srcset="http://ijz.me/wp-content/uploads/2025/03/14.png 943w, http://ijz.me/wp-content/uploads/2025/03/14-300x172.png 300w, http://ijz.me/wp-content/uploads/2025/03/14-768x440.png 768w, http://ijz.me/wp-content/uploads/2025/03/14-624x357.png 624w" sizes="auto, (max-width: 943px) 100vw, 943px" /></figure>
+
+
+
+<p><strong>glances</strong>（pip install glances）：计算机的监控控制台（进程，内存，网络，磁盘I/O，绑定器&#8230;&#8230;）</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="950" height="492" src="http://ijz.me/wp-content/uploads/2025/03/15.png" alt="" class="wp-image-1042" srcset="http://ijz.me/wp-content/uploads/2025/03/15.png 950w, http://ijz.me/wp-content/uploads/2025/03/15-300x155.png 300w, http://ijz.me/wp-content/uploads/2025/03/15-768x398.png 768w, http://ijz.me/wp-content/uploads/2025/03/15-624x323.png 624w" sizes="auto, (max-width: 950px) 100vw, 950px" /></figure>
+
+
+
+<p><strong>clog</strong>（<code>cargo install clog</code>）：从你的git repo的元数据生成CHANGELOG。</p>
+
+
+
+<p><strong>googler</strong>：命令行下搜索，SSH肉身搜索。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="713" height="291" src="http://ijz.me/wp-content/uploads/2025/03/16.png" alt="" class="wp-image-1043" srcset="http://ijz.me/wp-content/uploads/2025/03/16.png 713w, http://ijz.me/wp-content/uploads/2025/03/16-300x122.png 300w, http://ijz.me/wp-content/uploads/2025/03/16-624x255.png 624w" sizes="auto, (max-width: 713px) 100vw, 713px" /></figure>
+
+
+
+<p><strong>you-get</strong><strong>和youtube-dl</strong>：命令行下载视频：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="495" height="271" src="http://ijz.me/wp-content/uploads/2025/03/17.png" alt="" class="wp-image-1044" srcset="http://ijz.me/wp-content/uploads/2025/03/17.png 495w, http://ijz.me/wp-content/uploads/2025/03/17-300x164.png 300w" sizes="auto, (max-width: 495px) 100vw, 495px" /></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="815" height="113" src="http://ijz.me/wp-content/uploads/2025/03/18.png" alt="" class="wp-image-1045" srcset="http://ijz.me/wp-content/uploads/2025/03/18.png 815w, http://ijz.me/wp-content/uploads/2025/03/18-300x42.png 300w, http://ijz.me/wp-content/uploads/2025/03/18-768x106.png 768w, http://ijz.me/wp-content/uploads/2025/03/18-624x87.png 624w" sizes="auto, (max-width: 815px) 100vw, 815px" /></figure>
+
+
+
+<p><strong>dockly</strong>（npm install -g dockly）：监控你的指定的容器及Docker镜像：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="882" height="504" src="http://ijz.me/wp-content/uploads/2025/03/19.png" alt="" class="wp-image-1046" srcset="http://ijz.me/wp-content/uploads/2025/03/19.png 882w, http://ijz.me/wp-content/uploads/2025/03/19-300x171.png 300w, http://ijz.me/wp-content/uploads/2025/03/19-768x439.png 768w, http://ijz.me/wp-content/uploads/2025/03/19-624x357.png 624w" sizes="auto, (max-width: 882px) 100vw, 882px" /></figure>
+
+
+
+<p><strong>newman</strong>（npm install -g newman）：你想将Postman集成到CI/CD Pipeline中吗？newman就是专门干这个的！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="887" height="507" src="http://ijz.me/wp-content/uploads/2025/03/20.png" alt="" class="wp-image-1047" srcset="http://ijz.me/wp-content/uploads/2025/03/20.png 887w, http://ijz.me/wp-content/uploads/2025/03/20-300x171.png 300w, http://ijz.me/wp-content/uploads/2025/03/20-768x439.png 768w, http://ijz.me/wp-content/uploads/2025/03/20-624x357.png 624w" sizes="auto, (max-width: 887px) 100vw, 887px" /></figure>
+
+
+
+<p><strong>ttyrec/ttygif</strong>：通过shell会话创建GIF动画。</p>
+
+
+
+<p>对于上面引用的每个命令/工具，我都在其名称后的括号里附上了安装命令（主要有yum pip npm等）。如果不能通过包管理器安装，请你下载源码安装。如果你有更好的工具也请留言告诉我和大家分享。炎炎夏日，让我们一起来命令行的世界沐浴来把！</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1027</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>nginx日志自动切割以清理</title>
+		<link>http://ijz.me/?p=755</link>
+					<comments>http://ijz.me/?p=755#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 16 Aug 2015 14:34:35 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[shell]]></category>
+		<category><![CDATA[nginx]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=755</guid>
+
+					<description><![CDATA[按日自动切割nginx日志，并删除30（可自定义）天以上的日志。 脚本保存为 /nginx/logs/ngx_ [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>   按日自动切割nginx日志，并删除30（可自定义）天以上的日志。<br />
+脚本保存为 /nginx/logs/ngx_logcut.sh 并加入crontab中</p>
+<p></p><pre class="crayon-plain-tag">#!/bin/bash
+# 0 00 * * * /nginx/logs/ngx_logcut.sh  &gt;/dev/null 2&gt;&amp;
+pidfile=/var/run/nginx.pid
+logpath='/nginx/logs/'
+keepdays=30
+logfiles=(access.log error.log)
+cd $logpath
+
+for logfile in ${logfiles[@]}; do
+    if [ ! -e $logfile ];
+    then
+        continue
+    fi
+    find . -type f -name $logfile"20*" -mtime +$keepdays -exec rm {} ;
+    mv $logfile $logfile$(date -d "yesterday" +"%Y%m%d")
+done
+
+kill -USR1 `cat $pidfile`</pre><p> </p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=755</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>nohup, setsid, &#038;, disown, screen&#8211;Linux进程任务控制</title>
+		<link>http://ijz.me/?p=722</link>
+					<comments>http://ijz.me/?p=722#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Wed, 25 Mar 2015 01:41:11 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[工具]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=722</guid>
+
+					<description><![CDATA[              用ssh登录了远程的Linux服务器，运行了一些耗时较长的任务，结果却由于网络等的 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<div>
+<div>
+<p>              用ssh登录了远程的Linux服务器，运行了一些耗时较长的任务，结果却由于网络等的不稳定导致任务中途失败。这是由于在用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。<br />
+解决办法有两种：让进程忽略HUP信号，或让进程运行在新的会话里从而成为不属于此终端的子进程。<br />
+<span id="more-722"></span><br />
+&nbsp;</p>
+<p>下面是对Linux下运行与控制后台进程的各种方法的介绍：<br />
+<strong>1.nohup</strong><br />
+顾名思义，nohup的用途就是让提交的命令忽略所有的hangup信号。<br />
+使用方法：nohup COMMAND [ARG]&#8230;</p>
+<p><strong>2.setsid</strong><br />
+在一个新的会话中运行命令，从而可以避开当前终端发出的HUP信号。<br />
+使用方法：setsid COMMAND [ARG]&#8230;</p>
+<p><strong>3.&amp;</strong><br />
+可以结合()产生一个新的子shell并在这个子shell中将任务放置到后台运行，从而不受当前shell终端的HUP信号影响。<br />
+使用方法：(COMMAND [ARG]&#8230; &amp;)</p>
+<p>而我通常的使用方式为：<br />
+nohup ./filename.sh &gt; filename.log 2&gt;&amp;1 &amp;<br />
+三点理由:<br />
+1)nohup保障进程不会被hangup信号异常中断；<br />
+2)将任务放置到后台运行，不占用当前的终端；<br />
+3)将错误输出也打印到log中，默认&gt;只有标准输出，错误输出没有。<br />
+<strong>4.控制进程</strong><br />
+通过以下命令，我们可以对放入到后台的命令进行控制</p>
+<p>查看当前终端下的后台进程：<br />
+直接执行：jobs</p>
+<p>将查看到的某个后台进程放回到前台：<br />
+直接输入：fg {jobid} //这里的{jobid}是通过jobs命令中看到的进程前[]中的数字。</p>
+<p>将当前正在前台运行的进程放到后台运行:<br />
+先敲下快捷键：ctrl +z //暂停当前正在运行的进程。<br />
+再执行：bg</p>
+<p>终止当前正在前台运行的进程：<br />
+直接敲下快捷键：ctrl +c</p>
+<p><strong>5.disown</strong><br />
+亡羊补牢，为没有使用nohup与setsid的进程加上忽略HUP信号的功能。<br />
+使用方法：<br />
+将当前正在前台运行的进程放到后台运行（ctrl+z和bg）;<br />
+然后执行disown -h %{jobid} //这里的{jobid}是通过jobs命令中看到的进程前[]中的数字。</p>
+<p><strong>6.通过screen来实现稳定的后台运行</strong><br />
+screen 是建立一个新的全屏虚拟会话终端，这个会话只有在手动输入exit的时候才会退出，在这个会话里执行的命令不用担心HUP信号会对我们的进程造成影响，因 此也不用给每个命令前都加上“nohup”或“setsid”了，非常适合我们有规划的执行大量的后台任务，可以非常方便的让我们对这些后台任务进行管 理。</p>
+<p>使用方法：<br />
+screen //立即创建并进入一个会话。<br />
+screen -dmS {name} //建立一个处于断开模式下的会话，并根据我们的需要指定其会话名称。<br />
+screen -list //列出所有会话。<br />
+screen -r {name} //进入指定会话。<br />
+ctrl +ad //输入快捷键ctrl +a和d，可暂时退出当前会话。<br />
+exit //进入指定会话后执行exit即可关闭该会话。</p>
+<p>参考资料：<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/">https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></p>
+</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=722</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>linux 一条语句查杀php木马</title>
+		<link>http://ijz.me/?p=712</link>
+					<comments>http://ijz.me/?p=712#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 23 Mar 2015 01:47:23 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[find]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=712</guid>
+
+					<description><![CDATA[根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。   fi [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。<br />
+<code>  find ./ -name "*.php" |xargs egrep "phpspy|c99sh|milw0rm|eval(gunerpress|eval(base64_decoolcode|spider_bc"&gt; /tmp/php.txt</code></p>
+<p><span id="more-712"></span></p>
+<p>如果只列出含木马的文件</p>
+<p><code>      find ./ -name "*.php" -type f -print0 | xargs -0 egrep "(phpspy|c99sh|milw0rm|eval(gzuncompress(base64_decoolcode|eval(base64_decoolcode|spider_bc|gzinflate)" | awk -F: '{print $1}' | sort | uniq</code></p>
+<p><code>    find . -type f -name "*.php"|xargs grep  'versio:b.01'  -l &gt;list.0320</code></p>
+<p>需要注意的是，以上查出来的文件，有可能是正常的php文件，需要你根据实际甄别处理（批量替换），不要误杀了（处理以前注意备份俄）。</p>
+<p>grep方法：<br />
+# grep -r &#8211;include=*.php  &#8216;[^a-z]eval($_POST&#8217; . &gt; /tmp/eval.txt</p>
+<p># grep -r &#8211;include=*.php  &#8216;file_put_contents(.*$_POST[.*]);&#8217; . &gt; /tmp/file_put_contents.txt</p>
+<p>查找最近一天被修改的PHP文件</p>
+<p>#   find -mtime -1 -type f -name *.php</p>
+<p>修改网站的权限</p>
+<p># find -type f -name *.php -exec chmod 444 {} ;</p>
+<p># find ./ -type d -exec chmod 555{} ;</p>
+<p>附：linux下的批量查找和替换。<br />
+find . -type f -name &#8220;*.html&#8221;|xargs grep ‘yourstring’</p>
+<p>2：查找并用perl One-liners替换</p>
+<p>find -name &#8216;要查找的文件名&#8217; | xargs perl -pi -e &#8216;s|被替换的字符串|替换后的字符串|g&#8217;<br />
+下 面这个例子就是将当前目录及所有子目录下的所有*.shtml文件中的”&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;“替换为”(空)“.</p>
+<p>find . -type f -name &#8220;*.shtml&#8221;|xargs perl -pi -e &#8216;s|&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;| |g&#8217;</p>
+<p>perl -pi -e<br />
+在Perl 命令中加上-e 选项，后跟一行代码，那它就会像运行一个普通的Perl 脚本那样运行该代码.</p>
+<p>从命令行中使用Perl 能够帮助实现一些强大的、实时的转换。认真研究正则表达式，并正确地使用，将会为您省去大量的手工编辑工作。</p>
+<div id="main"></div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=712</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>如何判断 Linux 是否运行在虚拟机上/zz/</title>
+		<link>http://ijz.me/?p=685</link>
+					<comments>http://ijz.me/?p=685#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 14 Nov 2014 07:56:25 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[硬件]]></category>
+		<category><![CDATA[虚拟化]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=685</guid>
+
+					<description><![CDATA[  在 WebHostingTalk 论坛上有些国外奸商会把虚拟机当作独立服务器卖，去年7月份的时候就有一位中 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong> </strong></p>
+<p>在 WebHostingTalk 论坛上有些国外奸商会把虚拟机当作独立服务器卖，去年7月份的时候就有一位中国同胞上当受骗， 并在 WHT 上发帖声讨，证据确凿，甚至连服务商自己也承认，回帖达355篇。这家独立服务器/VPS 提供商 HostATree.com 居然大胆的把 OpenVZ VPS 这种一看就知道是虚拟机的虚拟机当作独立服务器卖，晕，至少也要弄个 VMWare/KVM/Xen HVM 吧（更难发现是虚拟机），用 OpenVZ 这种容器也太欺负人了：）昨天恰好收到网友一封邮件问到了如何判断自己买的是独立服务器还是虚拟机的问题。这里 VPSee 简单介绍一下市面上常用虚拟技术（包括容器技术）的判别小技巧。</p>
+<p><span id="more-685"></span></p>
+<p><strong>判断 OpenVZ/Xen PV/UML</strong></p>
+<p>判断 OpenVZ/Xen PV/UML 是最容易的，直接检查 /proc 下的相关目录和文件就可以知道，比如 OpenVZ VPS 上会有 /proc/vz 这个文件；Xen PV 虚拟机上会有 /proc/xen/ 这个目录，并且目录下有一些东西；UML 上打印 /proc/cpuinfo 会找到 UML 标志。写了一个简单的 Python 脚本来检测：</p>
+<p>#!/usr/bin/python</p>
+<p># check if a linux system running on a virtual machine (openvz/xen pv/uml)</p>
+<p># written by http://www.vpsee.com</p>
+<p>&nbsp;</p>
+<p>import sys, os</p>
+<p>&nbsp;</p>
+<p>def main():</p>
+<p>if os.getuid() != 0:</p>
+<p>print &#8220;must be run as root&#8221;</p>
+<p>sys.exit(0)</p>
+<p>&nbsp;</p>
+<p># check OpenVZ/Virtuozzo</p>
+<p>if os.path.exists(&#8220;/proc/vz&#8221;):</p>
+<p>if not os.path.exists(&#8220;/proc/bc&#8221;):</p>
+<p>print &#8220;openvz container&#8221;</p>
+<p>else:</p>
+<p>print &#8220;openvz node&#8221;</p>
+<p>&nbsp;</p>
+<p># check Xen</p>
+<p>if os.path.exists(&#8220;/proc/xen/capabilities&#8221;):</p>
+<p>if (os.path.getsize(&#8220;/proc/xen/capabilities&#8221;) &gt; 0):</p>
+<p>print &#8220;xen dom0&#8221;</p>
+<p>else:</p>
+<p>print &#8220;xen domU&#8221;</p>
+<p>&nbsp;</p>
+<p># check User Mode Linux (UML)</p>
+<p>f = open(&#8220;/proc/cpuinfo&#8221;, &#8220;r&#8221;); t = f.read(); f.close()</p>
+<p>if (t.find(&#8220;UML&#8221;) &gt; 0):</p>
+<p>print &#8220;uml&#8221;</p>
+<p>&nbsp;</p>
+<p>if __name__==&#8221;__main__&#8221;:</p>
+<p>main()</p>
+<p><strong>判断 VMware/Xen HVM/KVM</strong></p>
+<p>如果使用的是 VMware/Xen HVM/KVM 这样的全虚拟就更难判断一些，最准确的办法是读取 CPUID 来判断，Xen 源代码下面有一段检测是否是 Xen 的 C 语言代码 tools/misc/xen-detect.c，这段代码提供了一个很好的例子，VPSee 重写了代码，用宏替代了函数，增加了对 VMware 和 KVM 的识别，用 gcc 编译后就可以运行：</p>
+<p>/*</p>
+<p>* check if a linux system running on a virtual machine (vmware/xen hvm/kvm)</p>
+<p>* written by http://www.vpsee.com</p>
+<p>*/</p>
+<p>#include stdio.h</p>
+<p>#include string.h</p>
+<p>&nbsp;</p>
+<p>#define HYPERVISOR_INFO 0x40000000</p>
+<p>&nbsp;</p>
+<p>#define CPUID(idx, eax, ebx, ecx, edx) </p>
+<p>asm volatile ( </p>
+<p>&#8220;test %1,%1 ; jz 1f ; ud2a ; .ascii &#8220;xen&#8221; ; 1: cpuid&#8221; </p>
+<p>: &#8220;=b&#8221; (*ebx), &#8220;=a&#8221; (*eax), &#8220;=c&#8221; (*ecx), &#8220;=d&#8221; (*edx) </p>
+<p>: &#8220;0&#8221; (idx) );</p>
+<p>&nbsp;</p>
+<p>int main(void)</p>
+<p>{</p>
+<p>unsigned int eax, ebx, ecx, edx;</p>
+<p>char string[13];</p>
+<p>&nbsp;</p>
+<p>CPUID(HYPERVISOR_INFO, &amp;eax, &amp;ebx, &amp;ecx, &amp;edx);</p>
+<p>*(unsigned int *)(string+0) = ebx;</p>
+<p>*(unsigned int *)(string+4) = ecx;</p>
+<p>*(unsigned int *)(string+8) = edx;</p>
+<p>&nbsp;</p>
+<p>string[12] = 0;</p>
+<p>if (strncmp(string, &#8220;XenVMMXenVMM&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;xen hvmn&#8221;);</p>
+<p>} else if (strncmp(string, &#8220;VMwareVMware&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;vmwaren&#8221;);</p>
+<p>} else if (strncmp(string, &#8220;KVMKVMKVM&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;kvmn&#8221;);</p>
+<p>} else</p>
+<p>printf(&#8220;bare hardwaren&#8221;);</p>
+<p>&nbsp;</p>
+<p>return 0;</p>
+<p>}</p>
+<p><strong>判断 VirtualBox/Virtual PC</strong></p>
+<p>什么？这种家用桌面虚拟机自己装的还会不知道？！如果不知道的话也有办法，在 Linux 下运行 dmidecode 工具然后查找 Manufacturer: innotek GmbH, Manufacturer: Microsoft Corporation 关键字就能对应上 VirtualBox 和 Virtual PC.</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=685</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>linux误删除rpm解决方法</title>
+		<link>http://ijz.me/?p=678</link>
+					<comments>http://ijz.me/?p=678#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 23 Oct 2014 08:07:02 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[rpm]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=678</guid>
+
+					<description><![CDATA[二货同事卸载mysql时后，手贱执行 rpm  -e  mysql  &#8211;nodeps，之后，发现r [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>二货同事卸载mysql时后，手贱执行 rpm  -e  mysql  &#8211;nodeps，之后，发现rpm找不到了，yum也不能使用了报错：</p>
+<p>Unable to open /usr/lib/rpm/rpmrc for reading: No such file or directory</p>
+<p><span id="more-678"></span></p>
+<p>1. 从其他同类机器上服务下面所需的l类文件：<br />
+#scp IP:/usr/lib64/librpm* /tmp<br />
+librpm-4.4.so 100% 375KB 375.3KB/s 00:00<br />
+librpmbuild-4.4.so 100% 147KB 147.0KB/s 00:00<br />
+librpmdb-4.4.so 100% 1115KB 1.1MB/s 00:0<br />
+librpmio-4.4.so 100% 389KB 388.8KB/s 00:00</p>
+<p>对比本机/usr/lib64或者/usr/lib（32位机器）目录如果有的话就不用变了，没有的话直接复制到到目录</p>
+<p># mv * /usr/lib64</p>
+<p>2. 在上述同类机器机器上解压 rpm 包，再复制到本地：<br />
+#mkdir /rpm<br />
+#cd /rpm</p>
+<p>wget http://mirrors.sohu.com/centos/6.5/os/x86_64/Packages/rpm-4.8.0-37.el6.x86_64.rpm<br />
+#rpm2cpio rpm-4.8.0-37.el6.x86_64.rpm | cpio -ivd<br />
+# tar zcvf rpm.tar.gz *<br />
+# scp rpm.tar.gz 本机IP:/</p>
+<p>3. 在本机解压：<br />
+#cd /<br />
+#tar zxvf rpm.tar.gz</p>
+<p>现在可以使用 rpm 命令了。</p>
+<p>4. 再安装和 rpm 相关的包：<br />
+#rpm -ivh rpm-python rpm rpm-build rpm-libs redhat-rpm-config</p>
+<p>附录：rpm2cpio和cpio 命令<br />
+pm2cpio命令：将rpm格式的文件转为cpio格式的文件。rpm是linux中常用的文件格式，方便了用户的安装，但没有cpio格式灵 活，最典型的例子就是安装一个在rpm中.so文件时，如果直接使用rpm安装，那么需要处理复杂的依赖关系，将rpm转为cpio，则可以方便地提 取.so文件，做过软连接。</p>
+<p>比如：</p>
+<p>rpm2cpio ../libstdc++-4.3.0-8.i386.rpm | cpio -idv</p>
+<p>cpio命令详解：</p>
+<p>cpio是用来建立，还原备份档的工具程序，它可以加入，解开cpio或tar备份档内的文件。</p>
+<h2 class="headline-1 bk-sidecatalog-title"><a name="t0"></a><span class="headline-content">语　法：</span></h2>
+<p>cpio [-0aABckLovV][-C &lt;输入/输出大小&gt;][-F &lt;备份档&gt;][-H &lt;备份格式&gt;][-O &lt;备份档&gt;][&#8211;block-size=&lt;区块大小&gt;][&#8211;force-local][&#8211;help][&#8211;quiet] [&#8211;version] 或 cpio [-bBcdfikmnrsStuvV][-C &lt;输入/输出大小&gt;][-E &lt;范本文件&gt;][-F &lt;备份档&gt;][-H &lt;备份格式&gt;][-I &lt;备份档&gt;][-M &lt;回传信息&gt;][-R &lt;拥有者&gt;&lt;:/.&gt;&lt;所属群组&gt;][&#8211;block-size=&lt;区块大小&gt;][&#8211;force- local][&#8211;help][&#8211;no-absolute-filenames][&#8211;no-preserve-owner][&#8211;only- verify-crc][&#8211;quiet][&#8211;sparse][&#8211;version][范本样式&#8230;] 或 cpio [-0adkiLmpuvV][-R &lt;拥有者&gt;&lt;:/.&gt;&lt;所属群组&gt;][&#8211;help][&#8211;no-preserve-owner] [&#8211;quiet][&#8211;sparse][&#8211;version][目的目]</p>
+<h2 class="headline-1 bk-sidecatalog-title"><a name="t1"></a><span class="headline-content">补充说明：</span></h2>
+<p>cpio是用来建立，还原备份档的工具程序，它可以加入，解开cpio或tar备份档内的文件。</p>
+<h2 class="headline-1 bk-sidecatalog-title"><a name="t2"></a><a name="4"></a><span class="headline-content">参　数：</span></h2>
+<p>-0或&#8211;null 接受新增列控制字符，通常配合find指令的&#8221;-print0&#8243;参数使用。</p>
+<p>-a或&#8211;reset-access-time 重新设置文件的存取时间。</p>
+<p>-A或&#8211;append 附加到已存在的备份档中，且这个备份档必须存放在磁盘上，而不能放置于磁带机里。</p>
+<p>-b或&#8211;swap 此参数的效果和同时指定&#8221;-sS&#8221;参数相同。</p>
+<p>-B 将输入/输出的区块大小改成5210 Bytes。</p>
+<p>-c 使用旧ASCII备份格式。</p>
+<p>-C&lt;区块大小&gt;或&#8211;io-size=&lt;区块大小&gt; 设置输入/输出的区块大小，单位是Byte。</p>
+<p>-d或&#8211;make-directories 如有需要cpio会自行建立目录。</p>
+<p>-E&lt;范本文件&gt;或&#8211;pattern-file=&lt;范本文件&gt; 指定范本文件，其内含有一个或多个范本样式，让cpio解开符合范本条件的文件，格式为每列一个范本样式。</p>
+<p>-f或&#8211;nonmatching 让cpio解开所有不符合范本条件的文件。</p>
+<p>-F&lt;备份档&gt;或&#8211;file=&lt;备份档&gt; 指定备份档的名称，用来取代标准输入或输出，也能借此通过网络使用另一台主机的保存设备存取备份档。</p>
+<p>-H&lt;备份格式&gt; 指定备份时欲使用的文件格式。</p>
+<p>-i或&#8211;extract 执行copy-in模式，还原备份档。</p>
+<p>-l&lt;备份档&gt; 指定备份档的名称，用来取代标准输入，也能借此通过网络使用另一台主机的保存设备读取备份档。</p>
+<p>-k 此参数将忽略不予处理，仅负责解决cpio不同版本间的兼容性问题。</p>
+<p>-l或&#8211;link 以硬连接的方式取代复制文件，可在copy-pass模式下运用。</p>
+<p>-L或&#8211;dereference 不建立符号连接，直接复制该连接所指向的原始文件。</p>
+<p>-m或preserve-modification-time 不去更换文件的更改时间。</p>
+<p>-M&lt;回传信息&gt;或&#8211;message=&lt;回传信息&gt; 设置更换保存媒体的信息。</p>
+<p>-n或&#8211;numeric-uid-gid 使用&#8221;-tv&#8221;参数列出备份档的内容时，若再加上参数&#8221;-n&#8221;，则会以用户识别码和群组识别码替代拥有者和群组名称列出文件清单。</p>
+<p>-o或&#8211;create 执行copy-out模式，建立备份档。</p>
+<p>-O&lt;备份档&gt; 指定备份档的名称，用来取代标准输出，也能借此通过网络　使用另一台主机的保存设备存放备份档。</p>
+<p>-p或&#8211;pass-through 执行copy-pass模式，略过备份步骤，直接将文件复制到目的目录。</p>
+<p>-r或&#8211;rename 当有文件名称需要更动时，采用互动模式。</p>
+<p>-R&lt;拥有者&gt;&lt;:/.&gt;&lt;所属群组&gt;或　　&#8212;-owner&lt;拥有者&gt;&lt;: /.&gt;&lt;所属群组&gt; 在copy-in模式还原备份档，或copy-pass模式复制文件时，可指定这些备份，复制的文件的拥有者与所属群组。</p>
+<p>-s或&#8211;swap-bytes 交换每对字节的内容。</p>
+<p>-S或&#8211;swap-halfwords 交换每半个字节的内容。</p>
+<p>-t或&#8211;list 将输入的内容呈现出来。</p>
+<p>-u或&#8211;unconditional 置换所有文件，不论日期时间的新旧与否，皆不予询问而直接覆盖。</p>
+<p>-v或&#8211;verbose 详细显示指令的执行过程。</p>
+<p>-V或&#8211;dot 执行指令时，在每个文件的执行程序前面加上&#8221;.&#8221;号</p>
+<p>&#8211;block-size=&lt;区块大小&gt; 设置输入/输出的区块大小，假如设置数值为5，则区块大小为2500，若设置成10，则区块大小为5120，依次类推。</p>
+<p>&#8211;force-local 强制将备份档存放在本地主机。</p>
+<p>&#8211;help 在线帮助。</p>
+<p>&#8211;no-absolute-filenames 使用相对路径建立文件名称。</p>
+<p>&#8211;no-preserve-owner 不保留文件的拥有者，谁解开了备份档，那些文件就归谁所有。</p>
+<p>-only-verify-crc 当备份档采用CRC备份格式时，可使用这项参数检查备份档内的每个文件是否正确无误。</p>
+<p>&#8211;quiet 不显示复制了多少区块。</p>
+<p>&#8211;sparse 倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</p>
+<p>&#8211;version 显示版本信息。</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=678</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>bash重大漏洞用rex批量升级服务器</title>
+		<link>http://ijz.me/?p=666</link>
+					<comments>http://ijz.me/?p=666#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 25 Sep 2014 07:06:08 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=666</guid>
+
+					<description><![CDATA[9月25日消息，继“心脏流血”漏洞之后，安全研究专家又发现了一个危险级别为“毁灭级”（catastrophic [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>9月25日消息，继“心脏流血”漏洞之后，安全研究专家又发现了一个危险级别为“毁灭级”（catastrophic）的漏洞，开源软件公司Red Hat在一份报告中称，在Linux系统中广泛使用的Bash软件漏洞有可能让黑客利用攻击一切连入互联网的设备。</p>
+<p>美国国土安全部下属的美国电脑紧急响应团队(以下简称“US-CERT”)发出警告称，这一漏洞可能影响基于Unix的操作系统，包括Linux和Mac OS X</p>
+<p>用rex强大的工具可以在短时间内批量升级大量的服务器，只需安装rex创建如下的task，即可。</p>
+<p></p><pre class="crayon-plain-tag">task "update_bash", group = "all",  sub {
+
+say connection-server.":begin update bash!";
+pkg "bash",
+ensure = "latest";
+say connection-server.":upate success!";
+};</pre><p> </p>
+<p>执行 rex -qw update_bash</p>
+<p><span id="more-666"></span></p>
+<p><strong>漏洞详情页面</strong>：http://seclists.org/oss-sec/2014/q3/650<br />
+<strong>漏洞级别</strong>:非常严重<br />
+<strong>redhat官方提供漏洞详情</strong></p>
+<p>A flaw was found in the way Bash evaluated certain specially crafted environment variables. An attacker could use this flaw to override or bypass environment restrictions to execute shell commands. Certain services and applications allow remote unauthenticated attackers to provide environment variables, allowing them to exploit this issue.</p>
+<p><strong style="text-indent: 2em;">redhat官方提供检测方式</strong></p>
+<p><strong style="text-indent: 2em;">运行命令：  </strong></p><pre class="crayon-plain-tag">$ env x='() { :;}; echo vulnerable'  bash -c &quot;echo this is a test&quot;</pre><p></p><pre class="crayon-plain-tag">如果返回以下内容：则请尽快升级。</pre><p></p><pre class="crayon-plain-tag">vulnerable</pre><p></p><pre class="crayon-plain-tag">this is a test</pre><p></p><pre class="crayon-plain-tag">目前官方已经提供了升级包请运行：yum update -y bash 进行升级处理！</pre><p></p>
+<p>RedHat, CentOS or Fedora bash版本将升级到bash-4.1.2-15.el6_5.1.x86_64</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=666</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ssh隧道及其用法</title>
+		<link>http://ijz.me/?p=660</link>
+					<comments>http://ijz.me/?p=660#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sat, 20 Sep 2014 13:16:21 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[ssh]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=660</guid>
+
+					<description><![CDATA[&#160; 何谓SSH隧道 隧道是一种把一种网络协议封装进另外一种网络协议进行传输的技术。这里我们研究ssh [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>&nbsp;</p>
+<div class="entry-content">
+<h3>何谓SSH隧道</h3>
+<p>隧道是一种把一种网络协议封装进另外一种网络协议进行传输的技术。这里我们研究ssh隧道，所以所有的网络通讯都是加密的。又被称作端口转发，因为ssh隧道通常会绑定一个本地端口，所有发向这个端口端口的数据包，都会被加密并透明地传输到远端系统。</p>
+<h3>SSH隧道的类型</h3>
+<p>ssh隧道有3种类型：</p>
+<ol>
+<li>动态端口转发（Socks 代理） -D</li>
+<li>本地端口转发  -L</li>
+<li>远端端口转发 -R</li>
+</ol>
+<p><span id="more-660"></span></p>
+<h3>动态端口转发</h3>
+<p>动态端口允许通过配置一个本地端口，把通过隧道到数据转发到远端的所有地址。本地的应用程序需要使用Socks协议与本地端口通讯。此时SSH充当Socks代理服务器的角色。</p>
+<p><strong>命令格式</strong></p><pre class="crayon-plain-tag">ssh -D [bind_address:]port</pre><p><strong>参数说明</strong></p>
+<ul>
+<li>bind_address 指定绑定的IP地址，默认情况会绑定在本地的回环地址（即127.0.0.1），如果空值或者为<code>*</code>会绑定本地所有的IP地址，如果希望绑定的端口仅供本机使用，可以指定为<code>localhost</code>。</li>
+<li>port 指定本地绑定的端口</li>
+</ul>
+<p><strong>使用场景</strong></p>
+<p>假设X网络（192.168.18.0/24）有主机A（192.168.18.100）,Y网络（192.168.2.0/24）有主机B（192.168.2.100）和主机C（192.168.2.101），已知主机A可以连接主机B，但无法连接主机C。</p>
+<p>在主机A执行</p><pre class="crayon-plain-tag">$ ssh -D localhost:8080 root@192.168.2.100</pre><p>然后主机A上的应用程序就可以通过</p><pre class="crayon-plain-tag">SOCKS5 localhost:8080</pre><p>访问主机C上的服务。</p>
+<p><strong>优点</strong></p>
+<ul>
+<li>配置一个代理服务就可以访问远端机器和与其所在子网络的所有服务</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>应用程序需要额外配置SOCKS代理，若应用程序不支持代理配置则无法使用</li>
+</ul>
+<h3>本地端口转发</h3>
+<p>通过SSH隧道，将一个远端机器能够访问到的地址和端口，映射为一个本地的端口。</p>
+<p><a class="fancybox" title="本地端口转发" href="http://codelife.me/images/post/2012-12-09/local_forwarding.jpg" rel="gallery0"><img decoding="async" src="http://codelife.me/images/post/2012-12-09/local_forwarding.jpg" alt="本地端口转发" /></a><span class="caption">本地端口转发</span></p>
+<p><strong>命令格式</strong></p><pre class="crayon-plain-tag">ssh -L [bind_address:]port:host:hostport</pre><p><strong>参数说明</strong></p>
+<ul>
+<li>bind_address 指定绑定的IP地址，默认情况会绑定在本地的回环地址（即127.0.0.1），如果空值或者为<code>*</code>会绑定本地所有的IP地址，如果希望绑定的端口仅供本机使用，可以指定为<code>localhost</code>。</li>
+<li>port 指定本地绑定的端口</li>
+<li>host 指定数据包转发目标地址的IP，如果目标主机和ssh server是同一台主机时该参数指定为<code>localhost</code></li>
+<li>host_port 指定数据包转发目标端口</li>
+</ul>
+<p><strong>使用场景</strong></p>
+<p>假设X网络（192.168.18.0/24）有主机A（192.168.18.100）,Y网络（192.168.2.0/24）有主机 B（192.168.2.100）和主机C（192.168.2.101），已知主机A可以连接主机B，但无法连接主机C。A主机需要访问C主机的VNC 服务（5900端口）</p>
+<p>在A主机上建立本地转发端口5901</p><pre class="crayon-plain-tag">$ ssh -L 5901:192.168.2.101:5900 root@192.168.2.100</pre><p>然后本地vnc客户端通过5901端口打开c主机的vnc服务</p><pre class="crayon-plain-tag">$ open vnc://localhost:5901</pre><p><strong>优点</strong></p>
+<ul>
+<li>无需设置代理</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>每个服务都需要配置不同的端口转发</li>
+</ul>
+<h3>远端端口转发</h3>
+<p>远程端口转发用于某些单向阻隔的内网环境，比如说NAT，网络防火墙。在NAT设备之后的内网主机可以直接访问公网主机，但外网主机却无法访问内网 主机的服务。如果内网主机向外网主机建立一个远程转发端口，就可以让外网主机通过该端口访问该内网主机的服务。可以把这个内网主机理解为“内应”和“开门 者”。</p>
+<p><a class="fancybox" title="远端端口转发" href="http://codelife.me/images/post/2012-12-09/remote_forwarding.jpg" rel="gallery0"><img decoding="async" src="http://codelife.me/images/post/2012-12-09/remote_forwarding.jpg" alt="远端端口转发" /></a><span class="caption">远端端口转发</span></p>
+<p><strong>命令格式</strong></p><pre class="crayon-plain-tag">ssh -R [bind_address:]port:host:hostport</pre><p><strong>参数说明</strong></p>
+<ul>
+<li>bind_address 指定绑定的IP地址，默认情况会绑定在本地的回环地址（即127.0.0.1），如果空值或者为<code>*</code>会绑定本地所有的IP地址，如果希望绑定的端口仅供本机使用，可以指定为<code>localhost</code>。</li>
+<li>port 指定本地绑定的端口</li>
+<li>host 指定数据包转发源地址的IP，如果源主机和ssh server是同一台主机时该参数指定为<code>localhost</code></li>
+<li>host_port 指定数据包转发源端口</li>
+</ul>
+<p><strong>使用场景</strong></p>
+<p>假设X网络（192.168.18.0/24）有主机A（192.168.18.100）,Y网络（192.168.2.0/24）有主机 B（192.168.2.100）和主机C（192.168.2.101），已知主机A可以通过SSH访问登录B主机，但反向直接连接被禁止，主机B和主 机C可以相互访问。若主机C想访问主机A的VNC服务（5900端口）。</p>
+<p>在主机A执行如下命令，开放B主机远端端口转发。</p><pre class="crayon-plain-tag">$ ssh -R 5900:192.168.2.100:5901 root@192.168.2.100</pre><p>然后主机C连接主机B的5901端口</p><pre class="crayon-plain-tag">$ open vnc://192.168.2.100:5901</pre><p><strong>优点</strong></p>
+<ul>
+<li>可以穿越防火墙和NAT设备</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>每个服务都需要配置不同的端口转发</li>
+</ul>
+<h3>如何禁止端口转发</h3>
+<p>设置ssh服务配置文件<code>/etc/ssh/sshd_config</code></p><pre class="crayon-plain-tag">AllowTcpForwarding no</pre><p></p>
+<h3>参考文献</h3>
+<ol>
+<li><a href="http://chamibuddhika.wordpress.com/2012/03/21/ssh-tunnelling-explained/">SSH Tunneling Explained</a></li>
+<li><a href="http://www.ramkitech.com/2012/04/how-to-do-ssh-tunneling-port-forwarding.html">How to do SSH Tunneling (Port Forwarding) </a></li>
+<li><a href="http://www.liugj.com/2013/04/SSH-port-forwarding/">SSH端口转发以及应用实例</a></li>
+</ol>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=660</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Linux下编程辅助工具vim+ctags+taglist+cppcomplete＋cscope+global</title>
+		<link>http://ijz.me/?p=33</link>
+					<comments>http://ijz.me/?p=33#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=33</guid>
+
+					<description><![CDATA[各个工具的主要功能： vim：这个是Linux下功能十分强大的编辑器，就不说了。 ctags：生成tag文件的 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>各个工具的主要功能：</p>
+<p>vim：这个是Linux下功能十分强大的编辑器，就不说了。<br />
+ctags：生成tag文件的命令，这个是其它工具的基础。<br />
+taglist：需要ctags的支撑，直接在左边列出函数列表，全局参数列表。<br />
+cppcomplete：需要ctags的支撑，可以补全类型或者函数名。<br />
+cscope：比较强大，可以对函数以及部分类型定义进行跳转，其实cscope是用来替代ctags功能的。<br />
+global：貌似和cscope，taglist功能一样，据说对于大型的工程表现不错。</p>
+<p><span id="more-33"></span></p>
+<p>各个工具的安装：<br />
+1）vim，ctags，cscope，global，在系统安装时安装，或者使用yum安装。<br />
+2）从下面地址下载vim的cscope插件，并放到相应目录下，如~/.vim/plugin/</p>
+<p><a href="http://cscope.sourceforge.net/cscope_vim_tutorial.html" target="_blank">http://cscope.sourceforge.net/cscope_vim_tutorial.html</a><br />
+2）taglist，cppcomplete是Vim的插件，从下面地址获得，然后放到vim相应目录下即可。</p>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=273" target="_blank">http://www.vim.org/scripts/script.php?script_id=273</a><br />
+<a href="http://www.vim.org/scripts/script.php?script_id=527" target="_blank">http://www.vim.org/scripts/script.php?scrip103ft_id=527</a></p>
+<p>各个工具的使用：<br />
+1）ctags的使用<br />
+在终端运行如下命令，将生成文件tags：<br />
+ctags *.cpp<br />
+要生成cppcomplete需要的tags文件的话，需要运行下面的命令：<br />
+ctags -n -f cppcomplete.tags &#8211;fields=+ai &#8211;C++-types=+p * -L cscope.files<br />
+注意，我在最后使用了参数&#8221;-L cscope.files&#8221; 这仅仅是借用拉cscope生成的文件索引来帮助ctags去查询相关工程文件生成tags。<br />
+2）使用taglist<br />
+taglist的功能是即时生成当前文件的函数列表和全局变量列表，便于索引。<br />
+在vim中命令模式下使用：<br />
+Tlist 打开或者关闭当前文件的索引；<br />
+TlistSync 立即在打开的索引窗口中定位当前的光标所在位置属于哪个函数或者结构定义中。<br />
+3）使用cppcomplete<br />
+使用很简单，就是在你需要补全类型成员时，按F8键就可以啦。<br />
+The default key mapping to complete the code are:</p>
+<p>Alt+l in insert mode will try to find the possible completions and display them in a popup menu. Also normal completions to the names in cppcomplete.tags.<br />
+Alt+j in insert mode will show the popup menu with the last results. Selecting one of the   items will paste the text.<br />
+F8/F9 will work in a similar way as Ctrl+N, Ctrl+P in unextended vim so the script can be used without the popup menu.<br />
+F5 in insert mode will lookup the class and display it in a preview window</p>
+<p>The key mapping are only tested under Windows and linux and they will not work on all platforms. Changing the mappings is easy.<br />
+4）使用cscope<br />
+cscope的tag生成最简单的方法是：<br />
+在你的开发工程的最上层目录执行cscope-indexer，它会遍历下面的所有目录，生成两个文件，一个是cscope.files，这个文件记录需要生成tags的文件名，可以手工修改，另一个是cscope格式的tags文件cscope.out。<br />
+完成后，就可以使用Ctrl-]跳转查找类型定义了。<br />
+5）使用global<br />
+在工程的最上层目录执行命令：<br />
+gtags<br />
+等待它完成所有需要的global自己格式的tags的生成。生成完后，可以用如下命令查询相关类型引用和关联关系：</p>
+<p>代码:</p>
+<p>Gtags xxxx 查找xxxx的定义<br />
+Gtags -r xxxx 查找xxxx的引用<br />
+Gtags -s xxxx 查找xxxx出现的地方<br />
+有时它无法正常分析的类型 可以试试用带-s 的参数的方式找找类型定义。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=33</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Linux下软件的安装与卸载</title>
+		<link>http://ijz.me/?p=34</link>
+					<comments>http://ijz.me/?p=34#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=34</guid>
+
+					<description><![CDATA[在Windows下安装软件时，只需运行软件的安装程序（setup、install等）或者用zip等解压缩软件解 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>在Windows下安装软件时，只需运行软件的安装程序（setup、install等）或者用zip等解压缩软件解开即可安装，运行反安装程序（uninstall、unware、“卸载”等）就能将软件清除干净，完全图形化的操作界面，简单到只要用鼠标一直点击“下一步”就可以了。而 Linux好象就不一样了，很多的初学者都抱怨在Linux下安装和卸载软件非常地困难，没有像使用Windows时那么直观。其实在Linux下安装和卸载软件也非常简单，同样也有安装向导或解压安装的方式，不相同的只不过是除了二进制形式的软件分发外，还有许许多多以源代码形式分发的软件包，下面就来详细地讲一讲这些软件的安装与卸载：</p>
+<p><span id="more-34"></span></p>
+<p>一、二进制分发软件包的安装与卸载<br />
+Linux软件的二进制分发是指事先已经编译好二进制形式的软件包的发布形式，其优点是安装使用容易，缺点则是缺乏灵活性，如果该软件包是为特定的硬件/操作系统平台编译的，那它就不能在另外的平台或环境下正确执行。<br />
+1、*.rpm形式的二进制软件包<br />
+安装：rpm -ivh *.rpm<br />
+卸载：rpm -e packgename<br />
+说明：RPM（RedHat Packge Manager）是RedHat公司出的软件包管理器，使用它可以很容易地对rpm形式的软件包进行安装、升级、卸载、验证、查询等操作，安装简单，而卸载时也可以将软件安装在多处目录中的文件删除干净，因此推荐初学者尽可能</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=34</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

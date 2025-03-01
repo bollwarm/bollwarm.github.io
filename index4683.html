@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>iptables &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=iptables" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Tue, 01 Dec 2015 13:31:33 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>rex advent ——rex操作iptables</title>
+		<link>http://ijz.me/?p=810</link>
+					<comments>http://ijz.me/?p=810#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 01 Dec 2015 13:31:33 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[rex]]></category>
+		<category><![CDATA[advent]]></category>
+		<category><![CDATA[iptables]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=784</guid>
+
+					<description><![CDATA[注意需要引入iptables包 use Rex::Commands::Iptables; &#160; 1、远 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>注意需要引入iptables包</p>
+<p>use Rex::Commands::Iptables;</p>
+<p>&nbsp;</p>
+<p>1、远程主机iptables开放情况</p><pre class="crayon-plain-tag">task "ipc", group =&gt; "all", sub {
+
+ my $str=q(iptables -n -L);
+ my $output= run $str;
+ say connection-&gt;server.": $output";
+
+};</pre><p><span id="more-810"></span></p>
+<p>2、rex远程批量给iptables加黑名单</p><pre class="crayon-plain-tag">task "ipb",group =&gt; "all", sub {
+
+iptables I=&gt;"INPUT", s =&gt; "60.173.26.35",j =&gt; "DROP";
+iptables I=&gt;"INPUT", s =&gt; "180.131.56.9",j =&gt; "DROP";
+
+
+say connection-&gt;server." ip ban  success!";
+
+ };</pre><p>3、从rex从iptables中删除ip的条目</p><pre class="crayon-plain-tag">task "ipd", group =&gt; "all", sub {
+
+ my $str=q(service iptables status|perl -lane 'print $F[0] if /180.131.56.9/');
+ my $output= run $str;
+             run "iptables -D INPUT $output";
+ say connection-&gt;server;
+};</pre><p>4、iptables限制sshd端口（22）登录，仅仅开放白名单ip。</p><pre class="crayon-plain-tag">task "bansshd",group =&gt; "all", sub {
+
+iptables A=&gt;"INPUT", s =&gt; "192.168.1.0/24",p=&gt;'tcp',dport=&gt;22,j =&gt; "ACCEPT";
+iptables A=&gt;"INPUT", s =&gt; "172.16.2.88",p=&gt;'tcp',dport=&gt;22,j =&gt; "ACCEPT";
+iptables A=&gt;"INPUT",p=&gt;'tcp',dport=&gt;"22",j =&gt; "DROP";
+
+say connection-&gt;server." sshd ban  success!";
+
+ };</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=810</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

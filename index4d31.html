@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ssl &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=ssl" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:26:49 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>告别OpenSSL，谷歌推出其取代软件Tink</title>
+		<link>http://ijz.me/?p=1049</link>
+					<comments>http://ijz.me/?p=1049#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 14 Sep 2018 09:36:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[ssl]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1049</guid>
+
+					<description><![CDATA[要说一个软件对IT和互联网业界影响力，恐怕OpenSS要算上一个。一个甚至主要版本使用版本还不到V1.2的软件 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading"></h2>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="620" height="360" src="http://ijz.me/wp-content/uploads/2025/03/1-2.png" alt="" class="wp-image-1050" srcset="http://ijz.me/wp-content/uploads/2025/03/1-2.png 620w, http://ijz.me/wp-content/uploads/2025/03/1-2-300x174.png 300w" sizes="(max-width: 620px) 100vw, 620px" /></figure>
+
+
+
+<p>要说一个软件对IT和互联网业界影响力，恐怕OpenSS要算上一个。一个甚至主要版本使用版本还不到V1.2的软件，占据了整改互联网底层安全核心。SSH、HTTPS,还有其他很多的基础加密库都是离不开OpenSSL的。</p>
+
+
+
+<span id="more-1049"></span>
+
+
+
+<p>但是这么一个非常重要的基础软件，缺在管理上和经费上屡屡爆出问题，以至于当2014年爆发心脏出血时候，整个业界，甚至整个互联网，技术圈内的，非技术圈内的也都震动了。</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="623" height="338" src="http://ijz.me/wp-content/uploads/2025/03/2-2.png" alt="" class="wp-image-1051" srcset="http://ijz.me/wp-content/uploads/2025/03/2-2.png 623w, http://ijz.me/wp-content/uploads/2025/03/2-2-300x163.png 300w" sizes="(max-width: 623px) 100vw, 623px" /></figure>
+
+
+
+<p>为了克服OpenSSL带来的问题，OpenBSD Fork了一个新的软件LibreSSL，以确保SSL的库不会再出问题，基于OpenBSD的几十年积累下来的安全口碑，虫虫认为这是一个非常好的替代。同时各大公司也推出自己的SSL安全库，比如亚马逊就推出了s2n。</p>
+
+
+
+<p>本文介绍的则是，继继谷歌自己的BoringSSL和OpenBSD的LibreSSL之后，谷歌新发布的软件Tink。他是一个多语言，跨平台的安全加密库。使用OpenSSL，系统有着复杂的绑定，并且通常专注于特定的系统，例如Windows中的DLL。 而Tink是开源的，专注于创建简单的API，确保基础架构更具可移植性。</p>
+
+
+
+<h2 class="wp-block-heading">AWS s2n</h2>
+
+
+
+<p>s2n(signal to noise),是对TLS/SSL协议的C99（c语言标准）实现，基于开发一个简单，小巧，快速，并且优先考虑安全性的理念来设计。s2n使用Apache License 2.0发布和许可。重点用于改进TLS（传输层安全性）和使用更轻量级的方法。s2n仅使用了6,000行代码，定义了更专注，更精简的库。当然可能会随着新版本的迭代而代码增加，因为目前还只是一个基本的实现。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="535" src="http://ijz.me/wp-content/uploads/2025/03/3-1024x535.jpg" alt="" class="wp-image-1052" srcset="http://ijz.me/wp-content/uploads/2025/03/3-1024x535.jpg 1024w, http://ijz.me/wp-content/uploads/2025/03/3-300x157.jpg 300w, http://ijz.me/wp-content/uploads/2025/03/3-768x401.jpg 768w, http://ijz.me/wp-content/uploads/2025/03/3-624x326.jpg 624w, http://ijz.me/wp-content/uploads/2025/03/3.jpg 1030w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>s2n是完全开源的，托管在GitHub中（github：awslabs/s2n ），允许任何人review和fork代码，你可以所以fork然后添加核心版本不支持的新功能。</p>
+
+
+
+<p>亚马逊对安全问题都很认真，能及时反应社区发现的漏洞。还开展了与研究人员和学者合作的机制来解决新的问题。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="810" height="488" src="http://ijz.me/wp-content/uploads/2025/03/3-2.png" alt="" class="wp-image-1053" srcset="http://ijz.me/wp-content/uploads/2025/03/3-2.png 810w, http://ijz.me/wp-content/uploads/2025/03/3-2-300x181.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-2-768x463.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-2-624x376.png 624w" sizes="auto, (max-width: 810px) 100vw, 810px" /></figure>
+
+
+
+<h2 class="wp-block-heading">认识Tink</h2>
+
+
+
+<p>Tink是谷歌基于BoringSSL，发布一款新的SSL安全库软件，当前版本版本为1.2.0（已经超过了OpenSSL积累了几十年的版本）。Tink已经在谷歌自己的应用中得到了大量应用。比如已经集成到AdMob，Google Pay，Google智能助理和Firebase中了。</p>
+
+
+
+<p>Tink集成了<strong>AEAD方法</strong>（经过身份验证的加密AE和经过身份验证的加密以及相关数据）。集成了加密密钥，散列函数和消息验证代码（MAC）。</p>
+
+
+
+<p>Tink中AEAD的最低标准包括[RFC5116]：</p>
+
+
+
+<p>明文和相关数据可以具有任何长度（从0到2³²字节）。</p>
+
+
+
+<p>支持80位身份验证。</p>
+
+
+
+<p>CCA2安全性（自适应选择密文攻击）。</p>
+
+
+
+<p>谷歌分析了许多加密技术的弱点，在Tink中对他们做了专门解决。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="728" height="517" src="http://ijz.me/wp-content/uploads/2025/03/5-2.png" alt="" class="wp-image-1054" srcset="http://ijz.me/wp-content/uploads/2025/03/5-2.png 728w, http://ijz.me/wp-content/uploads/2025/03/5-2-300x213.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-2-624x443.png 624w" sizes="auto, (max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<h2 class="wp-block-heading">实例起步</h2>
+
+
+
+<p>基本的加密操作是使用对称密钥加密，我们还是举例传统的例子Bob和Alice通讯：Bob和Alice使用相同的密钥加密并解密。 Bob创建密钥，然后将其安全地传递给Alice，使用密钥交换方法生成共享密钥：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="335" src="http://ijz.me/wp-content/uploads/2025/03/6-1-1024x335.png" alt="" class="wp-image-1055" srcset="http://ijz.me/wp-content/uploads/2025/03/6-1-1024x335.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-1-300x98.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-1-768x251.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-1-624x204.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-1.png 1271w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Tink就是用于简化加密处理并尽可能使用安全、最佳加密方法。在下面我们使用“qwerty123”键加密一个字符串（“napier”），注意示例代码用了java，官方目前支持C++，OC和JAVA原生库，相关可以查看官方仓库，里面有详细的文档和范例。</p>
+
+
+
+<p>package com.helloworld;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadConfig;</p>
+
+
+
+<p>import java.security.GeneralSecurityException;</p>
+
+
+
+<p>import com.google.crypto.tink.Aead;</p>
+
+
+
+<p>import com.google.crypto.tink.KeysetHandle;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadFactory;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadKeyTemplates;</p>
+
+
+
+<p>public final class HelloWorld {</p>
+
+
+
+<p>&nbsp; public static void main(String[] args) throws Exception {</p>
+
+
+
+<p>AeadConfig.register();</p>
+
+
+
+<p>try {</p>
+
+
+
+<p>KeysetHandle keysetHandle = KeysetHandle.generateNew(AeadKeyTemplates.AES128_GCM);</p>
+
+
+
+<p>Aead aead = AeadFactory.getPrimitive(keysetHandle);</p>
+
+
+
+<p>String plaintext=&#8221;napier&#8221;;</p>
+
+
+
+<p>String aad=&#8221;qwerty123&#8243;;</p>
+
+
+
+<p>System.out.println(&#8220;Text:&#8221;+plaintext);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; byte[] ciphertext = aead.encrypt(plaintext.getBytes(), aad.getBytes());</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; System.out.println(&#8220;Cipher:&#8221;+ciphertext.toString());</p>
+
+
+
+<p>byte[] decrypted = aead.decrypt(ciphertext, aad.getBytes());</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; String s = new String(decrypted);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; System.out.println(&#8220;Text:&#8221;+s);</p>
+
+
+
+<p>} catch (GeneralSecurityException e) {</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(e);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.exit(1);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; }</p>
+
+
+
+<p>}</p>
+
+
+
+<p>}</p>
+
+
+
+<p>范例运行过程如下：</p>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<p>Text:&nbsp; hello123</p>
+
+
+
+<p>Password: qwerty</p>
+
+
+
+<p>Type:&nbsp; 1</p>
+
+
+
+<p>Enc type: 128-bit AES GCM</p>
+
+
+
+<p>Cipher: AQbLoE0ino8ofgrvuSSLOKTaYjdPc/ovwWznuMeYfjP+TO1fc6cn7DE=</p>
+
+
+
+<p>Cipher: 4151624C6F4530696E6F386F666772767553534C4F4B5461596A6450632F6F7677577A6E754D6559666A502B544F31666336636E3744453D</p>
+
+
+
+<p>Decrypted: hello123</p>
+</div></div>
+
+
+
+<p>在本里中下，我们使用了带GCM的128位AES（伽罗瓦/计数器模式）。我们的AEAD对象创建语句为：</p>
+
+
+
+<p>KeysetHandle keysetHandle = KeysetHandle.generateNew(AeadKeyTemplates.AES128_GCM);</p>
+
+
+
+<p>然后使用encrypt()和decrypt()方法创建加密流，并其进行解密。</p>
+
+
+
+<p>好今天文章就介绍到这里，在撰写本文的时候，我们得知.net版本的Tink也已经起步（github：elucidsoftllc/tink.net）。如果有机会，我们会对其做更多的探索，并且第一时间给大家呈上结论。欢迎关注虫虫，获得最新的技术和软件信息。</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1049</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

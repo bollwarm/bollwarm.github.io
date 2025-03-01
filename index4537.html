@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>iptables &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=18" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Fri, 26 Feb 2016 08:18:38 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>利用perl-oneline快速定位网站攻击源并处理</title>
+		<link>http://ijz.me/?p=844</link>
+					<comments>http://ijz.me/?p=844#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 26 Feb 2016 08:18:38 +0000</pubDate>
+				<category><![CDATA[iptables]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=844</guid>
+
+					<description><![CDATA[1、问题发现 在查看网站攻击信息，发现一个时间段流量徒增，猜测可能有攻击，记下当时的时间点，并截图 这是百度免 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<header class="entry-header"></header>
+<div class="entry-content">
+<p>1、问题发现</p>
+<p>在查看网站攻击信息，发现一个时间段流量徒增，猜测可能有攻击，记下当时的时间点，并截图</p>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446.png" rel="attachment wp-att-833"><img decoding="async" class="alignnone size-medium wp-image-833" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446-300x121.png" sizes="(max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-300x121.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-768x310.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-624x252.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446.png 958w" alt="QQ图片20160216162446" width="300" height="121" /></a></p>
+<p>这是百度免费cdn的免费统计信息，可见今天早上1点到2点有异常流量。<br />
+<span id="more-844"></span></p>
+<p>2、问题定位</p>
+<p>(1)分析网站acc<b>e</b><b>s</b><b>s</b>的日志，分析1点日志</p>
+<div id="crayon-56e41d4b60705514274851" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -ln&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;/[16/F&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;b/2016:01/ and print&#8217; acc&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;_nginx.log</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b60705514274851-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b60705514274851-1" class="crayon-line"><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">ln<b>e</b></span> <span class="crayon-s">&#8216;/[16/F<b>e</b>b/2016:01/ and print&#8217;</span> <span class="crayon-v">acc<b>e</b><b>s</b><b>s</b>_nginx</span><span class="crayon-sy">.</span><span class="crayon-v">log</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045.png" rel="attachment wp-att-834"><img decoding="async" class="alignnone size-medium wp-image-834" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045-300x143.png" sizes="(max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-300x143.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-768x365.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-1024x487.png 1024w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-624x297.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045.png 1033w" alt="QQ图片20160216163045" width="300" height="143" /></a></p>
+<p>可见确实有大量不同寻常的访问，可判断为对xmlrpc.php的攻击。</p>
+<p>(2)对来源ip进行定位并统计次数</p>
+<div id="crayon-56e41d4b6071a600458748" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -ln&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;/[16/F&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;b/2016:01/ and print&#8217; acc&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;_nginx.log|p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -lan&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;print $F[0]&#8217;|&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;ort|uniq -c|&lt;b style=&#8217;color:black;background-color:#ffff66&#8217;&gt;s&lt;/b&gt;ort -n</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b6071a600458748-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b6071a600458748-1" class="crayon-line"><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">ln<b>e</b></span> <span class="crayon-s">&#8216;/[16/F<b>e</b>b/2016:01/ and print&#8217;</span> <span class="crayon-v">acc<b>e</b><b>s</b><b>s</b>_nginx</span><span class="crayon-sy">.</span><span class="crayon-v">log</span><span class="crayon-o">|</span><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">lan<b>e</b></span> <span class="crayon-s">&#8216;print $F[0]&#8217;</span><span class="crayon-o">|</span><span class="crayon-v"><b>s</b>ort</span><span class="crayon-o">|</span><span class="crayon-v">uniq</span> <span class="crayon-o">&#8211;</span><span class="crayon-v">c</span><span class="crayon-o">|</span><span class="crayon-v"><b>s</b>ort</span> <span class="crayon-o">&#8211;</span><span class="crayon-v">n</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" rel="attachment wp-att-835"><img decoding="async" class="alignnone size-full wp-image-835" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" alt="QQ图片20160216163426" width="254" height="147" /></a></p>
+<p>可以明确看到是这两个ip在攻击，来源地都是美国</p>
+<p>(3)对两个ip单独分析，分析其行为</p>
+<div id="crayon-56e41d4b60724200519498" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -ln&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;/141.101.75.65/ and print&#8217; acc&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;_nginx.log|h&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;ad -n 10</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b60724200519498-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b60724200519498-1" class="crayon-line"><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">ln<b>e</b></span> <span class="crayon-s">&#8216;/141.101.75.65/ and print&#8217;</span> <span class="crayon-v">acc<b>e</b><b>s</b><b>s</b>_nginx</span><span class="crayon-sy">.</span><span class="crayon-v">log</span><span class="crayon-o">|</span><span class="crayon-v">h<b>e</b>ad</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">n</span> <span class="crayon-cn">10</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649.png" rel="attachment wp-att-837"><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-837" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649-300x66.png" sizes="auto, (max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-300x66.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-768x170.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-624x138.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649.png 908w" alt="QQ图片20160216163649" width="300" height="66" /></a></p>
+<p>可见，这两个ip先通过搜索文章作者(访问/?author=x)，找到用户名，然后对用户名和密码进行尝试攻击。</p>
+<p>3、处理和后续扩展<br />
+首先对两个ip进行封禁</p>
+<div id="crayon-56e41d4b6072e333457972" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">iptabl&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; -I INPUT -&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; 141.101.75.65 -&lt;a name=&#8221;qihoosnap3&#8243;&gt;&lt;/a&gt;&lt;b style=&#8217;color:#ffff66;background-color:#8080ff&#8217;&gt;j&lt;/b&gt; DROP&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;<br />
+iptabl&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; -I INPUT -&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; 162.158.90.40 -&lt;b style=&#8217;color:#ffff66;background-color:#8080ff&#8217;&gt;j&lt;/b&gt; DROP</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b6072e333457972-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-56e41d4b6072e333457972-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b6072e333457972-1" class="crayon-line"><span class="crayon-v">iptabl<b>e</b><b>s</b></span> <span class="crayon-o">&#8211;</span><span class="crayon-i">I</span> <span class="crayon-v">INPUT</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>s</b></span> <span class="crayon-cn">141.101.75.65</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>j</b></span> <span class="crayon-e">DROP</span></div>
+<div id="crayon-56e41d4b6072e333457972-2" class="crayon-line crayon-striped-line"><span class="crayon-v">iptabl<b>e</b><b>s</b></span> <span class="crayon-o">&#8211;</span><span class="crayon-i">I</span> <span class="crayon-v">INPUT</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>s</b></span> <span class="crayon-cn">162.158.90.40</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>j</b></span> <span class="crayon-v">DROP</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>由于xmlrpc.php并没有实际中用到，直接删除，或者改名。</p>
+<p>当然可以写一个自动处理脚本根据日志判断攻击ip，然后自动封禁，作为一个可持续的方案不错。</p>
+<p>4、关于wp防护</p>
+<p>注意多升级，可以尽可能的消除安全漏洞。<br />
+注意不用系统默认的用户。<br />
+用一些安全插件比如<strong>WPSecurty</strong> <b>Scan，Better wp Securiry </b>等<br />
+可以用一些开源ids，比如snort等。</p>
+</div>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=844</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>iptables和ipset批量限制非法ip源</title>
+		<link>http://ijz.me/?p=704</link>
+					<comments>http://ijz.me/?p=704#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 26 Jan 2015 11:09:42 +0000</pubDate>
+				<category><![CDATA[iptables]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[shell]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=704</guid>
+
+					<description><![CDATA[一、获取非法ip源： 扫描登录失败的日志： less secure*&#124;grep &#8220;Failed p [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>一、获取非法ip源：</p>
+<p>扫描登录失败的日志：<br />
+less secure*|grep &#8220;Failed password for root from&#8221;  &gt;/tmp/gj.list<br />
+对扫描日志进行分析，非法尝试失败超过50的ip列出来，保存为gongji.ip<br />
+cat /tmp/gj.list|perl -anle  &#8216;print $F[10]&#8217;|sort |uniq -c|sort -n |perl -anle &#8216;print $F[1] if $F[0]&gt;50 &#8216;&gt;/tmp/gongji.ip</p>
+<p><span id="more-704"></span></p>
+<p>二、安装ipset进行ip管理（略）</p>
+<p>三、在ipset中创建一个ip组用于存放非法ip</p>
+<p>ipset -N banip iphash</p>
+<p>四、写个脚本本将ip加入banip分组</p>
+<p>vim ipsetadd.sh</p>
+<p><code>_input</code>=/tmp/gongji.ip</p>
+<p><code>IPS=/usr/sbin/ipset</code></p>
+<p><code>egrep -v "^#|^$" $_input | while IFS= read -r ip</code></p>
+<p><code>do</code><br />
+<code>        $IPS -A banip $ip</code><br />
+<code>done</code></p>
+<p>执行sh ipsetadd.sh</p>
+<p>五、iptables 禁止这些ip</p>
+<p>iptables -I INPUT -m set &#8211;match-set banip  src -p tcp   -j DROP</p>
+<p>&nbsp;</p>
+<p>ok，收工</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=704</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>iptables基础知识详解/zz/</title>
+		<link>http://ijz.me/?p=619</link>
+					<comments>http://ijz.me/?p=619#comments</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 17 Jul 2014 02:27:12 +0000</pubDate>
+				<category><![CDATA[iptables]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=619</guid>
+
+					<description><![CDATA[&#160; iptables防火墙可以用于创建过滤(filter)与NAT规则。所有Linux发行版都能使用 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>iptables防火墙可以用于创建过滤(filter)与NAT规则。所有Linux发行版都能使用iptables，因此理解如何配置iptables将会帮助你更有效地管理Linux防火墙。如果你是第一次接触iptables，你会觉得它很复杂，但是一旦你理解iptables的工作原理，你会发现其实它很简单。</p>
+<p><span id="more-619"></span></p>
+<p>首先介绍iptables的结构：iptables -&gt; Tables -&gt; Chains -&gt; Rules. 简单地讲，tables由chains组成，而chains又由rules组成。如下图所示。</p>
+<p><a href="http://ijz.me/wp-content/uploads/2014/07/image001.png"><img loading="lazy" decoding="async" class="size-full wp-image-620 aligncenter" src="http://ijz.me/wp-content/uploads/2014/07/image001.png" alt="image001" width="540" height="400" /></a></p>
+<p style="text-align: center;">图: IPTables Table, Chain, and Rule Structure</p>
+<p><strong>一、iptables的表与链</strong></p>
+<p>iptables具有Filter, NAT, Mangle, Raw四种内建表：</p>
+<p><strong>1. Filter</strong><strong>表</strong></p>
+<p>Filter表示iptables的默认表，因此如果你没有自定义表，那么就默认使用filter表，它具有以下三种内建链：</p>
+<ul>
+<li><strong>INPUT</strong><strong>链</strong> – 处理来自外部的数据。</li>
+<li><strong>OUTPUT</strong><strong>链</strong> – 处理向外发送的数据。</li>
+<li><strong>FORWARD</strong><strong>链</strong> – 将数据转发到本机的其他网卡设备上。</li>
+</ul>
+<p><strong>2. NAT</strong><strong>表</strong></p>
+<p>NAT表有三种内建链：</p>
+<ul>
+<li><strong>PREROUTING</strong><strong>链</strong> – 处理刚到达本机并在路由转发前的数据包。它会转换数据包中的目标IP地址（destination ip address），通常用于DNAT(destination NAT)。</li>
+<li><strong>POSTROUTING</strong><strong>链</strong> – 处理即将离开本机的数据包。它会转换数据包中的源IP地址（source ip address），通常用于SNAT（source NAT）。</li>
+<li><strong>OUTPUT</strong><strong>链</strong> – 处理本机产生的数据包。</li>
+</ul>
+<p><strong>3. Mangle</strong><strong>表</strong></p>
+<p>Mangle表用于指定如何处理数据包。它能改变TCP头中的QoS位。Mangle表具有5个内建链：</p>
+<ul>
+<li>PREROUTING</li>
+<li>OUTPUT</li>
+<li>FORWARD</li>
+<li>INPUT</li>
+<li>POSTROUTING</li>
+</ul>
+<p><strong>4. Raw</strong><strong>表</strong></p>
+<p>Raw表用于处理异常，它具有2个内建链：</p>
+<ul>
+<li>PREROUTING chain</li>
+<li>OUTPUT chain</li>
+</ul>
+<ol start="5">
+<li><strong>小结</strong></li>
+</ol>
+<p>下图展示了iptables的三个内建表：</p>
+<p style="text-align: center;"><a href="http://ijz.me/wp-content/uploads/2014/07/image003.png"><img loading="lazy" decoding="async" class="alignnone size-full wp-image-622" src="http://ijz.me/wp-content/uploads/2014/07/image003.png" alt="image003" width="540" height="279" /></a></p>
+<p style="text-align: center;">图: IPTables 内建表</p>
+<p><strong>二、IPTABLES 规则(Rules)</strong></p>
+<p>牢记以下三点式理解iptables规则的关键：</p>
+<ul>
+<li>Rules包括一个条件和一个目标(target)</li>
+<li>如果满足条件，就执行目标(target)中的规则或者特定值。</li>
+<li>如果不满足条件，就判断下一条Rules。</li>
+</ul>
+<p><strong>目标值（Target Values）</strong></p>
+<p>下面是你可以在target里指定的特殊值：</p>
+<ul>
+<li><strong>ACCEPT</strong>– 允许防火墙接收数据包</li>
+<li><strong>DROP</strong>– 防火墙丢弃包</li>
+<li><strong>QUEUE</strong>– 防火墙将数据包移交到用户空间</li>
+<li><strong>RETURN</strong>– 防火墙停止执行当前链中的后续Rules，并返回到调用链(the calling chain)中。</li>
+</ul>
+<p>如果你执行iptables –list你将看到防火墙上的可用规则。下例说明当前系统没有定义防火墙，你可以看到，它显示了默认的filter表，以及表内默认的input链, forward链, output链。</p>
+<p># iptables -t filter –list Chain INPUT (policy ACCEPT) target prot opt source destination</p>
+<p>Chain FORWARD (policy ACCEPT) target prot opt source destination</p>
+<p>Chain OUTPUT (policy ACCEPT) target prot opt source destination</p>
+<p>查看mangle表：</p>
+<p># iptables -t mangle –list</p>
+<p>查看NAT表：</p>
+<p># iptables -t nat –list</p>
+<p>查看RAW表：</p>
+<p># iptables -t raw –list</p>
+<p>!注意：如果不指定<strong>-t</strong>选项，就只会显示默认的<strong>filter</strong>表。因此，以下两种命令形式是一个意思：</p>
+<p># iptables -t filter –list (or) # iptables –list</p>
+<p>以下例子表明在filter表的input链, forward链, output链中存在规则：</p>
+<p># iptables –list Chain INPUT (policy ACCEPT) num target prot opt source destination 1 RH-Firewall-1-INPUT all — 0.0.0.0/0 0.0.0.0/0</p>
+<p>Chain FORWARD (policy ACCEPT) num target prot opt source destination 1 RH-Firewall-1-INPUT all – 0.0.0.0/0 0.0.0.0/0</p>
+<p>Chain OUTPUT (policy ACCEPT) num target prot opt source destination</p>
+<p>Chain RH-Firewall-1-INPUT (2 references) num target prot opt source destination 1 ACCEPT all – 0.0.0.0/0 0.0.0.0/0 2 ACCEPT icmp – 0.0.0.0/0 0.0.0.0/0 icmp type 255 3 ACCEPT esp – 0.0.0.0/0 0.0.0.0/0 4 ACCEPT ah – 0.0.0.0/0 0.0.0.0/0 5 ACCEPT udp – 0.0.0.0/0 224.0.0.251 udp dpt:5353 6 ACCEPT udp – 0.0.0.0/0 0.0.0.0/0 udp dpt:631 7 ACCEPT tcp – 0.0.0.0/0 0.0.0.0/0 tcp dpt:631 8 ACCEPT all – 0.0.0.0/0 0.0.0.0/0 state RELATED,ESTABLISHED 9 ACCEPT tcp – 0.0.0.0/0 0.0.0.0/0 state NEW tcp dpt:22 10 REJECT all – 0.0.0.0/0 0.0.0.0/0 reject-with icmp-host-prohibited</p>
+<p>以上输出包含下列字段：</p>
+<ul>
+<li>num – 指定链中的规则编号 target – 前面提到的target的特殊值 prot – 协议：tcp, udp, icmp等 source – 数据包的源IP地址 destination – 数据包的目标IP地址</li>
+</ul>
+<p><strong>三、清空所有iptables规则</strong></p>
+<p>在配置iptables之前，你通常需要用iptables –list命令或者iptables-save命令查看有无现存规则，因为有时需要删除现有的iptables规则：</p>
+<p>iptables –flush 或者 iptables -F</p>
+<p>这两条命令是等效的。但是并非执行后就万事大吉了。你仍然需要检查规则是不是真的清空了，因为有的linux发行版上这个命令不会清除NAT表中的规则，此时只能手动清除：</p>
+<p>iptables -t NAT -F</p>
+<p><strong>四、永久生效</strong></p>
+<p>当你删除、添加规则后，这些更改并不能永久生效，这些规则很有可能在系统重启后恢复原样。为了让配置永久生效，根据平台的不同，具体操作也不同。下面进行简单介绍：</p>
+<p><strong>1.Ubuntu</strong></p>
+<p>首先，保存现有的规则：</p>
+<p>iptables-save &gt; /etc/iptables.rules</p>
+<p>然后新建一个bash脚本，并保存到<em>/etc/network/if-pre-up.d/</em>目录下：</p>
+<p>#!/bin/bash iptables-restore &lt; /etc/iptables.rules</p>
+<p>这样，每次系统重启后iptables规则都会被自动加载。</p>
+<p><strong>！注意：不要尝试在.bashrc或者.profile中执行以上命令，因为用户通常不是root，而且这只能在登录时加载iptables规则。</strong></p>
+<p><strong>2.CentOS, RedHat</strong></p>
+<p># 保存iptables规则 service iptables save</p>
+<p># 重启iptables服务 service iptables stop service iptables start</p>
+<p>查看当前规则：</p>
+<p>cat /etc/sysconfig/iptables</p>
+<p><strong>五、追加iptables规则</strong></p>
+<p>可以使用iptables -A命令追加新规则，其中<strong>-A</strong>表示<strong>Append</strong>。因此，<strong>新的规则将追加到链尾。</strong></p>
+<p>一般而言，最后一条规则用于丢弃(DROP)所有数据包。如果你已经有这样的规则了，并且使用<strong>-A</strong>参数添加新规则，那么就是无用功。</p>
+<ol>
+<li><strong>语法</strong></li>
+</ol>
+<p>iptables -A chain firewall-rule</p>
+<ul>
+<li>-A chain – 指定要追加规则的链</li>
+<li>firewall-rule – 具体的规则参数</li>
+</ul>
+<ol start="2">
+<li><strong>描述规则的基本参数</strong></li>
+</ol>
+<p>以下这些规则参数用于描述数据包的协议、源地址、目的地址、允许经过的网络接口，以及如何处理这些数据包。这些描述是对规则的基本描述。</p>
+<p><strong>-p </strong><strong>协议（protocol）</strong></p>
+<ul>
+<li>指定规则的协议，如tcp, udp, icmp等，可以使用<strong>all</strong>来指定所有协议。</li>
+<li>如果不指定<strong>-p</strong>参数，则默认是<strong>all</strong>值。这并不明智，请总是明确指定协议名称。</li>
+<li>可以使用协议名(如tcp)，或者是协议值（比如6代表tcp）来指定协议。映射关系请查看<em>/etc/protocols</em></li>
+<li>还可以使用<strong>–protocol</strong>参数代替<strong>-p</strong>参数</li>
+</ul>
+<p><strong>-s </strong><strong>源地址（source）</strong></p>
+<ul>
+<li>指定数据包的源地址</li>
+<li>参数可以使IP地址、网络地址、主机名</li>
+<li>例如：-s 192.168.1.101指定IP地址</li>
+<li>例如：-s 192.168.1.10/24指定网络地址</li>
+<li>如果不指定-s参数，就代表所有地址</li>
+<li>还可以使用<strong>–src</strong>或者<strong>–source</strong></li>
+</ul>
+<p><strong>-d </strong><strong>目的地址（destination）</strong></p>
+<ul>
+<li>指定目的地址</li>
+<li>参数和<strong>-s</strong>相同</li>
+<li>还可以使用<strong>–dst</strong>或者<strong>–destination</strong></li>
+</ul>
+<p><strong>-j </strong><strong>执行目标（jump to target）</strong></p>
+<ul>
+<li><strong>-j</strong>代表”jump to target”</li>
+<li><strong>-j</strong>指定了当与规则(Rule)匹配时如何处理数据包</li>
+<li>可能的值是ACCEPT, DROP, QUEUE, RETURN</li>
+<li>还可以指定其他链（Chain）作为目标</li>
+</ul>
+<p><strong>-i </strong><strong>输入接口（input interface）</strong></p>
+<ul>
+<li><strong>-i</strong>代表输入接口(input interface)</li>
+<li><strong>-i</strong>指定了要处理来自哪个接口的数据包</li>
+<li>这些数据包即将进入INPUT, FORWARD, PREROUTE链</li>
+<li>例如：<strong>-i eth0</strong>指定了要处理经由eth0进入的数据包</li>
+<li>如果不指定<strong>-i</strong>参数，那么将处理进入所有接口的数据包</li>
+<li>如果出现<strong>!</strong> -i eth0，那么将处理所有经由<strong>eth0以外的接口</strong>进入的数据包</li>
+<li>如果出现-i eth<strong>+</strong>，那么将处理所有经由<strong>eth开头的接口</strong>进入的数据包</li>
+<li>还可以使用<strong>–in-interface</strong>参数</li>
+</ul>
+<p><strong>-o </strong><strong>输出（out interface）</strong></p>
+<ul>
+<li><strong>-o</strong>代表”output interface”</li>
+<li><strong>-o</strong>指定了数据包由哪个接口输出</li>
+<li>这些数据包即将进入FORWARD, OUTPUT, POSTROUTING链</li>
+<li>如果不指定<strong>-o</strong>选项，那么系统上的所有接口都可以作为输出接口</li>
+<li>如果出现<strong>!</strong> -o eth0，那么将从<strong>eth0以外的接口</strong>输出</li>
+<li>如果出现-i eth<strong>+</strong>，那么将仅从<strong>eth开头的接口</strong>输出</li>
+<li>还可以使用<strong>–out-interface</strong>参数</li>
+</ul>
+<ol start="3">
+<li><strong>描述规则的扩展参数</strong></li>
+</ol>
+<p>对规则有了一个基本描述之后，有时候我们还希望指定端口、TCP标志、ICMP类型等内容。</p>
+<p><strong>–sport 源端口（source port）针对 -p tcp 或者 -p udp</strong></p>
+<ul>
+<li>缺省情况下，将匹配所有端口</li>
+<li>可以指定端口号或者端口名称，例如”–sport 22″与”–sport ssh”。</li>
+<li><em>/etc/services</em>文件描述了上述映射关系。</li>
+<li>从性能上讲，使用端口号更好</li>
+<li>使用冒号可以匹配端口范围，如”–sport 22:100″</li>
+<li>还可以使用”–source-port”</li>
+</ul>
+<p><strong>–-dport 目的端口（destination port）针对-p tcp 或者 -p udp</strong></p>
+<ul>
+<li>参数和–sport类似</li>
+<li>还可以使用”–destination-port”</li>
+</ul>
+<p><strong>&#8211;</strong><strong>–tcp-flags TCP标志 针对-p tcp</strong></p>
+<ul>
+<li>可以指定由逗号分隔的多个参数</li>
+<li>有效值可以是：SYN, ACK, FIN, RST, URG, PSH</li>
+<li>可以使用<strong>ALL</strong>或者<strong>NONE</strong></li>
+</ul>
+<p><strong>&#8211;</strong><strong>–icmp-type ICMP类型 针对-p icmp</strong></p>
+<ul>
+<li>–icmp-type 0 表示Echo Reply</li>
+<li>–icmp-type 8 表示Echo</li>
+</ul>
+<ol start="4">
+<li><strong>追加规则的完整实例：仅允许SSH服务</strong></li>
+</ol>
+<p>本例实现的规则将仅允许SSH数据包通过本地计算机，其他一切连接（包括ping）都将被拒绝。</p>
+<p># 1.清空所有iptables规则 iptables -F</p>
+<p># 2.接收目标端口为22的数据包 iptables -A INPUT -i eth0 -p tcp –dport 22 -j ACCEPT</p>
+<p># 3.拒绝所有其他数据包 iptables -A INPUT -j DROP</p>
+<p><strong>六、更改默认策略</strong></p>
+<p>上例的例子仅对接收的数据包过滤，而对于要发送出去的数据包却没有任何限制。本节主要介绍如何更改链策略，以改变链的行为。</p>
+<p><strong>1. </strong><strong>默认链策略</strong></p>
+<p><strong>/!</strong><strong>警告</strong>：请勿在远程连接的服务器、虚拟机上测试！</p>
+<p>当我们使用-L选项验证当前规则是发现，所有的链旁边都有<strong>policy ACCEPT</strong>标注，这表明当前链的默认策略为ACCEPT：</p>
+<p># iptables -L Chain INPUT (policy ACCEPT) target prot opt source destination ACCEPT tcp – anywhere anywhere tcp dpt:ssh DROP all – anywhere anywhere</p>
+<p>Chain FORWARD (policy ACCEPT) target prot opt source destination</p>
+<p>Chain OUTPUT (policy ACCEPT) target prot opt source destination</p>
+<p>这种情况下，如果没有明确添加DROP规则，那么默认情况下将采用ACCEPT策略进行过滤。除非：</p>
+<p><strong>a)</strong><strong>为以上三个链单独添加DROP规则：</strong></p>
+<p>iptables -A INPUT -j DROP iptables -A OUTPUT -j DROP iptables -A FORWARD -j DROP</p>
+<p><strong>b)</strong><strong>更改默认策略：</strong></p>
+<p>iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP</p>
+<p>糟糕！！如果你严格按照上一节的例子配置了iptables，并且现在使用的是SSH进行连接的，那么会话恐怕已经被迫终止了！</p>
+<p>为什么呢？因为我们已经把OUTPUT链策略更改为DROP了。此时虽然服务器能接收数据，但是无法发送数据：</p>
+<p># iptables -L Chain INPUT <strong>(policy DROP)</strong> target prot opt source destination ACCEPT tcp – anywhere anywhere tcp dpt:ssh DROP all – anywhere anywhere</p>
+<p>Chain FORWARD <strong>(policy DROP)</strong> target prot opt source destination</p>
+<p>Chain OUTPUT <strong>(policy DROP)</strong> target prot opt source destination</p>
+<p><strong>七、配置应用程序规则</strong></p>
+<p>尽管5.4节已经介绍了如何初步限制除SSH以外的其他连接，但是那是在链默认策略为ACCEPT的情况下实现的，并且没有对输出数据包进行限制。本节在上一节基础上，以SSH和HTTP所使用的端口为例，教大家如何在默认链策略为DROP的情况下，进行防火墙设置。在这里，我们将引进一种新的参数-m state，并检查数据包的状态字段。</p>
+<p><strong>1.SSH</strong></p>
+<p># 1.允许接收远程主机的SSH请求 iptables -A INPUT -i eth0 -p tcp –dport 22 -m state –state NEW,ESTABLISHED -j ACCEPT</p>
+<p># 2.允许发送本地主机的SSH响应 iptables -A OUTPUT -o eth0 -p tcp –sport 22 -m state –state ESTABLISHED -j ACCEPT</p>
+<ul>
+<li><strong>-m state:</strong>启用状态匹配模块（state matching module）</li>
+<li><strong>–-state:</strong>状态匹配模块的参数。当SSH客户端第一个数据包到达服务器时，状态字段为NEW；建立连接后数据包的状态字段都是ESTABLISHED</li>
+<li><strong>–sport 22:</strong> sshd监听22端口，同时也通过该端口和客户端建立连接、传送数据。因此对于SSH服务器而言，源端口就是22</li>
+<li><strong>–dport 22:</strong> ssh客户端程序可以从本机的随机端口与SSH服务器的22端口建立连接。因此对于SSH客户端而言，目的端口就是22</li>
+</ul>
+<p>如果服务器也需要使用SSH连接其他远程主机，则还需要增加以下配置：</p>
+<p># 1.送出的数据包目的端口为22 iptables -A OUTPUT -o eth0 -p tcp –dport 22 -m state –state NEW,ESTABLISHED -j ACCEPT</p>
+<p># 2.接收的数据包源端口为22 iptables -A INPUT -i eth0 -p tcp –sport 22 -m state –state ESTABLISHED -j ACCEPT</p>
+<p><strong>2.HTTP</strong></p>
+<p>HTTP的配置与SSH类似：</p>
+<p># 1.允许接收远程主机的HTTP请求 iptables -A INPUT -i eth0 -p tcp –dport 80 -m state –state NEW,ESTABLISHED -j ACCEPT</p>
+<p># 1.允许发送本地主机的HTTP响应 iptables -A OUTPUT -o eth0 -p tcp –sport 80 -m state –state ESTABLISHED -j ACCEPT</p>
+<ol start="3">
+<li><strong>完整的配置</strong></li>
+</ol>
+<p># 1.删除现有规则 iptables -F</p>
+<p># 2.配置默认链策略 iptables -P INPUT DROP iptables -P FORWARD DROP iptables -P OUTPUT DROP</p>
+<p># 3.允许远程主机进行SSH连接 iptables -A INPUT -i eth0 -p tcp –dport 22 -m state –state NEW,ESTABLISHED -j ACCEPT iptables -A OUTPUT -o eth0 -p tcp –sport 22 -m state –state ESTABLISHED -j ACCEPT</p>
+<p># 4.允许本地主机进行SSH连接 iptables -A OUTPUT -o eth0 -p tcp –dport 22 -m state –state NEW,ESTABLISHED -j ACCEPT iptables -A INPUT -i eth0 -p tcp –sport 22 -m state –state ESTABLISHED -j ACCEPT</p>
+<p># 5.允许HTTP请求 iptables -A INPUT -i eth0 -p tcp –dport 80 -m state –state NEW,ESTABLISHED -j ACCEPT iptables -A OUTPUT -o eth0 -p tcp –sport 80 -m state –state ESTABLISHED -j ACCEPT</p>
+<p><strong>References</strong></p>
+<p>[1] <a href="http://www.thegeekstuff.com/2011/01/iptables-fundamentals/">Linux Firewall Tutorial: IPTables Tables, Chains, Rules Fundamentals</a></p>
+<p>[2] <a href="http://www.thegeekstuff.com/2011/01/redhat-iptables-flush/">IPTables Flush: Delete / Remove All Rules On RedHat and CentOS Linux</a></p>
+<p>[3] <a href="http://www.thegeekstuff.com/2011/02/iptables-add-rule/">Linux IPTables: How to Add Firewall Rules (With Allow SSH Example)</a></p>
+<p>[4] <a href="http://www.thegeekstuff.com/2011/03/iptables-inbound-and-outbound-rules/">Linux IPTables: Incoming and Outgoing Rule Examples (SSH and HTTP)</a></p>
+<p>[5] <a href="http://www.thegeekstuff.com/2011/06/iptables-rules-examples/">25 Most Frequently Used Linux IPTables Rules Examples</a></p>
+<p>[6] man 8 iptables</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=619</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

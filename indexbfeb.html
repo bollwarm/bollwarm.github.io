@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>nginx &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=nginx" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sun, 16 Aug 2015 14:34:35 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>nginx日志自动切割以清理</title>
+		<link>http://ijz.me/?p=755</link>
+					<comments>http://ijz.me/?p=755#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 16 Aug 2015 14:34:35 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[shell]]></category>
+		<category><![CDATA[nginx]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=755</guid>
+
+					<description><![CDATA[按日自动切割nginx日志，并删除30（可自定义）天以上的日志。 脚本保存为 /nginx/logs/ngx_ [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>   按日自动切割nginx日志，并删除30（可自定义）天以上的日志。<br />
+脚本保存为 /nginx/logs/ngx_logcut.sh 并加入crontab中</p>
+<p></p><pre class="crayon-plain-tag">#!/bin/bash
+# 0 00 * * * /nginx/logs/ngx_logcut.sh  &gt;/dev/null 2&gt;&amp;
+pidfile=/var/run/nginx.pid
+logpath='/nginx/logs/'
+keepdays=30
+logfiles=(access.log error.log)
+cd $logpath
+
+for logfile in ${logfiles[@]}; do
+    if [ ! -e $logfile ];
+    then
+        continue
+    fi
+    find . -type f -name $logfile"20*" -mtime +$keepdays -exec rm {} ;
+    mv $logfile $logfile$(date -d "yesterday" +"%Y%m%d")
+done
+
+kill -USR1 `cat $pidfile`</pre><p> </p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=755</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>nginx负载均衡upstream配置</title>
+		<link>http://ijz.me/?p=600</link>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 08 Jul 2014 02:39:54 +0000</pubDate>
+				<category><![CDATA[工具]]></category>
+		<category><![CDATA[nginx]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=600</guid>
+
+					<description><![CDATA[nginx做为一个强大的反向代理、负载均衡和缓存已经被广泛使用，今特对其负载均衡upstream配置做一个总结 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>nginx做为一个强大的反向代理、负载均衡和缓存已经被广泛使用，今特对其负载均衡upstream配置做一个总结:</p>
+<p><span id="more-600"></span></p>
+<p><strong>第一种：轮询</strong></p>
+<div class="codecolorer-container text default" style="width: 435px; overflow: auto; white-space: nowrap;">
+<div class="text codecolorer">upstream ijz{<br />
+server 192.168.0.1:3000;<br />
+server 192.168.0.1:3001;<br />
+}</div>
+</div>
+<p><strong>第二种：权重</strong></p>
+<div class="codecolorer-container text default" style="width: 435px; overflow: auto; white-space: nowrap;">
+<div class="text codecolorer">upstream ijz{<br />
+server 192.168.0.1 weight=2;<br />
+server 192.168.0.2 weight=3;<br />
+}</div>
+</div>
+<p>这种模式可解决服务器性能不等的情况下轮询比率的调配</p>
+<p><strong>第三种：ip_hash</strong></p>
+<div class="codecolorer-container text default" style="width: 435px; overflow: auto; white-space: nowrap;">
+<div class="text codecolorer">upstream ijz{<br />
+ip_hash;<br />
+server 192.168.0.1;<br />
+server 192.168.0.2;<br />
+}</div>
+</div>
+<p>这种模式会根据来源IP和后端配置来做hash分配，确保固定IP只访问一个后端</p>
+<p><strong>第四种：fair</strong></p>
+<p>需要安装<a href="http://wiki.nginx.org/HttpUpstreamFairModule" target="_blank">Upstream Fair Balancer</a> Module</p>
+<div class="codecolorer-container text default" style="width: 435px; overflow: auto; white-space: nowrap;">
+<div class="text codecolorer">upstream ijz{<br />
+server 192.168.0.1;<br />
+server 192.168.0.2;<br />
+fair;<br />
+}</div>
+</div>
+<p>这种模式会根据后端服务的响应时间来分配，响应时间短的后端优先分配</p>
+<p><strong>第五种：自定义hash</strong></p>
+<p>需要安装<a href="http://wiki.nginx.org/HttpUpstreamRequestHashModule" target="_blank">Upstream Hash</a> Module</p>
+<div class="codecolorer-container text default" style="width: 435px; overflow: auto; white-space: nowrap;">
+<div class="text codecolorer">upstream ijz{<br />
+server 192.168.0.1;<br />
+server 192.168.0.2;<br />
+hash $request_uri;<br />
+}</div>
+</div>
+<p>这种模式可以根据给定的字符串进行Hash分配</p>
+<p><strong>具体应用：</strong></p>
+<div class="codecolorer-container text default" style="width: 435px; overflow: auto; white-space: nowrap;">
+<div class="text codecolorer">server{<br />
+listen 80;<br />
+server_name .ijz.me;<br />
+charset utf-8;location / {<br />
+proxy_pass http://ijz/;<br />
+}<br />
+}</div>
+</div>
+<p>&nbsp;</p>
+<p><strong>此外upstream每个后端的可设置参数为：</strong></p>
+<p>1.down: 表示此台server暂时不参与负载。</p>
+<p>2.weight: 默认为1，weight越大，负载的权重就越大。</p>
+<p>3.max_fails: 允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream模块定义的错误。</p>
+<p>4.fail_timeout: max_fails次失败后，暂停的时间。</p>
+<p>5.backup: 其它所有的非backup机器down或者忙的时候，请求backup机器，应急顶替。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

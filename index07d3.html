@@ -1,0 +1,1808 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>安全 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=6" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:31:23 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>关于SSH加密和连接的若干事儿</title>
+		<link>http://ijz.me/?p=1057</link>
+					<comments>http://ijz.me/?p=1057#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Mon, 08 Oct 2018 11:40:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[ssh]]></category>
+		<category><![CDATA[加密算法]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1057</guid>
+
+					<description><![CDATA[概述 SSH全称secure shell，是一种网络传输协议，是最常用的安全管理远程服务器的协议和工具集。SS [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading">概述</h1>
+
+
+
+<p>SSH全称secure shell，是一种网络传输协议，是最常用的安全管理远程服务器的协议和工具集。SSH协议中使用多种加密技术保证在用户终端和服务器之间建立加密安全连接，连接双方通过互相握手验证，并通过加密的通道传递管理命令和执行结果。</p>
+
+
+
+<p>本文中，虫虫将以此为话题和大家一起学习下SSH协议中涉及的基础加密技术以及怎么利用这些技术构建安全的通讯。此信息可用于了解各种常见的加密技术，SSH加密层、安全连接构建步骤以及双方互相验证步骤能内容。</p>
+
+
+
+<span id="more-1057"></span>
+
+
+
+<h2 class="wp-block-heading">SSH算法</h2>
+
+
+
+<p>SSH为了确保信息的安全传输，从连接发起到完成各阶段的各个点SSH协议采用了许多不同类型的数据加密技术，包括可逆的对称加密，非对称加密以及不可逆的哈希散列。</p>
+
+
+
+<h3 class="wp-block-heading">对称加密</h3>
+
+
+
+<p>加密和解密数据的时候相互对应的关系决定了加密方案是对称加密还是非对称的加密。</p>
+
+
+
+<p>最常见的加密方法是对称加密，对称加密是一种加密类型，在加密和解密时候使用同一个密钥。所以，在对称加密中，任何人都可以利用该密钥加密消息和解密任何使用它加密的消息。这种加密方法通常也称为“共享密钥”加密或“密钥”加密。通常只有一个密钥用于所有加解密操作，或者使用一对密钥，但是这对密钥可以互相简单推算出彼此。</p>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="583" height="209" src="http://ijz.me/wp-content/uploads/2025/03/1-3.png" alt="" class="wp-image-1058" srcset="http://ijz.me/wp-content/uploads/2025/03/1-3.png 583w, http://ijz.me/wp-content/uploads/2025/03/1-3-300x108.png 300w" sizes="(max-width: 583px) 100vw, 583px" /></figure>
+
+
+
+<p>SSH数据传输时候基本上所有过程都是使用对称密钥来加密。只有在刚开始创建连接阶段和身份认证握手阶段才使用非对称加密。</p>
+
+
+
+<p>客户端和服务器都通过协商一致的算法生成密钥，并互相通过可信通道交换密钥，这个过程叫密钥交换。通过密钥交换服务器和客户端可共享某些公共数据结合自己隐秘数据通过算法各自获得相同的共享密钥。后面第二部分虫虫会对此过程进行详细解释。此过程创建的对称加密密钥是基于会话的，然后通过该会话在服务器和客户端之间发送的加密数据。会话一旦创建，此后所有数据数据都通过共享密钥加密。</p>
+
+
+
+<p>在对称加密过程中最重要的是加密算法。SSH中支持各种不同的加密算法，主要有AES，Blowfish，3DES，CAST128和Arcfour等等。服务器和客户端可以根据优先顺序协商其支持的密码列表。服务器上可用的客户端列表中的第一个选项就是密码算法。</p>
+
+
+
+<p>在虫虫的Centos 中，openssh7.4是默认的算法为在连接github的git服务过程中，ssh协商的算法为：</p>
+
+
+
+<p>chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc</p>
+
+
+
+<p>这样连接协商后的结果会使用chacha20-poly1305@openssh.com做认证密码，共享加密算法为aes256-ctr。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="497" src="http://ijz.me/wp-content/uploads/2025/03/2-3-1024x497.png" alt="" class="wp-image-1059" srcset="http://ijz.me/wp-content/uploads/2025/03/2-3-1024x497.png 1024w, http://ijz.me/wp-content/uploads/2025/03/2-3-300x146.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-3-768x373.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-3-624x303.png 624w, http://ijz.me/wp-content/uploads/2025/03/2-3.png 1335w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>我们注意到加密算法使用了ChaCha20-Poly1305，它是由Google 推出新的加密套件并，具有以下优势：ChaCha20-Poly1305 避开了现有发现的所有安全漏洞和攻击；Poly1305 的输出是 16 字节，而 HMAC-SHA1 是 20 字节，可以节省 16% 的 overhead 消耗。</p>
+
+
+
+<h3 class="wp-block-heading">非对称加密</h3>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="668" height="297" src="http://ijz.me/wp-content/uploads/2025/03/3-3.png" alt="" class="wp-image-1060" srcset="http://ijz.me/wp-content/uploads/2025/03/3-3.png 668w, http://ijz.me/wp-content/uploads/2025/03/3-3-300x133.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-3-624x277.png 624w" sizes="(max-width: 668px) 100vw, 668px" /></figure>
+
+
+
+<p>非对称加密与对称加密的不同之处在于，为了在单个方向上发送数据，需要两个相关的一组密钥。其中一个密钥称为私钥，而另一个称为公钥。</p>
+
+
+
+<p>公钥可以公开共享。私钥与之配，无法通过公钥计算出公钥。公钥和私钥之间从数学的特性保证公钥加密的信息只能由私钥解密，私钥加密的信息也不能用公钥解密。</p>
+
+
+
+<p>非对称加密中是用最广泛RSA算法就用到了利用大素数方便生成大整数（2048），但是该大素数则几乎无法分解的特性。最近热门的阿蒂亚老教授宣布证明《黎曼猜想》，就是用关于大素数分布的规律，如果该证明有效，能发现大素数的分布规律，则可能会影响大素数分解，读广泛使用的RSA算法可能产生影响。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="487" src="http://ijz.me/wp-content/uploads/2025/03/4-2-1024x487.png" alt="" class="wp-image-1061" srcset="http://ijz.me/wp-content/uploads/2025/03/4-2-1024x487.png 1024w, http://ijz.me/wp-content/uploads/2025/03/4-2-300x143.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-2-768x365.png 768w, http://ijz.me/wp-content/uploads/2025/03/4-2-624x296.png 624w, http://ijz.me/wp-content/uploads/2025/03/4-2.png 1105w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>有意思的是RSA算法曾暴露过一丑闻，数学家们发现，算法中曾经使用的一个随机函数DUAL_EC_DRBG被NSA做了手脚，植入了后门，可以过这个这个算法来推算密钥。NSA利用该算法监控和窃取一些加密信息。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="648" height="173" src="http://ijz.me/wp-content/uploads/2025/03/5-3.png" alt="" class="wp-image-1062" srcset="http://ijz.me/wp-content/uploads/2025/03/5-3.png 648w, http://ijz.me/wp-content/uploads/2025/03/5-3-300x80.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-3-624x167.png 624w" sizes="auto, (max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<p>我们知道密钥对中的私钥唯一用来解密消息的密钥，所以私钥要绝对保密，不能泄露给任何人。实践中除了保证私钥的存放外，SSH中用来进行系统认证的私钥虫虫建议应该对其设置密码，防止万一泄露，没有密码别人也用不了。如果是系统之间做自动程序和访问git操作的密钥，为了方便可以不设置密码。</p>
+
+
+
+<p>SSH在建立对称加密（用于加密会话）的初始密钥交换过程中，使用了非对称加密。在该阶段，双方都生成临时密钥对并互相交换公钥，以便产生将用于对称加密的共享密钥。</p>
+
+
+
+<p>SSH还通过使用非对称加密的来进行SSH密钥的身份验证：客户端创建密钥对，然后将公钥配置到远程服务器上，具体为用户帐户目录的~/.ssh目录下名为authorized_keys文件,每一行对应一个公钥。</p>
+
+
+
+<p>收到用户请求后，服务器端利用authorized_keys中公钥比对证书指纹，找到用户公钥加密一个消息，并对消息生成哈希串附加到消息后返回给客户端。如果客户端能利用自己私钥解密消息，并用自己手中服务器端的公钥加密验证串给服务器，服务用自己私钥解密消息完成认证，这样证书交换和身份认证过程完成（密钥交换过程中各自独立计算出了对称加密的共享密钥），开始进行加密数据传输。</p>
+
+
+
+<h3 class="wp-block-heading">哈希散列</h3>
+
+
+
+<p>SSH协议中还用到了加密散列。哈希散列算法是一种不可逆算法，除非你知道原始值生成散列对比，否则你永远无法通过散列算出原始值（但是可以通过哈希碰撞，就是利用可能字串或者构造彩虹表大量生成哈希进行对比，目前MD5和SSA1已经不再绝对安全）。散列算法常用于创建信息 “签名”或生成一组信息摘要，用来保证信息传输过程中没有被人认为篡改。因为对数据的任何修改都会导致其哈希完全不一致。</p>
+
+
+
+<p>注意：目前对MD5和SHA-1可以通过大量计算生成利用精心设置的数据将数据内容修改，但是能保证哈希不变。下图就是谷歌去年2月份的SHA-1碰撞的实验，两个背景完全不一样的pdf，但是生成哈希完全一样。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="388" src="http://ijz.me/wp-content/uploads/2025/03/6-2-1024x388.png" alt="" class="wp-image-1063" srcset="http://ijz.me/wp-content/uploads/2025/03/6-2-1024x388.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-2-300x114.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-2-768x291.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-2-624x236.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-2.png 1181w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>在SSH对称加密协商的过程中，选择消息认证码（MAC）的生成算法就是用的哈希算法。协商发送的每条加密信息都会附加公开的该信息MAC作为消息的一部分，以便于另一方可以用它验证数据包的完整性。 MAC根据对称共享密钥，消息的分组序列号和实际信息组成的内容算出来的。MAC作为数据包的最后部单独发送。</p>
+
+
+
+<h3 class="wp-block-heading">常见加密算法比较</h3>
+
+
+
+<p>下面参考网上资料，我们对常见加密算法比较图示：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="617" height="403" src="http://ijz.me/wp-content/uploads/2025/03/7-1.png" alt="" class="wp-image-1065" srcset="http://ijz.me/wp-content/uploads/2025/03/7-1.png 617w, http://ijz.me/wp-content/uploads/2025/03/7-1-300x196.png 300w" sizes="auto, (max-width: 617px) 100vw, 617px" /></figure>
+
+
+
+<p><strong>常用的对称加密算法：</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="459" height="203" src="http://ijz.me/wp-content/uploads/2025/03/7-5.png" alt="" class="wp-image-1074" srcset="http://ijz.me/wp-content/uploads/2025/03/7-5.png 459w, http://ijz.me/wp-content/uploads/2025/03/7-5-300x133.png 300w" sizes="auto, (max-width: 459px) 100vw, 459px" /></figure>
+
+
+
+<p><strong>常用非对称算法比较</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="649" height="281" src="http://ijz.me/wp-content/uploads/2025/03/8-1.png" alt="" class="wp-image-1066" srcset="http://ijz.me/wp-content/uploads/2025/03/8-1.png 649w, http://ijz.me/wp-content/uploads/2025/03/8-1-300x130.png 300w, http://ijz.me/wp-content/uploads/2025/03/8-1-624x270.png 624w" sizes="auto, (max-width: 649px) 100vw, 649px" /></figure>
+
+
+
+<p><strong>常用散列算法比较</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="280" height="154" src="http://ijz.me/wp-content/uploads/2025/03/9-1.png" alt="" class="wp-image-1067"/></figure>
+
+
+
+<h2 class="wp-block-heading">SSH工作原理</h2>
+
+
+
+<p>我们上面在第二部部分SSH算法中概要提到了SSH的工作原理，本部分虫虫会详细介绍下。</p>
+
+
+
+<p>SSH协议使用客户端/服务器（CS）模式来双方认证并彼此加密传输数据。服务器组件侦听指定的端口（默认22），接受连接。服务器端（SSHD）负责协商安全连接，验证客户端，并在完成认证后，初始化shell环境。</p>
+
+
+
+<p>客户端负责开始与服务器的初始TCP握手，协商安全连接，验证服务器的身份（记录的信息匹配,~/.ssh/known_hosts中保存的证书，第一链接时候需要手动输入Yes，确认链接该服务器，并记录域名，端口，IP和公钥），以及提供身份验证密码（密钥）。</p>
+
+
+
+<p>SSH会话分两个阶段建立：基于Diffie-Hellman算法的密钥交换过程和用户认证阶段。</p>
+
+
+
+<h3 class="wp-block-heading">密钥交换（Diffie-Hellman）</h3>
+
+
+
+<p>当客户端建立TCP连接时，服务器会使用它支持的协议版本进行响应。如果客户端可以匹配其中一个可接受的协议版本，则继续连接。服务器还提供其公共主机密钥，客户端可以使用该密钥来检查这是否是预期要访问的主机。</p>
+
+
+
+<p>双方使用称为Diffie-Hellman算法协商会话密钥。该算法使得每一方能够将他们自己的私有数据与来自另一系统的公共数据组合以算出相同的共享会话密钥。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="453" height="340" src="http://ijz.me/wp-content/uploads/2025/03/10-2.png" alt="" class="wp-image-1073" srcset="http://ijz.me/wp-content/uploads/2025/03/10-2.png 453w, http://ijz.me/wp-content/uploads/2025/03/10-2-300x225.png 300w" sizes="auto, (max-width: 453px) 100vw, 453px" /></figure>
+
+
+
+<p>该密钥交换过程步骤如下：</p>
+
+
+
+<p>1、双方约定一个大的素数，它将它作为随机种子。</p>
+
+
+
+<p>2、双方约定加密算法（通常为AES），此后利用该算法加密数据。</p>
+
+
+
+<p>3、会话双方独各生成另一个素数，该数字保密。该素数用用于双发交互的临时私钥。</p>
+
+
+
+<p>4、利用各自私钥，共享大素数和加密算法生成公钥，并与对方交换公钥。</p>
+
+
+
+<p>5、接受方利用自己的私钥，对方公钥和原始共享素数来计算共享密钥。虽然这个过程各自独立，都使用自己私钥和对方公钥，所以能生成相同共享密钥。</p>
+
+
+
+<p>7.然后使用共享密钥加密此后的所有通信。</p>
+
+
+
+<p>生成的秘密是对称密钥，所以双方都可以解密消息。该过程保证了，随后数据通信位于一个加密隧道中。</p>
+
+
+
+<h3 class="wp-block-heading">用户认证</h3>
+
+
+
+<p>会话加密通道建立后，SSH开始进入用户认证阶段。该阶段完成用户验证和访问权限确定。根据服务端的配置（sshd_config），可能使用一下几种身份验证方法：</p>
+
+
+
+<p>1、密码验证：服务器提示客户端输入用户名和密码。密码通加密隧道发送，对外方是安全的。</p>
+
+
+
+<p>由于该方法存在暴力破解，以及容易泄密的可能较大，虫虫不建议使用此方法，尤其是直接使用root登陆，危害性更大。</p>
+
+
+
+<p>2、使用openssh密钥对认证：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="437" height="194" src="http://ijz.me/wp-content/uploads/2025/03/11-2.png" alt="" class="wp-image-1072" srcset="http://ijz.me/wp-content/uploads/2025/03/11-2.png 437w, http://ijz.me/wp-content/uploads/2025/03/11-2-300x133.png 300w" sizes="auto, (max-width: 437px) 100vw, 437px" /></figure>
+
+
+
+<p>具体步骤如下：</p>
+
+
+
+<p>(1)、客户端首先向服务器发送要对其进行身份验证的密钥对的用户名。</p>
+
+
+
+<p>(2)、服务器检查客户端尝试登录用户帐户的下authorized_keys文件。</p>
+
+
+
+<p>(3)、如果在文件中找到具有匹配公钥，则服务器生成随机数并使用公钥加密该随机数。并该加密消息发送给客户端。</p>
+
+
+
+<p>(4)、如果客户端利用自己的私钥解密消息（如果可以的话），从而显示原始数。</p>
+
+
+
+<p>(5)、客户端将解密的原始数和用于加密通信的共享会话密钥组合，计算他们的哈希值。客户端将该哈希值发回服务器，作为回应。</p>
+
+
+
+<p>(6)、服务器使用相同的共享会话密钥和此前（步骤4）发送给客户端的原始编号来自行计算哈希值。将计算结果和客户端发回的哈希值对比。如果这两个值匹配，则证明客户端拥有私钥并且客户端已经过身份验证。</p>
+
+
+
+<p>3、它认证方法：比如结合ldap的认证，双因子认证，以及更安全的Kerberos地狱狗认证以后有机会再做介绍，此处不再赘述</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1005" height="531" src="http://ijz.me/wp-content/uploads/2025/03/12-2.png" alt="" class="wp-image-1071" srcset="http://ijz.me/wp-content/uploads/2025/03/12-2.png 1005w, http://ijz.me/wp-content/uploads/2025/03/12-2-300x159.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-2-768x406.png 768w, http://ijz.me/wp-content/uploads/2025/03/12-2-624x330.png 624w" sizes="auto, (max-width: 1005px) 100vw, 1005px" /></figure>
+
+
+
+<p>本文中，虫虫结合SSH过程，介绍常见的加密算法，以及基于密钥交换和用户认证等，希望能帮助你理清SSH认证的过程。虫虫在此需要指出的是，类似的体系也在其他安全通讯中使用，比如用的比SSH更广泛的HTTPS的SSL/TSL技术。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1057</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>告别OpenSSL，谷歌推出其取代软件Tink</title>
+		<link>http://ijz.me/?p=1049</link>
+					<comments>http://ijz.me/?p=1049#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 14 Sep 2018 09:36:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[ssl]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1049</guid>
+
+					<description><![CDATA[要说一个软件对IT和互联网业界影响力，恐怕OpenSS要算上一个。一个甚至主要版本使用版本还不到V1.2的软件 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading"></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="620" height="360" src="http://ijz.me/wp-content/uploads/2025/03/1-2.png" alt="" class="wp-image-1050" srcset="http://ijz.me/wp-content/uploads/2025/03/1-2.png 620w, http://ijz.me/wp-content/uploads/2025/03/1-2-300x174.png 300w" sizes="auto, (max-width: 620px) 100vw, 620px" /></figure>
+
+
+
+<p>要说一个软件对IT和互联网业界影响力，恐怕OpenSS要算上一个。一个甚至主要版本使用版本还不到V1.2的软件，占据了整改互联网底层安全核心。SSH、HTTPS,还有其他很多的基础加密库都是离不开OpenSSL的。</p>
+
+
+
+<span id="more-1049"></span>
+
+
+
+<p>但是这么一个非常重要的基础软件，缺在管理上和经费上屡屡爆出问题，以至于当2014年爆发心脏出血时候，整个业界，甚至整个互联网，技术圈内的，非技术圈内的也都震动了。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="623" height="338" src="http://ijz.me/wp-content/uploads/2025/03/2-2.png" alt="" class="wp-image-1051" srcset="http://ijz.me/wp-content/uploads/2025/03/2-2.png 623w, http://ijz.me/wp-content/uploads/2025/03/2-2-300x163.png 300w" sizes="auto, (max-width: 623px) 100vw, 623px" /></figure>
+
+
+
+<p>为了克服OpenSSL带来的问题，OpenBSD Fork了一个新的软件LibreSSL，以确保SSL的库不会再出问题，基于OpenBSD的几十年积累下来的安全口碑，虫虫认为这是一个非常好的替代。同时各大公司也推出自己的SSL安全库，比如亚马逊就推出了s2n。</p>
+
+
+
+<p>本文介绍的则是，继继谷歌自己的BoringSSL和OpenBSD的LibreSSL之后，谷歌新发布的软件Tink。他是一个多语言，跨平台的安全加密库。使用OpenSSL，系统有着复杂的绑定，并且通常专注于特定的系统，例如Windows中的DLL。 而Tink是开源的，专注于创建简单的API，确保基础架构更具可移植性。</p>
+
+
+
+<h2 class="wp-block-heading">AWS s2n</h2>
+
+
+
+<p>s2n(signal to noise),是对TLS/SSL协议的C99（c语言标准）实现，基于开发一个简单，小巧，快速，并且优先考虑安全性的理念来设计。s2n使用Apache License 2.0发布和许可。重点用于改进TLS（传输层安全性）和使用更轻量级的方法。s2n仅使用了6,000行代码，定义了更专注，更精简的库。当然可能会随着新版本的迭代而代码增加，因为目前还只是一个基本的实现。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="535" src="http://ijz.me/wp-content/uploads/2025/03/3-1024x535.jpg" alt="" class="wp-image-1052" srcset="http://ijz.me/wp-content/uploads/2025/03/3-1024x535.jpg 1024w, http://ijz.me/wp-content/uploads/2025/03/3-300x157.jpg 300w, http://ijz.me/wp-content/uploads/2025/03/3-768x401.jpg 768w, http://ijz.me/wp-content/uploads/2025/03/3-624x326.jpg 624w, http://ijz.me/wp-content/uploads/2025/03/3.jpg 1030w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>s2n是完全开源的，托管在GitHub中（github：awslabs/s2n ），允许任何人review和fork代码，你可以所以fork然后添加核心版本不支持的新功能。</p>
+
+
+
+<p>亚马逊对安全问题都很认真，能及时反应社区发现的漏洞。还开展了与研究人员和学者合作的机制来解决新的问题。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="810" height="488" src="http://ijz.me/wp-content/uploads/2025/03/3-2.png" alt="" class="wp-image-1053" srcset="http://ijz.me/wp-content/uploads/2025/03/3-2.png 810w, http://ijz.me/wp-content/uploads/2025/03/3-2-300x181.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-2-768x463.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-2-624x376.png 624w" sizes="auto, (max-width: 810px) 100vw, 810px" /></figure>
+
+
+
+<h2 class="wp-block-heading">认识Tink</h2>
+
+
+
+<p>Tink是谷歌基于BoringSSL，发布一款新的SSL安全库软件，当前版本版本为1.2.0（已经超过了OpenSSL积累了几十年的版本）。Tink已经在谷歌自己的应用中得到了大量应用。比如已经集成到AdMob，Google Pay，Google智能助理和Firebase中了。</p>
+
+
+
+<p>Tink集成了<strong>AEAD方法</strong>（经过身份验证的加密AE和经过身份验证的加密以及相关数据）。集成了加密密钥，散列函数和消息验证代码（MAC）。</p>
+
+
+
+<p>Tink中AEAD的最低标准包括[RFC5116]：</p>
+
+
+
+<p>明文和相关数据可以具有任何长度（从0到2³²字节）。</p>
+
+
+
+<p>支持80位身份验证。</p>
+
+
+
+<p>CCA2安全性（自适应选择密文攻击）。</p>
+
+
+
+<p>谷歌分析了许多加密技术的弱点，在Tink中对他们做了专门解决。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="728" height="517" src="http://ijz.me/wp-content/uploads/2025/03/5-2.png" alt="" class="wp-image-1054" srcset="http://ijz.me/wp-content/uploads/2025/03/5-2.png 728w, http://ijz.me/wp-content/uploads/2025/03/5-2-300x213.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-2-624x443.png 624w" sizes="auto, (max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<h2 class="wp-block-heading">实例起步</h2>
+
+
+
+<p>基本的加密操作是使用对称密钥加密，我们还是举例传统的例子Bob和Alice通讯：Bob和Alice使用相同的密钥加密并解密。 Bob创建密钥，然后将其安全地传递给Alice，使用密钥交换方法生成共享密钥：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="335" src="http://ijz.me/wp-content/uploads/2025/03/6-1-1024x335.png" alt="" class="wp-image-1055" srcset="http://ijz.me/wp-content/uploads/2025/03/6-1-1024x335.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-1-300x98.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-1-768x251.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-1-624x204.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-1.png 1271w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Tink就是用于简化加密处理并尽可能使用安全、最佳加密方法。在下面我们使用“qwerty123”键加密一个字符串（“napier”），注意示例代码用了java，官方目前支持C++，OC和JAVA原生库，相关可以查看官方仓库，里面有详细的文档和范例。</p>
+
+
+
+<p>package com.helloworld;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadConfig;</p>
+
+
+
+<p>import java.security.GeneralSecurityException;</p>
+
+
+
+<p>import com.google.crypto.tink.Aead;</p>
+
+
+
+<p>import com.google.crypto.tink.KeysetHandle;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadFactory;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadKeyTemplates;</p>
+
+
+
+<p>public final class HelloWorld {</p>
+
+
+
+<p>&nbsp; public static void main(String[] args) throws Exception {</p>
+
+
+
+<p>AeadConfig.register();</p>
+
+
+
+<p>try {</p>
+
+
+
+<p>KeysetHandle keysetHandle = KeysetHandle.generateNew(AeadKeyTemplates.AES128_GCM);</p>
+
+
+
+<p>Aead aead = AeadFactory.getPrimitive(keysetHandle);</p>
+
+
+
+<p>String plaintext=&#8221;napier&#8221;;</p>
+
+
+
+<p>String aad=&#8221;qwerty123&#8243;;</p>
+
+
+
+<p>System.out.println(&#8220;Text:&#8221;+plaintext);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; byte[] ciphertext = aead.encrypt(plaintext.getBytes(), aad.getBytes());</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; System.out.println(&#8220;Cipher:&#8221;+ciphertext.toString());</p>
+
+
+
+<p>byte[] decrypted = aead.decrypt(ciphertext, aad.getBytes());</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; String s = new String(decrypted);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; System.out.println(&#8220;Text:&#8221;+s);</p>
+
+
+
+<p>} catch (GeneralSecurityException e) {</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(e);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.exit(1);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; }</p>
+
+
+
+<p>}</p>
+
+
+
+<p>}</p>
+
+
+
+<p>范例运行过程如下：</p>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<p>Text:&nbsp; hello123</p>
+
+
+
+<p>Password: qwerty</p>
+
+
+
+<p>Type:&nbsp; 1</p>
+
+
+
+<p>Enc type: 128-bit AES GCM</p>
+
+
+
+<p>Cipher: AQbLoE0ino8ofgrvuSSLOKTaYjdPc/ovwWznuMeYfjP+TO1fc6cn7DE=</p>
+
+
+
+<p>Cipher: 4151624C6F4530696E6F386F666772767553534C4F4B5461596A6450632F6F7677577A6E754D6559666A502B544F31666336636E3744453D</p>
+
+
+
+<p>Decrypted: hello123</p>
+</div></div>
+
+
+
+<p>在本里中下，我们使用了带GCM的128位AES（伽罗瓦/计数器模式）。我们的AEAD对象创建语句为：</p>
+
+
+
+<p>KeysetHandle keysetHandle = KeysetHandle.generateNew(AeadKeyTemplates.AES128_GCM);</p>
+
+
+
+<p>然后使用encrypt()和decrypt()方法创建加密流，并其进行解密。</p>
+
+
+
+<p>好今天文章就介绍到这里，在撰写本文的时候，我们得知.net版本的Tink也已经起步（github：elucidsoftllc/tink.net）。如果有机会，我们会对其做更多的探索，并且第一时间给大家呈上结论。欢迎关注虫虫，获得最新的技术和软件信息。</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1049</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Window远程桌面（RDP）安全基线审计</title>
+		<link>http://ijz.me/?p=1000</link>
+					<comments>http://ijz.me/?p=1000#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Sun, 29 Apr 2018 13:02:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1000</guid>
+
+					<description><![CDATA[对于IT人员和Windows用户，Windows远程桌面协议（RDP）是常用的便利工具，可以交互式使用或管理远 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>对于IT人员和Windows用户，Windows远程桌面协议（RDP）是常用的便利工具，可以交互式使用或管理远程Windows的服务器。然而这也是一扇被有心人惦记着的大门，如果管理不当，你的系统轻则被攻陷丢失信息，文件勒索，甚者被当做肉鸡去Ddos攻击别人，当做跳板去干别的坏事。</p>
+
+
+
+<span id="more-1000"></span>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="372" height="303" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou712320592C2965340610.jpg" alt="" class="wp-image-1004" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou712320592C2965340610.jpg 372w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou712320592C2965340610-300x244.jpg 300w" sizes="auto, (max-width: 372px) 100vw, 372px" /></figure>
+
+
+
+<p>典型的APT过程</p>
+
+
+
+<p>下面显示下利用RDP的途径进行一个APT (Advanced Persistent Threat, 阶持续性渗透攻击)的过程：</p>
+
+
+
+<p>1、 一名HR通过与钓鱼邮件进行交互，无意中点击下载安装了邮件中钓鱼URL链接的木马程序。</p>
+
+
+
+<p>2、木马利用Mimikatz等工具窃取了获取存储在内存中用于访问系统的用户帐户和密码。</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="577" height="406" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou35492965402C3907161060.jpg" alt="" class="wp-image-1005" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou35492965402C3907161060.jpg 577w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou35492965402C3907161060-300x211.jpg 300w" sizes="auto, (max-width: 577px) 100vw, 577px" /></figure>
+
+
+
+<p>3、木马创建一个网络隧道，接收攻击者的命令和控制指令。</p>
+
+
+
+<p>4、攻击者通过网络隧道使用泄露的账号和密码通过RDP登录到HR的电脑。</p>
+
+
+
+<p>5、攻击者使用Active Directory枚举命令来探测公司域的相关信息和系统。</p>
+
+
+
+<p>6、攻击者使用RDP和HR员工的域帐户连接到财务部门的系统。</p>
+
+
+
+<p>7、攻击者使用Mimikatz在财务系统上窃取账号信息，获取了最近登陆该系统的财务员工的账号和最近登录系统进行故障排除的IT管理员的账号。</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="594" height="327" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou29332202552C1452802413.jpg" alt="" class="wp-image-1002" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou29332202552C1452802413.jpg 594w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou29332202552C1452802413-300x165.jpg 300w" sizes="auto, (max-width: 594px) 100vw, 594px" /></figure>
+
+
+
+<p>8.使用RDP，攻击者利用HR帐户，财务的帐户和IT管理员的帐户登录环境中的其他系统。</p>
+
+
+
+<p>9、攻击者将数据下载到HR员工的系统上。</p>
+
+
+
+<p>10、攻击者通过内置的RDP复制和粘贴功能下载这些功能。</p>
+
+
+
+<p>整个过程图示如下：</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="640" height="515" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou26513500242C714283762.jpg" alt="" class="wp-image-1003" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou26513500242C714283762.jpg 640w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou26513500242C714283762-300x241.jpg 300w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou26513500242C714283762-624x502.jpg 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<p>通过这个例子，我们应该意识到我们的有多脆弱，黑客得多可怕。那么如何防止这种攻击呢？这就是本文虫虫要给大家说的主题。</p>
+
+
+
+<p>要防止和识别这类攻击最基本的做法是网络安全基线。为此，企业通过了解网络环境下的正常操作，什么是异常活动，基于这些建立基线，通过基线检测就可以识别非法的攻击活动。</p>
+
+
+
+<p>企业日常IT操作调查</p>
+
+
+
+<p>同样的环境，我们需要做以下调查：</p>
+
+
+
+<p>1、HR或财务人员需要使用RDP工作么？</p>
+
+
+
+<p>2、HR的RDP需要访问财务系统的么？</p>
+
+
+
+<p>3、HR或财务员工RDP是否必须访问这些系统？</p>
+
+
+
+<p>4、HR或财务部门的系统是否被用作RDP的源系统？</p>
+
+
+
+<p>5、IT管理员是否从不属于IT网络部分IP来源访问RDP？</p>
+
+
+
+<p>6、关键服务器是否都有来自不属于IT网络部分的源系统的登录？</p>
+
+
+
+<p>7、关键服务器是否给予HR或财务人员RDP登录的权限？</p>
+
+
+
+<p>8、是否要允许用户帐户不同IP来源发起RDP连接？</p>
+
+
+
+<p>尽管开发一个定制流程来确定用户帐户范围、IP来源的系统以及在企业中利用RDP的安全审计系统可能不是马上就能做到。但对这些数据进行规范化和审核将使企业员工更深入地了解用户帐户行为，以及检测意外活动、以便于快速排查这类事件。</p>
+
+
+
+<p>通过事件日志跟踪RDP活动</p>
+
+
+
+<p>如何识别网络典型行为？首要任务和最重要的方法是启用其事件日志。RDP登录可以在通过相关来源系统和目标系统上生成日志文件，事件日志和注册表组件。 JPCERT的有一个42页的参考文献《通过跟踪事件日志检测非法活动》详细介绍了调查人员在源系统和目标系统上可能找到的许多组件。</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="640" height="303" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou38173084472C1497764972.jpg" alt="" class="wp-image-1001" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou38173084472C1497764972.jpg 640w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou38173084472C1497764972-300x142.jpg 300w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou38173084472C1497764972-624x295.jpg 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<p>为了可扩展性，在此提出的基线方法将重点关注目标系统上记录的三个原始登</p>
+
+
+
+<p>录事件：</p>
+
+
+
+<p>&#8220;TerminalServices-LocalSessionManager&#8221;日志中的EID 21和EID 25，位于： &#8220;%systemroot%\Windows\System32\winevt\Logs\Microsoft-TerminalServices-LocalSessionmanager%3Operational.evtx&#8221;</p>
+
+
+
+<p>&#8220;安全&#8221;日志中的类型10登录的EID 4624条目，通常位于：</p>
+
+
+
+<p>&#8220;%systemroot%\Windows\System32\winevt\Logs\Security.evtx&#8221;</p>
+
+
+
+<p>当成功的交互式本地或远程登录事件发生时，图2中显示的EID 21条目在目标系统上创建。</p>
+
+
+
+<p>当成功的交互式本地或远程登录事件发生时， EID 21记录的日志如下图所为：</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="579" height="138" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou9094483272C2656316223.jpg" alt="" class="wp-image-1006" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou9094483272C2656316223.jpg 579w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou9094483272C2656316223-300x72.jpg 300w" sizes="auto, (max-width: 579px) 100vw, 579px" /></figure>
+
+
+
+<p>EID 25日志是在已经与先前建立的RDP会话系统重新连接的生成，该系统未通过正确的用户注销而终止。例如，直接关闭RDP窗口（它将生成EID 24），没有通过开始菜单注销（会生成EID 23）。</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="636" height="151" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou19921844742C1700283443.jpg" alt="" class="wp-image-1008" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou19921844742C1700283443.jpg 636w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou19921844742C1700283443-300x71.jpg 300w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou19921844742C1700283443-624x148.jpg 624w" sizes="auto, (max-width: 636px) 100vw, 636px" /></figure>
+
+
+
+<p>EID 4624日志是在发生任何类型的登录时在目标系统上创建的。有关RDP身份验证的，我们将重点关注带有Logon Type 10的EID 4624日志，他们对应RDP身份验证，如图下所示：</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="577" height="491" src="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou18857262352C3797971478.jpg" alt="" class="wp-image-1007" srcset="http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou18857262352C3797971478.jpg 577w, http://ijz.me/wp-content/uploads/2025/03/app25fJPEGfm173fmtautou18857262352C3797971478-300x255.jpg 300w" sizes="auto, (max-width: 577px) 100vw, 577px" /></figure>
+
+
+
+<p>这些事件日志提供了通过RDP登陆一个系统的日志记录。一般来说这些事件日志数据，必须将日志转发到统一的中心聚合平台（如安全信息和事件管理（SIEM）平台），或使用审计实用程序（例如FireEye的Endpoint Security（HX））收集日志。并对其做处理和统计分析。限于篇幅本文不对此做扩展介绍，本文仅以本地单一源的日志做介绍。</p>
+
+
+
+<p>对于EID 21和EID 25事件日志，用户帐户和源系统都可以在事件日志字符串中捕获。请注意，日志中记录的&#8221;来源地址&#8221;可能是主机名或IP地址。你需要对其做数据转化。系统和用户帐户或业务关系表有助于分析处理结果。如果没有这些信息，则需要首先通过资产管理数据库或者其他途径中获取。</p>
+
+
+
+<p>识别异常</p>
+
+
+
+<p>一旦通过分析事件日志在对你系统做RDP活动安全基线分析，安全分析人员就可以开始异常的RDP活动。请记住，区分合法与异常RDP活动可能需要一段时间积累磨合。</p>
+
+
+
+<p>将IP地址映射到主机名时， DHCP日志可以提供有用的帮助，将系统和用户帐户及特定业务单元相关联的表也可以帮助审计和关联记录到的RDP活动，用来以区分是否正常登陆。需要审计与预期商业惯例不符的任何RDP活动。此外，审计活动也要关注那些虽然被认为是为正常的RDP登录。</p>
+
+
+
+<p>可用指标</p>
+
+
+
+<p>通过使用SIEM关联技术，我们可以按帐户，来源IP和目标系统来分析RDP活动。我们一可以使用以下指标相关的元素的数量/积加：</p>
+
+
+
+<p>帐户的来源IP或者主机</p>
+
+
+
+<p>帐户的登陆的目标系统</p>
+
+
+
+<p>特定来源IP或者主机到目标系统路径的用户帐户</p>
+
+
+
+<p>每个来源IP或者主机的用户帐户</p>
+
+
+
+<p>每个目标系统的用户帐户</p>
+
+
+
+<p>将系统来源IP或者主机分配给每个用户帐户的目标系统路径</p>
+
+
+
+<p>每个用户帐户总RDP登录次数</p>
+
+
+
+<p>每个来源IP或者主机总RDP登录次数</p>
+
+
+
+<p>每个目标系统的总RDP登录数</p>
+
+
+
+<p>每个来源IP或者主机目标系统</p>
+
+
+
+<p>每个目标系统的来源IP或者主机</p>
+
+
+
+<p>这个指标列表只是大概罗列，不是详尽的参考。如果需要，可以添加时间戳按照时间范围扩展统计。</p>
+
+
+
+<p>更多安全建议</p>
+
+
+
+<p>虽然基线RDP活动可能不容易识别那些经过可疑伪装和混淆过的攻击，或者采取部分合法的活动，但它将不断帮助我们更好地理解在其特定环境中正常活动，并且最终实现对所有这些未授权活动的异常情况的识别或者找到其他更好的分析指标。</p>
+
+
+
+<p>最后虫虫给你对RDP的更多的安全建议，帮你更好的做安全基线分析，以及减少RDP被非法攻击和利用，</p>
+
+
+
+<p>1、 禁用个人使用电脑和笔记本上的远程桌面服务，禁止在一切非必须的目标系统开启远程桌面。</p>
+
+
+
+<p>2、 修改默认的RDP端口3389为其他值.</p>
+
+
+
+<p>RDP的端口号通过：</p>
+
+
+
+<p>HKEY_LOCAL_MACHINE/System/CurrentControlSet/Control/Terminal Server/Wds/Repwd/Tds/Tcp建修改。</p>
+
+
+
+<p>或者通过以下命令：</p>
+
+
+
+<p>MSTSC /v:192.168.0.150:3390。</p>
+
+
+
+<p>3、 如果需要使用RDP连接，必须做访问控制VCL限制，以强制RDP连接只能从特定跳板机和VPN登陆。</p>
+
+
+
+<p>4、通过防火墙（硬件、软防火墙）对RDP连接进行限制。使用基于IP设置防火墙规则：</p>
+
+
+
+<p>默认拒绝入站RDP的连接。</p>
+
+
+
+<p>必要时，只允许从与授权跳板机，VPN的IP地址访问RDP端口。</p>
+
+
+
+<p>5、用&#8221;通过远程桌面服务拒绝登录&#8221;安全设置来防止一般用户使用RDP连接到。设置禁止主机上的特权帐户（例如域管理员，服务帐户）进行RDP链接，因为攻击者通常会利用这些类型的帐户对本地环境中的敏感系统探测和攻击。</p>
+
+
+
+<p>6、通过以下方式阻止使用本地帐户使用RDP：</p>
+
+
+
+<p>安装KB2871997，并通过使用组策略在 &#8220;通过远程桌面服务拒绝登录&#8221;安全设置中添加SID&#8221;S-1-5-114: NT AUTHORITY\Local account and member of Administrators group&#8221;。这可以来完成。</p>
+
+
+
+<p>使用Microsoft LAPS等解决方案为终端上内置本地管理员帐户设置随机密码。</p>
+
+
+
+<p>7.、确保&#8221;TerminalServices LocalSessionManager Operational&#8221;事件日志中的EID 21，EID 23，EID 24和EID 25都被记录并转发到SIEM或中央日志聚合服务器。</p>
+
+
+
+<p>8、确认&#8221;安全&#8221;事件日志中的EID 4624被正常记录并转发到SIEM或中央日志聚合服务器。</p>
+
+
+
+<p>9、将&#8221;TerminalServices LocalSessionManager Operational&#8221;和事件日志的最大大小增加到至少500 MB。这可以通过使用组策略首选项（GPP）修改注册表项</p>
+
+
+
+<p>&#8220;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-TerminalServices-LocalSessionManager/Operational&#8221;</p>
+
+
+
+<p>中的&#8221;MaxSize&#8221;见来进行设置。</p>
+
+
+
+<p>10、将&#8221;安全&#8221;事件日志的最大大小增加到至少1 GB。</p>
+
+
+
+<p>11、记录清除&#8221;Security&#8221;和&#8221;TerminalServices LocalSessionManager Operational&#8221;事件日志的事件（EID 1102）。</p>
+
+
+
+<p>12、创建并定期更新将用户帐户和主机名和业务用户的关系文档。</p>
+
+
+
+<p>13、确保DHCP日志已归档并易于访问，以便在登录事件发生时将源系统IP地址与其主机名相关联。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1000</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>linux Libc Realpath缓冲区下溢漏洞(CVE–2018–1000001)预警</title>
+		<link>http://ijz.me/?p=996</link>
+					<comments>http://ijz.me/?p=996#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Mon, 29 Jan 2018 07:53:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=996</guid>
+
+					<description><![CDATA[最近OSS-SEC邮件组披露，Linux基准Libc函数库中的Realpath函数存在缓冲区下溢漏洞，CVE编 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>最近OSS-SEC邮件组披露，Linux基准Libc函数库中的Realpath函数存在缓冲区下溢漏洞，CVE编号为CVE-2018-1000001。漏洞的产生是由于GNU C库没有正确处理getcwd()系统调用返回的相对路径，并且没有对缓冲区边界进行检查，其他库也很可能受此影响。</p>
+
+
+
+<span id="more-996"></span>
+
+
+
+<p>该漏洞为高风险漏洞，可直接用于Linux本地提权，目前已经有攻击EXP公开，相关机器应尽快完成相应更新。</p>
+
+
+
+<p><strong>漏洞分析</strong></p>
+
+
+
+<p>该漏洞涉及到两个方面：</p>
+
+
+
+<p>（1）kernel的getcwd系统调用</p>
+
+
+
+<p>（2）glibc的realpath函数</p>
+
+
+
+<p>虽然官方认为这不是内核的问题，但是内核还是提供了补丁。</p>
+
+
+
+<p>linux kernel 补丁地址：</p>
+
+
+
+<figure class="wp-block-embed"><div class="wp-block-embed__wrapper">
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=52a713fdd0a30e1bd79818e2e3c4ab44ddca1a94
+</div></figure>
+
+
+
+<p>getcwd()函数用于返回当前工作目录的绝对路径，如果该目录不属于当前进程的根目录（例如：该进程使用chroot设置了一个新的文件系统根目录，但是没有将当前目录的根目录替换成新的），从linux 2.6.36开始，getcwd会返回“(unreachable)”。通过改变当前目录到另一个挂载的用户空间，普通用户可以完成上述的行为。所以当处理不可信来源的路径时，应该检查返回的路径是否以”/”或”(“开头，避免返回一个不可达地址，被认为是相对地址。</p>
+
+
+
+<p>漏洞发生处：glibc stdlib/canonicalize.c 的__realpath函数：</p>
+
+
+
+<p>如果解析的是一个相对路径(不是以’/’开头的路径)时，就会调用__getcwd()</p>
+
+
+
+<p><code>if (name[0] != '/')<br> { if (!__getcwd (rpath, path_max))<br> {<br> rpath[0] = '0'; goto error;<br> }<br> dest = __rawmemchr (rpath, '0');<br> } else<br> {<br> rpath[0] = '/';<br> dest = rpath + 1;<br> }</code><br> 如果__getcwd()此时返回的是”(unreachable)”，则接下来在解析路径时，发现路径开头并不包含’/’，会在while循环中不断读取dest之前的地址，产生缓冲区下溢。</p>
+
+
+
+<p><code>else if (end - start == 2 &amp;&amp; start[0] == '.' &amp;&amp; start[1] == '.')<br> { /* Back up to previous component, ignore if at root already. */<br> if (dest &gt; rpath + 1) while ((--dest)[-1] != '/');<br> }</code><br> 之后操作的dest地址就是溢出的地址。</p>
+
+
+
+<p>漏洞攻击效果图：</p>
+
+
+
+<p>2019</p>
+
+
+
+<p>漏洞影响</p>
+
+
+
+<p>Red Hat 受影响情况：</p>
+
+
+
+<p>Centos 7的glibc版本受影响，centos 5，6系列均不收影响。</p>
+
+
+
+<p>Ubuntu受影响情况：</p>
+
+
+
+<p>Package</p>
+
+
+
+<p>Source: eglibc (LP Ubuntu Debian)</p>
+
+
+
+<p>Upstream: needed<br>Ubuntu 12.04 ESM (Precise Pangolin): released (2.15-0ubuntu10.21)<br>Ubuntu 14.04 LTS (Trusty Tahr): released (2.19-0ubuntu6.14)<br>Ubuntu 16.04 LTS (Xenial Xerus): DNE<br>Ubuntu 17.10 (Artful Aardvark): DNE<br>Ubuntu 18.04 LTS (Bionic Beaver): DNE<br>Package</p>
+
+
+
+<p>Source: glibc (LP Ubuntu Debian)</p>
+
+
+
+<p>Upstream: needed<br>Ubuntu 12.04 ESM (Precise Pangolin): DNE<br>Ubuntu 14.04 LTS (Trusty Tahr): DNE<br>Ubuntu 16.04 LTS (Xenial Xerus): released (2.23-0ubuntu10)<br>Ubuntu 17.10 (Artful Aardvark): released (2.26-0ubuntu2.1)<br>Ubuntu 18.04 LTS (Bionic Beaver): needed<br>Patches:</p>
+
+
+
+<p>Upstream: https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=52a713fdd0a30e1bd79818e2e3c4ab44ddca1a94<br>Package</p>
+
+
+
+<p>Source: dietlibc (LP Ubuntu Debian)</p>
+
+
+
+<p>Upstream: needs-triage<br>Ubuntu 12.04 ESM (Precise Pangolin): DNE<br>Ubuntu 14.04 LTS (Trusty Tahr): needs-triage<br>Ubuntu 16.04 LTS (Xenial Xerus): needs-triage<br>Ubuntu 17.10 (Artful Aardvark): needs-triage<br>Ubuntu 18.04 LTS (Bionic Beaver): needs-triage<br>Package</p>
+
+
+
+<p>Source: musl (LP Ubuntu Debian)</p>
+
+
+
+<p>Upstream: needs-triage<br>Ubuntu 12.04 ESM (Precise Pangolin): DNE<br>Ubuntu 14.04 LTS (Trusty Tahr): needs-triage<br>Ubuntu 16.04 LTS (Xenial Xerus): needs-triage<br>Ubuntu 17.10 (Artful Aardvark): needs-triage<br>Ubuntu 18.04 LTS (Bionic Beaver): needs-triage</p>
+
+
+
+<p>修复方案<br>
+相关受影响产品已经提供了安全更新。centos7 通过yum update glibc kernel升级。<br>
+参考链接<br>
+http://www.openwall.com/lists/oss-security/2018/01/11/5<br>
+https://access.redhat.com/security/cve/CVE-2018-1000001<br>
+https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflow/<br>
+https://github.com/5H311-1NJ3C706/local-root-exploits/tree/master/linux/CVE-2018-1000001</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=996</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>关于Mysql CVE-2018-2696，CVE-2018-2591，CVE-2018-2562 漏洞的预警</title>
+		<link>http://ijz.me/?p=994</link>
+					<comments>http://ijz.me/?p=994#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Mon, 22 Jan 2018 04:49:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=994</guid>
+
+					<description><![CDATA[Oracle官方近日发布安全公告 ，公告修复MySQL服务25个安全漏洞，在这些安全漏洞中，影响较大的CVE- [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>Oracle官方近日发布安全公告 ，公告修复MySQL服务25个安全漏洞，在这些安全漏洞中，影响较大的CVE-2018-2696漏洞可以在无需认证的条件下，远程利用导致拒绝服务攻击。本次安全公告披露的安全漏洞数量较多，建议用户关注。</p>
+
+
+
+<span id="more-994"></span>
+
+
+
+<p><strong>漏洞编号: </strong></p>
+
+
+
+<p>CVE-2018-2696，CVE-2018-2591，CVE-2018-2562</p>
+
+
+
+<p><strong>漏洞描述:</strong></p>
+
+
+
+<p><strong>CVE-2018-2696 mysql: sha256_password 认证长密码拒绝式攻击</strong></p>
+
+
+
+<p>该漏洞源于MySQL sha256_password认证插件，该插件没有对认证密码的长度进行限制，而直接传给my_crypt_genhash()用SHA256对密码加密求哈希值。该计算过程需要大量的CPU计算，如果传递一个很长的密码时候，会导致CPU耗尽。而且该公式Mysql的实现中使用alloca()进行内存分配，无法对内存栈溢出保护，可能导致内存泄露、进程崩溃，从而可能实现代码执行。</p>
+
+
+
+<p>MySQL &lt;= 5.6.38 和MySQL &lt;= 5.7.20 受影响。</p>
+
+
+
+<p>mariadb分支版本不受该漏洞影响。 CVE-2018-2562 MySQL分区未指定的漏洞 漏洞源于 Oracle MySQL 服务器分区组件。</p>
+
+
+
+<p>影响5.5.58及之前版本，5.6.38及之前的版本，5.7.19及之前的版本。</p>
+
+
+
+<p>该漏洞允许低权限通过多种协议对服务器进行拒绝式攻击，也可以无需授权更新、插入、删除数据库中的可以访问的数据。 mariadb分支版本也受该漏洞影响。</p>
+
+
+
+<p> CVE-2018-2591 MySQL分区未指定的漏洞 漏洞源于 Oracle MySQL 服务器分区组件。影响5.6.38及之前的版本，5.7.19及之前的版本。</p>
+
+
+
+<p>该漏洞允许低权限通过多种协议对服务器进行拒绝式攻击。 mariadb分支版本不受该漏洞影响。 </p>
+
+
+
+<p>更多信息参考 ：http://www.oracle.com/technetwork/security-advisory/cpujan2018-3236628.html </p>
+
+
+
+<p><strong>漏洞利用条件和方式: </strong></p>
+
+
+
+<p>通过PoC直接远程利用。</p>
+
+
+
+<p> <strong>PoC状态: </strong></p>
+
+
+
+<p>未公开 </p>
+
+
+
+<p><strong>漏洞影响范围: </strong></p>
+
+
+
+<p>具体受影响范围参见漏洞描述部分。</p>
+
+
+
+<p><strong>漏洞检测: </strong></p>
+
+
+
+<p>检查是否使用了受影响版本范围内的MySQL服务。</p>
+
+
+
+<p> <strong>漏洞修复建议(或缓解措施): </strong></p>
+
+
+
+<p>1.目前Oracle官方已经最新版本，建议自建MySQL服务用户及时手工下载更新： MySQL 5.6.39 版本：https://dev.mysql.com/downloads/mysql/5.6.html </p>
+
+
+
+<p>MySQL 5.7.21 版本：https://dev.mysql.com/downloads/mysql/5.7.html https://downloads.mariadb.org/ </p>
+
+
+
+<p>防火墙或者云安全组限制mysql端口（默认为3306）限制mysql访问。 </p>
+
+
+
+<p>3.建议选择Mysql开源分支mariadb，该分支完全兼容mysql并提供更多功能和性能。 </p>
+
+
+
+<p><strong>参考信息: </strong></p>
+
+
+
+<p><code>http://www.oracle.com/technetwork/security-advisory/cpujan2018verbose-3236630.html#MSQL<br>https://access.redhat.com/security/cve/CVE-2018-2696<br>http://www.oracle.com/technetwork/security-advisory/cpujan2018-3236628.html<br>https://securitytracker.com/id/1040216 https://github.com/bollwarm/sectoolset</code></p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=994</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>关于Android WebView跨域访问（“应用克隆”）漏洞</title>
+		<link>http://ijz.me/?p=992</link>
+					<comments>http://ijz.me/?p=992#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 11 Jan 2018 09:46:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=992</guid>
+
+					<description><![CDATA[据腾讯玄武实验室研究，市面上 200 多款安卓应用中，27款 App 有此漏洞。漏洞列表及影响如下,其中18个 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>据腾讯玄武实验室研究，市面上 200 多款安卓应用中，27款 App 有此漏洞。漏洞列表及影响如下,其中18个可被远程攻击，9个只能从本地攻击。根据国家信息安全漏洞共享平台(cnvd)披露 ，截止到2018年1月9日，有11个 App 进行了修复，但其中3个修复存在缺陷。</p>
+
+
+
+<span id="more-992"></span>
+
+
+
+<p>攻击者利用该漏洞，可远程获取用户隐私数据(包括手机应用数据、照片、文档等敏感信息)，还可窃取用户登录凭证，在受害者毫无察觉的情况下实现对App用户账户的完全控制。由于该组件广泛应用于安卓平台，导致大量App受影响，构成较为严重的攻击威胁。该“应用克隆”的移动攻击威胁模型是基于移动应用的一些基本设计特点导致的，所以几乎所有移动应用都适用该攻击模型。在这个攻击模型的视角下，很多以前认为威胁不大、厂商不重视的安全问题，都可以轻松“克隆”用户账户，窃取隐私信息，盗取账号及资金等。</p>
+
+
+
+<h2 class="wp-block-heading">漏洞描述</h2>
+
+
+
+<p>WebView是Android用于显示网页的控件，是一个基于Webkit引擎、展现Web页面、解析并执行JavaScript代码的控件，Android应用可以使用WebView空间，灵活的扩展自身的业务功能。</p>
+
+
+
+<p>市面上大多数使用HTML5技术开发的应用均使用WebView进行HTML5页面的展示。除了从远程服务器加载Web页面，WebView还可以通过修改特定配置，从文件中进行HTML5页面的加载。在未正确配置WebView的情况下，会致使WebView同源策略失效，导致HTTP协议、file协议跨源攻击的发生。该漏洞使得WebView能够访问当前应用内部数据，如果WebView加载了来源不明的HTML文件，可能导致当前应用内部数据被攻击者窃取，如身份认证信息、加密密钥、用户隐私信息等。</p>
+
+
+
+<h2 class="wp-block-heading">漏洞分析</h2>
+
+
+
+<p>Android应用内部分可导出的Activity组件中，WebView允许通过file URL对http域进行访问，并且未对访问路径进行严格校验，由此导致了本次漏洞的出现。</p>
+
+
+
+<p>该漏洞的产生条件：</p>
+
+
+
+<p>（1）应用中存在设置为可被导出的Activity组件，并且组件中包含Webview调用。</p>
+
+
+
+<p>（2）Webview调用中setAllowFileAccessFromFileURLs 或</p>
+
+
+
+<p>setAllowUniversalAccessFromFileURLs 设置为true（minSdk&lt;=4.1 默认为true，minSdk&gt;4.1 默认为false）。</p>
+
+
+
+<h2 class="wp-block-heading">风险等级</h2>
+
+
+
+<p>高危</p>
+
+
+
+<h2 class="wp-block-heading">影响评估</h2>
+
+
+
+<p>漏洞影响使用WebView控件，开启file域访问且未按安全策略开发的安卓应用(App)。</p>
+
+
+
+<h3 class="wp-block-heading">解决方案</h3>
+
+
+
+<p>具备开发能力的企业，请按照如下检查步骤进行修复：</p>
+
+
+
+<p>（1） 严格限制包含WebView调用的Activity组件的导出权限，关闭导出权限或者限制导出组件的发起者。</p>
+
+
+
+<p>（2） 对于功能要求必须导出的Activity组件，手动设置</p>
+
+
+
+<p><code>setAllowFileAccessFromFileURLs（false）或<br>setAllowUniversalAccessFromFileURLs（false）</code></p>
+
+
+
+<p>（3） 对于必须使用file URL对http域进行访问时，可对传入的URL路径范围严格控制，例如建立URL白名单，设置允许访问的URL列表（不要遗漏路径中可能出现的特殊情况如“../../”等，避免限制被绕过）</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=992</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>处理器Meltdown(熔断)和Spectre(幽灵)漏洞分析</title>
+		<link>http://ijz.me/?p=990</link>
+					<comments>http://ijz.me/?p=990#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Mon, 08 Jan 2018 00:40:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[硬件]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=990</guid>
+
+					<description><![CDATA[Meltdown Meltdown攻击利用现代CPU中乱序执行 （out-of-order execution [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p><strong>Meltdown</strong></p>
+
+
+
+<p>Meltdown攻击利用现代CPU中乱序执行 （out-of-order execution）的特性，乱序执行（out-of-order execution）是指CPU允许将多条指令不按程序规定的顺序分开发送给各CPU单元处理的技术，我们通过参考资料[2]中的示例代码来说明这一攻击的原理。</p>
+
+
+
+<span id="more-990"></span>
+
+
+
+<p>一个简化的Meltdown攻击指令序列：</p>
+
+
+
+<p><code>; rcx = kernel address<br> ; rbx = probe array<br> retry:mov al, byte [rcx]<br> shl rax, 0xc<br> jz retry<br> mov rbx, qword [rbx + rax]</code><br> 1、rcx寄存器指向用户代码不可访问的内核地址<br> 2、攻击者在指令4中访问内核内存地址，由于访问了内核地址，这一条指令将会触发异常，但由于指令4在CPU内部执行时并不受权限检测，所以读取到的内核数据被存放在了CPU缓存中<br> 3、在等待CPU完成执行指令4的同时，后两条指令因为乱序执行机制实际上已经在CPU的内部执行单元中被执行<br> 4、在CPU内部执行单元执行过的指令5将会把获取到的内核数据（1个字节）乘以4096，并在指令6中将其作为offset来对数组probe array进行访问<br> 5、由于一个内存页的大小是4KB，不同的数据将会导致不同的内存页被访问并存放到CPU缓存中，所以，另一个攻击者进程（任务）就可以通过缓存侧信道攻击（已经被缓存的内存读取时间会更快），来了解哪个内存页被访问过了，从而推断出被访问的内核内存数据。<br> <strong>Spectre</strong><br> Spectre攻击利用了现代CPU中推测执行（Speculative Execution）的机制来对系统进行攻击。推测执行（Speculative Execution）同样是一种CPU优化特性。在执行类似if () {}这类分支指令，并且在分支指令执行结束之前，CPU会预测哪一个分支会被运行，提取相应的指令代码并执行，以提高CPU指令执行的性能。当预测执行发现预测错误时，预测执行的结果将会被丢弃，CPU的状态会被重置。然而，与乱序执行类似，预测执行时CPU获取到的内存数据会被保留在CPU缓存中（包括越权获取的数据，虽然这些数据用户代码无权访问），我们通过参考资料[3]中的示例代码来说明这一攻击的原理。</p>
+
+
+
+<p>1、首先申请一块内存，并写入如下数据<br> <code>char * secret="www.ijz.me";</code><br> 2、获取secret和array1的相对偏移量malicious_x<br><code> int main(int argc, const char **argv) {<br> size_t malicious_x=(size_t)(secret-(char*)array1);<br> /* default for malicious_x */<br> int i, score[2], len=10;<br> uint8_t value[2]</code></p>
+
+
+
+<p>3、循环调用readMemoryByte函数，分别将malicious递增值作为其中一个参数</p>
+
+
+
+<p><code>while (--len &gt;= 0) {<br> printf("Reading at malicious_x = %p... ", (void*)malicious_x);<br> readMemoryByte(malicious_x++, value, score);<br> printf("%s: ", (score[0] &gt;= 2*score[1] ? "Success" : "Unclear"));<br> printf("0x%02X=’%c’ score=%d ", value[0],<br> (value[0] &gt; 31 &amp;&amp; value[0] &lt; 127 ? value[0] : ’?’), score[0]); if (score[1] &gt; 0)<br> printf("(second best: 0x%02X score=%d)", value[1], score[1]);<br> printf("\n");<br> }<br> return (0);</code></p>
+
+
+
+<p>4、调用漏洞函数victim_function，利用CPU的预测执行机制将越权读取的数据cache到CPU缓存中<br> <code>void victim_function(size_t x) {<br> if (x &lt; array1_size) {<br> temp &amp;= array2[array1[x] * 512];<br> }</code><br> 5、由于array2[array1[x]*512]的值被缓存，所以代码中通过rdtscp函数计算指令执行时间来判断哪个内存页被访问过（缓存的字节被当做另一系列被预测执行指令访问的数组下标，被访问的数组同样是在CPU中被预测读取），从而推断出被访问的secret内存数据<br><code> 2018/* Time reads. Order is lightly mixed up to prevent stride prediction */<br> for (i = 0; i &lt; 256; i++) {<br> mix_i = ((i * 167) + 13) &amp; 255;<br> addr = &amp;array2[mix_i * 512];<br> time1 = __rdtscp(&amp;junk);<br> /* READ TIMER */<br> junk = *addr;<br> /* MEMORY ACCESS TO TIME */<br> time2 = __rdtscp(&amp;junk) - time1;<br> /* READ TIMER &amp; COMPUTE ELAPSED TIME */<br> if (time2 &lt;= CACHE_HIT_THRESHOLD &amp;&amp; mix_i != array1[tries % array1_size])<br> results[mix_i]++;<br> /* cache hit - add +1 to score for this value */<br> }</code><br> 6、POC验证执行结果，读取进程内的机密数据</p>
+
+
+
+<p><strong>限制条件</strong></p>
+
+
+
+<p>本质上讲Meltdown和Spectra都是基于侧信道的攻击，主要用于信息泄露，并不能对目标内存地址进行任意修改，以下分别介绍两种攻击的限制条件。</p>
+
+
+
+<p><strong>Meltdown</strong></p>
+
+
+
+<p>Meltdown攻击目前仅限于在Intel系列的现代CPU中访问受限内存，包括内核的地址空间<br>
+由于Meltdown攻击所使用的特殊代码无法在浏览器JIT中生成，所以该攻击几乎只能在本地进行<br>
+Spectre</p>
+
+
+
+<p>Spectre攻击需要目标程序具有特殊结构（比如浏览器JIT即时编译出的代码具有Spectra攻击所需要的特殊结构），所以受到目标软件的限制<br> Spectre攻击虽然适用于远程攻击，但是浏览器类JIT代码生成的Spectra攻击只能获取当前进程的内存数据，无法获取内核数据<br> Spectre攻击在Intel系列CPU上也可以读取目标内核内存数据</p>
+
+
+
+<p><br><strong> Meltdown和Spectre影响/防御对比</strong></p>
+
+
+
+<p><br> 我们整理下两类攻击的影响范围和防御方式，如下：<br> Meltdown Spectre<br> 读取系统内核层数据 是 是（测试Intel CPU）<br> 通过KAISER/KTPI技术修复 是 否<br> 读取任意用户层数据 是 是<br> 远程攻击 极难 容易<br> 主要影响范围 内核所有数据 浏览器进程数据<br> 受影响CPU厂商 Intel Intel AMD ARM等</p>
+
+
+
+<p><strong>参考资料</strong><br> [1] https://meltdownattack.com/meltdown.pdf</p>
+
+
+
+<p>[2] https://spectreattack.com/spectre.pdf</p>
+
+
+
+<p>[3] https://github.com/Pl4gue/spectre-attack-demo</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=990</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>关于处理器漏洞Meltdown(熔断)和Spectre(幽灵)</title>
+		<link>http://ijz.me/?p=987</link>
+					<comments>http://ijz.me/?p=987#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 05 Jan 2018 00:34:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=987</guid>
+
+					<description><![CDATA[关于该重大漏洞的发现，源于Google公司的Project Zero安全团队的论文https://meltdo [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-e581f530bb0a8556a0f0ae1db374ac9a">关于该重大漏洞的发现，源于Google公司的Project Zero安全团队的论文<a href="https://meltdownattack.com/meltdown.pdf">https://meltdownattack.com/meltdown.pdf</a></p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-1d184c39770cee9070779e999de0f0ed"><a href="https://spectreattack.com/spectre.pdf">https://spectreattack.com/spectre.pdf</a></p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-b09b3f26f667c531dd63e1c0e3aad83d">漏洞是由于Intel 处理器设计的一个BUG，利用漏洞能够允许具有用户态权限的进程执行未经过授权的CPU缓存数据读取，这有可能导致攻击者获取到用户设备上的一些敏感数据，例如密码、登录密钥、用户的私人照片、邮件、即时通讯信息甚至是商业秘密文件等。</p>
+
+
+
+<span id="more-987"></span>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-bf4b92d2290f7dc7ab3b02c3708ff840">针对英特尔处理器涉及到两种攻击方法，分别为Meltdown和Spectre，Meltdown涉及CVE编号CVE-2017-5753和CVE-2017-5715，而Spectre涉及CVE编号CVE-2017-5754。</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-03e6a89d2ccc26c576c497b95bda25fe">Meltdown破坏了位于用户和操作系统之间的基本隔离，此攻击允许程序访问内存，因此其他程序以及操作系统的敏感信息会被窃取。这个漏洞“熔化”了由硬件来实现的安全边界。允许低权限用户级别的应用程序“越界”访问系统级的内存，从而造成数据泄露。</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-bc556cb5136b0b33ef9d346206316006">Spectre则是破坏了不同应用程序之间的隔离。问题的根源在于推测执行（speculative execution），这是一种优化技术，处理器会推测在未来有用的数据并执行计算。这种技术的目的在于提前准备好计算结果，当这些数据被需要时可立即使用。在此过程中，英特尔没有很好地将低权限的应用程序与访问内核内存分开，这意味着攻击者可以使用恶意应用程序来获取应该被隔离的私有数据。</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-4c94fb1de8fc2c03096892c561077fa4">本次安全事件影响到的范围很广，包括：</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-50d7a270611c1c510ddf56fca1e30a23">处理器芯片：英特尔、ARM、AMD</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-c7a69b23abe77ed0fdab2e55d1e5ad80">操作系统：Windows、Linux、macOS、Android</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-2c7d1b1de4a14cc1a26d7f2da5d3f9c6">云计算服务提供商：亚马逊、微软、谷歌、腾讯云等</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-bb757cd2ed9c076c777179944aa8ffc4">目前Linux内核开发人员已经发布了针对Meltdown攻击方式的补丁</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-1ed09fece59f4ed7a5d5af057bd810d0">Google部分产品已经针对这些攻击方式做出了修补，但是在部分情况下还需要用户采取额外的步骤确保产品受保护，针对安卓也将在1月5日推出补丁更新以限制对ARM处理器的所有已知变种攻击。详情见：</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-872674c438b13c2377dc9578cdcd4df0">微软发布了几个更新来缓解这些漏洞，建议用户在安装操作系统或固件更新之前，请确认防病毒应用程序对其兼容，并且建议用户应用所有可用的Windows操作系统更新，包括2018年1月的Windows安全更新。</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-8b35be4ca9ca6d529ed2c5ce49804010">其他厂商也将要或已部分推出针对这些攻击方式的补丁，英特尔也提出正在与包括AMD、ARM以及各大操作系统厂商进行合作，以制定行业规范方法，及时、建设性的解决这个安全问题。</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-a59ea3724226be922b2acfcb550d9a0a">广大用户应密切关注补丁发布动态，及时对系统进行更新并应用设备制造商提供的适用固件更新才能有效防止自己的设备受到此类攻击。</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-6fbfc985d67b37c71ce7fef2e22e7a11">关于最新的相关信息：</p>
+
+
+
+<p class="has-dark-gray-color has-text-color has-link-color wp-elements-660e75b73db3ce77866be86ac89998c9"><a href="https://github.com/bollwarm/sectoolset/blob/master/Meltdown_Spectre.md">https://github.com/bollwarm/sectoolset/blob/master/Meltdown_Spectre.md</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=987</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>网站目录防篡改程序，perl web目录md5文件验证</title>
+		<link>http://ijz.me/?p=925</link>
+					<comments>http://ijz.me/?p=925#comments</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 20 Sep 2016 09:05:20 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[编程]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=925</guid>
+
+					<description><![CDATA[有时候站点，有bug，很容易会被人修改，添加其他乱七八糟的东西，针对这类问题，常见的做法：1、修改升级程序漏洞 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>有时候站点，有bug，很容易会被人修改，添加其他乱七八糟的东西，针对这类问题，常见的做法：1、修改升级程序漏洞。2、用WAF主动防御（用第三方免费cdn，也提供这类防御）。</p>
+<p>这儿介绍第三种方法（如果网站固定文件不变的情况下）<br />
+网站部署好后，通过对站点所有文件的计算MD5值，并保存在一个文件中。然后以后可以手动或者crontab，监控程序等定期对保存文件中的文件生成md5值和已有的md5值对比，如果发现值对不上，则说明文件被篡改了。</p>
+<p><span id="more-925"></span></p>
+<p>程序perl：</p><pre class="crayon-plain-tag">#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Digest::MD5 qw(md5_hex);
+
+
+my $dir=shift;
+# 此处默认为检查md5值。
+md5check($dir);
+# 如果需要开始生成web目录的md5值，注释掉上面一句，把下面一句启用
+#md5init($dir);
+sub md5_sum {
+
+ my ($file_name,$mode)=@_;
+ my ($FD,$ctx, $md5);
+   open ($FD,$file_name) or die "Can't open /'$file_name/': $!";
+     $ctx = Digest::MD5-&gt;new;
+       binmode($FD) if $mode;
+     $ctx-&gt;addfile($FD) || die "$!n";
+    $md5 = $ctx-&gt;hexdigest;
+   close $FD;
+ return $md5;
+}
+
+sub md5check {
+my $file=shift;
+open(my $fd, '&lt;',$file) or die "$file: $!n";
+print $file;
+while (&lt;$fd&gt;){
+        my ($name, $sum) = split /s+/;
+        if ($sum eq md5_sum($name,1)){
+                print "$name OKn";
+        }
+        else{
+          print "$name FAILEDn";
+        }
+}
+
+close $fd;
+
+}
+# 遍历目录计算md5值
+sub md5init {
+
+    my $fd=shift;
+    my $md5value;
+    if ( -f $fd ){
+            if ( -T $fd ) {
+                #print "按照文本模式进行计算MD5!n";
+                $md5value =md5_sum($fd,0);
+                print "$fdt$md5valuen";
+            }elsif( -B $fd ){
+                #print "二进制文件用binmod计算MD5!n";
+                $md5value =md5_sum($fd,1);
+                print "$fdt$md5valuen";
+            }else{
+                #print "其他文件，按照bimmod计算!n";
+                $md5value = md5_sum($fd,1);
+                print "$fdt$md5valuen";
+            }
+     }
+     elsif( -d $fd ){
+        my $file_md5;
+      # print "开始验证目录下所有文件:n";
+       opendir (my $DH,$fd) or die "Can't open dir $fd: $!";
+         for(readdir $DH ){
+         my $file=$fd.'/'.$_;
+      # 上级目录..，本目录. 以及连接文件跳过
+         next if ($file =~ m{/.$} || $file =~ m{/..$} || -l $file );
+         md5chek($file);
+        }
+       closedir $DH;
+    }
+
+}</pre><p>以上程序保存成文件，比如filemd5check.pl</p>
+<p>一、生成web的md5文件是时候：</p>
+<p>注释掉</p><pre class="crayon-plain-tag">#md5check($dir);</pre><p></p><pre class="crayon-plain-tag">md5init($dir);</pre><p>然后执行  web目录  &gt; webmd5-20160920</p>
+<p>web目录换成自己实际的web目录 webmd5-20160920 为保存计算结果的文件，可以自定义</p>
+<p>二、检查时候，用默认文件</p>
+<p>perl filemd5check.pl  webmd5-20160920</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=925</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>批量检查zabbix guest用户登录</title>
+		<link>http://ijz.me/?p=919</link>
+					<comments>http://ijz.me/?p=919#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 18 Aug 2016 00:48:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=919</guid>
+
+					<description><![CDATA[&#160; 最近又有人挖坑zabbix的sql注入漏洞，此漏洞不在详细说了。此漏洞的利用有个条件必须要登录才 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>最近又有人挖坑zabbix的sql注入漏洞，此漏洞不在详细说了。此漏洞的利用有个条件必须要登录才行。zabbix如果不做安全配置的话，默认是guest用户空密码可以登录的。</p>
+<p>为此写一个脚本检测是否禁用了guest用户，用来批量检查，加固。</p>
+<p><span id="more-919"></span></p><pre class="crayon-plain-tag">use strict;
+use warnings;
+use LWP;
+use Encode;
+use Data::Dumper;
+
+
+my $lwp = LWP::UserAgent-&gt;new;
+
+my @url=qw(
+
+http://192.168.1/zabbix
+http://zabbix.ooxx.com
+http://sb.zabbix.rc/zabbix
+#... 添加和修改更多的地址
+
+
+);
+for (@url) {
+  my $login_url = $_."/dashboard.php";
+  print $login_url,":n";
+  my $respos= $lwp-&gt;get($login_url);
+  if ($respos-&gt;is_success) {
+   my $res=$respos-&gt;content;
+   print "please disable guest accesss!","n" if $res=~/menu_graphs/ms;
+   print "good","n"   if $res=~/(&lt;!-- Login Form --&gt;)|(You are not logged in)/ms;
+   }
+  else {
+        print "Login Error: ",$respos-&gt;status_line,"n";
+   }
+
+ }</pre><p>上面是是多个地址批量检验的，同时没有兼顾新版本的zabbix，新版可能会报 404错误，下面在发一个检测单url的，同时兼顾新版本zabbix的</p><pre class="crayon-plain-tag">use strict;
+use warnings;
+use LWP;
+use Encode;
+use Data::Dumper;
+
+my $url=shift @ARGV;
+my $lwp = LWP::UserAgent-&gt;new;
+
+my $login_url1 = $url."/zabbix.php?action=dashboard.view";
+my $login_url = $url."/dashboard.php";
+
+my $ok=check($login_url);
+   $ok=check($login_url1) unless $ok;
+ print "Login Error: ","n" unless $ok;
+
+sub check {
+
+    my $url=shift;
+     print $url,":n";
+    my $respos= $lwp-&gt;get($url);
+    if ($respos-&gt;is_success) {
+       my $res=$respos-&gt;content;
+       print "please disable guest accesss!","n" if $res=~/menu_graphs|initPMaster/ms;
+       print "good","n"   if $res=~/(&lt;!-- Login Form --&gt;)|(You are not logged in)/ms;
+       return 1;
+       }
+     else {return 0};
+
+}</pre><p>使用方法：以上脚本保存为ztest1.pl</p>
+<p>然后执行 perl ztest1.pl http://zabbix.org/zabbix</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=919</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

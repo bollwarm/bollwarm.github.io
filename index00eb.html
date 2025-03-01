@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>rpm &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=rpm" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Thu, 23 Oct 2014 08:07:02 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>linux误删除rpm解决方法</title>
+		<link>http://ijz.me/?p=678</link>
+					<comments>http://ijz.me/?p=678#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 23 Oct 2014 08:07:02 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[rpm]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=678</guid>
+
+					<description><![CDATA[二货同事卸载mysql时后，手贱执行 rpm  -e  mysql  &#8211;nodeps，之后，发现r [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>二货同事卸载mysql时后，手贱执行 rpm  -e  mysql  &#8211;nodeps，之后，发现rpm找不到了，yum也不能使用了报错：</p>
+<p>Unable to open /usr/lib/rpm/rpmrc for reading: No such file or directory</p>
+<p><span id="more-678"></span></p>
+<p>1. 从其他同类机器上服务下面所需的l类文件：<br />
+#scp IP:/usr/lib64/librpm* /tmp<br />
+librpm-4.4.so 100% 375KB 375.3KB/s 00:00<br />
+librpmbuild-4.4.so 100% 147KB 147.0KB/s 00:00<br />
+librpmdb-4.4.so 100% 1115KB 1.1MB/s 00:0<br />
+librpmio-4.4.so 100% 389KB 388.8KB/s 00:00</p>
+<p>对比本机/usr/lib64或者/usr/lib（32位机器）目录如果有的话就不用变了，没有的话直接复制到到目录</p>
+<p># mv * /usr/lib64</p>
+<p>2. 在上述同类机器机器上解压 rpm 包，再复制到本地：<br />
+#mkdir /rpm<br />
+#cd /rpm</p>
+<p>wget http://mirrors.sohu.com/centos/6.5/os/x86_64/Packages/rpm-4.8.0-37.el6.x86_64.rpm<br />
+#rpm2cpio rpm-4.8.0-37.el6.x86_64.rpm | cpio -ivd<br />
+# tar zcvf rpm.tar.gz *<br />
+# scp rpm.tar.gz 本机IP:/</p>
+<p>3. 在本机解压：<br />
+#cd /<br />
+#tar zxvf rpm.tar.gz</p>
+<p>现在可以使用 rpm 命令了。</p>
+<p>4. 再安装和 rpm 相关的包：<br />
+#rpm -ivh rpm-python rpm rpm-build rpm-libs redhat-rpm-config</p>
+<p>附录：rpm2cpio和cpio 命令<br />
+pm2cpio命令：将rpm格式的文件转为cpio格式的文件。rpm是linux中常用的文件格式，方便了用户的安装，但没有cpio格式灵 活，最典型的例子就是安装一个在rpm中.so文件时，如果直接使用rpm安装，那么需要处理复杂的依赖关系，将rpm转为cpio，则可以方便地提 取.so文件，做过软连接。</p>
+<p>比如：</p>
+<p>rpm2cpio ../libstdc++-4.3.0-8.i386.rpm | cpio -idv</p>
+<p>cpio命令详解：</p>
+<p>cpio是用来建立，还原备份档的工具程序，它可以加入，解开cpio或tar备份档内的文件。</p>
+<h2 class="headline-1 bk-sidecatalog-title"><a name="t0"></a><span class="headline-content">语　法：</span></h2>
+<p>cpio [-0aABckLovV][-C &lt;输入/输出大小&gt;][-F &lt;备份档&gt;][-H &lt;备份格式&gt;][-O &lt;备份档&gt;][&#8211;block-size=&lt;区块大小&gt;][&#8211;force-local][&#8211;help][&#8211;quiet] [&#8211;version] 或 cpio [-bBcdfikmnrsStuvV][-C &lt;输入/输出大小&gt;][-E &lt;范本文件&gt;][-F &lt;备份档&gt;][-H &lt;备份格式&gt;][-I &lt;备份档&gt;][-M &lt;回传信息&gt;][-R &lt;拥有者&gt;&lt;:/.&gt;&lt;所属群组&gt;][&#8211;block-size=&lt;区块大小&gt;][&#8211;force- local][&#8211;help][&#8211;no-absolute-filenames][&#8211;no-preserve-owner][&#8211;only- verify-crc][&#8211;quiet][&#8211;sparse][&#8211;version][范本样式&#8230;] 或 cpio [-0adkiLmpuvV][-R &lt;拥有者&gt;&lt;:/.&gt;&lt;所属群组&gt;][&#8211;help][&#8211;no-preserve-owner] [&#8211;quiet][&#8211;sparse][&#8211;version][目的目]</p>
+<h2 class="headline-1 bk-sidecatalog-title"><a name="t1"></a><span class="headline-content">补充说明：</span></h2>
+<p>cpio是用来建立，还原备份档的工具程序，它可以加入，解开cpio或tar备份档内的文件。</p>
+<h2 class="headline-1 bk-sidecatalog-title"><a name="t2"></a><a name="4"></a><span class="headline-content">参　数：</span></h2>
+<p>-0或&#8211;null 接受新增列控制字符，通常配合find指令的&#8221;-print0&#8243;参数使用。</p>
+<p>-a或&#8211;reset-access-time 重新设置文件的存取时间。</p>
+<p>-A或&#8211;append 附加到已存在的备份档中，且这个备份档必须存放在磁盘上，而不能放置于磁带机里。</p>
+<p>-b或&#8211;swap 此参数的效果和同时指定&#8221;-sS&#8221;参数相同。</p>
+<p>-B 将输入/输出的区块大小改成5210 Bytes。</p>
+<p>-c 使用旧ASCII备份格式。</p>
+<p>-C&lt;区块大小&gt;或&#8211;io-size=&lt;区块大小&gt; 设置输入/输出的区块大小，单位是Byte。</p>
+<p>-d或&#8211;make-directories 如有需要cpio会自行建立目录。</p>
+<p>-E&lt;范本文件&gt;或&#8211;pattern-file=&lt;范本文件&gt; 指定范本文件，其内含有一个或多个范本样式，让cpio解开符合范本条件的文件，格式为每列一个范本样式。</p>
+<p>-f或&#8211;nonmatching 让cpio解开所有不符合范本条件的文件。</p>
+<p>-F&lt;备份档&gt;或&#8211;file=&lt;备份档&gt; 指定备份档的名称，用来取代标准输入或输出，也能借此通过网络使用另一台主机的保存设备存取备份档。</p>
+<p>-H&lt;备份格式&gt; 指定备份时欲使用的文件格式。</p>
+<p>-i或&#8211;extract 执行copy-in模式，还原备份档。</p>
+<p>-l&lt;备份档&gt; 指定备份档的名称，用来取代标准输入，也能借此通过网络使用另一台主机的保存设备读取备份档。</p>
+<p>-k 此参数将忽略不予处理，仅负责解决cpio不同版本间的兼容性问题。</p>
+<p>-l或&#8211;link 以硬连接的方式取代复制文件，可在copy-pass模式下运用。</p>
+<p>-L或&#8211;dereference 不建立符号连接，直接复制该连接所指向的原始文件。</p>
+<p>-m或preserve-modification-time 不去更换文件的更改时间。</p>
+<p>-M&lt;回传信息&gt;或&#8211;message=&lt;回传信息&gt; 设置更换保存媒体的信息。</p>
+<p>-n或&#8211;numeric-uid-gid 使用&#8221;-tv&#8221;参数列出备份档的内容时，若再加上参数&#8221;-n&#8221;，则会以用户识别码和群组识别码替代拥有者和群组名称列出文件清单。</p>
+<p>-o或&#8211;create 执行copy-out模式，建立备份档。</p>
+<p>-O&lt;备份档&gt; 指定备份档的名称，用来取代标准输出，也能借此通过网络　使用另一台主机的保存设备存放备份档。</p>
+<p>-p或&#8211;pass-through 执行copy-pass模式，略过备份步骤，直接将文件复制到目的目录。</p>
+<p>-r或&#8211;rename 当有文件名称需要更动时，采用互动模式。</p>
+<p>-R&lt;拥有者&gt;&lt;:/.&gt;&lt;所属群组&gt;或　　&#8212;-owner&lt;拥有者&gt;&lt;: /.&gt;&lt;所属群组&gt; 在copy-in模式还原备份档，或copy-pass模式复制文件时，可指定这些备份，复制的文件的拥有者与所属群组。</p>
+<p>-s或&#8211;swap-bytes 交换每对字节的内容。</p>
+<p>-S或&#8211;swap-halfwords 交换每半个字节的内容。</p>
+<p>-t或&#8211;list 将输入的内容呈现出来。</p>
+<p>-u或&#8211;unconditional 置换所有文件，不论日期时间的新旧与否，皆不予询问而直接覆盖。</p>
+<p>-v或&#8211;verbose 详细显示指令的执行过程。</p>
+<p>-V或&#8211;dot 执行指令时，在每个文件的执行程序前面加上&#8221;.&#8221;号</p>
+<p>&#8211;block-size=&lt;区块大小&gt; 设置输入/输出的区块大小，假如设置数值为5，则区块大小为2500，若设置成10，则区块大小为5120，依次类推。</p>
+<p>&#8211;force-local 强制将备份档存放在本地主机。</p>
+<p>&#8211;help 在线帮助。</p>
+<p>&#8211;no-absolute-filenames 使用相对路径建立文件名称。</p>
+<p>&#8211;no-preserve-owner 不保留文件的拥有者，谁解开了备份档，那些文件就归谁所有。</p>
+<p>-only-verify-crc 当备份档采用CRC备份格式时，可使用这项参数检查备份档内的每个文件是否正确无误。</p>
+<p>&#8211;quiet 不显示复制了多少区块。</p>
+<p>&#8211;sparse 倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</p>
+<p>&#8211;version 显示版本信息。</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=678</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

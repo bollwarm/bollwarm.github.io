@@ -1,0 +1,4641 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>lin123 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;author=1" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:27:42 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>JavaScript代码整洁之道——好代码和坏代码</title>
+		<link>http://ijz.me/?p=1134</link>
+					<comments>http://ijz.me/?p=1134#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 23 May 2019 02:18:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1134</guid>
+
+					<description><![CDATA[概述 我们之道作为一个码农，不论其实现如何，功能怎样，写的一手清晰靠谱的代码是其代码功力的体现。好的、清洁的代 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading"></h1>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="659" height="451" src="http://ijz.me/wp-content/uploads/2025/03/1-7.png" alt="" class="wp-image-1135" srcset="http://ijz.me/wp-content/uploads/2025/03/1-7.png 659w, http://ijz.me/wp-content/uploads/2025/03/1-7-300x205.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-7-624x427.png 624w" sizes="(max-width: 659px) 100vw, 659px" /></figure>
+
+
+
+<h2 class="wp-block-heading">概述</h2>
+
+
+
+<p>我们之道作为一个码农，不论其实现如何，功能怎样，写的一手清晰靠谱的代码是其代码功力的体现。好的、清洁的代码可以方便自己以后维护，让你的继任者马上能接手维护它，而不是给你檫屁股，被人戳脊梁骨、被骂垃圾代码。所以，写清洁代码非常重要。</p>
+
+
+
+<span id="more-1134"></span>
+
+
+
+<p>那么什么才是清洁代码的呢？不言而喻，清洁的代码就是可以让人易于人理解、易于更改、方便扩展的代码。写清洁的代码要常扪心自问：</p>
+
+
+
+<p>为什么要这样写？</p>
+
+
+
+<p>为什么要在这儿写？</p>
+
+
+
+<p>为什么不换个写法？</p>
+
+
+
+<p>Robert C. Martin在《代码整洁之道》一书中说过：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="567" height="325" src="http://ijz.me/wp-content/uploads/2025/03/2-6.png" alt="" class="wp-image-1136" srcset="http://ijz.me/wp-content/uploads/2025/03/2-6.png 567w, http://ijz.me/wp-content/uploads/2025/03/2-6-300x172.png 300w" sizes="(max-width: 567px) 100vw, 567px" /></figure>
+
+
+<p>就算是的坏代码也能运行，但如果代码不干净，也能会让你的开发团队陷入困境。</p>
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="270" height="103" src="http://ijz.me/wp-content/uploads/2025/03/3-6.png" alt="" class="wp-image-1137"/></figure>
+
+
+<p>在本文中，虫虫就给大家讲讲JavaScript代码的整洁知道，全面对比下好的代码和坏的代码的写法。</p>
+
+
+<h2 class="wp-block-heading">强类型检查，使用“===”，不用“==”</h2>
+
+
+<p>类型的检查非常重要，使用强类型检查可以帮我理清程序逻辑，如果类型检查松懈了（使用==），有可能使你的逻辑“南辕北撤了”，试看下面的例子：</p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="563" height="169" src="http://ijz.me/wp-content/uploads/2025/03/4-5.png" alt="" class="wp-image-1138" srcset="http://ijz.me/wp-content/uploads/2025/03/4-5.png 563w, http://ijz.me/wp-content/uploads/2025/03/4-5-300x90.png 300w" sizes="auto, (max-width: 563px) 100vw, 563px" /></figure>
+
+
+<p>所以从现在开始就强类型检查，“亡羊补牢，犹未晚也”！</p>
+<p>const value = &#8220;520&#8221;;</p>
+<p>if (value === 520) {</p>
+<p>&nbsp; console.log(value);</p>
+<p>}</p>
+<p>条件不会满足。</p>
+<p>if (value === &#8220;520&#8221;) {</p>
+<p>&nbsp; console.log(value);</p>
+<p>}</p>
+<p>条件满足。</p>
+
+
+<h2 class="wp-block-heading">变量命名</h2>
+
+
+<p>变量的命名要有意义，而不是随意乱起。最好是“望文生义”，一看到变量名就知道是干嘛用的。</p>
+
+
+<h3 class="wp-block-heading">望文生义</h3>
+
+
+<p>坏代码：</p>
+<p>let<code> daysSLV</code>=<code> </code>10;<code></code></p>
+<p>let<code> y </code>=<code> </code>new<code> </code>Date().getFullYear();<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code>
+
+
+<p>let<code> ok</code>;<code></code></p>
+<p>if<code> </code>(<code>user</code>.<code>age </code>&gt;<code> </code>30)<code> </code>{<code></code></p>
+<p><code>&nbsp; ok </code>=<code> </code>true;<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>const<code> </code>MAX_AGE<code> </code>=<code> </code>30;<code></code><br />
+let<code> daysSinceLastVisit </code>=<code> </code>10;<code></code><br />
+let<code> currentYear </code>=<code> </code>new<code> </code>Date().getFullYear();<code></code><br />
+...<code></code><br />
+const<code> isUserOlderThanAllowed </code>=<code> user</code>.<code>age </code>&gt;<code> </code>MAX_AGE;</p>
+
+
+<h3 class="wp-block-heading">不要给变量添加额外不需要的单词</h3>
+
+
+<p>坏代码：</p>
+<p>let<code> nameValue</code>;<code></code><br />
+let<code> theProduct</code>;<code></code></p>
+<p>好代码：</p>
+<p>let<code> name</code>;<code></code></p>
+<p>let<code> product</code>;<code></code></p>
+
+
+<h3 class="wp-block-heading">不要让我们需要从上下文中了解变量的意思</h3>
+
+
+
+<p>坏代码：</p>
+
+
+
+<p>const ans = ["Chongchong", "maomaochong", "bollworm"];</p>
+
+
+
+<p>ans.forEach(an =&gt; {</p>
+
+
+
+<p>&nbsp; doSomething();</p>
+
+
+
+<p>&nbsp; doSomethingElse();</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; // 等等，这个u是干嘛用的？</p>
+
+
+
+<p>&nbsp; register(an);</p>
+
+
+
+<p>好代码：</p>
+
+
+
+<p>const animals = ["Chongchong", "maomaochong", "bollworm"];</p>
+
+
+
+<p>animals.forEach(animal =&gt; {</p>
+
+
+
+<p>&nbsp; doSomething();</p>
+
+
+
+<p>&nbsp; doSomethingElse();</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; register(animal);</p>
+
+
+
+<p>});</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="599" height="187" src="http://ijz.me/wp-content/uploads/2025/03/5-6.png" alt="" class="wp-image-1139" srcset="http://ijz.me/wp-content/uploads/2025/03/5-6.png 599w, http://ijz.me/wp-content/uploads/2025/03/5-6-300x94.png 300w" sizes="auto, (max-width: 599px) 100vw, 599px" /></figure>
+
+
+
+<h3 class="wp-block-heading">不添加多余的上下文</h3>
+
+
+<p>坏代码：</p>
+<p>const<code> user </code>=<code> </code>{<code></code><br />
+<code>&nbsp; userName</code>:<code> </code>"Chongchong",<code></code><br />
+<code>&nbsp; userNameAbb</code>:<code> </code>"CC",<code></code><br />
+<code>&nbsp; userAge</code>:<code> </code>"28"<code></code><br />
+};<code></code><br />
+...<code></code><br />
+<code>user</code>.<code>userName</code>;</p>
+<p>&nbsp;</p>
+<p>好代码：</p>
+<p>const<code> user </code>=<code> </code>{<code></code></p>
+<p><code>Name</code>:<code> </code>"Chongchong",<code></code><br />
+<code>NameAbb</code>:<code> </code>"CC",<code></code><br />
+<code>&nbsp; userAge</code>:<code> </code>"28"<code></code><br />
+};<code></code></p>
+<p>...<code></code><br />
+<code>user</code>.<code>userName</code>;</p>
+
+
+<h2 class="wp-block-heading">函数</h2>
+
+
+
+<h3 class="wp-block-heading">使用长而具有描述性的函数名。</h3>
+
+
+<p>由于函数一般来说表示某种行为，函数名称应该是动词或短​​语，这样可以显示功能以及参数的意义。</p>
+<p>坏代码：</p>
+<p>function<code> </code>notif(user)<code> </code>{<code></code><br />
+<code>&nbsp; </code>// 代码逻辑<code></code><br />
+}<code></code></p>
+<p>好代码：</p>
+<p>function notifyUser（emailAddress）{</p>
+<p>&nbsp;&nbsp;//代码逻辑</p>
+<p>}</p>
+
+
+<h3 class="wp-block-heading">避免使用大量参数。</h3>
+
+
+<p>理想情况下，函数应该指定两个或更少的参数。参数越少，函数单元测试就越容易。</p>
+<p>坏代码：</p>
+<p>function<code> </code>getUsers(fields, fromDate, toDate)<code> </code>{<code></code><br />
+<code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>getUsers({ fields, fromDate, toDate })<code> </code>{<code></code><br />
+<code>&nbsp; </code>// 码逻辑<code></code><br />
+}<code></code></p>
+<p>getUsers({<code></code><br />
+<code>&nbsp; fields</code>:<code> </code>['name',<code> </code>'surname',<code> </code>'email'],<code></code><br />
+<code>&nbsp; fromDate</code>:<code> </code>'2019-05-22',<code></code><br />
+<code>&nbsp; toDate</code>:<code> </code>'2019-05-31'<code></code><br />
+});<code></code></p>
+<p>getUsers（{</p>
+<p>&nbsp;&nbsp;字段：['name'，'surname'，'email']，</p>
+<p>&nbsp;&nbsp;fromDate：'2019-01-01'，</p>
+<p>&nbsp;&nbsp;toDate：'2019-01-18'</p>
+<p>}）;</p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<h3 class="wp-block-heading">使用默认参数，不用条件。</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>createShape(type)<code> </code>{<code></code><br />
+<code>&nbsp; </code>const<code> shapeType </code>=<code> type </code>||<code> </code>"circle";<code></code><br />
+<code>&nbsp; </code>// ...<code></code><br />
+}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>createShape(<code>type </code>=<code> </code>"circle")<code> </code>{<code></code><br />
+<code>&nbsp; </code>// ...<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">一个函数做一件事。避免在单个函数中执行多个操作,多种逻辑</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>notifyUsers(users)<code> </code>{<code></code><br />
+<code>&nbsp; users</code>.forEach(user<code> </code>=&gt;<code> </code>{<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>const<code> userRecord </code>=<code> database</code>.lookup(<code>user</code>);<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>if<code> </code>(<code>userRecord</code>.isVerified())<code> </code>{<code></code><br />
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>notify(<code>user</code>);<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>}<code></code><br />
+<code>&nbsp; </code>});<code></code><br />
+}<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="477" height="173" src="http://ijz.me/wp-content/uploads/2025/03/6-6.png" alt="" class="wp-image-1140" srcset="http://ijz.me/wp-content/uploads/2025/03/6-6.png 477w, http://ijz.me/wp-content/uploads/2025/03/6-6-300x109.png 300w" sizes="auto, (max-width: 477px) 100vw, 477px" /></figure>
+
+
+<p>好代码：</p>
+<p>function<code> </code>notifyVerifiedUsers(users)<code> </code>{<code></code><br />
+<code>&nbsp; users</code>.filter(<code>isUserVerified</code>).forEach(<code>notify</code>);<code></code><br />
+}<code></code></p>
+<p>function<code> </code>isUserVerified(user)<code> </code>{<code></code><br />
+<code>&nbsp; </code>const<code> userRecord </code>=<code> database</code>.lookup(<code>user</code>);<code></code><br />
+<code>&nbsp; </code>return<code> userRecord</code>.isVerified();<code></code><br />
+}<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="511" height="199" src="http://ijz.me/wp-content/uploads/2025/03/7-4.png" alt="" class="wp-image-1141" srcset="http://ijz.me/wp-content/uploads/2025/03/7-4.png 511w, http://ijz.me/wp-content/uploads/2025/03/7-4-300x117.png 300w" sizes="auto, (max-width: 511px) 100vw, 511px" /></figure>
+
+
+
+<h3 class="wp-block-heading">使用Object.assign配置默认对象</h3>
+
+
+<p>坏代码：</p>
+<p>const<code> shapeConfig </code>=<code> </code>{<code></code><br />
+<code>&nbsp; type</code>:<code> </code>"cube",<code></code><br />
+<code>&nbsp; width</code>:<code> </code>200,<code></code><br />
+<code>&nbsp; height</code>:<code> </code>null<code></code></p>
+<p>};<code></code></p>
+<p>function<code> </code>createShape(config)<code> </code>{<code></code></p>
+<p><code>&nbsp; config</code>.<code>type </code>=<code> config</code>.<code>type </code>||<code> </code>"cube";<code></code></p>
+<p><code>&nbsp; config</code>.<code>width </code>=<code> config</code>.<code>width </code>||<code> </code>250;<code></code></p>
+<p><code>&nbsp; config</code>.<code>height </code>=<code> config</code>.<code>width </code>||<code> </code>250;<code></code></p>
+<p>}<code></code></p>
+<p>createShape(<code>shapeConfig</code>);<code></code></p>
+<p>function createShape（config）{</p>
+<p>&nbsp;&nbsp;config.type = config.type || “立方体”;</p>
+<p>&nbsp;&nbsp;config.width = config.width || 250;</p>
+<p>&nbsp;&nbsp;config.height = config.width || 250;</p>
+<p>}</p>
+<p>createShape（shapeConfig）;</p>
+<p>好代码：</p>
+<p>const<code> shapeConfig </code>=<code> </code>{<code></code></p>
+<p><code>&nbsp; type</code>:<code> </code>"cube",<code></code></p>
+<p><code>&nbsp; width</code>:<code> </code>200<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;<br><br>&nbsp;</code></pre>
+
+
+<p>function<code> </code>createShape(config)<code> </code>{<code></code></p>
+<p><code>&nbsp; config </code>=<code> Object</code>.assign(<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type</code>:<code> </code>"cube",<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width</code>:<code> </code>250,<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height</code>:<code> </code>250<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>},<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;&nbsp;&nbsp; config</code></pre>
+
+
+<p><code>&nbsp; </code>);<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>...<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>createShape(<code>shapeConfig</code>);<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="571" height="395" src="http://ijz.me/wp-content/uploads/2025/03/8-4.png" alt="" class="wp-image-1142" srcset="http://ijz.me/wp-content/uploads/2025/03/8-4.png 571w, http://ijz.me/wp-content/uploads/2025/03/8-4-300x208.png 300w" sizes="auto, (max-width: 571px) 100vw, 571px" /></figure>
+
+
+
+<h3 class="wp-block-heading">不要使用标志作为参数。</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>createFile(name, isPublic)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(<code>isPublic</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; fs</code>.create(`./public/${name}`);<code></code></p>
+<p><code>&nbsp; </code>}<code> </code>else<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; fs</code>.create(<code>name</code>);<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>createFile(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; fs</code>.create(<code>name</code>);<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>function<code> </code>createPublicFile(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>createFile(`./public/${name}`);<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">不要让全局函数污染</h3>
+
+
+<p>如果需要扩展现有对象，请使用ES类和继承，不要在对象原型链上创建函数。</p>
+<p>坏代码：</p>
+<p>Array.<code>prototype</code>.myFunc<code> </code>=<code> </code>function<code> </code>myFunc()<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// 代码逻辑<code></code></p>
+<p>};<code></code></p>
+<p>好代码：</p>
+<p>class<code> </code>SuperArray<code> </code>extends<code> </code>Array<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>myFunc()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>//代码逻辑<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}</p>
+
+
+<h2 class="wp-block-heading">条件</h2>
+
+
+
+<h3 class="wp-block-heading">不要用负面条件</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>isUserNotBlocked(user)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(!isUserNotBlocked(<code>user</code>))<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>isUserBlocked(user)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(isUserBlocked(<code>user</code>))<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}</p>
+
+
+<h3 class="wp-block-heading">使用布尔变量直接判断，而不是条件语句</h3>
+
+
+<p>坏代码：</p>
+<p>if<code> </code>(<code>isValid </code>===<code> </code>true)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(<code>isValid </code>===<code> </code>false)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>if<code> </code>(<code>isValid</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(!<code>isValid</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">避免使用条件，用多态和继承。</h3>
+
+
+<p>坏代码：</p>
+<p>class<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>switch<code> </code>(this.<code>type</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"Ford":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>+<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"Benz":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"BYD":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>-<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>}<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>class<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>class<code> </code>Ford<code> </code>extends<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>+<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>class<code> </code>Benz<code> </code>extends<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor();<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<p>class<code> BYD </code>extends<code> </code>Car<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp; </code>// ...<code></code></p>
+
+
+
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>-<code> </code>this.anotherFactor();<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+
+<p>}</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="451" src="http://ijz.me/wp-content/uploads/2019/05/21.png" alt="" class="wp-image-1152" srcset="http://ijz.me/wp-content/uploads/2019/05/21.png 798w, http://ijz.me/wp-content/uploads/2019/05/21-300x170.png 300w, http://ijz.me/wp-content/uploads/2019/05/21-768x434.png 768w, http://ijz.me/wp-content/uploads/2019/05/21-624x353.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+
+<p></p>
+
+
+
+<h2 class="wp-block-heading">ES类</h2>
+
+
+<p>类是JavaScript中的新的语法糖。除了语法不同外，其他都和prototype一样工作。使用ES类可以让你的代码更加简洁清晰。</p>
+<p>坏代码：</p>
+<p>const<code> </code>Person<code> </code>=<code> </code>function(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(!(this<code> </code>instanceof<code> </code>Person))<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>throw<code> </code>new<code> </code>Error("Instantiate Person with `new` keyword");<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>Person.<code>prototype</code>.sayHello<code> </code>=<code> </code>function<code> </code>sayHello()<code> </code>{<code> </code>/**/<code> </code>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>const<code> </code>Student<code> </code>=<code> </code>function(name, school)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(!(this<code> </code>instanceof<code> </code>Student))<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>throw<code> </code>new<code> </code>Error("Instantiate Student with `new` keyword");<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>Person.call(this,<code> name</code>);<code></code></p>
+<p><code>&nbsp; </code>this.<code>school </code>=<code> school</code>;<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>Student.<code>prototype </code>=<code> Object</code>.create(Person.<code>prototype</code>);<code></code></p>
+<p>Student.<code>prototype</code>.<code>constructor </code>=<code> Student</code>;<code></code></p>
+<p>Student.<code>prototype</code>.printSchoolName<code> </code>=<code> </code>function<code> </code>printSchoolName()<code> </code>{<code> </code>/**/<code> </code>};<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="451" src="http://ijz.me/wp-content/uploads/2025/03/10-6.png" alt="" class="wp-image-1149" srcset="http://ijz.me/wp-content/uploads/2025/03/10-6.png 798w, http://ijz.me/wp-content/uploads/2025/03/10-6-300x170.png 300w, http://ijz.me/wp-content/uploads/2025/03/10-6-768x434.png 768w, http://ijz.me/wp-content/uploads/2025/03/10-6-624x353.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+<p>好代码：</p>
+<p>class<code> </code>Person<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>constructor(name)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code></code></pre>
+
+
+<p><code>&nbsp; </code>sayHello()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>/* ... */<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<p>class<code> </code>Student<code> </code>extends<code> </code>Person<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp; </code>constructor(name, school)<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>super(<code>name</code>);<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>school </code>=<code> school</code>;<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}</p>
+
+
+
+<p><code>&nbsp; </code>printSchoolName()<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>/* ... */<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+
+<p>}<code></code></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="598" height="405" src="http://ijz.me/wp-content/uploads/2025/03/11-6.png" alt="" class="wp-image-1148" srcset="http://ijz.me/wp-content/uploads/2025/03/11-6.png 598w, http://ijz.me/wp-content/uploads/2025/03/11-6-300x203.png 300w" sizes="auto, (max-width: 598px) 100vw, 598px" /></figure>
+
+
+
+<h3 class="wp-block-heading">使用方法链接</h3>
+
+
+<p>许多库如jQuery和Lodash都使用该模式。因此，该方法可以让的代码简洁。在主类中，只需在每个函数的末尾返回“this”，就可以将更多的类方法链接到该方法。</p>
+<p>坏代码：</p>
+<p>class<code> </code>Person<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>constructor(name)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code>
+
+
+<p><code>&nbsp; </code>setSurname(surname)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>surname </code>=<code> surname</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>setAge(age)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>age </code>=<code> age</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>save()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; console</code>.log(this.<code>name</code>,<code> </code>this.<code>surname</code>,<code> </code>this.<code>age</code>);<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>const<code> person </code>=<code> </code>new<code> </code>Person("Chongchong);<code></code></p>
+<p><code>person</code>.setSurname("CC");<code></code></p>
+<p><code>person</code>.setAge(29);<code></code></p>
+<p><code>person</code>.save();<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="689" height="449" src="http://ijz.me/wp-content/uploads/2025/03/12-5.png" alt="" class="wp-image-1147" srcset="http://ijz.me/wp-content/uploads/2025/03/12-5.png 689w, http://ijz.me/wp-content/uploads/2025/03/12-5-300x196.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-5-624x407.png 624w" sizes="auto, (max-width: 689px) 100vw, 689px" /></figure>
+
+
+<p>好代码：</p>
+<p>class Person {</p>
+<p>&nbsp; constructor(name) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.name = name;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; setSurname(surname) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.surname = surname;</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; setAge(age) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.age = age;</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; save() {</p>
+<p>&nbsp;&nbsp;&nbsp; console.log(this.name, this.surname, this.age);</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>}</p>
+<p>const person = new Person("Chongchong")</p>
+<p>&nbsp;&nbsp;&nbsp; .setSurname("CC")</p>
+<p>&nbsp;&nbsp;&nbsp; .setAge(29)</p>
+<p>.save();</p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="616" height="520" src="http://ijz.me/wp-content/uploads/2025/03/13-3.png" alt="" class="wp-image-1146" srcset="http://ijz.me/wp-content/uploads/2025/03/13-3.png 616w, http://ijz.me/wp-content/uploads/2025/03/13-3-300x253.png 300w" sizes="auto, (max-width: 616px) 100vw, 616px" /></figure>
+
+
+
+<h2 class="wp-block-heading">其他</h2>
+
+
+
+<p>通常情况下，尽量不要写不要重复代码，不要写不使用的函数和死代码。</p>
+
+
+
+<p>出于历史原因，可能会遇到重复的代码。例如，有两段你略有不同的低吗，但是又很多共同之处逻辑，为省事或者赶工期，导致你复制了大段代码，略做小改然后使用了。针对这种代码，后期一定要及早抽象出相同逻辑部分删除重复代码越早越好，不要欠死账，不然后越积越多就不好处理了。</p>
+
+
+
+<p>关于死代码，码如其名。就是啥事不干，删了可能引入错误，这和上面的一样处理，及早处理，不用了就早处理，早删除。</p>
+
+
+
+<h2 class="wp-block-heading">结论</h2>
+
+
+<p>上面只是代码整洁的部分原理，而且个别条款也可能需要商榷。这些大部分理论来源于《代码整洁之道》这本书。有什么建议意见请回复，一起学习讨论。</p>
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1134</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>基于R语言DIY乐高拼图，以苏大强表情包为例</title>
+		<link>http://ijz.me/?p=1109</link>
+					<comments>http://ijz.me/?p=1109#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 28 Mar 2019 14:09:00 +0000</pubDate>
+				<category><![CDATA[大数据&算法]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[r语言]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1109</guid>
+
+					<description><![CDATA[概述 很多人喜欢乐高积木，但是苦于囊中羞涩，媳妇不给钱买，怎么办呢？不要愁！虫虫今天给大家介绍一个很有意思的项 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<h2 class="wp-block-heading">概述</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="637" height="327" src="http://ijz.me/wp-content/uploads/2025/03/1-6.png" alt="" class="wp-image-1110" srcset="http://ijz.me/wp-content/uploads/2025/03/1-6.png 637w, http://ijz.me/wp-content/uploads/2025/03/1-6-300x154.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-6-624x320.png 624w" sizes="auto, (max-width: 637px) 100vw, 637px" /></figure>
+
+
+
+<p>很多人喜欢乐高积木，但是苦于囊中羞涩，媳妇不给钱买，怎么办呢？不要愁！虫虫今天给大家介绍一个很有意思的项目brickr，利用它我们可以利用R语言编程来玩乐高积木，学习游戏两不误，何乐而不为呢？</p>
+
+
+
+<p>brickr是基于R tidyverse和rayshader包来创建LEGO 2D和3D模型的工具包。利用它我们可以：</p>
+
+
+
+<p>将图像文件转换为2D和3D LEGO马赛克</p>
+
+
+
+<p>从简单的数据框架构建3D乐高模型</p>
+
+
+
+<span id="more-1109"></span>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<h3 class="wp-block-heading">必备软件和包：</h3>
+
+
+
+<p>必须安装Rgui（或RStudio）,Rtools,基本依赖包devtools，tidyverse，rayshader，dplyr等。</p>
+
+
+
+<p>R和Rtools必须下载二进制安装包安装。</p>
+
+
+
+<p>依赖包的安装方法很简单直接利用install.packages（”XXX”）</p>
+
+
+
+<h3 class="wp-block-heading">安装brickr</h3>
+
+
+
+<p>安装brickr要利用devtools从github库安装，安装方法如下：</p>
+
+
+
+<p>devtools::install_githu（”ryantimpe/brickr”）</p>
+
+
+
+<h2 class="wp-block-heading">基本使用</h2>
+
+
+
+<h3 class="wp-block-heading">3D建模</h3>
+
+
+
+<p>3D模型可以用两种方法构建：bricks_from_table函数和或bricks_from_coords函数。</p>
+
+
+
+<p><strong>bricks_from_table()</strong>：将矩阵数组转换为乐高积木。对于简单模型，可以通过data.frame()或tibble::tribble()函数手动构建。对于更高级的模型，建议可以通过Excel或.csv文件导入数据。导入的表格数据中最左侧的列与模型的Level或z轴相关联。默认情况下，该功能会将此值转换为数字。其他列是x坐标，每行是y坐标。</p>
+
+
+
+<p><strong>bricks_from_coords()</strong>：则使用用带有x，y和z整数值以及颜色列的数据框，其中x，y和z的每个组合都是三维空间中的一个点。颜色必须是display_colors（）列出的官方乐高颜色名称。这种方法比bricks_from_table函数更灵活，还允许进行3D模型的编程开发。</p>
+
+
+
+<p>将任何brick_from _*()函数的输出传递给display_bricks()就可以查看其3D模型图。从一个简单例子开始：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="385" height="190" src="http://ijz.me/wp-content/uploads/2025/03/2-5.png" alt="" class="wp-image-1111" srcset="http://ijz.me/wp-content/uploads/2025/03/2-5.png 385w, http://ijz.me/wp-content/uploads/2025/03/2-5-300x148.png 300w" sizes="auto, (max-width: 385px) 100vw, 385px" /></figure>
+
+
+
+<p>结果：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="396" height="219" src="http://ijz.me/wp-content/uploads/2025/03/3-5.png" alt="" class="wp-image-1112" srcset="http://ijz.me/wp-content/uploads/2025/03/3-5.png 396w, http://ijz.me/wp-content/uploads/2025/03/3-5-300x166.png 300w" sizes="auto, (max-width: 396px) 100vw, 396px" /></figure>
+
+
+
+<p>打印这个图</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="308" height="100" src="http://ijz.me/wp-content/uploads/2025/03/4-4.png" alt="" class="wp-image-1113" srcset="http://ijz.me/wp-content/uploads/2025/03/4-4.png 308w, http://ijz.me/wp-content/uploads/2025/03/4-4-300x97.png 300w" sizes="auto, (max-width: 308px) 100vw, 308px" /></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="379" height="257" src="http://ijz.me/wp-content/uploads/2025/03/5-5.png" alt="" class="wp-image-1114" srcset="http://ijz.me/wp-content/uploads/2025/03/5-5.png 379w, http://ijz.me/wp-content/uploads/2025/03/5-5-300x203.png 300w" sizes="auto, (max-width: 379px) 100vw, 379px" /></figure>
+
+
+
+<h3 class="wp-block-heading">上色</h3>
+
+
+
+<p>有两种方法给brickr上色。display_colors()可以列出，支持的颜色标识ID和名称：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="484" src="http://ijz.me/wp-content/uploads/2025/03/6-5-1024x484.png" alt="" class="wp-image-1115" srcset="http://ijz.me/wp-content/uploads/2025/03/6-5-1024x484.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-5-300x142.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-5-768x363.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-5-624x295.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-5.png 1359w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>在模型输入表中使用brickrID值而不是“1”。值“0”表示空值。</p>
+
+
+
+<p>创建颜色分配表并将其传递给bricks_from_table()即可，比如：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="389" height="232" src="http://ijz.me/wp-content/uploads/2025/03/7-3.png" alt="" class="wp-image-1116" srcset="http://ijz.me/wp-content/uploads/2025/03/7-3.png 389w, http://ijz.me/wp-content/uploads/2025/03/7-3-300x179.png 300w" sizes="auto, (max-width: 389px) 100vw, 389px" /></figure>
+
+
+
+<p>结果显示：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="347" height="253" src="http://ijz.me/wp-content/uploads/2025/03/8-3.png" alt="" class="wp-image-1117" srcset="http://ijz.me/wp-content/uploads/2025/03/8-3.png 347w, http://ijz.me/wp-content/uploads/2025/03/8-3-300x219.png 300w" sizes="auto, (max-width: 347px) 100vw, 347px" /></figure>
+
+
+
+<h3 class="wp-block-heading">堆积</h3>
+
+
+
+<p>输入数组的Level列确定砖块的高度。bricks_from_table()会将字母数字级别转换为z坐标。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="396" height="116" src="http://ijz.me/wp-content/uploads/2025/03/9-3.png" alt="" class="wp-image-1118" srcset="http://ijz.me/wp-content/uploads/2025/03/9-3.png 396w, http://ijz.me/wp-content/uploads/2025/03/9-3-300x88.png 300w" sizes="auto, (max-width: 396px) 100vw, 396px" /></figure>
+
+
+
+<p>结果：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="524" height="456" src="http://ijz.me/wp-content/uploads/2025/03/10-4.png" alt="" class="wp-image-1119" srcset="http://ijz.me/wp-content/uploads/2025/03/10-4.png 524w, http://ijz.me/wp-content/uploads/2025/03/10-4-300x261.png 300w" sizes="auto, (max-width: 524px) 100vw, 524px" /></figure>
+
+
+
+<p>同理，我们可叠更多的层，不同的层使用不同的颜色</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="821" height="268" src="http://ijz.me/wp-content/uploads/2025/03/11-4.png" alt="" class="wp-image-1120" srcset="http://ijz.me/wp-content/uploads/2025/03/11-4.png 821w, http://ijz.me/wp-content/uploads/2025/03/11-4-300x98.png 300w, http://ijz.me/wp-content/uploads/2025/03/11-4-768x251.png 768w, http://ijz.me/wp-content/uploads/2025/03/11-4-624x204.png 624w" sizes="auto, (max-width: 821px) 100vw, 821px" /></figure>
+
+
+
+<p>结果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="526" height="494" src="http://ijz.me/wp-content/uploads/2025/03/12-4.png" alt="" class="wp-image-1121" srcset="http://ijz.me/wp-content/uploads/2025/03/12-4.png 526w, http://ijz.me/wp-content/uploads/2025/03/12-4-300x282.png 300w" sizes="auto, (max-width: 526px) 100vw, 526px" /></figure>
+
+
+
+<h2 class="wp-block-heading">一个比较的模型</h2>
+
+
+
+<p>对于较大的模型，可以使用<code>tibble::tribble()</code><code>，从而</code>更轻松地显示模型。如果在大一点的模型就需要从外部文件（exce）导入数据了。下面是一个使用<code>tibble::tribble()</code><code>的实例:</code></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="633" src="http://ijz.me/wp-content/uploads/2025/03/13-2.png" alt="" class="wp-image-1122" srcset="http://ijz.me/wp-content/uploads/2025/03/13-2.png 798w, http://ijz.me/wp-content/uploads/2025/03/13-2-300x238.png 300w, http://ijz.me/wp-content/uploads/2025/03/13-2-768x609.png 768w, http://ijz.me/wp-content/uploads/2025/03/13-2-624x495.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+
+<p>结果显示如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="422" height="353" src="http://ijz.me/wp-content/uploads/2025/03/14-2.png" alt="" class="wp-image-1123" srcset="http://ijz.me/wp-content/uploads/2025/03/14-2.png 422w, http://ijz.me/wp-content/uploads/2025/03/14-2-300x251.png 300w" sizes="auto, (max-width: 422px) 100vw, 422px" /></figure>
+
+
+
+<h2 class="wp-block-heading">以编程方式构建模型</h2>
+
+
+
+<p>使用bricks_from_coords()以编程方式构建3D LEGO模型，而不是通过表格手动绘。使用该函数，必须要提供x，y和z的坐标数组，以及每个点的颜色名称。比如：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="861" height="419" src="http://ijz.me/wp-content/uploads/2025/03/15-2.png" alt="" class="wp-image-1124" srcset="http://ijz.me/wp-content/uploads/2025/03/15-2.png 861w, http://ijz.me/wp-content/uploads/2025/03/15-2-300x146.png 300w, http://ijz.me/wp-content/uploads/2025/03/15-2-768x374.png 768w, http://ijz.me/wp-content/uploads/2025/03/15-2-624x304.png 624w" sizes="auto, (max-width: 861px) 100vw, 861px" /></figure>
+
+
+
+<p>结果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="523" height="409" src="http://ijz.me/wp-content/uploads/2025/03/16-2.png" alt="" class="wp-image-1125" srcset="http://ijz.me/wp-content/uploads/2025/03/16-2.png 523w, http://ijz.me/wp-content/uploads/2025/03/16-2-300x235.png 300w" sizes="auto, (max-width: 523px) 100vw, 523px" /></figure>
+
+
+
+<h2 class="wp-block-heading">马赛克</h2>
+
+
+
+<p>马赛克功能可以对导入的JPG或PNG图像文件用乐高颜色和brick渲染生成2D和3D的马赛克拼图。我们以最近流行的苏大强表情为原始图进行处理：</p>
+
+
+
+<p>原始图：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="488" height="305" src="http://ijz.me/wp-content/uploads/2025/03/17-2.png" alt="" class="wp-image-1126" srcset="http://ijz.me/wp-content/uploads/2025/03/17-2.png 488w, http://ijz.me/wp-content/uploads/2025/03/17-2-300x188.png 300w" sizes="auto, (max-width: 488px) 100vw, 488px" /></figure>
+
+
+
+<p>对原始图做渲染处理，渲染出蒙太奇拼图效果</p>
+
+
+
+<p>mosaic1 &lt;- jpeg::readJPEG(&#8220;sdq.jpg&#8221;) %&gt;%</p>
+
+
+
+<p>&nbsp; image_to_bricks(img_size = 148)</p>
+
+
+
+<p>mosaic1 %&gt;% display_set()</p>
+
+
+
+<p>显示效果图如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="624" height="515" src="http://ijz.me/wp-content/uploads/2025/03/18-2.png" alt="" class="wp-image-1127" srcset="http://ijz.me/wp-content/uploads/2025/03/18-2.png 624w, http://ijz.me/wp-content/uploads/2025/03/18-2-300x248.png 300w" sizes="auto, (max-width: 624px) 100vw, 624px" /></figure>
+
+
+
+<p>分辨率太高显示不出拼图效果来，我们把分辨率调小：</p>
+
+
+
+<p>mosaic1 &lt;- jpeg::readJPEG(&#8220;sdq.jpg&#8221;) %&gt;%</p>
+
+
+
+<p>&nbsp; scale_image(img_size = 48) %&gt;%</p>
+
+
+
+<p>&nbsp; legoize() %&gt;%&nbsp;</p>
+
+
+
+<p>&nbsp; collect_bricks()</p>
+
+
+
+<p>效果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="640" height="631" src="http://ijz.me/wp-content/uploads/2025/03/19-2.png" alt="" class="wp-image-1128" srcset="http://ijz.me/wp-content/uploads/2025/03/19-2.png 640w, http://ijz.me/wp-content/uploads/2025/03/19-2-300x296.png 300w, http://ijz.me/wp-content/uploads/2025/03/19-2-624x615.png 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<h3 class="wp-block-heading">2D马赛克</h3>
+
+
+
+<p>image_to_brick函数可以参数设置如下：</p>
+
+
+
+<p><strong>img_size</strong><strong>：</strong> 单个值（例如148）表示图像裁剪为正方形；2元素阵列c（56,48）将输出宽度*高度的矩形图像。</p>
+
+
+
+<p><strong>color_table</strong><strong>：</strong>马赛克中可能的拼块颜色的数据框。默认为包含的数据集lego_colors。</p>
+
+
+
+<p><code><strong>brightness</strong></code>：大于1的值将使图像变亮，而小于1的值将使图像变暗。</p>
+
+
+
+<p><strong>display_set():</strong> 引入的ggplot图像。</p>
+
+
+
+<h3 class="wp-block-heading">3D马赛克</h3>
+
+
+
+<p>另外两个函数可以以使用rayshader包将image_to_bricks数据输出转换为3D马赛克：</p>
+
+
+
+<p><strong>collect_3d(): </strong>将2D LEGO马赛克转换为两个矩阵:一个用于彩色图像，另一个用于图像上每个点的高度。默认情况下，生成的图像具有6个LEGO板（2个LEGO砖）的高度，颜色较浅，具有较高的高度。可以使用mosaic_height设置马赛克的高度，通过highest_el =&#8217;dark&#8217;设置最高的砖块以较暗的颜色。</p>
+
+
+
+<p><strong>display_3d:</strong> 调用rayshader::plot_3d()，但是从collect_3d的输出中提取山体阴影和高程矩阵并修复一些参数。更详细信息参考rayshader::plot_3d()的官方文档。比如：</p>
+
+
+
+<p>library(rayshader)</p>
+
+
+
+<p>mosaic1 %&gt;%</p>
+
+
+
+<p>&nbsp; collect_3d() %&gt;%</p>
+
+
+
+<p>&nbsp; display_3d(fov=0,theta=-20,phi=30,windowsize=c(1000,800),zoom=0.7)</p>
+
+
+
+<p>render_snapshot()&nbsp;</p>
+
+
+
+<p>3D拼图效果如下：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="815" height="414" src="http://ijz.me/wp-content/uploads/2025/03/20-2.png" alt="" class="wp-image-1129" srcset="http://ijz.me/wp-content/uploads/2025/03/20-2.png 815w, http://ijz.me/wp-content/uploads/2025/03/20-2-300x152.png 300w, http://ijz.me/wp-content/uploads/2025/03/20-2-768x390.png 768w, http://ijz.me/wp-content/uploads/2025/03/20-2-624x317.png 624w" sizes="auto, (max-width: 815px) 100vw, 815px" /></figure>
+
+
+
+<h2 class="wp-block-heading">乐高马赛克IRL</h2>
+
+
+
+<p>该项目还支持，建立乐高马赛克拼图过程图集。具体功能介绍如下：</p>
+
+
+
+<p>使用generate_instructions()将LEGO马赛克图像分解为更易于阅读的构建集合的步骤。默认为6步，具体步骤可以通过整数参数设置。</p>
+
+
+
+<p>mosaic1 %&gt;% generate_instructions(9)</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="635" height="644" src="http://ijz.me/wp-content/uploads/2025/03/21-1.png" alt="" class="wp-image-1130" srcset="http://ijz.me/wp-content/uploads/2025/03/21-1.png 635w, http://ijz.me/wp-content/uploads/2025/03/21-1-296x300.png 296w, http://ijz.me/wp-content/uploads/2025/03/21-1-624x633.png 624w" sizes="auto, (max-width: 635px) 100vw, 635px" /></figure>
+
+
+
+<h2 class="wp-block-heading">实需部件计数</h2>
+
+
+
+<p>当然brickr实际上不是一个纯指上谈兵的项目，而是一个可以线下实操的项目，项目可以这些提供功能，包括display_piece和table_pieces函数。</p>
+
+
+
+<p>使用display_pieces()函数可以生成所有必需的插图块的形状和数量。这些按颜色和大小排序，可以适用男高级搜索选项在乐高官网的Pick-a-Brick购买，当然前提是你必须先让媳妇批准你的预算。也可以使用table_pieces()生成所有必需砖块的数据框表。</p>
+
+
+
+<p>mosaic1 %&gt;% display_pieces()</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="544" height="438" src="http://ijz.me/wp-content/uploads/2025/03/22-1.png" alt="" class="wp-image-1131" srcset="http://ijz.me/wp-content/uploads/2025/03/22-1.png 544w, http://ijz.me/wp-content/uploads/2025/03/22-1-300x242.png 300w" sizes="auto, (max-width: 544px) 100vw, 544px" /></figure>
+
+
+
+<p>mosaic1 %&gt;% table_pieces()</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="608" height="337" src="http://ijz.me/wp-content/uploads/2025/03/23-1.png" alt="" class="wp-image-1132" srcset="http://ijz.me/wp-content/uploads/2025/03/23-1.png 608w, http://ijz.me/wp-content/uploads/2025/03/23-1-300x166.png 300w" sizes="auto, (max-width: 608px) 100vw, 608px" /></figure>
+
+
+
+<p>怎么样，少年？是不是心动了，那就赶紧整一个，拼呗。什么？没钱！那好吧，今天的内容就到这里，欢迎关注虫虫。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1109</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>数字电路到可消化胶囊机器人，细数麻省理工改变世界的伟大发明</title>
+		<link>http://ijz.me/?p=1082</link>
+					<comments>http://ijz.me/?p=1082#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Wed, 27 Feb 2019 02:00:00 +0000</pubDate>
+				<category><![CDATA[云计算&容器]]></category>
+		<category><![CDATA[工具]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[设计]]></category>
+		<category><![CDATA[资料]]></category>
+		<category><![CDATA[随感]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1082</guid>
+
+					<description><![CDATA[大家都知道麻省理工MIT是世界数一数二的大学，更是计算机技术科学界的翘楚。去年麻省理工又投资十亿美刀建立苏世民 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>大家都知道麻省理工MIT是世界数一数二的大学，更是计算机技术科学界的翘楚。去年麻省理工又投资十亿美刀建立苏世民（Stephen A. Schwarzman）计算机学院。在最近院庆活动中，麻省了推出了其CS科技成果展，罗列了一些了伟大的发明包括了数字电路到可可消化胶囊肠壁治疗机器人。本文虫虫和大家一起来看看麻省这些改变世界的伟大发明。</p>
+
+
+
+<span id="more-1082"></span>
+
+
+
+<h2 class="wp-block-heading">1937年</h2>
+
+
+
+<h3 class="wp-block-heading">数字电路</h3>
+
+
+
+<p>1937年克劳德·香农（Claude Elwood Shannon）在麻省发表硕士论文《A Symbolic Analysis of Relay and Switching Circuits》（继电器与开关电路的符号分析）：真/假逻辑的原理可以用来代表电气开关的开关状态。该论文开创了数字电路领域的基础，是整个数字行业，计算机的基础。基于该开创新的发现及后续一系列的理论，克劳德·香农被称为信息论之父。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="455" height="276" src="http://ijz.me/wp-content/uploads/2025/03/1-5.png" alt="" class="wp-image-1084" srcset="http://ijz.me/wp-content/uploads/2025/03/1-5.png 455w, http://ijz.me/wp-content/uploads/2025/03/1-5-300x182.png 300w" sizes="auto, (max-width: 455px) 100vw, 455px" /></figure>
+
+
+
+<h2 class="wp-block-heading">上世纪40年代</h2>
+
+
+
+<h3 class="wp-block-heading">数字计算机</h3>
+
+
+
+<p>世界上第一台可以实时运行的数字计算机来自旋风计划（Project Whirlwind）。这是二战期间的一项军方研究，1944年由麻省理工学院与美国海军合作开发完成旋风机器人，用于通用飞行模拟。该计划成功导致了世界上第一胎可实时运行的数字计算机旋风计算机，也为后续1951年麻省理工学院林肯实验室的成立奠定了基础。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="557" height="321" src="http://ijz.me/wp-content/uploads/2025/03/2-4.png" alt="" class="wp-image-1085" srcset="http://ijz.me/wp-content/uploads/2025/03/2-4.png 557w, http://ijz.me/wp-content/uploads/2025/03/2-4-300x173.png 300w" sizes="auto, (max-width: 557px) 100vw, 557px" /></figure>
+
+
+
+<h3 class="wp-block-heading">Memex数据系统</h3>
+
+
+
+<p>Vannevar Bush教授1945年发表论文《As We May Think》提出了一个名为“Memex”的“扩展存储器（Memory-Extender）” 数据系统。该系统设想可以用来“存储用户所有的书籍，记录和通信信息”并能随意检索它们。这个概念启发了早期的超文本系统，正是由于系统的产生和繁荣，启发了几十年后万维网的诞生。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="716" height="390" src="http://ijz.me/wp-content/uploads/2025/03/3-4.png" alt="" class="wp-image-1086" srcset="http://ijz.me/wp-content/uploads/2025/03/3-4.png 716w, http://ijz.me/wp-content/uploads/2025/03/3-4-300x163.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-4-624x340.png 624w" sizes="auto, (max-width: 716px) 100vw, 716px" /></figure>
+
+
+
+<h2 class="wp-block-heading">上世纪50年代</h2>
+
+
+
+<h3 class="wp-block-heading">函数式编程语言LISP</h3>
+
+
+
+<p>第一种函数式编程语言LISP是由John McCarthy教授于1958年在麻省理工发明的。在LISP之前，基于功能事的编程很难同时处理多个进程。函数式编程可让您更简单地描述所需的行为，从而可以处理比以往更大的问题。LISP诞生带动了大量的语言产生比如Clojure,&nbsp;Scala,&nbsp;Erlang,&nbsp;Haskell和 Elixir等，甚至在当今的编程语言中，增加函数式功能也还是个热点。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="594" height="274" src="http://ijz.me/wp-content/uploads/2025/03/4-3.png" alt="" class="wp-image-1087" srcset="http://ijz.me/wp-content/uploads/2025/03/4-3.png 594w, http://ijz.me/wp-content/uploads/2025/03/4-3-300x138.png 300w" sizes="auto, (max-width: 594px) 100vw, 594px" /></figure>
+
+
+
+<h3 class="wp-block-heading">实时传真</h3>
+
+
+
+<p>1959年麻省理工学院的学生Sam Asano发明了一种通过电话线传输扫描材料的​​技术，可以让你的听到声音的同时也能看到画面。但是该发明并未引起重视，日本电信公司NTT收购，NTT认为可以用来代替发电报，因为写下了传输图形，敲打字符要来的快。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="512" height="240" src="http://ijz.me/wp-content/uploads/2025/03/5-4.png" alt="" class="wp-image-1088" srcset="http://ijz.me/wp-content/uploads/2025/03/5-4.png 512w, http://ijz.me/wp-content/uploads/2025/03/5-4-300x141.png 300w" sizes="auto, (max-width: 512px) 100vw, 512px" /></figure>
+
+
+
+<h2 class="wp-block-heading">上世纪60年代</h2>
+
+
+
+<h3 class="wp-block-heading">多人制视频游戏</h3>
+
+
+
+<p>麻省理工电气工程系气采购了PDP-1计算机首先被用来不是计算，而是被一群贪玩的学生用来打游戏了。1962年Marvin Minsky AI团队的学生Steven “Slug” Russell和游友们一起开发了一款空战视频游戏“SpaceWar!”，并在码农中广为流行，这是世界上第一款多人制游戏。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="597" height="437" src="http://ijz.me/wp-content/uploads/2025/03/6-4.png" alt="" class="wp-image-1089" srcset="http://ijz.me/wp-content/uploads/2025/03/6-4.png 597w, http://ijz.me/wp-content/uploads/2025/03/6-4-300x220.png 300w" sizes="auto, (max-width: 597px) 100vw, 597px" /></figure>
+
+
+
+<h3 class="wp-block-heading">CTSS、Multics和密码</h3>
+
+
+
+<p>我们每天都要和密码打交道，密码是保障我们安全的最重要的屏障。而密码的发明也是来自于麻省理工。世界上第一个使用密码的系统是麻省理工学院的分时系统CTSS，弗尔南多考巴托（Fernando Jose Corbato） 教授于1963年在开发CTSS时候发明了密码，当时系统为了实现一个多终端，多用户，又互相隔离，每个用户自有文件目录，通过密码来区别用户成了简便快捷的解决方案。需要提及的是CTSS系统和后续的Multics，为Ken Thompson和Dennis Ritchie开发UNIX操作系统奠定了基础。考巴托教授因为这些突出的贡献于1990年被授予了计算机图灵奖 。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="564" height="370" src="http://ijz.me/wp-content/uploads/2025/03/7-2.png" alt="" class="wp-image-1090" srcset="http://ijz.me/wp-content/uploads/2025/03/7-2.png 564w, http://ijz.me/wp-content/uploads/2025/03/7-2-300x197.png 300w" sizes="auto, (max-width: 564px) 100vw, 564px" /></figure>
+
+
+
+<h3 class="wp-block-heading">图形用户界面</h3>
+
+
+
+<p>麻省理工的Ivan Sutherland博士生已经有了直接与电脑屏幕连接的想法，在前面提到的Memex系统的启发下，他于1963年开发“Sketchpad”系统，允许用户使用触摸笔绘制几何形状，开创了“计算机辅助绘图”的先河！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="488" height="300" src="http://ijz.me/wp-content/uploads/2025/03/8-2.png" alt="" class="wp-image-1091" srcset="http://ijz.me/wp-content/uploads/2025/03/8-2.png 488w, http://ijz.me/wp-content/uploads/2025/03/8-2-300x184.png 300w" sizes="auto, (max-width: 488px) 100vw, 488px" /></figure>
+
+
+
+<h3 class="wp-block-heading">阿波罗导航系统</h3>
+
+
+
+<p>1969年玛格丽特.汉密尔顿（Margaret Hamilton）率领麻省理工学院的团队编写了阿波罗11号导航系统，该系统辅助宇航员Neil Armstrong和 Buzz Aldrin成功登月。系统功能强大，还覆盖了将飞行器计算机执行指令，比如从优先系统到雷达系统的切换等，更值得称道的的该系统在载人登月的阿波罗登月计划任务中始终未出现任何bug。汉密尔顿作为码农中的巾帼好英雄在2016年被奥巴马总统亲自颁发了自由总统自由勋章。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="576" height="486" src="http://ijz.me/wp-content/uploads/2025/03/9-2.png" alt="" class="wp-image-1092" srcset="http://ijz.me/wp-content/uploads/2025/03/9-2.png 576w, http://ijz.me/wp-content/uploads/2025/03/9-2-300x253.png 300w" sizes="auto, (max-width: 576px) 100vw, 576px" /></figure>
+
+
+
+<h2 class="wp-block-heading">上世纪70年代</h2>
+
+
+
+<h3 class="wp-block-heading">电子邮件Email</h3>
+
+
+
+<p>1971年麻省理工校友Ray Tomlinson发送了第一封通过计算机网络传递的电子邮件。他在BBN Technologies工作时，创造了Email，也是第一个使用@的人。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="531" height="295" src="http://ijz.me/wp-content/uploads/2025/03/10-3.png" alt="" class="wp-image-1093" srcset="http://ijz.me/wp-content/uploads/2025/03/10-3.png 531w, http://ijz.me/wp-content/uploads/2025/03/10-3-300x167.png 300w" sizes="auto, (max-width: 531px) 100vw, 531px" /></figure>
+
+
+
+<h3 class="wp-block-heading">个人电脑</h3>
+
+
+
+<p>麻省理工教授Butler Lampson教授创立了施乐公司施乐帕克（Xerox Palo Alto）研究中心研究中心（PARC）。由于突出性研究工作，使Lampson教授赢得了“现代PC之父”的称号。1973年PARC创造世界上第一台个人电脑奥拓（Alto）。在奥拓电脑上有了世界上第一个图形用户界面（GUI），第一个位图显示，以及第一个“所见即所得”（WYSIWYG）编辑器。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="374" height="435" src="http://ijz.me/wp-content/uploads/2025/03/11-3.png" alt="" class="wp-image-1094" srcset="http://ijz.me/wp-content/uploads/2025/03/11-3.png 374w, http://ijz.me/wp-content/uploads/2025/03/11-3-258x300.png 258w" sizes="auto, (max-width: 374px) 100vw, 374px" /></figure>
+
+
+
+<h3 class="wp-block-heading">数据加密</h3>
+
+
+
+<p>1977年麻省理工团队在发明电子商务时候，发明了数据加密的RSA算法，RSA算法是一种非对称加密算法，它基于大质数的因数分解的困难度，来保证RSA的可靠性。</p>
+
+
+
+<p>该算法在虫虫之前的文章中曾今介绍过，大家可以关注虫虫，从历史文章中查看详情介绍。</p>
+
+
+
+<p>RSA算发的名字也是来自于麻省理工的三个发明人罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）的名字，取他们名字的第一个字母就是RSA。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="422" height="222" src="http://ijz.me/wp-content/uploads/2025/03/12-3.png" alt="" class="wp-image-1095" srcset="http://ijz.me/wp-content/uploads/2025/03/12-3.png 422w, http://ijz.me/wp-content/uploads/2025/03/12-3-300x158.png 300w" sizes="auto, (max-width: 422px) 100vw, 422px" /></figure>
+
+
+
+<h3 class="wp-block-heading">电子表格</h3>
+
+
+
+<p>1979年，Bob Frankston和Dan Brickson在麻省理工的大型机上工作夜以继日的工作，并创造了世界上第一个电子表格系统VisiCalc。VisiCalc一出世就受到广泛好评，第一年就卖出了超10万份的拷贝。有意思的是，VisiCalc还是推动苹果AppleⅡ电脑的大卖，因为当时VisiCalc和AppleⅡ是捆绑销售的。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="434" height="287" src="http://ijz.me/wp-content/uploads/2025/03/13-1.png" alt="" class="wp-image-1096" srcset="http://ijz.me/wp-content/uploads/2025/03/13-1.png 434w, http://ijz.me/wp-content/uploads/2025/03/13-1-300x198.png 300w" sizes="auto, (max-width: 434px) 100vw, 434px" /></figure>
+
+
+
+<h2 class="wp-block-heading">上世纪80年代</h2>
+
+
+
+<h3 class="wp-block-heading">以太网</h3>
+
+
+
+<p>通过以太网技术可让我们通过简单的电缆插件就可以联网。以太网技术的发明源于麻省理工校友鲍勃.梅特卡夫Bob Metcalfe。他曾在1973年了一篇有关以太网潜力的备忘录，1979他和助手一起发表了论文《以太网：局域计算机网络的分布式包交换技术》为以太网的诞生奠定了理论基础。1980梅特卡夫创建了3com公司，3com公司联合DEC、英特尔和施乐一起起早指定了太网标准化规范标志着以太网的正式诞生。由于以太网的发展和促进，才有了后来互联网的飞速发展和流行。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="488" height="362" src="http://ijz.me/wp-content/uploads/2025/03/14-1.png" alt="" class="wp-image-1097" srcset="http://ijz.me/wp-content/uploads/2025/03/14-1.png 488w, http://ijz.me/wp-content/uploads/2025/03/14-1-300x223.png 300w" sizes="auto, (max-width: 488px) 100vw, 488px" /></figure>
+
+
+
+<h3 class="wp-block-heading">光学鼠标</h3>
+
+
+
+<p>麻省理工本科生史蒂夫.基尔希（Steve Kirsch）于1980年第一个申请了光学计算机鼠标专利。他设想使用最少的精密移动部件制作一个“点设备”，为此，他创立了鼠标系统公司。他还发明了跟踪方法专利，通过点击计数来计算在线广告展示次数。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="354" height="266" src="http://ijz.me/wp-content/uploads/2025/03/15-1.png" alt="" class="wp-image-1098" srcset="http://ijz.me/wp-content/uploads/2025/03/15-1.png 354w, http://ijz.me/wp-content/uploads/2025/03/15-1-300x225.png 300w" sizes="auto, (max-width: 354px) 100vw, 354px" /></figure>
+
+
+
+<h3 class="wp-block-heading">自由软件的兴起</h3>
+
+
+
+<p>黑客文化和自由软件运动的主要先驱麻省AI实验室的Richard Stallman教父于1983年发起了GNU（GNU代表“GNU&#8217;s Not Unix”）计划，项目旨在开发Unix操作系统的免费替代品，GUN项目开发GCC、GDB、Gxxx等以G开头的自由软件。也为GNU/Linux操作系统和其他重要的计算创新奠定了基础。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="510" height="301" src="http://ijz.me/wp-content/uploads/2025/03/16-1.png" alt="" class="wp-image-1099" srcset="http://ijz.me/wp-content/uploads/2025/03/16-1.png 510w, http://ijz.me/wp-content/uploads/2025/03/16-1-300x177.png 300w" sizes="auto, (max-width: 510px) 100vw, 510px" /></figure>
+
+
+
+<h3 class="wp-block-heading">生成树算法</h3>
+
+
+
+<p>Radia Perlman 是码农界的又一女豪杰，具有 “互联网之母”之称。她于1985年开发了生成树算法是全球计算机网络数据传输路由的基础。该算法将以太网从原始有限可扩展的单线CSMA/CD转换为可处理大型网络的协议，并使以太网可极大地利用带宽。路由生成树算法对互联网数据传输产生了深远影响，提高了整改互联网的鲁棒性，从此，互联网具具有了自我管理和可扩展的特性。</p>
+
+
+
+<p>值得提及的是她还创建了LOGO，这是第一种面向儿童的编程语言。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="636" height="393" src="http://ijz.me/wp-content/uploads/2025/03/17-1.png" alt="" class="wp-image-1100" srcset="http://ijz.me/wp-content/uploads/2025/03/17-1.png 636w, http://ijz.me/wp-content/uploads/2025/03/17-1-300x185.png 300w, http://ijz.me/wp-content/uploads/2025/03/17-1-624x386.png 624w" sizes="auto, (max-width: 636px) 100vw, 636px" /></figure>
+
+
+
+<h2 class="wp-block-heading">上世纪90年代</h2>
+
+
+
+<h3 class="wp-block-heading">万维网联盟（W3C）</h3>
+
+
+
+<p>WWW之父Tim Berners-Lee在发明Web之后，于1994年加入麻省理工并成立了一个致力于建立全球标准的互联网联盟，为建站、浏览器和设备提供服务，这就是W3C的来历。W3C标准用于构建可访问，安全，并可以轻松被搜索引擎优化(SEO)的网站标准。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="579" height="356" src="http://ijz.me/wp-content/uploads/2025/03/18-1.png" alt="" class="wp-image-1101" srcset="http://ijz.me/wp-content/uploads/2025/03/18-1.png 579w, http://ijz.me/wp-content/uploads/2025/03/18-1-300x184.png 300w" sizes="auto, (max-width: 579px) 100vw, 579px" /></figure>
+
+
+
+<h3 class="wp-block-heading">区块链的诞生</h3>
+
+
+
+<p>1999年麻省理工教授Barbara Liskov的发表了关于实用拜占庭容错算法（PBFT： Practical Byzantine Fault Tolerance）论文奠定了区块链的理论基础，并生成了第一个区块链，这是一种广泛使用的密码系统。利斯科夫教授团队的区块链系统可以处理高吞吐量的事务，还首创了很多当今区块链平台至关重要的概念。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="684" height="298" src="http://ijz.me/wp-content/uploads/2025/03/19-1.png" alt="" class="wp-image-1102" srcset="http://ijz.me/wp-content/uploads/2025/03/19-1.png 684w, http://ijz.me/wp-content/uploads/2025/03/19-1-300x131.png 300w, http://ijz.me/wp-content/uploads/2025/03/19-1-624x272.png 624w" sizes="auto, (max-width: 684px) 100vw, 684px" /></figure>
+
+
+
+<h2 class="wp-block-heading">近20年</h2>
+
+
+
+<h3 class="wp-block-heading">Roomba扫地机器人</h3>
+
+
+
+<p>Colin Angle在读本科的时候加入了AI 实验室，在实验室时他萌生了让机器人能够和真实的环境进行实时反馈的想法，他开发了一款可移动机器人GenghiS。Genghis仿生了蚂蚁的灵感，他的导师是著名的机器人之父 Rodney Brooks教授。1990年， Colin Angle和导师 Rodney 教授同学 Helen Greiner 一起创办了机器人公司 iRobot。iRobot创建很多NB的机器人，比如火星车火星（漫游者Sojourner Rover），但是他的商业模式都不是很成功，直到2002年Roomba的推出，对，就是它，没有腿的机器人。截止目前Roomba扫地人已售出超2000万台，并催生了整个自动化清洁产品行业。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="529" height="352" src="http://ijz.me/wp-content/uploads/2025/03/20-1.png" alt="" class="wp-image-1103" srcset="http://ijz.me/wp-content/uploads/2025/03/20-1.png 529w, http://ijz.me/wp-content/uploads/2025/03/20-1-300x200.png 300w" sizes="auto, (max-width: 529px) 100vw, 529px" /></figure>
+
+
+
+<h3 class="wp-block-heading">移动个人助理</h3>
+
+
+
+<p>大家都知道苹果的Siri和亚马逊的Alexa。但是，很早之前就有了这样的系统。2007年麻省理工的教授Boris Katz就开发了StartMobile，一款可进行约会安排，信获取息以及使用语音完成各类任务的APP。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="985" height="449" src="http://ijz.me/wp-content/uploads/2025/03/21.png" alt="" class="wp-image-1104" srcset="http://ijz.me/wp-content/uploads/2025/03/21.png 985w, http://ijz.me/wp-content/uploads/2025/03/21-300x137.png 300w, http://ijz.me/wp-content/uploads/2025/03/21-768x350.png 768w, http://ijz.me/wp-content/uploads/2025/03/21-624x284.png 624w" sizes="auto, (max-width: 985px) 100vw, 985px" /></figure>
+
+
+
+<h3 class="wp-block-heading">EdX在线开放课堂</h3>
+
+
+
+<p>由前CSAIL主管Anant Agarwal领导，2012年麻省理工联合哈佛大学开办了大规模在线开放课堂平台EdX，通过该EdX提供免费的在线课程。截止目前EdX免费在线课程已经吸引了全球逾1800万学习者。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="736" height="477" src="http://ijz.me/wp-content/uploads/2025/03/22.png" alt="" class="wp-image-1105" srcset="http://ijz.me/wp-content/uploads/2025/03/22.png 736w, http://ijz.me/wp-content/uploads/2025/03/22-300x194.png 300w, http://ijz.me/wp-content/uploads/2025/03/22-624x404.png 624w" sizes="auto, (max-width: 736px) 100vw, 736px" /></figure>
+
+
+
+<h3 class="wp-block-heading">可消化胶囊机器人</h3>
+
+
+
+<p>麻省计算机科学与人工智能实验室（CSAIL）Daniela Rus于2016年等开发了可消化折叠胶囊机器人，可将其吞咽到肠胃，预热可从胶囊状自动展开，可以在体外磁场控制它攀爬你的胃壁，修复伤口，去除结石和误吞咽下去的异物等。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="620" height="335" src="http://ijz.me/wp-content/uploads/2025/03/23.png" alt="" class="wp-image-1106" srcset="http://ijz.me/wp-content/uploads/2025/03/23.png 620w, http://ijz.me/wp-content/uploads/2025/03/23-300x162.png 300w" sizes="auto, (max-width: 620px) 100vw, 620px" /></figure>
+
+
+
+<h2 class="wp-block-heading">波士顿动力</h2>
+
+
+
+<p>Marc Raibert教授于1992年创建了波士顿动力公司。该公司制造了让人们大饱眼福的“大狗”，“Atlas”， “SpotMini”等机器人明星，可以攀爬，跑步，跳跃，甚至可以进行翻转。其中Atlas被用于DARPA机器人挑战赛，取得很棒的成绩。2013年波士顿动力公司被谷歌收购，2017年波士顿动力再次易主被日本软银收归旗下。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="531" height="319" src="http://ijz.me/wp-content/uploads/2025/03/24.png" alt="" class="wp-image-1107" srcset="http://ijz.me/wp-content/uploads/2025/03/24.png 531w, http://ijz.me/wp-content/uploads/2025/03/24-300x180.png 300w" sizes="auto, (max-width: 531px) 100vw, 531px" /></figure>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1082</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>通过Tomtit实现Perl6开发工作流程的自动化</title>
+		<link>http://ijz.me/?p=1076</link>
+					<comments>http://ijz.me/?p=1076#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 25 Dec 2018 07:51:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[perl6]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1076</guid>
+
+					<description><![CDATA[Perl6的开发如何做到自动化？其实很简单，只需要一个应用Tomtit。 Tomtit是一个全新的Perl6任 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>Perl6的开发如何做到自动化？其实很简单，只需要一个应用Tomtit。</p>
+
+
+
+<p>Tomtit是一个全新的Perl6任务运行器，可让你很便捷地自动执行日常任务。</p>
+
+
+
+<p>本文中，我们将展示如何使用Tomtit实现Perl6开发自动化，我们以实例展示Perl6开发中的典型场景：设置git存储库、测试本地源代码、安装本地源代码、发布CPAN模块。关于Tomtit的详细介绍请参考文章(<a href="https://dev.to/melezhik/one-tomtit-for-it--1j3f">https://dev.to/melezhik/one-tomtit-for-it&#8211;1j3f</a>)。</p>
+
+
+
+<span id="more-1076"></span>
+
+
+
+<p>本文译自<a href="https://dev.to/melezhik">Alexey Melezhik </a>的博客，原文链接 <a href="https://dev.to/melezhik/automation-of-perl6-development-workflow-through-the-tomtit-task-runner-10jj">https://dev.to/melezhik/automation-of-perl6-development-workflow-through-the-tomtit-task-runner-10jj</a></p>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<p>Tomit的安装很简单只需通过Perl6 模块生态系统命令zef：</p>
+
+
+
+<p>zef install Tomtit</p>
+
+
+
+<p>现在让我们从远程git存储库获得本实例应用程序源代码：</p>
+
+
+
+<p>git clone $ git-repo</p>
+
+
+
+<h2 class="wp-block-heading">Tomtit实例</h2>
+
+
+
+<p>本文的内容限制为在Perl6开发和发布时典型的应用场景：设置git存储库、测试本地源代码、安装本地源代码、发布CPAN模块。</p>
+
+
+
+<p>首先我们为每个涉及的实例定义tomtit场景。场景配置文件位于.tom目录中，配置文件为纯Perl6脚本，同这些脚本调用Tomtit API。</p>
+
+
+
+<h3 class="wp-block-heading">案例1.设置git存储库。</h3>
+
+
+
+<p>在新建应用时候，先要设置用户和电子邮件，这样可以支持push到远程git仓。我们也希望在缓存中保存git密码。防止每次手动输入，这些任务都可以在.tom文件中配置：</p>
+
+
+
+<p>.tom/set-get.pl6:</p>
+
+
+
+<p>task-run &#8220;set git&#8221;, &#8220;git-base&#8221;, %(</p>
+
+
+
+<p>&nbsp; email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong@ijz.me&#8217;,</p>
+
+
+
+<p>&nbsp; name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp; config_scope&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;local&#8217;,</p>
+
+
+
+<p>&nbsp; set_credential_cache =&gt; &#8216;on&#8217;</p>
+
+
+
+<p>);</p>
+
+
+
+<p>实例中的工作流程有点复杂，需要将源代码推送到GitHub和BitBucket两个远程库。</p>
+
+
+
+<p>为push操作的任务场景配置也很容易：</p>
+
+
+
+<p>.tom/push-gh.pl6:</p>
+
+
+
+<p># push到 github</p>
+
+
+
+<p>bash &#8220;git push origin master&#8221;;</p>
+
+
+
+<p>.tom/push-bb.pl6:</p>
+
+
+
+<p># push 到bitbucket</p>
+
+
+
+<p>bash &#8220;git push bb master&#8221;;</p>
+
+
+
+<p>.tom/push.pl6:</p>
+
+
+
+<p># push到github和bitbucket</p>
+
+
+
+<p>EVALFILE &#8220;.tom/push-bb.pl6&#8221;</p>
+
+
+
+<p>EVALFILE &#8220;.tom/push-gh.pl6&#8221;</p>
+
+
+
+<h3 class="wp-block-heading">案例2.测试本地源代码。</h3>
+
+
+
+<p>对于许多Perl6项目，会通过<code>zef test</code><code>测试</code>在t/目录中的单元测试用例，本例子中我们还要做Outthentic测试并且验证META6.json文件，看看是否有任何JSON语法错误,任务的配置实例如下：</p>
+
+
+
+<p>.tom/test.pl6:</p>
+
+
+
+<p>task-run &#8220;check json files&#8221;, &#8220;json-lint&#8221;, %( path =&gt;&nbsp; &#8220;{$*CWD}&#8221; );</p>
+
+
+
+<p>bash &#8220;zef test .&#8221;;</p>
+
+
+
+<p>bash &#8220;sh run-test.sh&#8221;;</p>
+
+
+
+<h3 class="wp-block-heading">案例3.安装源代码。</h3>
+
+
+
+<p>该操作简单，只是在当前工作目录的下执行zef install命令。</p>
+
+
+
+<p>.tom/install.pl6:</p>
+
+
+
+<p>bash &#8220;zef install . &#8211;force-install&#8221;;</p>
+
+
+
+<h3 class="wp-block-heading">案例4.打包成CPAN模块，并自动发布</h3>
+
+
+
+<p>实例中我们使用App::Mi6工具将Perl6模块打包并发布到CPAN，执行该操作首先要在它需要通过~/.pause配置CPAN Update的用户和密码，下面是该任务的配置文件：</p>
+
+
+
+<p>.tom/set-pause.pl6:</p>
+
+
+
+<p>my $password = prompt(&#8220;enter your CPAN password: &#8220;);</p>
+
+
+
+<p>template-create &#8220;/home/{%*ENV&lt;USER&gt;}/.pause&#8221;, %(</p>
+
+
+
+<p>&nbsp; mode =&gt; &#8216;700&#8217;,</p>
+
+
+
+<p>&nbsp; variables =&gt; %(</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; password&nbsp; =&gt; $password</p>
+
+
+
+<p>&nbsp; ),</p>
+
+
+
+<p>&nbsp; source =&gt; q:to /TEMPL/</p>
+
+
+
+<p>&nbsp; user&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;[%= user %]</p>
+
+
+
+<p>&nbsp; password&nbsp; [%= password %]</p>
+
+
+
+<p>&nbsp; TEMPL</p>
+
+
+
+<p>);</p>
+
+
+
+<p>发布的任务配置就简单了：</p>
+
+
+
+<p>.tom/release.pl6:</p>
+
+
+
+<p>zef &#8220;App::Mi6&#8221;;</p>
+
+
+
+<p>bash &#8220;mi6 release&#8221;;</p>
+
+
+
+<h2 class="wp-block-heading">工作流程</h2>
+
+
+
+<p>当tomtit场景准备就绪时，开发工作流就变的简单明了，当一切都配置到位的时候：</p>
+
+
+
+<p>1、chekout应用程序源代码：</p>
+
+
+
+<p>git clone $git-repo</p>
+
+
+
+<p>2、安装Tomtit：</p>
+
+
+
+<p>zef intall Tomtit</p>
+
+
+
+<p>3、列出可用的tomtits任务：</p>
+
+
+
+<p>tom &#8211;list</p>
+
+
+
+<p>4、修改源代码</p>
+
+
+
+<p>vim foo/bar/app.pl6</p>
+
+
+
+<p>5、运行测试：</p>
+
+
+
+<p>tom test</p>
+
+
+
+<p>安装应用：</p>
+
+
+
+<p>tom install</p>
+
+
+
+<p>6、设置git repo：</p>
+
+
+
+<p>tom git-setup</p>
+
+
+
+<p>7、提交更改</p>
+
+
+
+<p>git commit -a</p>
+
+
+
+<p>8、推送更改：</p>
+
+
+
+<p>tom push</p>
+
+
+
+<p>9、设置PAUSE帐户凭据：</p>
+
+
+
+<p>tom set-pause</p>
+
+
+
+<p>10、发布到CPAN：</p>
+
+
+
+<p>tom release</p>
+
+
+
+<h2 class="wp-block-heading">结论</h2>
+
+
+
+<p>本文中，我们实现了Perl6开发的自动化任务执行过程，所有操作只需要Tomtit就可以实现。更多典型任务请关注官方文档和探索。</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1076</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Perl 6的自动任务执行模块Tomtit ，勤快好用的趁手山雀！</title>
+		<link>http://ijz.me/?p=1078</link>
+					<comments>http://ijz.me/?p=1078#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 25 Dec 2018 02:53:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[perl6]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1078</guid>
+
+					<description><![CDATA[Tomtit介绍 Tomtit是基于Perl6语言开发的任务执行器，它方便好用、任务定义快捷简洁，内置数十个常 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="569" height="332" src="http://ijz.me/wp-content/uploads/2025/03/p61.png" alt="" class="wp-image-1079" srcset="http://ijz.me/wp-content/uploads/2025/03/p61.png 569w, http://ijz.me/wp-content/uploads/2025/03/p61-300x175.png 300w" sizes="auto, (max-width: 569px) 100vw, 569px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Tomtit介绍</h2>
+
+
+
+<p>Tomtit是基于Perl6语言开发的任务执行器，它方便好用、任务定义快捷简洁，内置数十个常用场景任务插件，利用该雀儿帮我们自动化Perl/Perl6以及更多的语言开发任务。</p>
+
+
+
+<span id="more-1078"></span>
+
+
+
+<p>最适合Perl5/Perl6开发人员,也支持其他开发场景使用；</p>
+
+
+
+<p>支持Perl6语言的编程API；</p>
+
+
+
+<p>自带许多常见任务任务配置：运行Bash脚本、创建文件和启动/停止服务 ，更多的任务脚本详见：</p>
+
+
+
+<p><a href="https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md">https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md</a></p>
+
+
+
+<p>它有几十个插件，详细列表请访问<a href="http://sparrowhub.org">http://sparrowhub.org</a></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="854" height="553" src="http://ijz.me/wp-content/uploads/2025/03/p62.png" alt="" class="wp-image-1080" srcset="http://ijz.me/wp-content/uploads/2025/03/p62.png 854w, http://ijz.me/wp-content/uploads/2025/03/p62-300x194.png 300w, http://ijz.me/wp-content/uploads/2025/03/p62-768x497.png 768w, http://ijz.me/wp-content/uploads/2025/03/p62-624x404.png 624w" sizes="auto, (max-width: 854px) 100vw, 854px" /></figure>
+
+
+
+<p>支持扩展， 你可以使用自己喜欢的语言并编写新的插件来满足的特定需求。</p>
+
+
+
+<p></p>
+
+
+
+<p>最重要的是作为底线，它可以帮助我们轻松完成常见的任务，但不限于静态DSL，而是允许你使用现代化的强大的Perl6语言来配置任务场景。说这么多，你一定心动了把，那让咱们开始把。</p>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<p>Tomtit是一个标准的Perl6模块，可以使用Perl6模块生态系统包管理软件zef安装。</p>
+
+
+
+<p>zef install &nbsp;Tomtit</p>
+
+
+
+<p>成功安装后，Tomcatit在你的shell环境增加tom -命令行客户端来执行具体的任务。</p>
+
+
+
+<h2 class="wp-block-heading">启动</h2>
+
+
+
+<p>你需要一个系统引启动器（*）来引导Tomtit的内部任务器的运行，实际上就是一个简单的命令</p>
+
+
+
+<p>&nbsp;tom &#8211;bootstrap</p>
+
+
+
+<p>注意：你需要sudo权限来启动该任务器。</p>
+
+
+
+<p>完成启动后，你就可以执行任务脚本，接着让我们来看看典型的tomtit工作流程。</p>
+
+
+
+<h2 class="wp-block-heading">Tomtit工作流程</h2>
+
+
+
+<p>通常使用tomtit的工作流程是先定义方案（任务脚本），然后运行它们时。它基于任务为中心的方法非常便捷，我们可以检查应用程序的源代码并运行一些相关的任务。比如，我们有一个应用程序源代码，我们只需执行3个标准操作：</p>
+
+
+
+<p>build,测试和安装</p>
+
+
+
+<p>我们定以后任务方案后，我们命名他们然后构建，测试和安装。如果使用make程序来构建项目，则方案对应make对应参数的3次调用。让我们创建我们的第一个Tomtit场景：</p>
+
+
+
+<p>git checkout $git-repo</p>
+
+
+
+<p>mkdir .tom</p>
+
+
+
+<p>nano .tom/build.pl6</p>
+
+
+
+<p>nano .tom/test.pl6</p>
+
+
+
+<p>nano .tom/install.pl6</p>
+
+
+
+<p>每个场景的代码和bash命令运行make一样简单：</p>
+
+
+
+<p>.tom/build.pl6:</p>
+
+
+
+<p>bash &#8220;make&#8221;</p>
+
+
+
+<p>.tom/test.pl6:</p>
+
+
+
+<p>bash &#8220;make test&#8221;</p>
+
+
+
+<p>.tom/install.pl6:</p>
+
+
+
+<p>bash &#8220;sudo make install&#8221;</p>
+
+
+
+<h2 class="wp-block-heading">程序化API</h2>
+
+
+
+<p>tomtit的任务方案场景的脚本是用Perl6编写的，对应于调用不同的任务，但这些场景不一定是有限的任务调用，它们只是Perl6程序，基于Perl6的强大功能你可以使用它做任何事情。</p>
+
+
+
+<p>Tomtit中有两种语法不同的任务。你通过任务运行函数调用的第一个是快捷方式，它与task-run几乎相同但具有助记符名称，有时更容易签名。</p>
+
+
+
+<p>在上述make实用程序的场景中，我们使用bash快捷方式调用一段Bash代码。tomtie可调用的完整快捷方式列表，请浏览：</p>
+
+
+
+<p><a href="https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md">https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md</a></p>
+
+
+
+<h2 class="wp-block-heading">任务和插件</h2>
+
+
+
+<p>换句话说，任务运行和快捷方式只是一种调用任务块的方法，如果代码从SparrowHub下载，脚本存储库然后由sparrow内部脚本运行执行，虽然不之前没有提到过，但实际上zoo-repository支持更多的birds！</p>
+
+
+
+<p>这些小脚本或任务也叫Sparrow插件。Tomtits的任务场景基对应于一个执行的Sparrow插件或任务的列表。</p>
+
+
+
+<h2 class="wp-block-heading">命令行API</h2>
+
+
+
+<p>通过运行tom &#8211;list，你可以到当前可用的所有任务场景：</p>
+
+
+
+<p>[scenarios list]</p>
+
+
+
+<p>build</p>
+
+
+
+<p>test</p>
+
+
+
+<p>install</p>
+
+
+
+<p>一旦定义了任务方案，就可以通过tom &#8211;run=$scenario命令运行它们。例如：</p>
+
+
+
+<p>tom run = build，tom run = test等等。</p>
+
+
+
+<p>要回想一下你运行的最后一个场景是什么，可使用tom &#8211;last命令。更多文档，请参考tomtitgithub页面的tom命令行的相关说明。</p>
+
+
+
+<h2 class="wp-block-heading">自定义任务</h2>
+
+
+
+<p>就上上文中我们提到的，我们不必受限于Tomtit场景中运行Bash和官方一些标准的任务场景。我们可以下载和自己开发相关插件，可以实现各种形形色色的任务。</p>
+
+
+
+<p>例如，我们创建一个用用户参数（如用户名和电子邮件）配置本地git存储库的方案。你要clone一个新项目时，通常需要对其做修改并提交修改，最后push到远程库。那么本任务就是帮助你实现这个任务，并能自动缓存用户账号信息，以后不需要再输入用户名和密码（http/https）。</p>
+
+
+
+<p>.tom/git-setup.pl6:</p>
+
+
+
+<p>task-run &#8220;set git&#8221;, &#8220;git-base&#8221;, %(</p>
+
+
+
+<p>&nbsp; email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong@ijz.me&#8217;,</p>
+
+
+
+<p>&nbsp; name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp; config_scope&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;local&#8217;,</p>
+
+
+
+<p>&nbsp; set_credential_cache =&gt; &#8216;on&#8217;</p>
+
+
+
+<p>);</p>
+
+
+
+<p>通过设置config_scope，我们定义任务为对本地git存储库进行设置，并通过设置set_credential_cache为“on”，我们要求git缓存密码。</p>
+
+
+
+<p>可以在SparrowHub的sparrow插件存储库中找到可在Tomtit方案中使用的插件列表。</p>
+
+
+
+<p>在下面的场景示例中，我们创建任务以通过vsts-build插件远程运行VSTS构建：</p>
+
+
+
+<p>.tom/build-vsts.pl6:</p>
+
+
+
+<p>task_run &#8220;run my build&#8221;, &#8220;vsts-build&#8221;, %(</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; definition =&gt; &#8220;BackEndBuild&#8221;</p>
+
+
+
+<p>)</p>
+
+
+
+<p>你可以在Tomtit方案中使用许多其他插件作为任务。 关于更多的插件，请查看SparrowHub存储库<a href="http://sparrowhub.org">SparrowHub</a>。</p>
+
+
+
+<h2 class="wp-block-heading">总结</h2>
+
+
+
+<p>Tomtit为我们提供了大量可用于日常任务的小脚本或插件，尤其是在处理开发类的源代码管理和自动化构建的任务。Tomtit任务场景配置脚本使用的是普通Perl6脚本，用于生成执行任务的动态列表。任务脚本支持语法糖，你可以使用预定义的内置函数集，而不是引用插件，使代码更简洁，更容易阅读。</p>
+
+
+
+<p>如果由于某些原因你找不到解决你特定任务的插件，你可以随时创建自己的插件。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1078</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>关于SSH加密和连接的若干事儿</title>
+		<link>http://ijz.me/?p=1057</link>
+					<comments>http://ijz.me/?p=1057#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Mon, 08 Oct 2018 11:40:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[ssh]]></category>
+		<category><![CDATA[加密算法]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1057</guid>
+
+					<description><![CDATA[概述 SSH全称secure shell，是一种网络传输协议，是最常用的安全管理远程服务器的协议和工具集。SS [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading">概述</h1>
+
+
+
+<p>SSH全称secure shell，是一种网络传输协议，是最常用的安全管理远程服务器的协议和工具集。SSH协议中使用多种加密技术保证在用户终端和服务器之间建立加密安全连接，连接双方通过互相握手验证，并通过加密的通道传递管理命令和执行结果。</p>
+
+
+
+<p>本文中，虫虫将以此为话题和大家一起学习下SSH协议中涉及的基础加密技术以及怎么利用这些技术构建安全的通讯。此信息可用于了解各种常见的加密技术，SSH加密层、安全连接构建步骤以及双方互相验证步骤能内容。</p>
+
+
+
+<span id="more-1057"></span>
+
+
+
+<h2 class="wp-block-heading">SSH算法</h2>
+
+
+
+<p>SSH为了确保信息的安全传输，从连接发起到完成各阶段的各个点SSH协议采用了许多不同类型的数据加密技术，包括可逆的对称加密，非对称加密以及不可逆的哈希散列。</p>
+
+
+
+<h3 class="wp-block-heading">对称加密</h3>
+
+
+
+<p>加密和解密数据的时候相互对应的关系决定了加密方案是对称加密还是非对称的加密。</p>
+
+
+
+<p>最常见的加密方法是对称加密，对称加密是一种加密类型，在加密和解密时候使用同一个密钥。所以，在对称加密中，任何人都可以利用该密钥加密消息和解密任何使用它加密的消息。这种加密方法通常也称为“共享密钥”加密或“密钥”加密。通常只有一个密钥用于所有加解密操作，或者使用一对密钥，但是这对密钥可以互相简单推算出彼此。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="583" height="209" src="http://ijz.me/wp-content/uploads/2025/03/1-3.png" alt="" class="wp-image-1058" srcset="http://ijz.me/wp-content/uploads/2025/03/1-3.png 583w, http://ijz.me/wp-content/uploads/2025/03/1-3-300x108.png 300w" sizes="auto, (max-width: 583px) 100vw, 583px" /></figure>
+
+
+
+<p>SSH数据传输时候基本上所有过程都是使用对称密钥来加密。只有在刚开始创建连接阶段和身份认证握手阶段才使用非对称加密。</p>
+
+
+
+<p>客户端和服务器都通过协商一致的算法生成密钥，并互相通过可信通道交换密钥，这个过程叫密钥交换。通过密钥交换服务器和客户端可共享某些公共数据结合自己隐秘数据通过算法各自获得相同的共享密钥。后面第二部分虫虫会对此过程进行详细解释。此过程创建的对称加密密钥是基于会话的，然后通过该会话在服务器和客户端之间发送的加密数据。会话一旦创建，此后所有数据数据都通过共享密钥加密。</p>
+
+
+
+<p>在对称加密过程中最重要的是加密算法。SSH中支持各种不同的加密算法，主要有AES，Blowfish，3DES，CAST128和Arcfour等等。服务器和客户端可以根据优先顺序协商其支持的密码列表。服务器上可用的客户端列表中的第一个选项就是密码算法。</p>
+
+
+
+<p>在虫虫的Centos 中，openssh7.4是默认的算法为在连接github的git服务过程中，ssh协商的算法为：</p>
+
+
+
+<p>chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc</p>
+
+
+
+<p>这样连接协商后的结果会使用chacha20-poly1305@openssh.com做认证密码，共享加密算法为aes256-ctr。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="497" src="http://ijz.me/wp-content/uploads/2025/03/2-3-1024x497.png" alt="" class="wp-image-1059" srcset="http://ijz.me/wp-content/uploads/2025/03/2-3-1024x497.png 1024w, http://ijz.me/wp-content/uploads/2025/03/2-3-300x146.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-3-768x373.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-3-624x303.png 624w, http://ijz.me/wp-content/uploads/2025/03/2-3.png 1335w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>我们注意到加密算法使用了ChaCha20-Poly1305，它是由Google 推出新的加密套件并，具有以下优势：ChaCha20-Poly1305 避开了现有发现的所有安全漏洞和攻击；Poly1305 的输出是 16 字节，而 HMAC-SHA1 是 20 字节，可以节省 16% 的 overhead 消耗。</p>
+
+
+
+<h3 class="wp-block-heading">非对称加密</h3>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="668" height="297" src="http://ijz.me/wp-content/uploads/2025/03/3-3.png" alt="" class="wp-image-1060" srcset="http://ijz.me/wp-content/uploads/2025/03/3-3.png 668w, http://ijz.me/wp-content/uploads/2025/03/3-3-300x133.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-3-624x277.png 624w" sizes="auto, (max-width: 668px) 100vw, 668px" /></figure>
+
+
+
+<p>非对称加密与对称加密的不同之处在于，为了在单个方向上发送数据，需要两个相关的一组密钥。其中一个密钥称为私钥，而另一个称为公钥。</p>
+
+
+
+<p>公钥可以公开共享。私钥与之配，无法通过公钥计算出公钥。公钥和私钥之间从数学的特性保证公钥加密的信息只能由私钥解密，私钥加密的信息也不能用公钥解密。</p>
+
+
+
+<p>非对称加密中是用最广泛RSA算法就用到了利用大素数方便生成大整数（2048），但是该大素数则几乎无法分解的特性。最近热门的阿蒂亚老教授宣布证明《黎曼猜想》，就是用关于大素数分布的规律，如果该证明有效，能发现大素数的分布规律，则可能会影响大素数分解，读广泛使用的RSA算法可能产生影响。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="487" src="http://ijz.me/wp-content/uploads/2025/03/4-2-1024x487.png" alt="" class="wp-image-1061" srcset="http://ijz.me/wp-content/uploads/2025/03/4-2-1024x487.png 1024w, http://ijz.me/wp-content/uploads/2025/03/4-2-300x143.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-2-768x365.png 768w, http://ijz.me/wp-content/uploads/2025/03/4-2-624x296.png 624w, http://ijz.me/wp-content/uploads/2025/03/4-2.png 1105w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>有意思的是RSA算法曾暴露过一丑闻，数学家们发现，算法中曾经使用的一个随机函数DUAL_EC_DRBG被NSA做了手脚，植入了后门，可以过这个这个算法来推算密钥。NSA利用该算法监控和窃取一些加密信息。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="648" height="173" src="http://ijz.me/wp-content/uploads/2025/03/5-3.png" alt="" class="wp-image-1062" srcset="http://ijz.me/wp-content/uploads/2025/03/5-3.png 648w, http://ijz.me/wp-content/uploads/2025/03/5-3-300x80.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-3-624x167.png 624w" sizes="auto, (max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<p>我们知道密钥对中的私钥唯一用来解密消息的密钥，所以私钥要绝对保密，不能泄露给任何人。实践中除了保证私钥的存放外，SSH中用来进行系统认证的私钥虫虫建议应该对其设置密码，防止万一泄露，没有密码别人也用不了。如果是系统之间做自动程序和访问git操作的密钥，为了方便可以不设置密码。</p>
+
+
+
+<p>SSH在建立对称加密（用于加密会话）的初始密钥交换过程中，使用了非对称加密。在该阶段，双方都生成临时密钥对并互相交换公钥，以便产生将用于对称加密的共享密钥。</p>
+
+
+
+<p>SSH还通过使用非对称加密的来进行SSH密钥的身份验证：客户端创建密钥对，然后将公钥配置到远程服务器上，具体为用户帐户目录的~/.ssh目录下名为authorized_keys文件,每一行对应一个公钥。</p>
+
+
+
+<p>收到用户请求后，服务器端利用authorized_keys中公钥比对证书指纹，找到用户公钥加密一个消息，并对消息生成哈希串附加到消息后返回给客户端。如果客户端能利用自己私钥解密消息，并用自己手中服务器端的公钥加密验证串给服务器，服务用自己私钥解密消息完成认证，这样证书交换和身份认证过程完成（密钥交换过程中各自独立计算出了对称加密的共享密钥），开始进行加密数据传输。</p>
+
+
+
+<h3 class="wp-block-heading">哈希散列</h3>
+
+
+
+<p>SSH协议中还用到了加密散列。哈希散列算法是一种不可逆算法，除非你知道原始值生成散列对比，否则你永远无法通过散列算出原始值（但是可以通过哈希碰撞，就是利用可能字串或者构造彩虹表大量生成哈希进行对比，目前MD5和SSA1已经不再绝对安全）。散列算法常用于创建信息 “签名”或生成一组信息摘要，用来保证信息传输过程中没有被人认为篡改。因为对数据的任何修改都会导致其哈希完全不一致。</p>
+
+
+
+<p>注意：目前对MD5和SHA-1可以通过大量计算生成利用精心设置的数据将数据内容修改，但是能保证哈希不变。下图就是谷歌去年2月份的SHA-1碰撞的实验，两个背景完全不一样的pdf，但是生成哈希完全一样。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="388" src="http://ijz.me/wp-content/uploads/2025/03/6-2-1024x388.png" alt="" class="wp-image-1063" srcset="http://ijz.me/wp-content/uploads/2025/03/6-2-1024x388.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-2-300x114.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-2-768x291.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-2-624x236.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-2.png 1181w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>在SSH对称加密协商的过程中，选择消息认证码（MAC）的生成算法就是用的哈希算法。协商发送的每条加密信息都会附加公开的该信息MAC作为消息的一部分，以便于另一方可以用它验证数据包的完整性。 MAC根据对称共享密钥，消息的分组序列号和实际信息组成的内容算出来的。MAC作为数据包的最后部单独发送。</p>
+
+
+
+<h3 class="wp-block-heading">常见加密算法比较</h3>
+
+
+
+<p>下面参考网上资料，我们对常见加密算法比较图示：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="617" height="403" src="http://ijz.me/wp-content/uploads/2025/03/7-1.png" alt="" class="wp-image-1065" srcset="http://ijz.me/wp-content/uploads/2025/03/7-1.png 617w, http://ijz.me/wp-content/uploads/2025/03/7-1-300x196.png 300w" sizes="auto, (max-width: 617px) 100vw, 617px" /></figure>
+
+
+
+<p><strong>常用的对称加密算法：</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="459" height="203" src="http://ijz.me/wp-content/uploads/2025/03/7-5.png" alt="" class="wp-image-1074" srcset="http://ijz.me/wp-content/uploads/2025/03/7-5.png 459w, http://ijz.me/wp-content/uploads/2025/03/7-5-300x133.png 300w" sizes="auto, (max-width: 459px) 100vw, 459px" /></figure>
+
+
+
+<p><strong>常用非对称算法比较</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="649" height="281" src="http://ijz.me/wp-content/uploads/2025/03/8-1.png" alt="" class="wp-image-1066" srcset="http://ijz.me/wp-content/uploads/2025/03/8-1.png 649w, http://ijz.me/wp-content/uploads/2025/03/8-1-300x130.png 300w, http://ijz.me/wp-content/uploads/2025/03/8-1-624x270.png 624w" sizes="auto, (max-width: 649px) 100vw, 649px" /></figure>
+
+
+
+<p><strong>常用散列算法比较</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="280" height="154" src="http://ijz.me/wp-content/uploads/2025/03/9-1.png" alt="" class="wp-image-1067"/></figure>
+
+
+
+<h2 class="wp-block-heading">SSH工作原理</h2>
+
+
+
+<p>我们上面在第二部部分SSH算法中概要提到了SSH的工作原理，本部分虫虫会详细介绍下。</p>
+
+
+
+<p>SSH协议使用客户端/服务器（CS）模式来双方认证并彼此加密传输数据。服务器组件侦听指定的端口（默认22），接受连接。服务器端（SSHD）负责协商安全连接，验证客户端，并在完成认证后，初始化shell环境。</p>
+
+
+
+<p>客户端负责开始与服务器的初始TCP握手，协商安全连接，验证服务器的身份（记录的信息匹配,~/.ssh/known_hosts中保存的证书，第一链接时候需要手动输入Yes，确认链接该服务器，并记录域名，端口，IP和公钥），以及提供身份验证密码（密钥）。</p>
+
+
+
+<p>SSH会话分两个阶段建立：基于Diffie-Hellman算法的密钥交换过程和用户认证阶段。</p>
+
+
+
+<h3 class="wp-block-heading">密钥交换（Diffie-Hellman）</h3>
+
+
+
+<p>当客户端建立TCP连接时，服务器会使用它支持的协议版本进行响应。如果客户端可以匹配其中一个可接受的协议版本，则继续连接。服务器还提供其公共主机密钥，客户端可以使用该密钥来检查这是否是预期要访问的主机。</p>
+
+
+
+<p>双方使用称为Diffie-Hellman算法协商会话密钥。该算法使得每一方能够将他们自己的私有数据与来自另一系统的公共数据组合以算出相同的共享会话密钥。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="453" height="340" src="http://ijz.me/wp-content/uploads/2025/03/10-2.png" alt="" class="wp-image-1073" srcset="http://ijz.me/wp-content/uploads/2025/03/10-2.png 453w, http://ijz.me/wp-content/uploads/2025/03/10-2-300x225.png 300w" sizes="auto, (max-width: 453px) 100vw, 453px" /></figure>
+
+
+
+<p>该密钥交换过程步骤如下：</p>
+
+
+
+<p>1、双方约定一个大的素数，它将它作为随机种子。</p>
+
+
+
+<p>2、双方约定加密算法（通常为AES），此后利用该算法加密数据。</p>
+
+
+
+<p>3、会话双方独各生成另一个素数，该数字保密。该素数用用于双发交互的临时私钥。</p>
+
+
+
+<p>4、利用各自私钥，共享大素数和加密算法生成公钥，并与对方交换公钥。</p>
+
+
+
+<p>5、接受方利用自己的私钥，对方公钥和原始共享素数来计算共享密钥。虽然这个过程各自独立，都使用自己私钥和对方公钥，所以能生成相同共享密钥。</p>
+
+
+
+<p>7.然后使用共享密钥加密此后的所有通信。</p>
+
+
+
+<p>生成的秘密是对称密钥，所以双方都可以解密消息。该过程保证了，随后数据通信位于一个加密隧道中。</p>
+
+
+
+<h3 class="wp-block-heading">用户认证</h3>
+
+
+
+<p>会话加密通道建立后，SSH开始进入用户认证阶段。该阶段完成用户验证和访问权限确定。根据服务端的配置（sshd_config），可能使用一下几种身份验证方法：</p>
+
+
+
+<p>1、密码验证：服务器提示客户端输入用户名和密码。密码通加密隧道发送，对外方是安全的。</p>
+
+
+
+<p>由于该方法存在暴力破解，以及容易泄密的可能较大，虫虫不建议使用此方法，尤其是直接使用root登陆，危害性更大。</p>
+
+
+
+<p>2、使用openssh密钥对认证：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="437" height="194" src="http://ijz.me/wp-content/uploads/2025/03/11-2.png" alt="" class="wp-image-1072" srcset="http://ijz.me/wp-content/uploads/2025/03/11-2.png 437w, http://ijz.me/wp-content/uploads/2025/03/11-2-300x133.png 300w" sizes="auto, (max-width: 437px) 100vw, 437px" /></figure>
+
+
+
+<p>具体步骤如下：</p>
+
+
+
+<p>(1)、客户端首先向服务器发送要对其进行身份验证的密钥对的用户名。</p>
+
+
+
+<p>(2)、服务器检查客户端尝试登录用户帐户的下authorized_keys文件。</p>
+
+
+
+<p>(3)、如果在文件中找到具有匹配公钥，则服务器生成随机数并使用公钥加密该随机数。并该加密消息发送给客户端。</p>
+
+
+
+<p>(4)、如果客户端利用自己的私钥解密消息（如果可以的话），从而显示原始数。</p>
+
+
+
+<p>(5)、客户端将解密的原始数和用于加密通信的共享会话密钥组合，计算他们的哈希值。客户端将该哈希值发回服务器，作为回应。</p>
+
+
+
+<p>(6)、服务器使用相同的共享会话密钥和此前（步骤4）发送给客户端的原始编号来自行计算哈希值。将计算结果和客户端发回的哈希值对比。如果这两个值匹配，则证明客户端拥有私钥并且客户端已经过身份验证。</p>
+
+
+
+<p>3、它认证方法：比如结合ldap的认证，双因子认证，以及更安全的Kerberos地狱狗认证以后有机会再做介绍，此处不再赘述</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1005" height="531" src="http://ijz.me/wp-content/uploads/2025/03/12-2.png" alt="" class="wp-image-1071" srcset="http://ijz.me/wp-content/uploads/2025/03/12-2.png 1005w, http://ijz.me/wp-content/uploads/2025/03/12-2-300x159.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-2-768x406.png 768w, http://ijz.me/wp-content/uploads/2025/03/12-2-624x330.png 624w" sizes="auto, (max-width: 1005px) 100vw, 1005px" /></figure>
+
+
+
+<p>本文中，虫虫结合SSH过程，介绍常见的加密算法，以及基于密钥交换和用户认证等，希望能帮助你理清SSH认证的过程。虫虫在此需要指出的是，类似的体系也在其他安全通讯中使用，比如用的比SSH更广泛的HTTPS的SSL/TSL技术。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1057</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>告别OpenSSL，谷歌推出其取代软件Tink</title>
+		<link>http://ijz.me/?p=1049</link>
+					<comments>http://ijz.me/?p=1049#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 14 Sep 2018 09:36:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[ssl]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1049</guid>
+
+					<description><![CDATA[要说一个软件对IT和互联网业界影响力，恐怕OpenSS要算上一个。一个甚至主要版本使用版本还不到V1.2的软件 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading"></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="620" height="360" src="http://ijz.me/wp-content/uploads/2025/03/1-2.png" alt="" class="wp-image-1050" srcset="http://ijz.me/wp-content/uploads/2025/03/1-2.png 620w, http://ijz.me/wp-content/uploads/2025/03/1-2-300x174.png 300w" sizes="auto, (max-width: 620px) 100vw, 620px" /></figure>
+
+
+
+<p>要说一个软件对IT和互联网业界影响力，恐怕OpenSS要算上一个。一个甚至主要版本使用版本还不到V1.2的软件，占据了整改互联网底层安全核心。SSH、HTTPS,还有其他很多的基础加密库都是离不开OpenSSL的。</p>
+
+
+
+<span id="more-1049"></span>
+
+
+
+<p>但是这么一个非常重要的基础软件，缺在管理上和经费上屡屡爆出问题，以至于当2014年爆发心脏出血时候，整个业界，甚至整个互联网，技术圈内的，非技术圈内的也都震动了。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="623" height="338" src="http://ijz.me/wp-content/uploads/2025/03/2-2.png" alt="" class="wp-image-1051" srcset="http://ijz.me/wp-content/uploads/2025/03/2-2.png 623w, http://ijz.me/wp-content/uploads/2025/03/2-2-300x163.png 300w" sizes="auto, (max-width: 623px) 100vw, 623px" /></figure>
+
+
+
+<p>为了克服OpenSSL带来的问题，OpenBSD Fork了一个新的软件LibreSSL，以确保SSL的库不会再出问题，基于OpenBSD的几十年积累下来的安全口碑，虫虫认为这是一个非常好的替代。同时各大公司也推出自己的SSL安全库，比如亚马逊就推出了s2n。</p>
+
+
+
+<p>本文介绍的则是，继继谷歌自己的BoringSSL和OpenBSD的LibreSSL之后，谷歌新发布的软件Tink。他是一个多语言，跨平台的安全加密库。使用OpenSSL，系统有着复杂的绑定，并且通常专注于特定的系统，例如Windows中的DLL。 而Tink是开源的，专注于创建简单的API，确保基础架构更具可移植性。</p>
+
+
+
+<h2 class="wp-block-heading">AWS s2n</h2>
+
+
+
+<p>s2n(signal to noise),是对TLS/SSL协议的C99（c语言标准）实现，基于开发一个简单，小巧，快速，并且优先考虑安全性的理念来设计。s2n使用Apache License 2.0发布和许可。重点用于改进TLS（传输层安全性）和使用更轻量级的方法。s2n仅使用了6,000行代码，定义了更专注，更精简的库。当然可能会随着新版本的迭代而代码增加，因为目前还只是一个基本的实现。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="535" src="http://ijz.me/wp-content/uploads/2025/03/3-1024x535.jpg" alt="" class="wp-image-1052" srcset="http://ijz.me/wp-content/uploads/2025/03/3-1024x535.jpg 1024w, http://ijz.me/wp-content/uploads/2025/03/3-300x157.jpg 300w, http://ijz.me/wp-content/uploads/2025/03/3-768x401.jpg 768w, http://ijz.me/wp-content/uploads/2025/03/3-624x326.jpg 624w, http://ijz.me/wp-content/uploads/2025/03/3.jpg 1030w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>s2n是完全开源的，托管在GitHub中（github：awslabs/s2n ），允许任何人review和fork代码，你可以所以fork然后添加核心版本不支持的新功能。</p>
+
+
+
+<p>亚马逊对安全问题都很认真，能及时反应社区发现的漏洞。还开展了与研究人员和学者合作的机制来解决新的问题。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="810" height="488" src="http://ijz.me/wp-content/uploads/2025/03/3-2.png" alt="" class="wp-image-1053" srcset="http://ijz.me/wp-content/uploads/2025/03/3-2.png 810w, http://ijz.me/wp-content/uploads/2025/03/3-2-300x181.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-2-768x463.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-2-624x376.png 624w" sizes="auto, (max-width: 810px) 100vw, 810px" /></figure>
+
+
+
+<h2 class="wp-block-heading">认识Tink</h2>
+
+
+
+<p>Tink是谷歌基于BoringSSL，发布一款新的SSL安全库软件，当前版本版本为1.2.0（已经超过了OpenSSL积累了几十年的版本）。Tink已经在谷歌自己的应用中得到了大量应用。比如已经集成到AdMob，Google Pay，Google智能助理和Firebase中了。</p>
+
+
+
+<p>Tink集成了<strong>AEAD方法</strong>（经过身份验证的加密AE和经过身份验证的加密以及相关数据）。集成了加密密钥，散列函数和消息验证代码（MAC）。</p>
+
+
+
+<p>Tink中AEAD的最低标准包括[RFC5116]：</p>
+
+
+
+<p>明文和相关数据可以具有任何长度（从0到2³²字节）。</p>
+
+
+
+<p>支持80位身份验证。</p>
+
+
+
+<p>CCA2安全性（自适应选择密文攻击）。</p>
+
+
+
+<p>谷歌分析了许多加密技术的弱点，在Tink中对他们做了专门解决。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="728" height="517" src="http://ijz.me/wp-content/uploads/2025/03/5-2.png" alt="" class="wp-image-1054" srcset="http://ijz.me/wp-content/uploads/2025/03/5-2.png 728w, http://ijz.me/wp-content/uploads/2025/03/5-2-300x213.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-2-624x443.png 624w" sizes="auto, (max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<h2 class="wp-block-heading">实例起步</h2>
+
+
+
+<p>基本的加密操作是使用对称密钥加密，我们还是举例传统的例子Bob和Alice通讯：Bob和Alice使用相同的密钥加密并解密。 Bob创建密钥，然后将其安全地传递给Alice，使用密钥交换方法生成共享密钥：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="335" src="http://ijz.me/wp-content/uploads/2025/03/6-1-1024x335.png" alt="" class="wp-image-1055" srcset="http://ijz.me/wp-content/uploads/2025/03/6-1-1024x335.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-1-300x98.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-1-768x251.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-1-624x204.png 624w, http://ijz.me/wp-content/uploads/2025/03/6-1.png 1271w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Tink就是用于简化加密处理并尽可能使用安全、最佳加密方法。在下面我们使用“qwerty123”键加密一个字符串（“napier”），注意示例代码用了java，官方目前支持C++，OC和JAVA原生库，相关可以查看官方仓库，里面有详细的文档和范例。</p>
+
+
+
+<p>package com.helloworld;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadConfig;</p>
+
+
+
+<p>import java.security.GeneralSecurityException;</p>
+
+
+
+<p>import com.google.crypto.tink.Aead;</p>
+
+
+
+<p>import com.google.crypto.tink.KeysetHandle;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadFactory;</p>
+
+
+
+<p>import com.google.crypto.tink.aead.AeadKeyTemplates;</p>
+
+
+
+<p>public final class HelloWorld {</p>
+
+
+
+<p>&nbsp; public static void main(String[] args) throws Exception {</p>
+
+
+
+<p>AeadConfig.register();</p>
+
+
+
+<p>try {</p>
+
+
+
+<p>KeysetHandle keysetHandle = KeysetHandle.generateNew(AeadKeyTemplates.AES128_GCM);</p>
+
+
+
+<p>Aead aead = AeadFactory.getPrimitive(keysetHandle);</p>
+
+
+
+<p>String plaintext=&#8221;napier&#8221;;</p>
+
+
+
+<p>String aad=&#8221;qwerty123&#8243;;</p>
+
+
+
+<p>System.out.println(&#8220;Text:&#8221;+plaintext);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; byte[] ciphertext = aead.encrypt(plaintext.getBytes(), aad.getBytes());</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; System.out.println(&#8220;Cipher:&#8221;+ciphertext.toString());</p>
+
+
+
+<p>byte[] decrypted = aead.decrypt(ciphertext, aad.getBytes());</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; String s = new String(decrypted);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; System.out.println(&#8220;Text:&#8221;+s);</p>
+
+
+
+<p>} catch (GeneralSecurityException e) {</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(e);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.exit(1);</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; }</p>
+
+
+
+<p>}</p>
+
+
+
+<p>}</p>
+
+
+
+<p>范例运行过程如下：</p>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<p>Text:&nbsp; hello123</p>
+
+
+
+<p>Password: qwerty</p>
+
+
+
+<p>Type:&nbsp; 1</p>
+
+
+
+<p>Enc type: 128-bit AES GCM</p>
+
+
+
+<p>Cipher: AQbLoE0ino8ofgrvuSSLOKTaYjdPc/ovwWznuMeYfjP+TO1fc6cn7DE=</p>
+
+
+
+<p>Cipher: 4151624C6F4530696E6F386F666772767553534C4F4B5461596A6450632F6F7677577A6E754D6559666A502B544F31666336636E3744453D</p>
+
+
+
+<p>Decrypted: hello123</p>
+</div></div>
+
+
+
+<p>在本里中下，我们使用了带GCM的128位AES（伽罗瓦/计数器模式）。我们的AEAD对象创建语句为：</p>
+
+
+
+<p>KeysetHandle keysetHandle = KeysetHandle.generateNew(AeadKeyTemplates.AES128_GCM);</p>
+
+
+
+<p>然后使用encrypt()和decrypt()方法创建加密流，并其进行解密。</p>
+
+
+
+<p>好今天文章就介绍到这里，在撰写本文的时候，我们得知.net版本的Tink也已经起步（github：elucidsoftllc/tink.net）。如果有机会，我们会对其做更多的探索，并且第一时间给大家呈上结论。欢迎关注虫虫，获得最新的技术和软件信息。</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1049</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>爱上命令行并深入</title>
+		<link>http://ijz.me/?p=1027</link>
+					<comments>http://ijz.me/?p=1027#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 24 Aug 2018 07:27:00 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[shell]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1027</guid>
+
+					<description><![CDATA[命令行是一个强大的工具，而我们大多数却都不会用，可以说没有命令行的世界等于你失去了一多半的乐趣和技能。 本文虫 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>命令行是一个强大的工具，而我们大多数却都不会用，可以说没有命令行的世界等于你失去了一多半的乐趣和技能。</p>
+
+
+
+<p>本文虫虫和大家一起来聊聊命令行，并教大家一起来学习命令，不管你是运维、开发、测试、DBA，甚至是项目经理、PM都能通过命令行获得很大的裨益。当然我们主要是以开发了主要受众来举例子说明。</p>
+
+
+
+<span id="more-1027"></span>
+
+
+
+<p>日常编码时，你是选择集成开发环境IDE呢，还是文本编辑器（Vim、Emacs、sublime）+插件+命令行呢？</p>
+
+
+
+<p>现代IDE（VS、Eclipse、IDEA等）可以一个界面提供给我们所有必需的开发工具：代码版本，语法高亮，自动格式化，自动补全，版本控制，编译，调试、可视化断点、还有运行时环境！一键编译、一键运行，那么，为什么选择简单的文本编辑器呢？</p>
+
+
+
+<p>对这个问题，有很多问题、当然可能有一个原因是IDE太慢了！就个人而言，主要是是对于简单的项目和脚本，使用轻量化的文本编辑以及一些插件，一方面可以节省我编译的时间，而且我更喜欢欢命令行的各个工具栈套件GCC+GDB等强大的编译调试套件，更加适合我的胃口。</p>
+
+
+
+<p>我更喜欢学习掌握每个工具，比如GDB强大的各种特性和命令，可以让你更加编辑的操作，用键盘而不是点鼠标，还有就是让你可以更深入到程序和开发的精髓之处。。</p>
+
+
+
+<p>听起来有点泛泛而谈，但在IDE中，我们时常会受到约束并受限于固定的功能项，而在命令行中，有许多工具，脚本，框架可以在借鉴，支持多环境，许多语言以及Linx下强大的Shell流水栈、Perl onelines等可以把许多最高效最优秀的工具连接起来，最主要你随时可以修改完善他们，甚至自己造个更趁手的工具。</p>
+
+
+
+<p>当然，如果你是在Windows使用命令行，虽然现在Powershell已经增强改善了很多很多，以及有WSL的Linux子系统，但是由于其终端模拟器的限制，你可能还是可能会有不爽之处，所以建议你来使用Linux,Mac也是个很棒的选择。</p>
+
+
+
+<p>为啥，我只举两个个例子Docker，时下最火的容器技术，以及Git服务器Gitlab都是只支持Linux的，你还想多学点技术，Linux是不好躲的。</p>
+
+
+
+<h2 class="wp-block-heading">Fish shell</h2>
+
+
+
+<p>Fish shell（或“fish”）是一个面向用户交互的shell，它是日常和交互式使用的良好候选者。我们很多人可能都用的是Bash，但是说实话Bash更适合做脚本而Fish则更加人性化，更适合做交互操作。</p>
+
+
+
+<p>Fish shell包括许多命令和工具的原生语法高亮，也原生支持自动完成。</p>
+
+
+
+<p>Zsh是这种用例的另一种可靠替代方案。</p>
+
+
+
+<p>以下是使用git自动完成的示例：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="756" height="429" src="http://ijz.me/wp-content/uploads/2025/03/1-1.png" alt="" class="wp-image-1028" srcset="http://ijz.me/wp-content/uploads/2025/03/1-1.png 756w, http://ijz.me/wp-content/uploads/2025/03/1-1-300x170.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-1-624x354.png 624w" sizes="auto, (max-width: 756px) 100vw, 756px" /></figure>
+
+
+
+<p>通过敲打<strong>git</strong>，空格，在输入<strong>&lt;tab&gt;</strong>，fish会列出git命令列表（<strong>checkout，commit，log，&#8230;</strong>）。通过反复敲<strong>&lt;tab&gt;</strong>建，可以浏览命令直到达到所需的命令，然后我们只需输入回车（例如git checkout），这时fish就显示它的强大的魔力，他可以自动列出你仓库的分支和Tag列表。当然对其他工具，fish也是有很多类似的魔力的，你需要做的就是安装并且使用探索它。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="109" src="http://ijz.me/wp-content/uploads/2025/03/2-1-1024x109.png" alt="" class="wp-image-1029" srcset="http://ijz.me/wp-content/uploads/2025/03/2-1-1024x109.png 1024w, http://ijz.me/wp-content/uploads/2025/03/2-1-300x32.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-1-768x82.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-1-624x66.png 624w, http://ijz.me/wp-content/uploads/2025/03/2-1.png 1223w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>这儿我推荐两个框架可以增强的fish的功能：oh-my-fish（github/oh-my-fish）和fisherman（github/fisherman）。</p>
+
+
+
+<p><strong>oh-my-fish</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="887" height="224" src="http://ijz.me/wp-content/uploads/2025/03/3-1.png" alt="" class="wp-image-1030" srcset="http://ijz.me/wp-content/uploads/2025/03/3-1.png 887w, http://ijz.me/wp-content/uploads/2025/03/3-1-300x76.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-1-768x194.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-1-624x158.png 624w" sizes="auto, (max-width: 887px) 100vw, 887px" /></figure>
+
+
+
+<p><strong>fisherman</strong></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="916" height="280" src="http://ijz.me/wp-content/uploads/2025/03/4-1.png" alt="" class="wp-image-1031" srcset="http://ijz.me/wp-content/uploads/2025/03/4-1.png 916w, http://ijz.me/wp-content/uploads/2025/03/4-1-300x92.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-1-768x235.png 768w, http://ijz.me/wp-content/uploads/2025/03/4-1-624x191.png 624w" sizes="auto, (max-width: 916px) 100vw, 916px" /></figure>
+
+
+
+<p>它们都可以用来给提示符和各种插件安装主题样式。</p>
+
+
+
+<h3 class="wp-block-heading">命令提示符主题</h3>
+
+
+
+<p>你可能会说，定制提示符能有啥蛋用呢，但当你只面对一个主窗口的时候，那么定制它就很有必要了。比如</p>
+
+
+
+<p>当你用git的时候,用他可以告诉我们：</p>
+
+
+
+<p>当前所处的分支；</p>
+
+
+
+<p>你要push/pull的远程仓库地址是啥；</p>
+
+
+
+<p>你的索引干净，有没有你有未提交或未跟踪的文件；</p>
+
+
+
+<p>等等。</p>
+
+
+
+<p>一般情况下时候：</p>
+
+
+
+<p>你当前目录（pwd）；</p>
+
+
+
+<p>你上一条执行的命令是啥（！）；</p>
+
+
+
+<p>上一条命令的状态（$?）；</p>
+
+
+
+<p>上一条命令的响应时间；</p>
+
+
+
+<p>等等。</p>
+
+
+
+<p>系统可以有几十个提示可供自由选择，因此大家都可以按照自己喜好和需求进行选择。我一般用两个：<strong>bobthefish</strong>和<strong>neolambda</strong>主题，你可以在<strong>oh-my-fish</strong><strong>框架下</strong>安装：<strong>omf install bobthefish</strong>。他可以提供：</p>
+
+
+
+<p>第一个主题<strong>bobthefish</strong>，高度可视化，基于powerline，Vim的状态行，包括许多模式和符号，使其更加用户友好：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="91" src="http://ijz.me/wp-content/uploads/2025/03/5-1-1024x91.png" alt="" class="wp-image-1032" srcset="http://ijz.me/wp-content/uploads/2025/03/5-1-1024x91.png 1024w, http://ijz.me/wp-content/uploads/2025/03/5-1-300x27.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-1-768x68.png 768w, http://ijz.me/wp-content/uploads/2025/03/5-1-624x55.png 624w, http://ijz.me/wp-content/uploads/2025/03/5-1.png 1339w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>后一个主题<strong>neolambda</strong>更时尚，功能更少，但有趣（omf install neolambda）：</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="97" src="http://ijz.me/wp-content/uploads/2025/03/6-1024x97.png" alt="" class="wp-image-1033" srcset="http://ijz.me/wp-content/uploads/2025/03/6-1024x97.png 1024w, http://ijz.me/wp-content/uploads/2025/03/6-300x28.png 300w, http://ijz.me/wp-content/uploads/2025/03/6-768x73.png 768w, http://ijz.me/wp-content/uploads/2025/03/6-624x59.png 624w, http://ijz.me/wp-content/uploads/2025/03/6.png 1348w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 class="wp-block-heading">更多插件推荐</h3>
+
+
+
+<p>除了命令提示符，许多插件允许增强用户界面，值得推荐的有：</p>
+
+
+
+<p><strong>colorman</strong>，为man添加语法高亮显示（omf install colorman）</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="496" height="343" src="http://ijz.me/wp-content/uploads/2025/03/7.png" alt="" class="wp-image-1034" srcset="http://ijz.me/wp-content/uploads/2025/03/7.png 496w, http://ijz.me/wp-content/uploads/2025/03/7-300x207.png 300w" sizes="auto, (max-width: 496px) 100vw, 496px" /></figure>
+
+
+
+<pre class="wp-block-preformatted"><strong>grc</strong>为Linux命令添加语法高亮,比如cat，cvs，df，diff,dig,gcc,ping,ps...（omf install grc）</pre>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="894" height="304" src="http://ijz.me/wp-content/uploads/2025/03/8.png" alt="" class="wp-image-1035" srcset="http://ijz.me/wp-content/uploads/2025/03/8.png 894w, http://ijz.me/wp-content/uploads/2025/03/8-300x102.png 300w, http://ijz.me/wp-content/uploads/2025/03/8-768x261.png 768w, http://ijz.me/wp-content/uploads/2025/03/8-624x212.png 624w" sizes="auto, (max-width: 894px) 100vw, 894px" /></figure>
+
+
+
+<p><strong>g2</strong>是一个简化git命令的打包。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="841" height="417" src="http://ijz.me/wp-content/uploads/2025/03/9.png" alt="" class="wp-image-1036" srcset="http://ijz.me/wp-content/uploads/2025/03/9.png 841w, http://ijz.me/wp-content/uploads/2025/03/9-300x149.png 300w, http://ijz.me/wp-content/uploads/2025/03/9-768x381.png 768w, http://ijz.me/wp-content/uploads/2025/03/9-624x309.png 624w" sizes="auto, (max-width: 841px) 100vw, 841px" /></figure>
+
+
+
+<p><strong>weather</strong>在 Fish shell 中使用以下命令查看天气。(注意该插件依赖jq来处理json数据需要先安装yum install jq 安装，后面日志部分会介绍)。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="577" height="304" src="http://ijz.me/wp-content/uploads/2025/03/10.png" alt="" class="wp-image-1037" srcset="http://ijz.me/wp-content/uploads/2025/03/10.png 577w, http://ijz.me/wp-content/uploads/2025/03/10-300x158.png 300w" sizes="auto, (max-width: 577px) 100vw, 577px" /></figure>
+
+
+
+<p><strong>colorls</strong>（gem install colorls），这个美化的ls工具是必备的。他非常好看，使用用颜色变化来突出当前目录文件的修改工具期。它使文件大小做对人友好话适配（-h）；最重要的是，它显示可以当前文件/文件夹的git状态！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="557" height="241" src="http://ijz.me/wp-content/uploads/2025/03/11.png" alt="" class="wp-image-1038" srcset="http://ijz.me/wp-content/uploads/2025/03/11.png 557w, http://ijz.me/wp-content/uploads/2025/03/11-300x130.png 300w" sizes="auto, (max-width: 557px) 100vw, 557px" /></figure>
+
+
+
+<h3 class="wp-block-heading">让你的日志更好看</h3>
+
+
+
+<p>如果你是，运维或或者开发人员工程师，那么日志可视化是你日常一项重复性任务，你必须选择好的工具才能提高工作效率。</p>
+
+
+
+<p>现代IDE都不适合查看日志，因为它们已经被源文件过载，而且它日志文件通常尺寸都不小，会严重影响你编辑器的性能。一旦文件大小超过10Mb，大多数IDE和编辑器都会“卡壳”。</p>
+
+
+
+<p>解决方案：使用<strong>head</strong>和<strong>tail</strong>工具来得到最先或者最新的日志，同时从可用于shell中的<strong>grep、awk、sort、uniq</strong>等形成流水处理栈，你可以启用语法突出显示并执行搜索。</p>
+
+
+
+<p>根据日志类型，我们在还这推荐两个工具</p>
+
+
+
+<p><strong>ccze</strong>用于传统日志（Apache，syslog，php，&#8230;）</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="376" src="http://ijz.me/wp-content/uploads/2025/03/12-1024x376.png" alt="" class="wp-image-1039" srcset="http://ijz.me/wp-content/uploads/2025/03/12-1024x376.png 1024w, http://ijz.me/wp-content/uploads/2025/03/12-300x110.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-768x282.png 768w, http://ijz.me/wp-content/uploads/2025/03/12-624x229.png 624w, http://ijz.me/wp-content/uploads/2025/03/12.png 1344w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p><strong>jq</strong>用于JSON日志</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="589" height="235" src="http://ijz.me/wp-content/uploads/2025/03/13.png" alt="" class="wp-image-1040" srcset="http://ijz.me/wp-content/uploads/2025/03/13.png 589w, http://ijz.me/wp-content/uploads/2025/03/13-300x120.png 300w" sizes="auto, (max-width: 589px) 100vw, 589px" /></figure>
+
+
+
+<p><strong>jq</strong>的好处是，除了JSON语法突出显示之外，它还会自动格式化你的日志，以方便阅读。因此，如果你的ELK或任何其他数据分析栈如果有单行压缩的JSON日志，你可以用jq解压缩日志并使其做人性化阅读适配。jq是一个功能更强大的工具，它还自带有描述语言的JSON解析器，与XML的xpath类似，但JSON的最简单。</p>
+
+
+
+<p>因此，通过<strong>命令行</strong>的tail -f access 实时获取最新每个日志行，并根据类型将stdout传送到jq或ccze，你就可以快速得到所需信息，并以优雅人性化的格式呈现在你的眼前。</p>
+
+
+
+<h2 class="wp-block-heading">更多命令行工具推荐列表</h2>
+
+
+
+<p>命令行的世界丰富多彩，群芳流彩，虫虫在此列一些我收集到很好的工具。</p>
+
+
+
+<p><strong>ccat</strong>：cat的语法高亮显示</p>
+
+
+
+<p><strong>tig</strong>：允许增强许多已知git命令的输出（例如git log|tig）</p>
+
+
+
+<pre class="wp-block-preformatted"><strong>howdoi</strong>：常量格式化工具，可生成多种语言的格式，比如你需要python的格式，那么只需输入howdoi format date python。</pre>
+
+
+
+<pre class="wp-block-preformatted">你要显示tar命令你只需 howdoi create tar archive </pre>
+
+
+
+<pre class="wp-block-preformatted">会显示 &gt; tar -cf backup.tar --exclude "www/subf3" www</pre>
+
+
+
+<pre class="wp-block-preformatted">&nbsp;</pre>
+
+
+
+<p><strong>htop</strong>：炫酷当前进程列表展示。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="943" height="540" src="http://ijz.me/wp-content/uploads/2025/03/14.png" alt="" class="wp-image-1041" srcset="http://ijz.me/wp-content/uploads/2025/03/14.png 943w, http://ijz.me/wp-content/uploads/2025/03/14-300x172.png 300w, http://ijz.me/wp-content/uploads/2025/03/14-768x440.png 768w, http://ijz.me/wp-content/uploads/2025/03/14-624x357.png 624w" sizes="auto, (max-width: 943px) 100vw, 943px" /></figure>
+
+
+
+<p><strong>glances</strong>（pip install glances）：计算机的监控控制台（进程，内存，网络，磁盘I/O，绑定器&#8230;&#8230;）</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="950" height="492" src="http://ijz.me/wp-content/uploads/2025/03/15.png" alt="" class="wp-image-1042" srcset="http://ijz.me/wp-content/uploads/2025/03/15.png 950w, http://ijz.me/wp-content/uploads/2025/03/15-300x155.png 300w, http://ijz.me/wp-content/uploads/2025/03/15-768x398.png 768w, http://ijz.me/wp-content/uploads/2025/03/15-624x323.png 624w" sizes="auto, (max-width: 950px) 100vw, 950px" /></figure>
+
+
+
+<p><strong>clog</strong>（<code>cargo install clog</code>）：从你的git repo的元数据生成CHANGELOG。</p>
+
+
+
+<p><strong>googler</strong>：命令行下搜索，SSH肉身搜索。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="713" height="291" src="http://ijz.me/wp-content/uploads/2025/03/16.png" alt="" class="wp-image-1043" srcset="http://ijz.me/wp-content/uploads/2025/03/16.png 713w, http://ijz.me/wp-content/uploads/2025/03/16-300x122.png 300w, http://ijz.me/wp-content/uploads/2025/03/16-624x255.png 624w" sizes="auto, (max-width: 713px) 100vw, 713px" /></figure>
+
+
+
+<p><strong>you-get</strong><strong>和youtube-dl</strong>：命令行下载视频：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="495" height="271" src="http://ijz.me/wp-content/uploads/2025/03/17.png" alt="" class="wp-image-1044" srcset="http://ijz.me/wp-content/uploads/2025/03/17.png 495w, http://ijz.me/wp-content/uploads/2025/03/17-300x164.png 300w" sizes="auto, (max-width: 495px) 100vw, 495px" /></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="815" height="113" src="http://ijz.me/wp-content/uploads/2025/03/18.png" alt="" class="wp-image-1045" srcset="http://ijz.me/wp-content/uploads/2025/03/18.png 815w, http://ijz.me/wp-content/uploads/2025/03/18-300x42.png 300w, http://ijz.me/wp-content/uploads/2025/03/18-768x106.png 768w, http://ijz.me/wp-content/uploads/2025/03/18-624x87.png 624w" sizes="auto, (max-width: 815px) 100vw, 815px" /></figure>
+
+
+
+<p><strong>dockly</strong>（npm install -g dockly）：监控你的指定的容器及Docker镜像：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="882" height="504" src="http://ijz.me/wp-content/uploads/2025/03/19.png" alt="" class="wp-image-1046" srcset="http://ijz.me/wp-content/uploads/2025/03/19.png 882w, http://ijz.me/wp-content/uploads/2025/03/19-300x171.png 300w, http://ijz.me/wp-content/uploads/2025/03/19-768x439.png 768w, http://ijz.me/wp-content/uploads/2025/03/19-624x357.png 624w" sizes="auto, (max-width: 882px) 100vw, 882px" /></figure>
+
+
+
+<p><strong>newman</strong>（npm install -g newman）：你想将Postman集成到CI/CD Pipeline中吗？newman就是专门干这个的！</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="887" height="507" src="http://ijz.me/wp-content/uploads/2025/03/20.png" alt="" class="wp-image-1047" srcset="http://ijz.me/wp-content/uploads/2025/03/20.png 887w, http://ijz.me/wp-content/uploads/2025/03/20-300x171.png 300w, http://ijz.me/wp-content/uploads/2025/03/20-768x439.png 768w, http://ijz.me/wp-content/uploads/2025/03/20-624x357.png 624w" sizes="auto, (max-width: 887px) 100vw, 887px" /></figure>
+
+
+
+<p><strong>ttyrec/ttygif</strong>：通过shell会话创建GIF动画。</p>
+
+
+
+<p>对于上面引用的每个命令/工具，我都在其名称后的括号里附上了安装命令（主要有yum pip npm等）。如果不能通过包管理器安装，请你下载源码安装。如果你有更好的工具也请留言告诉我和大家分享。炎炎夏日，让我们一起来命令行的世界沐浴来把！</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1027</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>是时候迁移到Java 11了，Java 7到11迁移实战 </title>
+		<link>http://ijz.me/?p=1012</link>
+					<comments>http://ijz.me/?p=1012#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 07 Aug 2018 07:19:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1012</guid>
+
+					<description><![CDATA[JDK 8将停止支持 Oracle JDK 8将于2019年1月（从现在起153天）停止发布公共更新，时间不多 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading"></h1>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="457" height="250" src="http://ijz.me/wp-content/uploads/2025/03/1.png" alt="" class="wp-image-1013" srcset="http://ijz.me/wp-content/uploads/2025/03/1.png 457w, http://ijz.me/wp-content/uploads/2025/03/1-300x164.png 300w" sizes="auto, (max-width: 457px) 100vw, 457px" /></figure>
+
+
+
+<h2 class="wp-block-heading">JDK 8将停止支持</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="882" height="418" src="http://ijz.me/wp-content/uploads/2025/03/2.png" alt="" class="wp-image-1014" srcset="http://ijz.me/wp-content/uploads/2025/03/2.png 882w, http://ijz.me/wp-content/uploads/2025/03/2-300x142.png 300w, http://ijz.me/wp-content/uploads/2025/03/2-768x364.png 768w, http://ijz.me/wp-content/uploads/2025/03/2-624x296.png 624w" sizes="auto, (max-width: 882px) 100vw, 882px" /></figure>
+
+
+
+<p>Oracle JDK 8将于2019年1月（从现在起153天）停止发布公共更新，时间不多了，所以虫虫认为现在是最好的时机迁移到最新版JDK版本，享受新版本的各种黑魔法和新功能了。</p>
+
+
+
+<span id="more-1012"></span>
+
+
+
+<p>另外，在虫虫以前的文章中也提到过，从JDK 11开始，其发布周期变为每6个月一个新版本，每3年发布一个新的LTS版本（下一个是JDK 11）。</p>
+
+
+
+<p>值得一提的是，发布的公开使用的Oracle JDK将支持OpenJDK源代码进行编译而无需更改。</p>
+
+
+
+<h2 class="wp-block-heading">Java会收费吗？</h2>
+
+
+
+<p>ORACLE确保，不会对Java公共开放不会收费。所有Java/JDK开发基于OpenJDK版本库中完成，所有修复和增强功能都将推送到该开放库。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="904" height="567" src="http://ijz.me/wp-content/uploads/2025/03/3.png" alt="" class="wp-image-1015" srcset="http://ijz.me/wp-content/uploads/2025/03/3.png 904w, http://ijz.me/wp-content/uploads/2025/03/3-300x188.png 300w, http://ijz.me/wp-content/uploads/2025/03/3-768x482.png 768w, http://ijz.me/wp-content/uploads/2025/03/3-624x391.png 624w" sizes="auto, (max-width: 904px) 100vw, 904px" /></figure>
+
+
+
+<p>另外，三方公司也都有自己JRE实现，比如谷歌，Azul和RedHat等，以及IBM开源的Java/JDK实现OpenJ9：</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="636" height="321" src="http://ijz.me/wp-content/uploads/2025/03/4.png" alt="" class="wp-image-1016" srcset="http://ijz.me/wp-content/uploads/2025/03/4.png 636w, http://ijz.me/wp-content/uploads/2025/03/4-300x151.png 300w, http://ijz.me/wp-content/uploads/2025/03/4-624x315.png 624w" sizes="auto, (max-width: 636px) 100vw, 636px" /></figure>
+
+
+
+<h2 class="wp-block-heading">向Java 11迁移</h2>
+
+
+
+<p>在Java 9,10和即将发布的Java 11 LTE，我们来着重介绍下如何迁移Java应用程序和模块及其可能存在的未解决的问题。虽然类似的文章问多，但是深入的太少，大多数文章都集中在简单的Hello World应用程序上。</p>
+
+
+
+<p>本文我们将介绍个基于Spring Boot框架的应用程序为实例分步介绍迁移具体过程。选择这样做的示例应用程序是Spring PetClinic，一个使用WebMVC，Actuator，Cache，Data JPA，Thymeleaf和Test starters的Spring Boot 2示例应用程序。完全迁移到Java 11基本上有三个主要过程：</p>
+
+
+
+<p>1.使用JDK 11运行现有Java应用程序。</p>
+
+
+
+<p>2.使用Java 11编译应用程序。</p>
+
+
+
+<p>3.模块化应用程序以使用模块系统。</p>
+
+
+
+<p>如果你还没有准备好同时做这三件事，那请追随虫虫脚本开始。</p>
+
+
+
+<h2 class="wp-block-heading">JDK 11开发环境构建</h2>
+
+
+
+<p>首先，你需要为你的操作系统下载并安装JDK 11。</p>
+
+
+
+<p>首先更新你喜欢的IDE以支持Java模块系统：</p>
+
+
+
+<p>根据各自的IDE官网下载相应模块（地址略）：</p>
+
+
+
+<p>Eclipse IDE，IntelliJ IDEA，Apache NetBeans</p>
+
+
+
+<h2 class="wp-block-heading">1.使用JDK 11运行现有Java应用程序</h2>
+
+
+
+<p>为什么要从JDK 8升级到JDK 11？因为我们将能享受到以下这些的黑魔法：</p>
+
+
+
+<h3 class="wp-block-heading">JDK 11 黑魔法</h3>
+
+
+
+<p>继Java 8后最新LTS长期支持版本（如果你拥有商业许可证）。</p>
+
+
+
+<p>完全支持Linux容器（包括Docker）。</p>
+
+
+
+<p>支持G1上的并行完全垃圾收集。</p>
+
+
+
+<p>免费应用程序类，数据共享功能。</p>
+
+
+
+<p>免费的低耗能飞行记录仪和堆分析仪。</p>
+
+
+
+<p>备用存储设备上的堆分配。</p>
+
+
+
+<p>新的默认根权限证书集。</p>
+
+
+
+<p>新的ZGC和Epsilon垃圾收集器。</p>
+
+
+
+<p>Ahead-of-time编译和GraalVM。</p>
+
+
+
+<p>最新的HTTPS安全协议TLS 1.3。</p>
+
+
+
+<p>JShell。</p>
+
+
+
+<p>支持“shebang”Java脚本文件！<strong><em>#!/bin/java</em></strong></p>
+
+
+
+<h3 class="wp-block-heading">运行你的应用程序</h3>
+
+
+
+<p>这是一个非常简单的步骤，使用早期Java版本创建的应用程序都可以在JDK 11上运行而不会出现重大问题，除非你得依赖模块中包括JEP-320中从JDK中删除的Java EE或CORBA模块。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="731" height="386" src="http://ijz.me/wp-content/uploads/2025/03/5.png" alt="" class="wp-image-1017" srcset="http://ijz.me/wp-content/uploads/2025/03/5.png 731w, http://ijz.me/wp-content/uploads/2025/03/5-300x158.png 300w, http://ijz.me/wp-content/uploads/2025/03/5-624x329.png 624w" sizes="auto, (max-width: 731px) 100vw, 731px" /></figure>
+
+
+
+<p>如果缺少类，你可能需要显式添加java.activation，java.transaction和java.xml.bind依赖项。在类文件错误的情况下，你将需要更新Java字节码增强库，如ASM，bytebuddy，javassist或cglib等。</p>
+
+
+
+<h2 class="wp-block-heading">2.使用Java 11编译应用程序</h2>
+
+
+
+<p>为什么要将源代码升级到Java 11？</p>
+
+
+
+<p>局部变量类型推断（var关键字）。</p>
+
+
+
+<p>新的本机不可修改集合API。</p>
+
+
+
+<p>新的反应流API。</p>
+
+
+
+<p>改进的流/谓词/可选API。</p>
+
+
+
+<p>改进的系统过程API。</p>
+
+
+
+<p>改进的文件API。</p>
+
+
+
+<p>支持HTTP/2。</p>
+
+
+
+<p>标准Java异步HTTP客户端。</p>
+
+
+
+<p>多版本JAR。</p>
+
+
+
+<p>详细步骤：<strong></strong></p>
+
+
+
+<h3 class="wp-block-heading">1.克隆Spring PetClinic存储库</h3>
+
+
+
+<p>git clone github:spring-projects/spring-petclinic.git</p>
+
+
+
+<h3 class="wp-block-heading">2.更新版本信息</h3>
+
+
+
+<p>打开pom.xml并更新java.version属性</p>
+
+
+
+<p>&lt;<strong>java.version</strong>&gt;11&lt;/<strong>java.version</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>maven.compiler.source</strong>&gt;${java.version}&lt;/<strong>maven.compiler.source</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>maven.compiler.target</strong>&gt;${java.version}&lt;/<strong>maven.compiler.target</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">3.删除cobertura-maven-plugin引用</h3>
+
+
+
+<p>因为它不支持JDK 11，而且也有年头不维护了。你可以使用支持较新JDK版本的JaCoCo。</p>
+
+
+
+<h3 class="wp-block-heading">4.更新javassist和mockito-core依赖项</h3>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.javassist&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;javassist&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;3.23.1-GA&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.mockito&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;mockito-core&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;2.20.0&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>scope</strong>&gt;test&lt;/<strong>scope</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">5.包括mockito-core depende</h3>
+
+
+
+<p>&lt;plugin&gt;</p>
+
+
+
+<p>&#8230;</p>
+
+
+
+<p><strong>&lt;dependency&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.mockito&lt;/groupId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp; &lt;version&gt;2.20.0&lt;/version&gt;</strong></p>
+
+
+
+<p><strong>&lt;/dependency&gt;</strong></p>
+
+
+
+<p>&#8230;</p>
+
+
+
+<p>&lt;/plugin&gt;</p>
+
+
+
+<h3 class="wp-block-heading">6.使用最新的asm依赖项将maven-compiler-plugin更新到3.7.0+版本</h3>
+
+
+
+<p>&lt;plugin&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;version&gt;<strong>3.7.0</strong>&lt;/version&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;configuration&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;release&gt;${java.version}&lt;/release&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/configuration&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;dependencies&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&lt;dependency&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.ow2.asm&lt;/groupId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;asm&lt;/artifactId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;version&gt;6.2&lt;/version&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/dependency&gt;</strong></p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/dependencies&gt;</p>
+
+
+
+<p>&lt;/plugin&gt;</p>
+
+
+
+<h3 class="wp-block-heading">7.使用最新的asm依赖项将maven-surefire-plugin更新到2.21.0+版本</h3>
+
+
+
+<p>&lt;plugin&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;version&gt;<strong>2.21.0</strong>&lt;/version&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;dependencies&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&lt;dependency&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.ow2.asm&lt;/groupId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;asm&lt;/artifactId&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;version&gt;6.2&lt;/version&gt;</strong></p>
+
+
+
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/dependency&gt;</strong></p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/dependencies&gt;</p>
+
+
+
+<p>&lt;/plugin&gt;</p>
+
+
+
+<h3 class="wp-block-heading">8.包含java.xml.bind模块依赖项，因为JEP-320在JDK 11中删除了这些模块</h3>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.glassfish.jaxb&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;jaxb-runtime&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;2.4.0-b180608.0325&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">9.在pom.xml中包含GlassFish JAXB存储库</h3>
+
+
+
+<p>&lt;<strong>repositories</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>repository</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>id</strong>&gt;jvnet-nexus-staging&lt;/<strong>id&gt;</strong></p>
+
+
+
+<p>&lt;<strong>url</strong>&gt;http://maven.java.net/content/repositories/staging/&lt;/<strong>url</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>layout</strong>&gt;default&lt;/<strong>layout</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>repository</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>repositories</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">10.使用spring-boot-maven-plugin运行应用程序</h3>
+
+
+
+<p>./mvnw spring-boot:run</p>
+
+
+
+<p>然后可以通过浏览器访问应用程序界面：localhost:8080</p>
+
+
+
+<h3 class="wp-block-heading">11.打包应用程序并运行测试</h3>
+
+
+
+<p>./mvnw clean package</p>
+
+
+
+<h3 class="wp-block-heading">12.使用打包的可执行jar运行应用程序</h3>
+
+
+
+<p>java -jar target/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar</p>
+
+
+
+<p>现在，你可以使用Java 11编译和运行应用程序，但还没用到模块系统。</p>
+
+
+
+<h2 class="wp-block-heading">3.模块化应用程序以使用模块系统</h2>
+
+
+
+<p>为什么要迁移到模块系统？</p>
+
+
+
+<p><strong>配置更可靠</strong>：用程序组件声明显式依赖的方法来替换脆弱的，容易出错的类路径机制。</p>
+
+
+
+<p><strong>强封装</strong>：允许组件声明其中哪些公共类型可供其他组件访问，哪些不可访问。</p>
+
+
+
+<p><strong>为你的应用程序创建最小的JRE映像</strong>。</p>
+
+
+
+<p><strong>•减少应用程序内存占用量。</strong></p>
+
+
+
+<p><strong>•优化应用程序启动时间。</strong></p>
+
+
+
+<p><strong>具体步骤如下：</strong></p>
+
+
+
+<h3 class="wp-block-heading">1.创建模块文件module-info.java</h3>
+
+
+
+<p>在src/main/java目录中创建一个名为module-info.java的文件，其中包含以下内容：</p>
+
+
+
+<p><strong>module</strong> spring.petclinic {</p>
+
+
+
+<p>}</p>
+
+
+
+<p>现在，当你尝试编译应用程序时，你会看到如下所示很多错误告警：</p>
+
+
+
+<p>Error:(19, 27) java: package org.springframework.boot is not visible</p>
+
+
+
+<p>(package org.springframework.boot is declared in module spring.boot, but module spring.petclinic does not read it)</p>
+
+
+
+<p>这表明应用程序已经表现为模块化布局，并且必须连接模块以进行编译和运行时。</p>
+
+
+
+<p>你可以使用Maven依赖项插件解析目标列出当前在类路径中的所有模块名称，并将它们添加到module-info中：</p>
+
+
+
+<p>./mvnw compile org.apache.maven.plugins:maven-dependency-plugin:3.1.1:resolve</p>
+
+
+
+<p>注意：上面的命令不排除传递依赖项或包括JDK模块。</p>
+
+
+
+<p>遗憾的是，由于许多原因，jdeps无法帮助你生成模块描述列表，但主要是因为第三方库尚未添加模块系统描述，它们被视为特殊的自动模块。</p>
+
+
+
+<p>最终的模块描述符应如下所示：</p>
+
+
+
+<p><strong>open module </strong>spring.petclinic {</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>cache.api;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.activation;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.instrument;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.persistence;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.sql;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.transaction;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.validation;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>java.xml.bind;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>org.hibernate.validator;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.beans;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.boot;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.boot.autoconfigure;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.context;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.core;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.data.commons;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.data.jpa;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.tx;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.web;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>spring.webmvc;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; <strong>requires </strong>jdk.unsupported;</p>
+
+
+
+<p>}</p>
+
+
+
+<p>注意：由于Spring Framework和Hibernate JPA的反射要求，open关键字是必需的，jdk.unsupported是sun.misc.Unsafe的survivors。</p>
+
+
+
+<h3 class="wp-block-heading">2.构建并引入modules目录</h3>
+
+
+
+<p>引入maven-jar-plugin以创建应用程序jar（仅限类）并将其复制到modules目录。</p>
+
+
+
+<p>&lt;<strong>plugin</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;maven-jar-plugin&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;3.1.0&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${project.build.directory}/modules</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>plugin</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">3.引入maven-dependency-plugin以将运行时依赖项复制到模块目录。</h3>
+
+
+
+<p>&lt;<strong>plugin</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.apache.maven.plugins&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;maven-dependency-plugin&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;3.1.1&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>executions</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<strong>phase</strong>&gt;package&lt;/<strong>phase</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goal</strong>&gt;copy-dependencies&lt;/<strong>goal</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${project.build.directory}/modules</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>outputDirectory</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>includeScope</strong>&gt;runtime&lt;/<strong>includeScope</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>excludeArtifactIds</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; spring-boot-devtools</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>excludeArtifactIds</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>executions</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>plugin</strong>&gt;</p>
+
+
+
+<p>注意：应该从模块中排除spring-boot-devtools依赖项。</p>
+
+
+
+<h3 class="wp-block-heading">4.包括java.persistence和java.transaction模块依赖项</h3>
+
+
+
+<p>它们修复了更新版本的自动模块问题：</p>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.hibernate.javax.persistence&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;hibernate-jpa-2.1-api&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;1.0.2.Final&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&lt;<strong>dependency</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.jboss.spec.javax.transaction&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;jboss-transaction-api_1.2_spec&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;1.1.1.Final&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>dependency</strong>&gt;</p>
+
+
+
+<p>同样增加<strong>javax.transaction</strong>依赖给 <strong>spring-boot-starter-data-jpa.</strong></p>
+
+
+
+<p>&lt;<strong>exclusions</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>exclusion</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;javax.transaction-api&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;javax.transaction&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>exclusion</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>exclusions</strong>&gt;</p>
+
+
+
+<p>注意：当存在module-info.java并且启用了fork进程时，surefire会创建一个包含模块和未命名模块的混合类路径，从而导致模块可见性问题，这会阻止应用程序启动。</p>
+
+
+
+<h3 class="wp-block-heading">6.打包并测试应用程序</h3>
+
+
+
+<p>./mvnw clean package</p>
+
+
+
+<h3 class="wp-block-heading">7.使用Java模块系统运行应用程序</h3>
+
+
+
+<p>java &#8211;add-opens java.base/java.lang=spring.core,javassist \</p>
+
+
+
+<p>&#8211;module-path target/modules \</p>
+
+
+
+<p>&#8211;module spring.petclinic/org.springframework.samples.petclinic.PetClinicApplication</p>
+
+
+
+<p>注意：由于Spring和Hibernate依赖项会有请求JDK反射访问，因此需要&#8211;add-opens。</p>
+
+
+
+<h3 class="wp-block-heading">8.设置main-class属性</h3>
+
+
+
+<p>使用以下命令设置模块main-class属性，删除使用module参数指定的主类：</p>
+
+
+
+<p>jar &#8211;update \</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &#8211;file=target/modules/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar \</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &#8211;main-class=org.springframework.samples.petclinic.PetClinicApplication</p>
+
+
+
+<h3 class="wp-block-heading">9.为了自动执行上一步，你可以添加exec-maven-plugin：</h3>
+
+
+
+<p>&lt;<strong>plugin</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>groupId</strong>&gt;org.codehaus.mojo&lt;/<strong>groupId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>artifactId</strong>&gt;exec-maven-plugin&lt;/<strong>artifactId</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>version</strong>&gt;1.6.0&lt;/<strong>version</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;<strong>executions</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>id</strong>&gt;module-main-class&lt;/<strong>id</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>phase</strong>&gt;package&lt;/<strong>phase</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>goal</strong>&gt;exec&lt;/<strong>goal</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>goals</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>executable</strong>&gt;jar&lt;/<strong>executable</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>arguments</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;update</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;file=${project.build.directory}/modules/${project.build.finalName}.jar</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;main-class=org.springframework.samples.petclinic.PetClinicApplication</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8211;module-version=${project.version}</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>argument</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>arguments</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>configuration</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>execution</strong>&gt;</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; &lt;/<strong>executions</strong>&gt;</p>
+
+
+
+<p>&lt;/<strong>plugin</strong>&gt;</p>
+
+
+
+<h3 class="wp-block-heading">10.现在你可以在没有显式主类声明的情况下运行应用程序：</h3>
+
+
+
+<p>./mvnw clean package</p>
+
+
+
+<p>java &#8211;add-opens java.base/java.lang=spring.core,javassist \</p>
+
+
+
+<p>&#8211;module-path=target/modules \</p>
+
+
+
+<p>&#8211;module spring.petclinic</p>
+
+
+
+<p>注意：由于MJAR-238，Maven还不支持开箱即用。</p>
+
+
+
+<p>ok，整个迁移过程就完成。如果你对该文档和问题，请给虫虫留言，欢迎关注虫虫。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1012</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>微软如何让我对C 和.NET 重拾旧爱</title>
+		<link>http://ijz.me/?p=1010</link>
+					<comments>http://ijz.me/?p=1010#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 11 May 2018 06:10:00 +0000</pubDate>
+				<category><![CDATA[编程]]></category>
+		<category><![CDATA[.net]]></category>
+		<category><![CDATA[c#]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1010</guid>
+
+					<description><![CDATA[&#8220;为什么你会想要使用ASP.NET，还活90年代？&#8221;，几年前，当我提出考虑要在一个项目 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>&#8220;为什么你会想要使用ASP.NET，还活90年代？&#8221;，几年前，当我提出考虑要在一个项目中使用ASP.NET时候，我的一位老同事的回应。当时我很大程度上认同他的看法。微软雇佣了一个伟大的程序员，开发了一个伟大的语言，创建了一个伟大的Web框架和IDE工具，但人们仍然不太满意。那次我们最终没有为该项目使用ASP.NET的主要原因是因为语言和框架的封闭模式。使用ASP.NET意味着为我们的服务器必须支付Windows服务器许可证费用，或者为了让我们的C#应用程序跑在Linux上，我们就必须的使用Mono，一个漏洞百出，需要填很多的坑的不成熟的玩具。</p>
+
+
+
+<span id="more-1010"></span>
+
+
+
+<p>但从那以后，很多事情都发生了变化，微软真真切切的改变了游戏规则，并将ASP.NET从被迫使用的东西变成适宜的选择，因为即使是最铁杆时髦开发者，你的雇主也需要使用它来满足需求，.net core&nbsp;变成了满足需求的称手工具。</p>
+
+
+
+<p>当很多年前第一次学习C#时，我认为它是有史以来最好的编程语言。但是我的兴奋并没有持续很长时间，很快我就发现发现他有很多的缺点。我很早就开始学习ASP.NET Core，几乎在第刚开始公开发布的时候就已经关注它了。当微软微软宣布要实现ASP.NET Core跨平台时候，我对ASP.NET Core和C#的兴趣就再次被提了起来。</p>
+
+
+
+<p>所以，微软当时的体系的问题并不在于他们技术、性能或其他大多数指标。问题在于它被限定在Windows这个专有的平台，你不得不使用专有的需要付费微软技术，比如Windows Server和IIS来部署你的应用程序。这意味着与大多数其他技术体系相比，你服务的运行成本要高得多，甚至是C#的最大竞争对手Java。就算这成本对于每年产生很多收入的大型企业而言，与支付的开发人员工资而言算不得什么。但对于早期初创企业或试图用其搞点副业的的开发人员来说，这还是有点贵。</p>
+
+
+
+<p>与微软的体系相关的另一个糟糕的问题是，他们的技术太陈旧，有很多陈旧的、丑陋的和不一致的API，这使得整个体系看起来很臃肿。</p>
+
+
+
+<p>随着.NET Core，ASP.NET Core和C#的更新版本的推出，微软确实改变了游戏规则。 C＃已经是行业内使用的顶级语言之一，但微软采取的顺应潮流的做法确实使他们的位置得到了保留，并帮助其被大量运用。如果你对这比较生疏，让我来先来解释下：.NET Core是微软几年前发布的一个新框架，在此之前它解决了所有缺点。它是跨平台，高性能，精致，并且最重要的是他还开源。以前没有人想过微软会发布任何可以在Windows以外的平台上运行的东西，没想过微软整个开发平台可以在Linux或者苹果的Mac OS X上运行。</p>
+
+
+
+<h1 class="wp-block-heading">微软.net core开发体系</h1>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="519" height="315" src="http://ijz.me/wp-content/uploads/2018/05/1.jpg" alt="" class="wp-image-1019" srcset="http://ijz.me/wp-content/uploads/2018/05/1.jpg 519w, http://ijz.me/wp-content/uploads/2018/05/1-300x182.jpg 300w" sizes="auto, (max-width: 519px) 100vw, 519px" /></figure>
+
+
+
+<p>微软体系结构有点庞乱，下面概要介绍下其中的主角：</p>
+
+
+
+<h2 class="wp-block-heading">C# 语言</h2>
+
+
+
+<p>这是微软开发的通用编程语言的名称，是ECMA（欧洲计算机制造联合会）批准的标准语言(ECMA 334)，也是ISO标准语言（ISO/IEC 23271:2006）。本文章主要以C# V7为例，其他相关信息，参考微软的C#网站。</p>
+
+
+
+<p>说到ECMA我们说给话外主题，大家常说Javascript的实际上是个惯例叫法，但是这个叫法是有问题的。js的真正名字是ECMAScript（ECMA262），早期js还是归网景公司的时候，为了蹭java语言的热点，所以叫了Javascript，但是这个名字是被SUN注册商标的，但是SUN还是个很地道的公司，也没有究其法律责任，所以叫法就延续下来了。直到网景公司将他捐给了ECMA，才真正叫了ECMAScript，Javascript但是叫顺了也被延续下来了。但是后来SUN被Oracle收购了，包括Java、mysql和Javascript都是Oracle的商标，所以现在如果公司在某些商业场合时候不注意用Javascript时候会有版权纠纷的。毕竟Oracle已经把谷歌告了，还要求赔几十亿刀，也有js开发者的应用使用Javascript这个名字收到Oracle的律师信，所以作为一个话外题给大家提个醒。</p>
+
+
+
+<h2 class="wp-block-heading">.NET 框架</h2>
+
+
+
+<p>这是一个通用应用程序程序开发框架。它可以用于创建从桌面应用程序、移动应用程序到Web应用程序的所有应用。但只能在Microsoft的Windows平台上运行。</p>
+
+
+
+<h2 class="wp-block-heading">.NET Core</h2>
+
+
+
+<p>这是跨平台.NET的新版本，适用于大多数主要平台等非微软Windows平台。这应该是下一代.NET框架</p>
+
+
+
+<h2 class="wp-block-heading">ASP.NET Core</h2>
+
+
+
+<p>这是一个基于.NET Core框架构建的Web应用程序框架。这是之前ASP.NET的后继者。ASP.NET只支持在windows IIS下运行。</p>
+
+
+
+<p>看完主角简介，让我们更深入了解下微软基于.NET Core的新技术体系，就是这些技术体系让我喜欢上C＃和.NET Core的。</p>
+
+
+
+<h1 class="wp-block-heading">特性</h1>
+
+
+
+<p>从外部看，整个新的.NET Core生态系统可能看起来像是一只披着喜羊羊皮的灰太狼，对那些没有做过多少研究的人来说，很容易认为它只是旧版.NET Framework旧人换新婚纱的版本。但事实并非如此，微软近年内一直在努力推动开源战略。微软宣称，.NET Core与其前任不同之处在于新增的功能。最大的特点是新的技术体系是跨平台的。跨平台实施并不像我们过去看到过的其他一些语言那样简单，他们基于跨平台的思想重新构建了整个体系架构。这也使得能够使用最新的应用包装系统，例如容器和的Docker。他们还开发了一些合宜的工具，可以让你基于.NET Core进行跨平台开发，这是微软以前从未做过的事情。</p>
+
+
+
+<p>另一个主要功能是删除对IIS的依赖，这是微软自家的Web服务器。微软创建了一个新的没有依赖的嵌入式Web服务器Kestrel，它不仅没有任何的依赖，而且还支持开发人员将它嵌入到应用程序中去，无需另外再安装运行环境，从而为部署增加了更多的灵活性。然而，这些还不是的.NET Core所带来的全部功能。更多功能，可以参考，微软官方的Microsoft .NET Core Guide系列。</p>
+
+
+
+<p>体系架构的新鲜血液注入不仅限于.NET Core，C#也一直在持续更新，并增加了许多有用的功能。值得提及的有tuples，Async/await，local 函数等，C#的开发也更加便捷高效。</p>
+
+
+
+<h1 class="wp-block-heading">性能</h1>
+
+
+
+<p>开始使用.NET Core的另一个重要原因就是性能的极大改进。当涉及流行的通用编程语言之间的性能对比项目是，微软再次成为了吸人眼球的焦点。性能是开发社区中一个敏感的主题，因为体系和工具只有在优化应用程序的性能时才能带你到达目的地，剩下的事由码农来搞定就行。但是，开发体系可以做的是鼓励并强化性能的最佳实践，并优化常用的使用场景，以便在更大的范围内最大限度地提高性能，而这正是微软所最擅长的。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="492" height="304" src="http://ijz.me/wp-content/uploads/2018/05/2.jpg" alt="" class="wp-image-1020" srcset="http://ijz.me/wp-content/uploads/2018/05/2.jpg 492w, http://ijz.me/wp-content/uploads/2018/05/2-300x185.jpg 300w" sizes="auto, (max-width: 492px) 100vw, 492px" /></figure>
+
+
+
+<p>C#本身就是一种令人惊叹的语言，并且内置许多功能，可以让你调整应用程序的性能，但.NET Core团队一直在努力优化大量内置API以实现最佳性能。即使早期版本的ASP.NET Core在TechEmpower Benchmarks的性能都已经夺人眼球。有大量的企业利用.NET Core中可用的性能优化以最大限度地提高效率的例子。微软最近发布了最新版本的.NET Core 2.1以及带来的巨大地性能改进。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="601" height="429" src="http://ijz.me/wp-content/uploads/2018/05/3.jpg" alt="" class="wp-image-1021" srcset="http://ijz.me/wp-content/uploads/2018/05/3.jpg 601w, http://ijz.me/wp-content/uploads/2018/05/3-300x214.jpg 300w" sizes="auto, (max-width: 601px) 100vw, 601px" /></figure>
+
+
+
+<h1 class="wp-block-heading">多功能性</h1>
+
+
+
+<p>让我再次拾起微软体系的最大原因是多功能性。由于他是开源、跨平台的，我几乎可以用一个技术栈不出体系就能构建一切，做全栈开发。你可以使用UWP构建桌面应用程序，使用Xamarin（现为Microsoft的一部分）开发跨平台移动应用程序，使用ASP.NET Core做Web开发，使用SignalR发布实时应用程序等。我的开发哲学是“用正确的工作，做正确的任务”，而.net core让我仍然可以使用我熟悉和喜爱的语言，高效的工具和API的高效率的完成开发，而且最重要的是所有这一切都是免费的。</p>
+
+
+
+<h1 class="wp-block-heading">工具</h1>
+
+
+
+<p>我最后要说的是工具。工具链是当前.NET生态系统做的最好的事情之一。你有很多种在多个平台上开发的方式。如果你喜欢使用IDE，Microsoft的主IDE，Visual Studio是首屈一指的。对于那些喜欢对其工具进行更多设置改装的，并且比较讨厌使用现成IDE提供的工具的用户，可以选择微软开源的Visual Studio Code，这是微软一个免费开源的代码编辑器和命令行工具，它们允许你构建，测试和开发应用程序，也算是一个完整的IDE。 VS Code支持大量的第三方扩展，可以帮助你更好地开发，提升你的开发体验。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="640" height="469" src="http://ijz.me/wp-content/uploads/2018/05/4.jpg" alt="" class="wp-image-1022" srcset="http://ijz.me/wp-content/uploads/2018/05/4.jpg 640w, http://ijz.me/wp-content/uploads/2018/05/4-300x220.jpg 300w, http://ijz.me/wp-content/uploads/2018/05/4-624x457.jpg 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<p>微软也推出了&nbsp;Mac版的Visual Studio，与Windows版本不同，但它是一个完整的软件包，可让你在Mac OS上的Microsoft全新开发体系下进行开发。如果你在Linux上，或者只是想使用非微软家产品的IDE，可以选用Jetbrains的产品，他们已经发布了一个名为Rider的IDE，非常棒，是我在Mac上开发的主力开发工具。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="640" height="307" src="http://ijz.me/wp-content/uploads/2018/05/5.jpg" alt="" class="wp-image-1023" srcset="http://ijz.me/wp-content/uploads/2018/05/5.jpg 640w, http://ijz.me/wp-content/uploads/2018/05/5-300x144.jpg 300w, http://ijz.me/wp-content/uploads/2018/05/5-624x299.jpg 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<p>Rider支持Windows、Linux和Mac OS三大要平台。我的主要开发机器是MacBook，我非常喜欢Jetbrains Rider或VSCode的工作流程。微软的Intellisense自动完成系统是我在现有的开发体系中找到的最佳地解决方案，而且通过添加诸如Jetbrains ReSharper等工具，可以实现一个完美高效的开发平台，应该找不到比这更好的其他工具组合了。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="640" height="400" src="http://ijz.me/wp-content/uploads/2018/05/6.jpg" alt="" class="wp-image-1024" srcset="http://ijz.me/wp-content/uploads/2018/05/6.jpg 640w, http://ijz.me/wp-content/uploads/2018/05/6-300x188.jpg 300w, http://ijz.me/wp-content/uploads/2018/05/6-624x390.jpg 624w" sizes="auto, (max-width: 640px) 100vw, 640px" /></figure>
+
+
+
+<p>微软一直在开发工具上长期投入时间和工程设计，他们拥有稳定的开发体系，经验丰富且知识渊博的工程团队以及多年积累的信任。新的.NET Core开辟了一个更大的市场，同时展示了一家大型公司可以做什么以及他们能够怎么快速转型。在现任CEO Satya Nadella被任命后，他开始推动公司的工程和开发方面，从而进行所有这些重大变革，依托其工程背景，改革目前看来很成功。&nbsp;</p>
+
+
+
+<p>C#和.NET Core可能是微软在开发领域长期以来所做最好的事情，也是献给开源界的一份大礼。当然我在此还要提到这体系外用来替代JS的一个最流行的免费开源编程语言Typescript。也是伟大程序员安德斯·海尔斯伯格发明有又一干货（Delphi，.net,J++ ,C#,F#）。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="625" height="401" src="http://ijz.me/wp-content/uploads/2018/05/7.jpg" alt="" class="wp-image-1025" srcset="http://ijz.me/wp-content/uploads/2018/05/7.jpg 625w, http://ijz.me/wp-content/uploads/2018/05/7-300x192.jpg 300w" sizes="auto, (max-width: 625px) 100vw, 625px" /></figure>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1010</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="zh-Hans">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="zh-Hans">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="zh-Hans">
+<!--<![endif]-->
+
+<!-- Mirrored from ijz.me/?p=62 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:58:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>sql2000常见问题 | 虫虫之家</title>
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="pingback" href="xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://ijz.me/wp-content/themes/twentytwelve/js/html5.js?ver=3.7.0" type="text/javascript"></script>
+<![endif]-->
+<meta name='robots' content='max-image-preview:large' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel='dns-prefetch' href='index.html' />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; Feed" href="indexd784.html?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; 评论 Feed" href="indexa6da.html?feed=comments-rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; sql2000常见问题 评论 Feed" href="index552f.html?feed=rss2&amp;p=62" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/ijz.me\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.2"}};
+/*! This file is auto-generated */
+!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83d\udc26\u200d\u2b1b","\ud83d\udc26\u200b\u2b1b")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<link rel='stylesheet' id='crayon-css' href='wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min653d.css?ver=2.7.1' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='wp-includes/css/dist/block-library/style.mind1c0.css?ver=6.7.2' type='text/css' media='all' />
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote:where(.has-text-align-right){border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote:where(.has-text-align-center){border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote:where(.is-style-plain){border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #21759b;--wp--preset--color--dark-gray: #444;--wp--preset--color--medium-gray: #9f9f9f;--wp--preset--color--light-gray: #e6e6e6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='twentytwelve-fonts-css' href='wp-content/themes/twentytwelve/fonts/font-open-sans6a62.css?ver=20230328' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css' href='wp-content/themes/twentytwelve/style3eda.css?ver=20241112' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-block-style-css' href='wp-content/themes/twentytwelve/css/blocks2676.css?ver=20240812' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css' href='http://ijz.me/wp-content/themes/twentytwelve/css/ie.css?ver=20240722' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" id="crayon_js-js-extra">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/ijz.me\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002","minimize":"\u70b9\u51fb\u5c55\u5f00\u4ee3\u7801"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min653d.js?ver=2.7.1" id="crayon_js-js"></script>
+<script type="text/javascript" src="wp-content/themes/twentytwelve/js/navigation66f2.js?ver=20141205" id="twentytwelve-navigation-js" defer="defer" data-wp-strategy="defer"></script>
+<link rel="https://api.w.org/" href="index52f0.json?rest_route=/" /><link rel="alternate" title="JSON" type="application/json" href="indexb508.json?rest_route=/wp/v2/posts/62" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.php?rsd" />
+<meta name="generator" content="WordPress 6.7.2" />
+<link rel="canonical" href="index5c36.html?p=62" />
+<link rel='shortlink' href='index5c36.html?p=62' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="index2b31.json?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D62" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="indexa1fa.php?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D62&amp;format=xml" />
+</head>
+
+<body class="post-template-default single single-post postid-62 single-format-standard wp-embed-responsive full-width custom-font-enabled">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header">
+		<hgroup>
+			<h1 class="site-title"><a href="index.html" rel="home">虫虫之家</a></h1>
+			<h2 class="site-description">略懂技术</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation">
+			<button class="menu-toggle">菜单</button>
+			<a class="assistive-text" href="#content">跳至正文</a>
+			<div class="menu-top-container"><ul id="menu-top" class="nav-menu"><li id="menu-item-969" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-969"><a href="index5b0d.html?cat=12">编程</a></li>
+<li id="menu-item-970" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-970"><a href="index0fbe.html?cat=21">perl</a></li>
+<li id="menu-item-971" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-971"><a href="index9035.html?cat=22">php</a></li>
+<li id="menu-item-972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-972"><a href="index2d79.html?cat=26">web</a></li>
+<li id="menu-item-973" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-973"><a href="indexc728.html?cat=7">工具</a></li>
+<li id="menu-item-974" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-974"><a href="indexb0b7.html?cat=6">安全</a></li>
+<li id="menu-item-975" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-975"><a href="index3f7b.html?cat=2">linux</a></li>
+<li id="menu-item-976" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-976"><a href="indexaa1e.html?cat=4">古文</a></li>
+<li id="menu-item-977" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-977"><a href="indexc055.html?cat=17">随感</a></li>
+<li id="menu-item-978" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-978"><a href="index54cb.html?cat=23">rex</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-62" class="post-62 post type-post status-publish format-standard hentry category-database">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">sql2000常见问题</h1>
+										<div class="comments-link">
+					<a href="index5c36.html?p=62#respond"><span class="leave-reply">发表评论</span></a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p>////////////////////////////////安装问题//////////////////////////</p>
+<p>Win2k      装不上      SQL      Server      2000      问题很常见.<br />
+//          (1)配置服务器时中断.<br />
+//          (2)注册      ActiveX      时中断.<br />
+//          (3)显示到100%的时候中断.<br />
+当然重新安装      Windows      2000      完全可以安装      SQL      Server      2000.</p>
+<p>安全起见:<br />
+1&gt;先备份您的注册表.<br />
+2&gt;备份您的数据[进不了SQL      Server      2000,可以备份      Program<br />
+FilesMicrosoft      SQL  &amp;nbsp103f;   ServerMSSQLData      文件夹的文件.]</p>
+<p>您必须知道:<br />
+Windows      2000        Server可以安装SQL      Server      2000的任何版本.<br />
+Windows      2000        Professional只能安装SQL      Server      2000的个人版本.(通过一些办法也可以安装其他版本)</p>
+<p>有两种办法:<br />
+1:先卸载您的      SQL      Server      2000,必要的时候删除      Program<br />
+FilesMicrosoft      SQL      Server      文件夹.<br />
+2:放入      SQL      Server      2000      光盘.<br />
+3:在&#8221;开始&#8221;&#8211;&#8220;运行&#8221;键入      &#8220;F:x86setup.exe      k=dbg&#8221;      (F是光盘)<br />
+[此命令的意思单步运行安装      SQL      Server      2000]<br />
+4:98%安装不成功,没有任何的提示.可能是:<br />
+(1)配置服务器时中断.<br />
+(2)注册      ActiveX      时中断.<br />
+(3)显示到100%的时候中断.</p>
+<p>这样一来,您只能使用下面的办法了!否则,您只有      FORMAT了!<br />
+1      打开注册表<br />
+在&#8221;开始&#8221;&#8211;&#8220;运行&#8221;键入      &#8220;regedit&#8221;<br />
+2      按下列顺序点击打开<br />
++      HKEY_LOCAL_MACHINE<br />
++      SOFTWART<br />
++      Microsoft<br />
++      Windows<br />
++      CurrentVersion<br />
+&amp;103fnbsp;                                       +      Setup<br />
++      ExceptionComponents<br />
+3      将      ExceptionComponents      下面的文件夹全部删除!<br />
+如      {60BFF50D-FB2C-4498-A577-C9548C390BB9}<br />
+{60BFF50D-FB2C-4498-A577-C9548C390BB9}<br />
+{60BFF50D-FB2C-4498-A577-C9548C390BB9}<br />
+{60BFF50D-FB2C-4498-A577-C9548C390BB9}<br />
+&#8230;&#8230;.</p>
+<p>4      重新启动:<br />
+5      重新安装      SQL      Server      2000</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;<br />
+如果问题依旧,试试先修复操作系统.</p>
+<p>命令提示符下执行:<br />
+sfc      /scannow</p>
+<p style="margin: 0cm 0cm 0pt;">最后的方法：换Windows 2000 安装盘 和SQL Server2000安装盘</p>
+<p style="margin: 0cm 0cm 0pt;">有时候问题的原因很奇怪，有人曾更换了一个电源就解决了问题。</p>
+<p style="margin: 0cm 0cm 0pt;">1 先卸载您的 SQL Server 2000,必要的时候删除 Program FilesMicrosoft SQL Server 文件夹</p>
+<p style="margin: 0cm 0cm 0pt;">2 打开注册表 在&#8221;开始&#8221;&#8211;&#8220;运行&#8221;键入 &#8220;regedit&#8221;</p>
+<p style="margin: 0cm 0cm 0pt;">3 按下列顺序点击打开 + HKEY_LOCAL_MACHINE + SOFTWART + Microsoft + Windows + CurrentVersion + Setup + ExceptionComponents</p>
+<p style="margin: 0cm 0cm 0pt;">4 将 ExceptionComponents 下面的文件夹全部删除! 如 {60BFF50D-FB-4498-A577-C390BB9} {60BFF50D-FB-4498-A577-C390BB9} {60BFF50D-FB-4498-A577-C390BB9} {60BFF50D-FB-4498-A577-C390BB9}</p>
+<p style="margin: 0cm 0cm 0pt;">6 重新启动: 7 重新安装 SQL Server 2000</p>
+<p style="margin: 0cm 0cm 0pt;">其他方法： &#8212; SQL Server 2000安装错误“安装配置服务器失败”解决方法</p>
+<p>研究了两天的心得。 安装SQL Server 2000时，在安装后面如果出现“安装配置服务器失败”错误，并且安装终止时，可能引起的原因如下： 当您在安装了证书服务器的计算机上安装 SQL Server 2000 时将出现一个错误消息。如果证书服务器安装在运行 Microsoft Windows 2000/2003 的计算机103f上，且证书颁发机构 (CA) 名称与机器主机名相同或以机器主机名开头，那么您的 SQL Server 2000 安装程序将失败，您会收到下面的错误消息： 安装程序配置服务器失败。参考服务器错误日志和 C:WINDOWSsqlstp.log 了解更多信息。</p>
+<p>此问题最早是在 SQL Server 2000 Service Pack 1 中纠正的。 有关其他信息，请单击下面的文章编号，以查看 Microsoft 知识库中相应的文章： 302409 FIX：Unable to Connect to SQL Server 2000 When Certificate Authority Name Is the Same As the Host Name of the Windows 2000 Computer 解决方法：删除“证书服务”。</p>
+<p>（1） 打开“控制面板”－&gt;“添加或删除程序”－&gt;“添加/删除Windows组件”</p>
+<p>（2） 在打开的窗口中，把“证书服务”前面的勾去掉，如下图所示：</p>
+<p>（3） 点击下一步，直至完成。</p>
+<p>（4）重新安装SQL Server 2000。</p>
+<p>问：安装MSDE时出现：“配置服务器失败，请参考服务器错误日志和安装错误日志，以了解更多信息”</p>
+<p>答：此问题可能是由于计算机系统驱动器上还保留着以前的用户数据，安装程序不会覆盖以前的用户数据，因而导致配置服务器失败。</p>
+<p>可以尝试用下面的方法来解决此问题： 删除 [系统驱动器号]：Program FilesMicrosoft SQL ServerMSSQL 文件夹</p>
+<p>另外，安装时还要注意：</p>
+<p>1、用有系统管理员权限的用户来执行安装操作；</p>
+<p>2、建议安装前先退出其他应用程序，和暂停使用防病毒软件和防火墙； 如果机器上安装过SQL Server 清理操作系统注册表下如下路径的残存文件： HKEY_CURRENT_USERSoftwareMicrosoftMSSQLServer HKEY_LOCAL_MACHINESOFTWAREMicrosoftMSSQLServer 并且删除磁盘中原来安装路径下的残存文件</p>
+<p>//////////////////////////////////////卸载//////////////////////////////////////////////////////////</p>
+<p>&nbsp;</p>
+<p>如何卸载SQLServer2000</p>
+<p>通过正常方法无法卸载SQLServer2000时,可以使用下面的方法:<br />
+（1）在计算机windows的“开始－运行”弹出窗口内录入“regedit.exe”，在出现的〔注册表编辑器〕里删除以下选项。     # HKEY_LOCAL_MACHINESOFTWAREMicrosoftMSSQLServer<br />
+# HKEY_LOCAL_MACHINESOFTWAREMicrosoftMicrosoft SQLServer<br />
+# HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesMSSQLServer<br />
+# HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesSQLSERVERAGENT<br />
+# HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesMSSQLServerADHelper<br />
+（2）手工删除SQL Server 2000默认安装目录C:Program FilesMicrosoft SQL Server。<br />
+（3）重新启动计算机。重装SQL或者MSDE的注意事项</p>
+<p>重新安装SQL或者MSDE必须注意以下几个方面的要点。<br />
+（1）计算机是否按照上面所介绍的已经完整的删除了SQL旧软件和它的注册表信息。<br />
+（2）SQL不能安装在除win 2000以外的系统上，而如果要安装服务器的SQL，那么计算机必须首先安装了win2000Server或者Win2000 Advance Server，这样的系统基础才可以安装SQL Server 2000作为服务器端数据库。<br />
+（3）MSDE可以在任何windows系统内安装作为单机版数据库环境，但如果计算机已经存在SQL或者MSDE系统，重新安装就会出错，必须完整删除已有的SQL或者MSDE系统才能重装。<br />
+（4）重装完毕必须重启计算机。解决sql2000挂起无法安装的问题</p>
+<p>解决sql2000挂起无法安装的问题<br />
+出现“以前的某个程序安装已在安装计算机上创建挂起的文件操作。运行安装程序之前必须重新启动计算机”错误。<br />
+步骤是：<br />
+1）添加/删除程序中彻底删除sql server。<br />
+2）将没有删除的sql server目录也删除掉。<br />
+3）打开注册表编辑器，在HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlSession Manager<br />
+中找到PendingFileRenameOperations项目，并删除它。这样就可以清除安装暂挂项目。<br />
+4）删除注册表中跟sql server相关的键。<br />
+一般只需要执行第三步就能解决问题了<strong>SQL Server 2000端口连接不上</strong></p>
+<p>SQL    Server连接中的三个最常见错误:</p>
+<p>一.&#8221;SQL    Server    不存在或访问被拒绝&#8221;</p>
+<p>这个是最复杂的,错误发生的原因比较多,需要检查的方面也比较多.</p>
+<p>一般说来,有以下几种可能性:</p>
+<p>1,SQL    Server名称或IP地址拼写有误<br />
+2,服务器端网络配置有误<br />
+3,客户端网络配置有误</p>
+<p>要解决这个问题,我们一般要遵循以下的步骤来一步步找出导致错误的原因.</p>
+<p>=============    首先,检查网络物理连接    =============<br />
+ping    &lt;服务器IP地址/服务器名称&gt;</p>
+<p>如果    ping    &lt;服务器IP地址&gt;    不成功,说明物理连接有问题,这时候要检查硬件设备,如网卡,HUB,路由器等.<br />
+还有一种可能是由于客户端和服务器之间安装有防火墙软件造成的,比如    ISA    Server.防火墙软件可能会屏蔽对    ping,telnet    等的响应<br />
+因此在检查连接问题的时候,我们要先把防火墙软件暂时关闭,或者打开所有被封闭的端口.</p>
+<p>如果ping    &lt;服务器IP地址&gt;    成功而,ping    &lt;服务器名称&gt;    失败<br />
+则说明名字解析有问题,这时候要检查    DNS    服务是否正常.<br />
+有时候客户端和服务器不在同一个局域网里面,这时候很可能无法直接使用服务器名称来标识该服务器,这时候我们可以使用HOSTS文件来进行名字解析,<br />
+具体的方法是:</p>
+<p>1.使用记事本打开HOSTS文件（一般情况下位于C:WINNTsystem32driversetc）.<br />
+添加一条IP地址与服务器名称的对应记录,如:<br />
+172.168.10.24    myserver</p>
+<p>2.或在    SQL    Server    的客户端网络实用工具里面进行配置,后面会有详细说明.</p>
+<p>=============    其次,使用    telnet    命令检查SQL    Server服务器工作状态    =============<br />
+telnet103f    &lt;服务器IP地址&gt;    1433</p>
+<p>如果命令执行成功,可以看到屏幕一闪之后光标在左上角不停闪动,这说明    SQL    Server    服务器工作正常,并且正在监听1433端口的    TCP/IP    连接<br />
+如果命令返回&#8221;无法打开连接&#8221;的错误信息,则说明服务器端没有启动    SQL    Server    服务,<br />
+也可能服务器端没启用    TCP/IP    协议,或者服务器端没有在    SQL    Server    默认的端口1433上监听.</p>
+<p>=============接着,我们要到服务器上检查服务器端的网络配置,检查是否启用了命名管道.是否启用了    TCP/IP    协议等等    =============<br />
+可以利用    SQL    Server    自带的服务器网络使用工具来进行检查.</p>
+<p>点击:程序    &#8212;    Microsoft    SQL    Server    &#8212;    服务器网络使用工具</p>
+<p>打开该工具后,在&#8221;常规&#8221;中可以看到服务器启用了哪些协议.<br />
+一般而言,我们启用命名管道以及    TCP/IP    协议.<br />
+点中    TCP/IP    协议,选择&#8221;属性&#8221;,我们可以来检查    SQK    Server    服务默认端口的设置<br />
+一般而言,我们使用    SQL    Server    默认的1433端口.如果选中&#8221;隐藏服务器&#8221;,则意味着客户端无法通过枚举服务器来看到这台服务器,起到了保护的作用,但不影响连接.</p>
+<p>=============    接下来我们要到客户端检查客户端的网络配置    =============<br />
+我们同样可以利用    SQL    Server    自带的客户端网络使用工具来进行检查,<br />
+所不同的是这次是在客户端来运行这个工具.</p>
+<p>点击:程序    &#8212;    Microsoft    SQL    Server    &#8212;    客户端网络使用工具</p>
+<p>打开该工具后,在&#8221;常规&#8221;项中,可以看到客户端启用了哪些协议.<br />
+一般而言,我们同样需要启用命名管道以及    TCP/IP    协议.<br />
+点击    TCP/IP    协议,选择&#8221;属性&#8221;,可以检查客户端默认连接端口的设置,该端口必须与服务器一致.</p>
+<p>单击&#8221;别名&#8221;选项卡,还可以为服务器配置别名.服务器的别名是用来连接的名称,<br />
+连接参数中的服务器是真正的服务器名称,两者可以相同或不同.别名的设置与使用HOSTS文件有相似之处.</p>
+<p>通过以上几个方面的检查,基本上可以排除第一种错误.  &amp;103fnbsp;</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;</p>
+<p>二.&#8221;无法连接到服务器,用户xxx登陆失败&#8221;</p>
+<p>该错误产生的原因是由于SQL    Server使用了&#8221;仅    Windows&#8221;的身份验证方式,<br />
+因此用户无法使用SQL    Server的登录帐户（如    sa    ）进行连接.解决方法如下所示:</p>
+<p>1.在服务器端使用企业管理器,并且选择&#8221;使用    Windows    身份验证&#8221;连接上    SQL    Server<br />
+2.展开&#8221;SQL    Server组&#8221;,鼠标右键点击SQL    Server服务器的名称,选择&#8221;属性&#8221;,再选择&#8221;安全性&#8221;选项卡<br />
+3.在&#8221;身份验证&#8221;下,选择&#8221;SQL    Server和    Windows    &#8220;.<br />
+4.重新启动SQL    Server服务.</p>
+<p>在以上解决方法中,如果在第    1    步中使用&#8221;使用    Windows    身份验证&#8221;连接    SQL    Server    失败,<br />
+那就通过修改注册表来解决此问题:</p>
+<p>1.点击&#8221;开始&#8221;-&#8220;运行&#8221;,输入regedit,回车进入注册表编辑器<br />
+2.依次展开注册表项,浏览到以下注册表键:<br />
+[HKEY_LOCAL_MACHINESOFTWAREMicrosoftMSSQLServerMSSQLServer]<br />
+3.在屏幕右方找到名称&#8221;LoginMode&#8221;,双击编辑双字节值<br />
+4.将原值从1改为2,点击&#8221;确定&#8221;<br />
+5.关闭注册表编辑器<br />
+6.重新启动SQL    Server服务.</p>
+<p>此时,用户可以成功地使用sa在企业管理器中新建SQL    Server注册,<br />
+但是仍然无法使用Windows身份验证模式来连接SQL    Server.<br />
+这是因为在    SQL    Server    中有两个缺省的登录帐户:<br />
+BUILTINAdministrators<br />
+&lt;机器名&gt;Administrator    被删除.<br />
+要恢复这两个帐户,可以使用以下的方法:</p>
+<p>1.打开企业管理器,展开服务器组,然后展开服务器<br />
+2.展开&#8221;安全性&#8221;,右击&#8221;登录&#8221;,然后单击&#8221;新建登录&#8221;<br />
+3.在&#8221;名称&#8221;框中,输入    BUILTINAdministrators<br />
+4.在&#8221;服务器角色&#8221;选项卡中,选择&#8221;System    Administrators&#8221;<br />
+5.点击&#8221;确定&#8221;退出<br />
+6.使用同样方法添加    &lt;机器名&gt;Administrator    登录.</p>
+<p>说明:</p>
+<p>以下注册表键:<br />
+HKEY_LOCAL_MACHINESOFTWAREMicrosoftMSSQLServerMSSQLSer103fverLoginMode<br />
+的值决定了SQL    Server将采取何种身份验证模式.<br />
+1.表示使用&#8221;Windows    身份验证&#8221;模式<br />
+2.表示使用混合模式（Windows    身份验证和    SQL    Server    身份验证）.</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;</p>
+<p>三.提示连接超时</p>
+<p>如果遇到第三个错误,一般而言表示客户端已经找到了这台服务器,并且可以进行连接,<br />
+不过是由于连接的时间大于允许的时间而导致出错.<br />
+这种情况一般会发生在当用户在Internet上运行企业管理器来注册另外一台同样在Internet上的服务器,<br />
+并且是慢速连接时,有可能会导致以上的超时错误.有些情况下,由于局域网的网络问题,也会导致这样的错误.</p>
+<p>要解决这样的错误,可以修改客户端的连接超时设置.<br />
+默认情况下,通过企业管理器注册另外一台SQL    Server的超时设置是    4    秒,<br />
+而查询分析器是    15    秒（这也是为什么在企业管理器里发生错误的可能性比较大的原因）.</p>
+<p>具体步骤为:<br />
+企业管理器中的设置:<br />
+1.在企业管理器中,选择菜单上的&#8221;工具&#8221;,再选择&#8221;选项&#8221;<br />
+2.在弹出的&#8221;SQL    Server企业管理器属性&#8221;窗口中,点击&#8221;高级&#8221;选项卡<br />
+3.在&#8221;连接设置&#8221;下的&#8221;登录超时（秒）&#8221;右边的框中输入一个比较大的数字,如    20.</p>
+<p>查询分析器中的设置:<br />
+工具    &#8212;    选项    &#8212;    连接    &#8212;    将登录超时设置为一个较大的数字</p>
+<p>===================================================================</p>
+<p>总结:</p>
+<p>1.先保证ping通(有防火墙的先关闭防火墙)<br />
+2.在命令提示符下执行:telnet    &lt;服务器ip地址&gt;    1433    不会报错<br />
+3.连接时使用用ip连接企业管理器<br />
+4.如果不行<br />
+SQL    Server服务器&#8211;开始&#8211;程序&#8211;Microsoft    SQL    Server<br />
+&#8211;服务器网络实用工具<br />
+&#8211;启用    WinSock代理<br />
+&#8211;代理地址：(sqlserver服务器IP)<br />
+&#8211;代理端口&#8211;1433<br />
+&#8212;确定</p>
+<p>5.如果还不行,在客户端装个SQL    Server客户端配置一下:<br />
+开始&#8211;程序&#8211;Microsoft    SQL    Server&#8211;客户端网络实</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			本条目发布于<a href="index5c36.html?p=62" title="下午5:00" rel="bookmark"><time class="entry-date" datetime="2013-07-11T17:00:00+08:00">2013年7月11日</time></a>。属于<a href="indexd65e.html?cat=8" rel="category">数据库</a>分类。<span class="by-author">作者是<span class="author vcard"><a class="url fn n" href="index3f71.html?author=2" title="查看所有由桔子发布的文章" rel="author">桔子</a></span>。</span>								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">文章导航</h3>
+					<span class="nav-previous"><a href="indexea0f.html?p=105" rel="prev"><span class="meta-nav">&larr;</span> 北斗星修好了。。</a></span>
+					<span class="nav-next"><a href="indexcb2d.html?p=800" rel="next">可以替代M$ Word的工具 <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">发表回复 <small><a rel="nofollow" id="cancel-comment-reply-link" href="index5c36.html?p=62#respond" style="display:none;">取消回复</a></small></h3><form action="http://ijz.me/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">您的邮箱地址不会被公开。</span> <span class="required-field-message">必填项已用 <span class="required">*</span> 标注</span></p><p class="comment-form-comment"><label for="comment">评论 <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">显示名称 <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required="required" /></p>
+<p class="comment-form-email"><label for="email">邮箱 <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required="required" /></p>
+<p class="comment-form-url"><label for="url">网站</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" autocomplete="url" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">在此浏览器中保存我的显示名称、邮箱地址和网站地址，以便下次评论时使用。</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论" /> <input type='hidden' name='comment_post_ID' value='62' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p></form>	</div><!-- #respond -->
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://cn.wordpress.org/" class="imprint" title="优雅的个人发布平台">
+				自豪地采用WordPress			</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type="text/javascript" src="wp-includes/js/comment-reply.mind1c0.js?ver=6.7.2" id="comment-reply-js" async="async" data-wp-strategy="async"></script>
+</body>
+
+<!-- Mirrored from ijz.me/?p=62 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:58:27 GMT -->
+</html>

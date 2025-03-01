@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>虚拟化 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=%e8%99%9a%e6%8b%9f%e5%8c%96" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Fri, 29 Nov 2013 16:00:00 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>vmware虚拟机的网络设置 /zz/</title>
+		<link>http://ijz.me/?p=76</link>
+					<comments>http://ijz.me/?p=76#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[虚拟化]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=76</guid>
+
+					<description><![CDATA[在很多情况下,电脑爱好者需要有一个网络环境来学习网络服务器的安装和设置,黑客攻防技术等,但是往往大部分的业余电 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>在很多情况下,电脑爱好者需要有一个网络环境来学习网络服务器的安装和设置,黑客攻防技术等,但是往往大部分的业余电脑爱好者都没有这样的条件.虚拟机软 件VMware的出现使得我们可以以非常低廉的价格来获得一个非常高效实用的网络实验平台.然而,VMware虚拟机的网络设置一直是很多初学者感到困惑 的地方,常常在各大电脑论坛上看到有人寻求有关VMware网络设置解决方案的贴子,虽然互连网上也有很多这方面的文章,但往往说的不够完整,或者写的过 于专业,使初学者看后仍是一头云雾.针对这个情况,笔者在学习阅读网络上的各类文章和VMware软件的文档后,结合自己的经验整理出这些内容,力图比较 详悉又简明易懂的表述来说明VMware虚拟机网络的设置过程.</p>
+<p><span id="more-76"></span><br />
+下面我想以Linux平台的VMware虚拟机的安装和网络的设置为例来说明VMware的安装和网络设置过程。<br />
+一、VMware的安装<br />
+1，获得VMware<br />
+在Internet上可以下载到VMware Workstation的试用版本，很多Linux站点都可以下载<br />
+推荐两个有VMware下载的网站：<br />
+http://www.linuxeden.com<br />
+http://www.linuxfans.org<br />
+2，安装VMware的硬件要求<br />
+虚 拟机是极费电脑资源的软件，对电脑的硬件要求比较高，尤其是对内存容量要求更高。一般来说256M内存是底线，相对来说CPU就没那么高要求了，一般五六 百MHz以上的CPU就可以跑起来，当然如果想使得虚拟系统和实际系统都运行的比较流畅，并且可以在虚拟系统和主系统上运行PHOTOSHP,CAD等大 型软件的话，推荐使用512M的内存，1G以上的CPU。就本人的电脑而言，配置是 毒龙700M CPU+256M SDRAM内存，跑Redhat 8.0主系统和Windows 2000 Server虚拟系统，并分别在主系统和虚拟系统上运行DNS服务器，HTTP服务器，<a href="http://sysapp.51cto.com/art/200512/13182.htm" target="_blank">FTP服务器</a>等， 系统基本可以跑的流畅 ，内存使用率在 52%以上，CPU使用率在9%左右，swap使用量达57M(平时只要5M左右),这也仅仅是在正常运行时的资源耗费情况,在虚拟系统开机和关机的时候 实际资源耗费量更大。如果想在跑虚拟系统的时候顺便听听MP3的话，MP3有明显的停顿和暴音。基本上是用足了资源，当然再在主系统和虚拟系统上运行几个 FTP和HTTP客户端，还是可以的。如果你的内存只有128M，理论上还可以跑虚拟机，尽量关闭所有的Linux后台进程，不用KDE，GNOME等这 样的大型桌面管理系统，而只用X和TWM窗口管理器就可以省下很多内存，并且在虚拟机中跑WIN98、WIN95或者字符界面的Linux系统等对硬件要 求比较低的系统，跑VMware还是可以的，只是在窗口切换的时候会有一点卡。如果你的内存只有64M的话那你只能乞求奇迹的发生了，或者能跑个DOS虚 拟系统？ 有兴趣的朋友不妨去试一下，看看VMware对硬件要求的极限是多少。<br />
+3,VMware的安装<br />
+解压缩软件包：<br />
+#tar xfvz VMware-workstation-3.2.0-2230.tar.gz<br />
+进入安装目录<br />
+#cd vmware-distrib<br />
+运行安装程序<br />
+#./vmware-install.pl<br />
+根据提示安装软件，安装程序会询问软件各种文件的安装目录，直接回车用默认值就可以了。<br />
+需要注意不要盲目直接按回车，在安装程序提示是否让Vmware支持网络的时候一定要选择yes，在提示是否支持host-only网络的是时候也要选择yes。<br />
+注意：VMware在安装过程中会根据你的系统内核版本选择一个和系统匹配的配置，如果找不到则需要编译，所以你需要一个GCC编译器，否则VMware将无法安装。<br />
+如果安装顺利，安装程序会有类似 ： enjoy vmware! 之类的提示。说明已经安装成功。<br />
+二、运行VMware<br />
+在终端中输入vmware并回车就可以运行VMware<br />
+有 一点需要注意，VMware只是一个前台程序，它的运行需要VMware后台虚拟设备的支持，即在你运行VMware前你已经运行了VMware的后台服 务程序，一般情况下安装程序安装完以后会执行这个工作，并把VMware的启动脚本添加到 /etc/rc.d/init.d目录下，使它在每次开机的时候都自动运行，如果由于某种原因已经把VMware的后台服务程序关闭请手动开启：<br />
+#service vmware start<br />
+用ifconfig查看vmware的虚拟网络设备:<br />
+#ifconfig<br />
+lo        Link encap:Local Loopback<br />
+inet addr:127.0.0.1  Mask:255.0.0.0<br />
+UP LOOPBACK RUNNING  MTU:16436  Metric:1<br />
+RX packets:454 errors:0 dropped:0 overruns:0 frame:0<br />
+TX packets:454 errors:0 dropped:0 overruns:0 carrier:0<br />
+collisions:0 txqueuelen:0<br />
+RX bytes:33512 (32.7 Kb)  TX bytes:33512 (32.7 Kb)<br />
+vmnet1    Link encap:Ethernet  HWaddr 00:50:56:C0:00:01<br />
+inet addr:192.168.221.1  Bcast:192.168.221.255  Mask:255.255.255.0<br />
+UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1<br />
+RX packets:191 errors:0 dropped:0 overruns:0 frame:0<br />
+TX packets:63 errors:0 dropped:0 overruns:0 carrier:0<br />
+collisions:0 txqueuelen:100<br />
+RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)<br />
+vmnet8    Link encap:Ethernet  HWaddr 00:50:56:C0:00:08<br />
+inet addr:172.16.74.1  Bcast:172.16.74.255  Mask:255.255.255.0<br />
+UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1<br />
+RX packets:0 errors:0 dropped:0 overruns:0 frame:0<br />
+TX packets:0 errors:0 dropped:0 overruns:0 carrier:0<br />
+collisions:0 txqueuelen:100<br />
+RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)<br />
+可以看到VMware的虚拟网络设备vmnet1 和vmnet8<br />
+如果用ifconfig命令没有看到这两个虚拟设备则说明VMware的后台服务程序没有运行，执行vmware的时候将出错，请用上面讲的命令运行。<br />
+VMware不是免费软件，第一次运行的时候需要输入序列号，你可以按GET SN按扭从VMware官方网站得到一个试用三个月的序列号。为了避免麻烦我先贴几个在这里：<br />
+VMWare 3.0 for Linux :<br />
+625AX-8DE40-46RA3-30HUM<br />
+625AX-8DE40-46RA3-30HUM<br />
+60N88-8DW44-16H77-32KT4<br />
+6818X-84WD1-01KDK-3JN9X<br />
+FOR win V3.2.0-2230<br />
+0F11N-004U4-0U0HJ-12XDG<br />
+04590-00NU1-0UMKX-161AW<br />
+0DM1J-004H0-0KTA4-1614F<br />
+04HCM-085K0-0R8UM-1FH0U<br />
+0451J-0AJHJ-0KXKX-1412U<br />
+输入序列号后会弹出虚拟机配置向导，这些内容不在本文叙述范围内，而且这些比较容易掌握，所以这部分内容请读者自己去摸索。<br />
+按VMware工具条上的“Power On”按钮启动虚拟机，按F2键进入BIOS设置，让虚拟机从光盘启动，保存后重起虚拟机，这样就可以从光盘启动，安装系统了。<br />
+(注 意：在vmware的使用中笔者发现这样一个问题：在主系统没有安装显卡3D驱动程序的情况下在虚拟机上安装虚拟系统会很慢，而且经常失去响应，但是装上 了显卡的3D加速驱动后安装明显加快，所以在安装虚拟系统的过程中如果发现类似问题，可以先把显卡3D驱动装上再试。)<br />
+系统安装好后别忘了安装VM TOOLS，（VMware 工具栏——&gt;Settings——&gt;VMware Tools Install）这会显著增加虚拟系统的性能。<br />
+三、虚拟机的网络设置（原理篇）<br />
+在正式开始之前，我想有必要先来学习一些必要的网络知识。否则，在不懂得任何原理的情况下依葫芦画瓢虽然可解一时之需要，但遇到具体情况改变的情况下就只能干瞪眼了。由于篇幅限制，这里只讲和VMware设置有关的一点简单网络知识。<br />
+1，什么是网络？<br />
+Internet 是指“互连网”，好象这句话说的有点多余，不过确实有很多人对他有错误的理解，“互连网”是指一个个网络互连，而不是像有些人想象的那样把一台台电脑杂乱 无章的互连。当我们需要用电脑和远方的电脑通讯的时候，先把本地电脑组成一个网络，当然，远方的电脑也要组成一个网络，在把这两个网络“互连”起来，组成 “互连网”。用电话线和MODEM拨号上网的时候是通过电话线先把自己的电脑连到ISP（Internet Service Provider 网络服务提供商）的网络中，再经过ISP的网络和世界各地的电脑通信。<br />
+2，电脑如何通过网络传递数据？<br />
+每一个网络需要一个网络地址，网络 中的电脑需要一个在网络中唯一确定的标识，网络号和电脑的标识号组成了IP地址，所以IP地址是由网络号和主机号组成的。当你的电脑要和其他的电脑通信的 时候，电脑会先根据IP地址和子网掩码确定目标主机是在本地网络中还是在远程网络中，如果在本地网络中则直接把一个包含信息的IP数据包发送到本地网络 上，目标主机会检测到并接收，如果目标主机在远程网络则需要通过一台被称为网关的的电脑转发到远程网络，网关（geteway）可以看做是连接网络和网络 的桥梁，网关的概念很广，这里为了简化起见，我们暂且认为它和路由器是同一个概念。路由器（router）是一种连接网络和网络，并选择IP数据包传送的 路径的一台特殊计算机。很多情况下网关的概念等同于路由器。<br />
+3，网络中电脑的IP地址有何要求？<br />
+在同一个网络中，每台电脑必须具有相同的 网络号，这样电脑才认为目标主机是在本网络中并且可以正确送达，如果网络号不同,即使目标主机已经用网线连到本网络中数据也不能直接送达,即使这两台电脑 近在咫尺,在电脑看来仍旧是一台远程电脑.比如一个网络的网络号为192.168.0，则该网络中的计算机的IP地址必须以192.168.0开头。假如 要传送一个数据包到网络号为192.168.1的网络，则必须通过路由器转发，如果该网络中没有路由器，则发送失败。因此，为了连接两个网络，一台路又器 至少要有两个网络接口（网卡、调制解调器等联网设备称为网络接口）。网络和路由器的关系见下图：<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;           &#8212;&#8212;&#8212;&#8212;&#8211;          &#8212;&#8212;&#8212;&#8212;&#8211;<br />
+|  网络A      |           |  路由器    |          |  网络B     |<br />
+|             |           |            |          |            |<br />
+|         □&#8211;|&#8212;&#8212;&#8212;&#8211;|&#8211;□    □&#8211;|&#8212;&#8212;&#8212;-|&#8211;□        |<br />
+|         1   |           |  2     3   |          |  4         |<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;           &#8212;&#8212;&#8212;&#8212;&#8211;          &#8212;&#8212;&#8212;&#8212;&#8211;<br />
+图 一<br />
+图中的小方框表示网卡或其他网络接口。<br />
+可以看到路由器至少有两个网络接口。<br />
+假设网络A的地址为192.168.0 网卡1的地址为192.168.0.1<br />
+网络B的地址为192.168.1 网卡4的地址为192.168.1.1<br />
+则路由器上的网卡2必须属于网络 192.168.0 地址为192.168.0.x （x为任意小于255的数）<br />
+路由器上的网卡3必须属于网络 192.168.1 地址为192.168.1.x （x为任意小于255的数）<br />
+就是说，路由器既属于网络A，又属于网络B，这样才起到桥梁的作用。<br />
+当数据从网络A发往网络B时，路由器从网卡2接收数据，经过改装后通过网卡3发送数据到网络B。<br />
+这样，我们称网卡2的地址 192.168.0.x为网络A的网关<br />
+网卡3的地址 192.168.1.x为网络B的网关<br />
+4，VMware虚拟机提供了那些虚拟网络设备？</p>
+<p>默认安装的情况下VMware提供了虚拟网卡vmnet1和vmnet8,还有在虚拟系统上的虚拟网卡 &#8220;AMD  PCNET Family PCI Ethernet Adapter&#8221;<br />
+请 注意，vmnet1和vmnet8是主系统上虚拟设备，用ifconfig命令可以看到，而&#8221;AMD  PCNET Family PCI Ethernet Adapter&#8221;是虚拟系统上的虚拟设备，在安装完虚拟系统后可以在设备管理器中看到，前两个隶属于真实系统，是你的真实电脑中的设备,后一个隶属于虚拟 系统，是虚拟电脑中的设备,不要搞混淆。<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;           &#8212;&#8212;&#8212;&#8212;&#8211;          &#8212;&#8212;&#8212;&#8212;&#8211;<br />
+|  网络A      |           |  路由器    |          |  网络B     |<br />
+|             |           |            |          |            |<br />
+|         □&#8211;|&#8212;&#8212;&#8212;&#8211;|&#8211;□    □&#8211;|&#8212;&#8212;&#8212;-|&#8211;□        |<br />
+|         1   |           |  2     3   |          |  4         |<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;           &#8212;&#8212;&#8212;&#8212;&#8211;          &#8212;&#8212;&#8212;&#8212;&#8211;<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;-           &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-      &#8212;&#8212;&#8212;&#8212;&#8211;<br />
+|   虚拟系统   |           |  主系统(路由器)       |      | 真实网络   |<br />
+|              |           |                       |      |            |<br />
+|          □&#8211;|&#8212;&#8212;&#8212;&#8211;|&#8211;□     □&lt;&#8212;&gt;□&#8212;&#8211;|&#8212;&#8212;|&#8211;□        |<br />
+|AMD PCNET卡   |           |vmnet1 vmnet8 真实网卡 |      |  4         |<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;-           &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-      &#8212;&#8212;&#8212;&#8212;&#8211;<br />
+图 二<br />
+让我们来和上面的网络和路由器的关系做一个比对。<br />
+可以看到要想虚拟系统和主系统通信必须使AMD PCNET 网卡和vmnet1组成一个网络。<br />
+而vmnet1本来就在主系统中，系统可以直接访问，所以主系统又充当了路由器的功能，只要有这两个虚拟设备主系统和虚拟系统就可以通讯。<br />
+关键在于三点：<br />
+1.确定网卡AMD PCNET和vmnet1的网络号相同。<br />
+2.在虚拟系统里设置网络属性，把网关地址设为vmnet1的地址。<br />
+3.开启主系统的路由功能，使它成为一台路由器。<br />
+事 实上，如果你只需要虚拟系统和主系统通信，而不需要和主系统所在的真实网络上的其他主机通信的话只要满足第一点就可以了。因为满足第一点，主系统和虚拟系 统就在同一网络中了，不需要路由器便可通信。但是大多数情况下我们需要虚拟系统和主系统所在的真实网络通信，这就需要满足其他两点了。<br />
+四、虚拟机的网络设置（实施篇）<br />
+1，  我们先来让虚拟系统和主系统联系上。<br />
+在VMware安装的时候安装程序会自动给vmnet1分配一个IP地址，下面是笔者电脑上例子：<br />
+vmnet1    Link encap:Ethernet  HWaddr 00:50:56:C0:00:01<br />
+inet addr:192.168.221.1  Bcast:192.168.221.255  Mask:255.255.255.0<br />
+UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1<br />
+RX packets:191 errors:0 dropped:0 overruns:0 frame:0<br />
+TX packets:63 errors:0 dropped:0 overruns:0 carrier:0<br />
+collisions:0 txqueuelen:100<br />
+RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)<br />
+在 第二行可以看到安装程序给vmnet1分配的IP地址为192.168.221.1(注意每次安装VMware IP地址是随机分配的，实际的情况与这里的例子会不同)。即虚拟网卡vmnet1属于网络192.168.221。因此，我们需要启动虚拟系统，设置网络 属性，把虚拟系统的网卡&#8221;AMD  PCNET Family PCI Ethernet Adapter&#8221;的IP地址设置为192.168.221.x （x为除1以外2~254之间的任意数字笔者把它设置为2），把网关设置为vmnet1的地址：192.168.221.1(如果不和外界真实网络通信的 话网关可以不设)<br />
+windows 2000和XP 设置后立即生效，win98需要重新启动，linux需要重新启动网络服务:<br />
+#service network restart<br />
+在主系统上ping一下虚拟系统：<br />
+#ping -c 3 192.168.221.2<br />
+PING 192.168.221.2 (192.168.221.2) from 192.168.221.1 : 56(84) bytes of data.<br />
+64 bytes from 192.168.221.2: icmp_seq=1 ttl=128 time=6.91 ms<br />
+64 bytes from 192.168.221.2: icmp_seq=2 ttl=128 time=0.425 ms<br />
+64 bytes from 192.168.221.2: icmp_seq=3 ttl=128 time=0.527 ms<br />
+&#8212; 192.168.221.2 ping statistics &#8212;<br />
+3 packets transmitted, 3 received, 0% loss, time 2001ms<br />
+rtt min/avg/max/mdev = 0.425/2.623/6.917/3.036 ms<br />
+yeah!通了！<br />
+再在虚拟系统上ping主系统:<br />
+C:&gt;ping 192.168.221.1<br />
+Pinging 192.168.221.1 with 32 bytes of data:<br />
+Reply from 192.168.221.1: bytes=32 time&lt;10ms TTL=64<br />
+Reply from 192.168.221.1: bytes=32 time&lt;10ms TTL=64<br />
+Reply from 192.168.221.1: bytes=32 time&lt;10ms TTL=64<br />
+Reply from 192.168.221.1: bytes=32 time&lt;10ms TTL=64<br />
+Ping statistics for 192.168.221.1:<br />
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),<br />
+Approximate round trip times in milli-seconds:<br />
+Minimum = 0ms, Maximum =  0ms, Average =  0ms<br />
+yeah!又通了！主系统和虚拟系统顺利联系上啦！<br />
+2， 让虚拟系统和主系统所在的真实网络通信<br />
+首 先在你的电脑上需要有一块与真实网络相连真实的网卡（如图二所示）。vmnet8就在与真实网络通讯的时候起作用了，vmnet8会和真实网卡对应起来， 虚拟系统要发送数据包到真实网络中的时候，真实系统是一台路由器，首先数据发到虚拟网卡vmnet1，然后经过路由器（这里就是主系统linux）发到 vmnet8，由于vmnet8和真实网卡是对应起来的，这一机制是有vmware完成的,所以发到vmnet8上的网卡就等于传送到了真实网卡上，然后 数据包再通过真实网卡发送到真实网络，整个过程请看图二。如果你的系统上有两块以上的真实网卡，在安装的时候安装程序会询问把虚拟网卡对应到哪个真实网卡 上。可以根据实际情况选择。<br />
+把vmnet8的IP地址设置为和真实网卡在同一网络的地址，假设真实网络的网络号为192.168.0,真实网卡的IP地址为192.168.0.1则可设置vmnet8的IP地址为192.168.0.2<br />
+在linux中方法如下：<br />
+#ifconfig vmnet8 down<br />
+#ifconfig vmnet8 192.168.0.2 up<br />
+回顾一下上面讲的三个条件：<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;<br />
+关键在于三点：<br />
+1.确定网卡AMD PCNET和vmnet1的网络号相同。<br />
+2.在虚拟系统里设置网络属性，把网关地址设为vmnet1的地址。<br />
+3.开启主系统的路由功能，使它成为一台路由器。<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;<br />
+前两点我们已经在第一部分中做好了，现在只要开启了linux的路由功能虚拟系统就可以和外界通讯了。<br />
+linux是一个天生的网络操作系统，他在网络方面的强大功能使得它在网络服务器领域有广泛的应用。用linux来做路由器甚至不需要额外的软件，linux的内核直接支持静态路由的功能。我们要做的只是把路由功能打开就可以了。<br />
+可以先看看路由表：<br />
+#route<br />
+确定所有网卡的IP地址或网络地址都在Destination一栏里,如下图:<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-<br />
+Kernel IP routing table<br />
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface<br />
+192.168.0.0     *               255.255.255.0   U     0      0        0 eth1<br />
+192.168.0.0     *               255.255.255.0   U     0      0        0 eth1<br />
+192.168.0.0     *               255.255.255.0   U     0      0        0 vmnet8<br />
+192.168.221.0   *               255.255.255.0   U     0      0        0 vmnet1<br />
+127.0.0.0       *               255.0.0.0       U     0      0        0 lo<br />
+default         www.gucuiwen.co 0.0.0.0         UG    0      0        0 eth0<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-<br />
+默认情况下启动网络设备的时候系统会把该设备的IP地址添加到路由表中，如果没有的话可以重新启动一下网络服务：<br />
+#service network restart<br />
+再来开启路由功能：<br />
+# echo 1 &gt; /proc/sys/net/ipv4/ip_forward<br />
+至此，linux的路由功能已经打开，你的linux系统已经成了一台路由器，连接着虚拟的网络和真实网络。虚拟网络和真实网络间就可以通信了。出于安全考虑，如果有必要的话还需要用iptables命令来设置一下路由规则。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=76</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

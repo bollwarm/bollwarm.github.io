@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>find &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=find" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Mon, 23 Mar 2015 01:47:23 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>linux 一条语句查杀php木马</title>
+		<link>http://ijz.me/?p=712</link>
+					<comments>http://ijz.me/?p=712#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 23 Mar 2015 01:47:23 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[find]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=712</guid>
+
+					<description><![CDATA[根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。   fi [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。<br />
+<code>  find ./ -name "*.php" |xargs egrep "phpspy|c99sh|milw0rm|eval(gunerpress|eval(base64_decoolcode|spider_bc"&gt; /tmp/php.txt</code></p>
+<p><span id="more-712"></span></p>
+<p>如果只列出含木马的文件</p>
+<p><code>      find ./ -name "*.php" -type f -print0 | xargs -0 egrep "(phpspy|c99sh|milw0rm|eval(gzuncompress(base64_decoolcode|eval(base64_decoolcode|spider_bc|gzinflate)" | awk -F: '{print $1}' | sort | uniq</code></p>
+<p><code>    find . -type f -name "*.php"|xargs grep  'versio:b.01'  -l &gt;list.0320</code></p>
+<p>需要注意的是，以上查出来的文件，有可能是正常的php文件，需要你根据实际甄别处理（批量替换），不要误杀了（处理以前注意备份俄）。</p>
+<p>grep方法：<br />
+# grep -r &#8211;include=*.php  &#8216;[^a-z]eval($_POST&#8217; . &gt; /tmp/eval.txt</p>
+<p># grep -r &#8211;include=*.php  &#8216;file_put_contents(.*$_POST[.*]);&#8217; . &gt; /tmp/file_put_contents.txt</p>
+<p>查找最近一天被修改的PHP文件</p>
+<p>#   find -mtime -1 -type f -name *.php</p>
+<p>修改网站的权限</p>
+<p># find -type f -name *.php -exec chmod 444 {} ;</p>
+<p># find ./ -type d -exec chmod 555{} ;</p>
+<p>附：linux下的批量查找和替换。<br />
+find . -type f -name &#8220;*.html&#8221;|xargs grep ‘yourstring’</p>
+<p>2：查找并用perl One-liners替换</p>
+<p>find -name &#8216;要查找的文件名&#8217; | xargs perl -pi -e &#8216;s|被替换的字符串|替换后的字符串|g&#8217;<br />
+下 面这个例子就是将当前目录及所有子目录下的所有*.shtml文件中的”&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;“替换为”(空)“.</p>
+<p>find . -type f -name &#8220;*.shtml&#8221;|xargs perl -pi -e &#8216;s|&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;| |g&#8217;</p>
+<p>perl -pi -e<br />
+在Perl 命令中加上-e 选项，后跟一行代码，那它就会像运行一个普通的Perl 脚本那样运行该代码.</p>
+<p>从命令行中使用Perl 能够帮助实现一些强大的、实时的转换。认真研究正则表达式，并正确地使用，将会为您省去大量的手工编辑工作。</p>
+<div id="main"></div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=712</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

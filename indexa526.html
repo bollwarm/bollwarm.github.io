@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>vim &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=25" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Tue, 25 Aug 2015 09:18:13 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>vim RE 非贪婪匹配</title>
+		<link>http://ijz.me/?p=808</link>
+					<comments>http://ijz.me/?p=808#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 25 Aug 2015 09:18:13 +0000</pubDate>
+				<category><![CDATA[vim]]></category>
+		<category><![CDATA[RE]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=770</guid>
+
+					<description><![CDATA[/a.{-}b 它会匹配到&#8221;axbxb&#8221;中的&#8221;axb&#8221;. 如果 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>/a.{-}b<br />
+它会匹配到&#8221;axbxb&#8221;中的&#8221;axb&#8221;. 如果模式是:<br />
+normal mode command<br />
+/a.*b<br />
+它就会尽可能多地匹配了. 所以匹配到的是整个&#8221;axbxb&#8221;.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=808</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Linux用vim/vi给文件加密和解密/zz/</title>
+		<link>http://ijz.me/?p=692</link>
+					<comments>http://ijz.me/?p=692#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 24 Nov 2014 04:16:58 +0000</pubDate>
+				<category><![CDATA[vim]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=692</guid>
+
+					<description><![CDATA[linux文件为了防止被人随便打开收看，可以使用那个vim自带的加密功能，对文本文件进行加密，以防止人直接看到 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>linux文件为了防止被人随便打开收看，可以使用那个vim自带的加密功能，对文本文件进行加密，以防止人直接看到内容。</p>
+<p>然而在使用Vim编辑文件保存时时，有时候可能输入:X（shift键未及时按下松开），这时体统会提示：</p>
+<p><span id="more-692"></span></p>
+<blockquote><p><strong>Enter encryption key:</strong></p></blockquote>
+<p>原来:X命令是加密文本的命令。根据提示输入密钥，然后会再次提示：</p>
+<blockquote><p><strong>Enter same key again:</strong></p></blockquote>
+<p>加密后的文本需要密钥才可查看。</p>
+<p>有加密就需要有取消加密，取消密钥需在打开文件后（如果文件已加密，当然<strong>需要先输入密钥才能进行如下操作</strong>）</p>
+<p>在命令行模式下：</p>
+<blockquote><p><strong>: set key= </strong></p></blockquote>
+<p><strong>将密钥赋值为空（必须要有空格）即可。</strong></p>
+<p>问题是vim是如何加密文件的？答案是vim采用了BlowFish加密算法（7.3版本），密钥存储在key这个选项中。</p>
+<p>实际操作的过程中还遇到一个问题，在设置加密密钥后保存文件，只有用:wq才可以，用:x不可以。看了这两个命令不是完全等价的，查看帮助文档发现：:wq是将缓冲区中的内容写入文件，而:x则需要缓冲区内容被修改时才会将缓冲区中的内容写入文件。</p>
+<p>由此看来设置密钥不会改变缓冲区的内容，缓冲区的内容就不会被加密存入文件了。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=692</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>VIM标记 mark 详解</title>
+		<link>http://ijz.me/?p=73</link>
+					<comments>http://ijz.me/?p=73#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[vim]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=73</guid>
+
+					<description><![CDATA[Vim 允许你在文本中放置自定义的标记。命令 &#8220;ma&#8221; 用 a 标记当前的光标位置。你 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Vim 允许你在文本中放置自定义的标记。命令 &#8220;ma&#8221; 用 a 标记当前的光标位置。你可以在文本中使用 26 个标记（a到z）。这些标记是不可见的，只是一个由 Vim 记住的位置。<br />
+要跳到一个你定义的标记，可以使用命令 <code>{mark}，这里 {mark} 是指定义标记的那个字母。</p>
+<p><span id="more-73"></span></p>
+<p>所以，移到标记a的命令是：</p>
+<p></code>a</p>
+<p>命令 &#8216;mark（单引号加上一个标记）会移到标记所在行的行首。这与 `mark 命令是不同的，<br />
+后者是移到标记所在行上被标记的列。</p>
+<p>标记在需要处理一个文件的两个相关地方的时候非常有用。假设你在处理文末的时候需要<br />
+查看文首的一些内容，先移动到行首，设置一个标记 s (start)：</p>
+<p>ms</p>
+<p>然后移动到你需要处理的地方，再设置一个标记 e (end)：</p>
+<p>me</p>
+<p>现在你可以随意移动，当你需要看开头的地方，可以使用这个命令移到那里：</p>
+<p>&#8216;s</p>
+<p>然后使用 &#8221; 跳回来。或者用 &#8216;e 跳到你正在处理的文尾的地方。<br />
+这里使用 s 和 e 作标记名没有特别的含义，只是为了好记而已。</p>
+<p>你可以用如下命令取得所有的103f标记的列表：</p>
+<p>:marks</p>
+<p>你会注意到有一些特殊的标记，包括：</p>
+<p>&#8216;       跳转前的位置<br />
+&#8221;       最后编辑的位置<br />
+[       最后修改的位置的开头<br />
+]       最后修改的位置的结尾</p>
+<p>补充：如果想要删除marks，可用命令delmarks + markname 。</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=73</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>vi下显示回车换行符等特殊符号</title>
+		<link>http://ijz.me/?p=74</link>
+					<comments>http://ijz.me/?p=74#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[vim]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=74</guid>
+
+					<description><![CDATA[换行方式 在早期的打印机时代，开始新的一行要占用两个字符的时间。如果到了一行的结尾处，你要快速回到新的一行的开 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong><span style="font-size: 18px;">换行方式</span></strong></p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">在早期的打印机时代，开始新的一行要占用两个字符的时间。如果到了一行的结尾处，你要快速回到新的一行的开头，需要打印针头在纸面上飞快地掠过，常常会在纸面上留下污点。解决这个问题的办法就是，用两个字符：一个字符&lt;Return&gt;来移到第一列，另一个字符&lt;Linefeed&gt;来新增一行。计算机产生以后，存储较为昂贵，在如何解决回车换行这个老问题上，人们产生了不同的意见。UNIX人认为在到达一行的结尾时新增一行&lt;Linefeed&gt;(LF)，而Mac人则认同&lt;Return&gt;(CR)的解决办法，MS则坚持古老的&lt;Return&gt;&lt;Linefeed&gt;(CRLF)的方法。这就意味着如果你将一个文件从一个系统转移到另一个系统，就面临着回车换行的问题。而Vim编辑器则会自动的认出这种文件格式方面的区别，并做出相应处理。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;"><span id="more-74"></span></p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">fileformats选项，用于处理文件格式问题。以下命令，告诉vim将UNIX文件格式做为第一选择，而将MS-DOS的文件格式做为第二选择：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set fileformats=unix,dos</p>
+<p style="margin103f: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">检测到的文件格式会被存放在fileformat选项中，我们可以用以下命令来查询：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set fileformat?</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">我们还可以利用fileformat选项，来转换种文件格式。例如，使用以下命令将名为readme.txt的MS-DOS格式的文件，转换为UNIX格式的文件。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set fileformat=unix</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">在默认情况下，Vim认为文件是由行组成的，并且文件最后一行是以&lt;EOL&gt;为结束符的。如果你想设置文件以&lt;EOL&gt;结束符结尾，则可以用以下命令：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set endofline</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">如果你想设置文件不以&lt;EOL&gt;结束符来结尾，则可以使用以下命令：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set noendofline</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">显示换行</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">如果你使用以下命令进入&lt;listmode&gt;，那么就可以清楚的看到以“$”表示的换行符和以“^I”表示的制表符。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set list</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">你可以使用以下命令退出&lt;list mode&gt;：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set nolist</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">删除换行</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">可以用以下命令删除换行符：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:%s/n//g</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">可以用以下命令删除DOS文件中的回车符“^M”：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:%s/r//g</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">可以用以下命令转换DOS回车符“^M”为真正的换行符：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:%s/r/r/g</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">可以用以下命令删除行尾的空格以及DOS回车符。它没有使用“/”字符作为替换命令各个参数间的分隔符，而是使用了“#”字符。命令还使用了“?”正则表达式，用来匹配它前面出现的字符0次或1次。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:%s#s*r?$##</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">可以用以下命令删除三行空行：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:%s/^n{3}//</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">可以用以下命令将连续的两个空行替换成一个空行：</p>
+<p style="marg103fin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:%s/nn/r/g</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">自动换行</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">在默认情况下，Vim是不会自动换行的，也就是说我们需要自己决定回车的位置。但是我们也可以通过指定textwidth选项，让Vim自动在指定位置换行。例如，使用以下命令指定在30列时自动换行。由于在遇到空格时才会自动换行，所以换行的精确位置可能会小于你指定的列宽。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set textwidth=29</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">而以下命令告诉Vim从右面算起当达到10个字符的空格时要换行：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">:set wrapmargin=10</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">在指定了文本宽度的情况下，当我们将一行中的前几个文字删掉时，Vim并不会将后面行中的文本移动上来，而是形成了一些长短不一的段落，这样看起来不是很好。可以有几种方法处理这个问题：</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">一种方法是，在可视化模式下选中这些文本，然后用gp命令来格式化选中的段落。另一种方法是，使用gqmotion命令来完成格式。例如要格式化5行，就可以用命令:gq4j。这个命令告诉Vim要格式化本行，同时要格式化下面的4行，这样就达到了格式化5行的目的。如果要格式化整个段落，可以将光标放在段落的第一行上，然后执行命令gq}。而使用命令gqip可以格式化当前段落，而且并不必要将光标放在段落的第一行上。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">如果要想格式化一行，可以使用命令gqgq，也可以简记为gqq。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">注意：选项textwidth优先于wrapmargin。如果要使wrapmargin选项生效，必须将textwidth设置为0（这也是默认值）。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">合并行</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">命令J使两行合并为一行，同时用空格分隔这两行。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">通过设置joinspace选项，可以控制合并两行时的分隔符（如果一行是以标点符号来结尾）。如果设置:setnojoinspaces，用J命令合并两行时会用一个空格来分隔；如果设置:setjoinspaces，用J命令合并两行时会用两个空格来分隔。如果不希望用空格来分隔合并的行，可以使用gJ命令。</p>
+<p style="margin: 0px; font-size: 14px; font-family: inherit; color: #666666; line-height: 20px;">我们也可以使用:join命令，将几行合并为一行并使用空格来分隔各行。如果不希望加入空格，那么可以使用:join!命令。</p>
+<p>命令小结:set fileformat设置文件格式:set endofline设置文件结束符:set noendofline取消文件结束符:set list进入List Mode:set nolist退出List Mode:%s/n//g删除换行符:set textwidth设置行宽:set textwidth设置行边距:join合并多行J合并两行</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=74</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>VI高级命令集锦 /zz/</title>
+		<link>http://ijz.me/?p=75</link>
+					<comments>http://ijz.me/?p=75#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
+				<category><![CDATA[vim]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=75</guid>
+
+					<description><![CDATA[1.交换两个字符位置 xp 2.上下两行调换 ddp 3.把文件内容反转 :g/^/m0/ (未通过) 4.上 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>1.交换两个字符位置<br />
+xp<br />
+2.上下两行调换<br />
+ddp<br />
+3.把文件内容反转<br />
+:g/^/m0/ (未通过)<br />
+4.上下两行合并<br />
+J<br />
+5.删除所有行<br />
+dG</p>
+<p><span id="more-75"></span><br />
+6.从当前位置删除到行尾<br />
+d$<br />
+7.从当前位置复制到行尾<br />
+y$ 如果要粘贴到其他地方 p 就可以了</p>
+<p>由于vi 是建立在 EX 上的 所以 当键入 : 时就来到了 EX 命令状态<br />
+8.<br />
+:ab string strings<br />
+例如 &#8220;:ab usa United States of America&#8221; ,<br />
+当你在文见里插入 usa 时<br />
+United States of America 就蹦出来了<br />
+9.<br />
+:map keys new_seq<br />
+定义你当前 键盘命令<br />
+10.<br />
+:set [all]<br />
+vi or ex 的编辑状态<br />
+如 显示每行 :set nu<br />
+11.<br />
+在命令状态下，nyy表示拷贝从光标行起的下n行内容，p表示paste,可刚复制的内容粘贴在光标处的<br />
+下面。</p>
+<p>12.<br />
+单个字符替换用r，覆盖多个字符用R，用多个字符替换一个字符用s，整行替换用S</p>
+<p>13.</p>
+<p>:%s/old_word/new_word/g<br />
+这个指令是于在整个文件中替换特定字符串</p>
+<p>14.光标控制</p>
+<p>k:上移 nk 上移n行<br />
+j:下移 nj 下移n行</p>
+<p>将光标移到第n行，按下 mk<br />
+将光标移到第m行，按下 &#8220;ay&#8217;k<br />
+即将第n到m的行存到a寄存器，以此类推，b，c&#8230;&#8230;..寄存器等</p>
+<p>这样就可以将你常用的需要复用的内容粘贴到不同的寄存器中以备用</p>
+<p>想粘贴到某处，直接将光标移到某</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=75</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

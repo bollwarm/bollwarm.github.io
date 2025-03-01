@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>JavaScript &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=javascript" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:24:41 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>JavaScript代码整洁之道——好代码和坏代码</title>
+		<link>http://ijz.me/?p=1134</link>
+					<comments>http://ijz.me/?p=1134#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 23 May 2019 02:18:00 +0000</pubDate>
+				<category><![CDATA[web]]></category>
+		<category><![CDATA[编程]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1134</guid>
+
+					<description><![CDATA[概述 我们之道作为一个码农，不论其实现如何，功能怎样，写的一手清晰靠谱的代码是其代码功力的体现。好的、清洁的代 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h1 class="wp-block-heading"></h1>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="659" height="451" src="http://ijz.me/wp-content/uploads/2025/03/1-7.png" alt="" class="wp-image-1135" srcset="http://ijz.me/wp-content/uploads/2025/03/1-7.png 659w, http://ijz.me/wp-content/uploads/2025/03/1-7-300x205.png 300w, http://ijz.me/wp-content/uploads/2025/03/1-7-624x427.png 624w" sizes="(max-width: 659px) 100vw, 659px" /></figure>
+
+
+
+<h2 class="wp-block-heading">概述</h2>
+
+
+
+<p>我们之道作为一个码农，不论其实现如何，功能怎样，写的一手清晰靠谱的代码是其代码功力的体现。好的、清洁的代码可以方便自己以后维护，让你的继任者马上能接手维护它，而不是给你檫屁股，被人戳脊梁骨、被骂垃圾代码。所以，写清洁代码非常重要。</p>
+
+
+
+<span id="more-1134"></span>
+
+
+
+<p>那么什么才是清洁代码的呢？不言而喻，清洁的代码就是可以让人易于人理解、易于更改、方便扩展的代码。写清洁的代码要常扪心自问：</p>
+
+
+
+<p>为什么要这样写？</p>
+
+
+
+<p>为什么要在这儿写？</p>
+
+
+
+<p>为什么不换个写法？</p>
+
+
+
+<p>Robert C. Martin在《代码整洁之道》一书中说过：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="567" height="325" src="http://ijz.me/wp-content/uploads/2025/03/2-6.png" alt="" class="wp-image-1136" srcset="http://ijz.me/wp-content/uploads/2025/03/2-6.png 567w, http://ijz.me/wp-content/uploads/2025/03/2-6-300x172.png 300w" sizes="(max-width: 567px) 100vw, 567px" /></figure>
+
+
+<p>就算是的坏代码也能运行，但如果代码不干净，也能会让你的开发团队陷入困境。</p>
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="270" height="103" src="http://ijz.me/wp-content/uploads/2025/03/3-6.png" alt="" class="wp-image-1137"/></figure>
+
+
+<p>在本文中，虫虫就给大家讲讲JavaScript代码的整洁知道，全面对比下好的代码和坏的代码的写法。</p>
+
+
+<h2 class="wp-block-heading">强类型检查，使用“===”，不用“==”</h2>
+
+
+<p>类型的检查非常重要，使用强类型检查可以帮我理清程序逻辑，如果类型检查松懈了（使用==），有可能使你的逻辑“南辕北撤了”，试看下面的例子：</p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="563" height="169" src="http://ijz.me/wp-content/uploads/2025/03/4-5.png" alt="" class="wp-image-1138" srcset="http://ijz.me/wp-content/uploads/2025/03/4-5.png 563w, http://ijz.me/wp-content/uploads/2025/03/4-5-300x90.png 300w" sizes="auto, (max-width: 563px) 100vw, 563px" /></figure>
+
+
+<p>所以从现在开始就强类型检查，“亡羊补牢，犹未晚也”！</p>
+<p>const value = &#8220;520&#8221;;</p>
+<p>if (value === 520) {</p>
+<p>&nbsp; console.log(value);</p>
+<p>}</p>
+<p>条件不会满足。</p>
+<p>if (value === &#8220;520&#8221;) {</p>
+<p>&nbsp; console.log(value);</p>
+<p>}</p>
+<p>条件满足。</p>
+
+
+<h2 class="wp-block-heading">变量命名</h2>
+
+
+<p>变量的命名要有意义，而不是随意乱起。最好是“望文生义”，一看到变量名就知道是干嘛用的。</p>
+
+
+<h3 class="wp-block-heading">望文生义</h3>
+
+
+<p>坏代码：</p>
+<p>let<code> daysSLV</code>=<code> </code>10;<code></code></p>
+<p>let<code> y </code>=<code> </code>new<code> </code>Date().getFullYear();<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code>
+
+
+<p>let<code> ok</code>;<code></code></p>
+<p>if<code> </code>(<code>user</code>.<code>age </code>&gt;<code> </code>30)<code> </code>{<code></code></p>
+<p><code>&nbsp; ok </code>=<code> </code>true;<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>const<code> </code>MAX_AGE<code> </code>=<code> </code>30;<code></code><br />
+let<code> daysSinceLastVisit </code>=<code> </code>10;<code></code><br />
+let<code> currentYear </code>=<code> </code>new<code> </code>Date().getFullYear();<code></code><br />
+...<code></code><br />
+const<code> isUserOlderThanAllowed </code>=<code> user</code>.<code>age </code>&gt;<code> </code>MAX_AGE;</p>
+
+
+<h3 class="wp-block-heading">不要给变量添加额外不需要的单词</h3>
+
+
+<p>坏代码：</p>
+<p>let<code> nameValue</code>;<code></code><br />
+let<code> theProduct</code>;<code></code></p>
+<p>好代码：</p>
+<p>let<code> name</code>;<code></code></p>
+<p>let<code> product</code>;<code></code></p>
+
+
+<h3 class="wp-block-heading">不要让我们需要从上下文中了解变量的意思</h3>
+
+
+
+<p>坏代码：</p>
+
+
+
+<p>const ans = ["Chongchong", "maomaochong", "bollworm"];</p>
+
+
+
+<p>ans.forEach(an =&gt; {</p>
+
+
+
+<p>&nbsp; doSomething();</p>
+
+
+
+<p>&nbsp; doSomethingElse();</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; // 等等，这个u是干嘛用的？</p>
+
+
+
+<p>&nbsp; register(an);</p>
+
+
+
+<p>好代码：</p>
+
+
+
+<p>const animals = ["Chongchong", "maomaochong", "bollworm"];</p>
+
+
+
+<p>animals.forEach(animal =&gt; {</p>
+
+
+
+<p>&nbsp; doSomething();</p>
+
+
+
+<p>&nbsp; doSomethingElse();</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; // ...</p>
+
+
+
+<p>&nbsp; register(animal);</p>
+
+
+
+<p>});</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="599" height="187" src="http://ijz.me/wp-content/uploads/2025/03/5-6.png" alt="" class="wp-image-1139" srcset="http://ijz.me/wp-content/uploads/2025/03/5-6.png 599w, http://ijz.me/wp-content/uploads/2025/03/5-6-300x94.png 300w" sizes="auto, (max-width: 599px) 100vw, 599px" /></figure>
+
+
+
+<h3 class="wp-block-heading">不添加多余的上下文</h3>
+
+
+<p>坏代码：</p>
+<p>const<code> user </code>=<code> </code>{<code></code><br />
+<code>&nbsp; userName</code>:<code> </code>"Chongchong",<code></code><br />
+<code>&nbsp; userNameAbb</code>:<code> </code>"CC",<code></code><br />
+<code>&nbsp; userAge</code>:<code> </code>"28"<code></code><br />
+};<code></code><br />
+...<code></code><br />
+<code>user</code>.<code>userName</code>;</p>
+<p>&nbsp;</p>
+<p>好代码：</p>
+<p>const<code> user </code>=<code> </code>{<code></code></p>
+<p><code>Name</code>:<code> </code>"Chongchong",<code></code><br />
+<code>NameAbb</code>:<code> </code>"CC",<code></code><br />
+<code>&nbsp; userAge</code>:<code> </code>"28"<code></code><br />
+};<code></code></p>
+<p>...<code></code><br />
+<code>user</code>.<code>userName</code>;</p>
+
+
+<h2 class="wp-block-heading">函数</h2>
+
+
+
+<h3 class="wp-block-heading">使用长而具有描述性的函数名。</h3>
+
+
+<p>由于函数一般来说表示某种行为，函数名称应该是动词或短​​语，这样可以显示功能以及参数的意义。</p>
+<p>坏代码：</p>
+<p>function<code> </code>notif(user)<code> </code>{<code></code><br />
+<code>&nbsp; </code>// 代码逻辑<code></code><br />
+}<code></code></p>
+<p>好代码：</p>
+<p>function notifyUser（emailAddress）{</p>
+<p>&nbsp;&nbsp;//代码逻辑</p>
+<p>}</p>
+
+
+<h3 class="wp-block-heading">避免使用大量参数。</h3>
+
+
+<p>理想情况下，函数应该指定两个或更少的参数。参数越少，函数单元测试就越容易。</p>
+<p>坏代码：</p>
+<p>function<code> </code>getUsers(fields, fromDate, toDate)<code> </code>{<code></code><br />
+<code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>getUsers({ fields, fromDate, toDate })<code> </code>{<code></code><br />
+<code>&nbsp; </code>// 码逻辑<code></code><br />
+}<code></code></p>
+<p>getUsers({<code></code><br />
+<code>&nbsp; fields</code>:<code> </code>['name',<code> </code>'surname',<code> </code>'email'],<code></code><br />
+<code>&nbsp; fromDate</code>:<code> </code>'2019-05-22',<code></code><br />
+<code>&nbsp; toDate</code>:<code> </code>'2019-05-31'<code></code><br />
+});<code></code></p>
+<p>getUsers（{</p>
+<p>&nbsp;&nbsp;字段：['name'，'surname'，'email']，</p>
+<p>&nbsp;&nbsp;fromDate：'2019-01-01'，</p>
+<p>&nbsp;&nbsp;toDate：'2019-01-18'</p>
+<p>}）;</p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<h3 class="wp-block-heading">使用默认参数，不用条件。</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>createShape(type)<code> </code>{<code></code><br />
+<code>&nbsp; </code>const<code> shapeType </code>=<code> type </code>||<code> </code>"circle";<code></code><br />
+<code>&nbsp; </code>// ...<code></code><br />
+}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>createShape(<code>type </code>=<code> </code>"circle")<code> </code>{<code></code><br />
+<code>&nbsp; </code>// ...<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">一个函数做一件事。避免在单个函数中执行多个操作,多种逻辑</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>notifyUsers(users)<code> </code>{<code></code><br />
+<code>&nbsp; users</code>.forEach(user<code> </code>=&gt;<code> </code>{<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>const<code> userRecord </code>=<code> database</code>.lookup(<code>user</code>);<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>if<code> </code>(<code>userRecord</code>.isVerified())<code> </code>{<code></code><br />
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>notify(<code>user</code>);<code></code><br />
+<code>&nbsp;&nbsp;&nbsp; </code>}<code></code><br />
+<code>&nbsp; </code>});<code></code><br />
+}<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="477" height="173" src="http://ijz.me/wp-content/uploads/2025/03/6-6.png" alt="" class="wp-image-1140" srcset="http://ijz.me/wp-content/uploads/2025/03/6-6.png 477w, http://ijz.me/wp-content/uploads/2025/03/6-6-300x109.png 300w" sizes="auto, (max-width: 477px) 100vw, 477px" /></figure>
+
+
+<p>好代码：</p>
+<p>function<code> </code>notifyVerifiedUsers(users)<code> </code>{<code></code><br />
+<code>&nbsp; users</code>.filter(<code>isUserVerified</code>).forEach(<code>notify</code>);<code></code><br />
+}<code></code></p>
+<p>function<code> </code>isUserVerified(user)<code> </code>{<code></code><br />
+<code>&nbsp; </code>const<code> userRecord </code>=<code> database</code>.lookup(<code>user</code>);<code></code><br />
+<code>&nbsp; </code>return<code> userRecord</code>.isVerified();<code></code><br />
+}<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="511" height="199" src="http://ijz.me/wp-content/uploads/2025/03/7-4.png" alt="" class="wp-image-1141" srcset="http://ijz.me/wp-content/uploads/2025/03/7-4.png 511w, http://ijz.me/wp-content/uploads/2025/03/7-4-300x117.png 300w" sizes="auto, (max-width: 511px) 100vw, 511px" /></figure>
+
+
+
+<h3 class="wp-block-heading">使用Object.assign配置默认对象</h3>
+
+
+<p>坏代码：</p>
+<p>const<code> shapeConfig </code>=<code> </code>{<code></code><br />
+<code>&nbsp; type</code>:<code> </code>"cube",<code></code><br />
+<code>&nbsp; width</code>:<code> </code>200,<code></code><br />
+<code>&nbsp; height</code>:<code> </code>null<code></code></p>
+<p>};<code></code></p>
+<p>function<code> </code>createShape(config)<code> </code>{<code></code></p>
+<p><code>&nbsp; config</code>.<code>type </code>=<code> config</code>.<code>type </code>||<code> </code>"cube";<code></code></p>
+<p><code>&nbsp; config</code>.<code>width </code>=<code> config</code>.<code>width </code>||<code> </code>250;<code></code></p>
+<p><code>&nbsp; config</code>.<code>height </code>=<code> config</code>.<code>width </code>||<code> </code>250;<code></code></p>
+<p>}<code></code></p>
+<p>createShape(<code>shapeConfig</code>);<code></code></p>
+<p>function createShape（config）{</p>
+<p>&nbsp;&nbsp;config.type = config.type || “立方体”;</p>
+<p>&nbsp;&nbsp;config.width = config.width || 250;</p>
+<p>&nbsp;&nbsp;config.height = config.width || 250;</p>
+<p>}</p>
+<p>createShape（shapeConfig）;</p>
+<p>好代码：</p>
+<p>const<code> shapeConfig </code>=<code> </code>{<code></code></p>
+<p><code>&nbsp; type</code>:<code> </code>"cube",<code></code></p>
+<p><code>&nbsp; width</code>:<code> </code>200<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;<br><br>&nbsp;</code></pre>
+
+
+<p>function<code> </code>createShape(config)<code> </code>{<code></code></p>
+<p><code>&nbsp; config </code>=<code> Object</code>.assign(<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type</code>:<code> </code>"cube",<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width</code>:<code> </code>250,<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height</code>:<code> </code>250<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>},<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;&nbsp;&nbsp; config</code></pre>
+
+
+<p><code>&nbsp; </code>);<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>...<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>createShape(<code>shapeConfig</code>);<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="571" height="395" src="http://ijz.me/wp-content/uploads/2025/03/8-4.png" alt="" class="wp-image-1142" srcset="http://ijz.me/wp-content/uploads/2025/03/8-4.png 571w, http://ijz.me/wp-content/uploads/2025/03/8-4-300x208.png 300w" sizes="auto, (max-width: 571px) 100vw, 571px" /></figure>
+
+
+
+<h3 class="wp-block-heading">不要使用标志作为参数。</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>createFile(name, isPublic)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(<code>isPublic</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; fs</code>.create(`./public/${name}`);<code></code></p>
+<p><code>&nbsp; </code>}<code> </code>else<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; fs</code>.create(<code>name</code>);<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>createFile(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; fs</code>.create(<code>name</code>);<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>function<code> </code>createPublicFile(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>createFile(`./public/${name}`);<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">不要让全局函数污染</h3>
+
+
+<p>如果需要扩展现有对象，请使用ES类和继承，不要在对象原型链上创建函数。</p>
+<p>坏代码：</p>
+<p>Array.<code>prototype</code>.myFunc<code> </code>=<code> </code>function<code> </code>myFunc()<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// 代码逻辑<code></code></p>
+<p>};<code></code></p>
+<p>好代码：</p>
+<p>class<code> </code>SuperArray<code> </code>extends<code> </code>Array<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>myFunc()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>//代码逻辑<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}</p>
+
+
+<h2 class="wp-block-heading">条件</h2>
+
+
+
+<h3 class="wp-block-heading">不要用负面条件</h3>
+
+
+<p>坏代码：</p>
+<p>function<code> </code>isUserNotBlocked(user)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(!isUserNotBlocked(<code>user</code>))<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>function<code> </code>isUserBlocked(user)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(isUserBlocked(<code>user</code>))<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}</p>
+
+
+<h3 class="wp-block-heading">使用布尔变量直接判断，而不是条件语句</h3>
+
+
+<p>坏代码：</p>
+<p>if<code> </code>(<code>isValid </code>===<code> </code>true)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(<code>isValid </code>===<code> </code>false)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>if<code> </code>(<code>isValid</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>if<code> </code>(!<code>isValid</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>//代码逻辑<code></code></p>
+<p>}<code></code></p>
+
+
+<h3 class="wp-block-heading">避免使用条件，用多态和继承。</h3>
+
+
+<p>坏代码：</p>
+<p>class<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>switch<code> </code>(this.<code>type</code>)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"Ford":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>+<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"Benz":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>case<code> </code>"BYD":<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>-<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>}<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+<p>好代码：</p>
+<p>class<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>class<code> </code>Ford<code> </code>extends<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>+<code> </code>this.anotherFactor();<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>class<code> </code>Benz<code> </code>extends<code> </code>Car<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>// ...<code></code></p>
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor();<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<p>class<code> BYD </code>extends<code> </code>Car<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp; </code>// ...<code></code></p>
+
+
+
+<p><code>&nbsp; </code>getMaximumSpeed()<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>return<code> </code>this.someFactor()<code> </code>-<code> </code>this.anotherFactor();<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+
+<p>}</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="451" src="http://ijz.me/wp-content/uploads/2019/05/21.png" alt="" class="wp-image-1152" srcset="http://ijz.me/wp-content/uploads/2019/05/21.png 798w, http://ijz.me/wp-content/uploads/2019/05/21-300x170.png 300w, http://ijz.me/wp-content/uploads/2019/05/21-768x434.png 768w, http://ijz.me/wp-content/uploads/2019/05/21-624x353.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+
+<p></p>
+
+
+
+<h2 class="wp-block-heading">ES类</h2>
+
+
+<p>类是JavaScript中的新的语法糖。除了语法不同外，其他都和prototype一样工作。使用ES类可以让你的代码更加简洁清晰。</p>
+<p>坏代码：</p>
+<p>const<code> </code>Person<code> </code>=<code> </code>function(name)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(!(this<code> </code>instanceof<code> </code>Person))<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>throw<code> </code>new<code> </code>Error("Instantiate Person with `new` keyword");<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>Person.<code>prototype</code>.sayHello<code> </code>=<code> </code>function<code> </code>sayHello()<code> </code>{<code> </code>/**/<code> </code>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>const<code> </code>Student<code> </code>=<code> </code>function(name, school)<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>if<code> </code>(!(this<code> </code>instanceof<code> </code>Student))<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>throw<code> </code>new<code> </code>Error("Instantiate Student with `new` keyword");<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>Person.call(this,<code> name</code>);<code></code></p>
+<p><code>&nbsp; </code>this.<code>school </code>=<code> school</code>;<code></code></p>
+<p>};<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>Student.<code>prototype </code>=<code> Object</code>.create(Person.<code>prototype</code>);<code></code></p>
+<p>Student.<code>prototype</code>.<code>constructor </code>=<code> Student</code>;<code></code></p>
+<p>Student.<code>prototype</code>.printSchoolName<code> </code>=<code> </code>function<code> </code>printSchoolName()<code> </code>{<code> </code>/**/<code> </code>};<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="798" height="451" src="http://ijz.me/wp-content/uploads/2025/03/10-6.png" alt="" class="wp-image-1149" srcset="http://ijz.me/wp-content/uploads/2025/03/10-6.png 798w, http://ijz.me/wp-content/uploads/2025/03/10-6-300x170.png 300w, http://ijz.me/wp-content/uploads/2025/03/10-6-768x434.png 768w, http://ijz.me/wp-content/uploads/2025/03/10-6-624x353.png 624w" sizes="auto, (max-width: 798px) 100vw, 798px" /></figure>
+
+
+<p>好代码：</p>
+<p>class<code> </code>Person<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>constructor(name)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code></code></pre>
+
+
+<p><code>&nbsp; </code>sayHello()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>/* ... */<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+
+<p>class<code> </code>Student<code> </code>extends<code> </code>Person<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp; </code>constructor(name, school)<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>super(<code>name</code>);<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>school </code>=<code> school</code>;<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}</p>
+
+
+
+<p><code>&nbsp; </code>printSchoolName()<code> </code>{<code></code></p>
+
+
+
+<p><code>&nbsp;&nbsp;&nbsp; </code>/* ... */<code></code></p>
+
+
+
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+
+<p>}<code></code></p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="598" height="405" src="http://ijz.me/wp-content/uploads/2025/03/11-6.png" alt="" class="wp-image-1148" srcset="http://ijz.me/wp-content/uploads/2025/03/11-6.png 598w, http://ijz.me/wp-content/uploads/2025/03/11-6-300x203.png 300w" sizes="auto, (max-width: 598px) 100vw, 598px" /></figure>
+
+
+
+<h3 class="wp-block-heading">使用方法链接</h3>
+
+
+<p>许多库如jQuery和Lodash都使用该模式。因此，该方法可以让的代码简洁。在主类中，只需在每个函数的末尾返回“this”，就可以将更多的类方法链接到该方法。</p>
+<p>坏代码：</p>
+<p>class<code> </code>Person<code> </code>{<code></code></p>
+<p><code>&nbsp; </code>constructor(name)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>name </code>=<code> name</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code>
+
+
+<p><code>&nbsp; </code>setSurname(surname)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>surname </code>=<code> surname</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>setAge(age)<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; </code>this.<code>age </code>=<code> age</code>;<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p><code>&nbsp; </code>save()<code> </code>{<code></code></p>
+<p><code>&nbsp;&nbsp;&nbsp; console</code>.log(this.<code>name</code>,<code> </code>this.<code>surname</code>,<code> </code>this.<code>age</code>);<code></code></p>
+<p><code>&nbsp; </code>}<code></code></p>
+<p>}<code></code></p>
+
+
+<pre class="wp-block-code"><code>&nbsp;</code></pre>
+
+
+<p>const<code> person </code>=<code> </code>new<code> </code>Person("Chongchong);<code></code></p>
+<p><code>person</code>.setSurname("CC");<code></code></p>
+<p><code>person</code>.setAge(29);<code></code></p>
+<p><code>person</code>.save();<code></code></p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="689" height="449" src="http://ijz.me/wp-content/uploads/2025/03/12-5.png" alt="" class="wp-image-1147" srcset="http://ijz.me/wp-content/uploads/2025/03/12-5.png 689w, http://ijz.me/wp-content/uploads/2025/03/12-5-300x196.png 300w, http://ijz.me/wp-content/uploads/2025/03/12-5-624x407.png 624w" sizes="auto, (max-width: 689px) 100vw, 689px" /></figure>
+
+
+<p>好代码：</p>
+<p>class Person {</p>
+<p>&nbsp; constructor(name) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.name = name;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; setSurname(surname) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.surname = surname;</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; setAge(age) {</p>
+<p>&nbsp;&nbsp;&nbsp; this.age = age;</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; save() {</p>
+<p>&nbsp;&nbsp;&nbsp; console.log(this.name, this.surname, this.age);</p>
+<p>&nbsp;&nbsp;&nbsp; return this;</p>
+<p>&nbsp; }</p>
+<p>}</p>
+<p>const person = new Person("Chongchong")</p>
+<p>&nbsp;&nbsp;&nbsp; .setSurname("CC")</p>
+<p>&nbsp;&nbsp;&nbsp; .setAge(29)</p>
+<p>.save();</p>
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="616" height="520" src="http://ijz.me/wp-content/uploads/2025/03/13-3.png" alt="" class="wp-image-1146" srcset="http://ijz.me/wp-content/uploads/2025/03/13-3.png 616w, http://ijz.me/wp-content/uploads/2025/03/13-3-300x253.png 300w" sizes="auto, (max-width: 616px) 100vw, 616px" /></figure>
+
+
+
+<h2 class="wp-block-heading">其他</h2>
+
+
+
+<p>通常情况下，尽量不要写不要重复代码，不要写不使用的函数和死代码。</p>
+
+
+
+<p>出于历史原因，可能会遇到重复的代码。例如，有两段你略有不同的低吗，但是又很多共同之处逻辑，为省事或者赶工期，导致你复制了大段代码，略做小改然后使用了。针对这种代码，后期一定要及早抽象出相同逻辑部分删除重复代码越早越好，不要欠死账，不然后越积越多就不好处理了。</p>
+
+
+
+<p>关于死代码，码如其名。就是啥事不干，删了可能引入错误，这和上面的一样处理，及早处理，不用了就早处理，早删除。</p>
+
+
+
+<h2 class="wp-block-heading">结论</h2>
+
+
+<p>上面只是代码整洁的部分原理，而且个别条款也可能需要商榷。这些大部分理论来源于《代码整洁之道》这本书。有什么建议意见请回复，一起学习讨论。</p>
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1134</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

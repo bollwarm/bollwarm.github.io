@@ -1,0 +1,2291 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>perl &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=21" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:30:19 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>通过Tomtit实现Perl6开发工作流程的自动化</title>
+		<link>http://ijz.me/?p=1076</link>
+					<comments>http://ijz.me/?p=1076#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 25 Dec 2018 07:51:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[perl6]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1076</guid>
+
+					<description><![CDATA[Perl6的开发如何做到自动化？其实很简单，只需要一个应用Tomtit。 Tomtit是一个全新的Perl6任 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>Perl6的开发如何做到自动化？其实很简单，只需要一个应用Tomtit。</p>
+
+
+
+<p>Tomtit是一个全新的Perl6任务运行器，可让你很便捷地自动执行日常任务。</p>
+
+
+
+<p>本文中，我们将展示如何使用Tomtit实现Perl6开发自动化，我们以实例展示Perl6开发中的典型场景：设置git存储库、测试本地源代码、安装本地源代码、发布CPAN模块。关于Tomtit的详细介绍请参考文章(<a href="https://dev.to/melezhik/one-tomtit-for-it--1j3f">https://dev.to/melezhik/one-tomtit-for-it&#8211;1j3f</a>)。</p>
+
+
+
+<span id="more-1076"></span>
+
+
+
+<p>本文译自<a href="https://dev.to/melezhik">Alexey Melezhik </a>的博客，原文链接 <a href="https://dev.to/melezhik/automation-of-perl6-development-workflow-through-the-tomtit-task-runner-10jj">https://dev.to/melezhik/automation-of-perl6-development-workflow-through-the-tomtit-task-runner-10jj</a></p>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<p>Tomit的安装很简单只需通过Perl6 模块生态系统命令zef：</p>
+
+
+
+<p>zef install Tomtit</p>
+
+
+
+<p>现在让我们从远程git存储库获得本实例应用程序源代码：</p>
+
+
+
+<p>git clone $ git-repo</p>
+
+
+
+<h2 class="wp-block-heading">Tomtit实例</h2>
+
+
+
+<p>本文的内容限制为在Perl6开发和发布时典型的应用场景：设置git存储库、测试本地源代码、安装本地源代码、发布CPAN模块。</p>
+
+
+
+<p>首先我们为每个涉及的实例定义tomtit场景。场景配置文件位于.tom目录中，配置文件为纯Perl6脚本，同这些脚本调用Tomtit API。</p>
+
+
+
+<h3 class="wp-block-heading">案例1.设置git存储库。</h3>
+
+
+
+<p>在新建应用时候，先要设置用户和电子邮件，这样可以支持push到远程git仓。我们也希望在缓存中保存git密码。防止每次手动输入，这些任务都可以在.tom文件中配置：</p>
+
+
+
+<p>.tom/set-get.pl6:</p>
+
+
+
+<p>task-run &#8220;set git&#8221;, &#8220;git-base&#8221;, %(</p>
+
+
+
+<p>&nbsp; email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong@ijz.me&#8217;,</p>
+
+
+
+<p>&nbsp; name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp; config_scope&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;local&#8217;,</p>
+
+
+
+<p>&nbsp; set_credential_cache =&gt; &#8216;on&#8217;</p>
+
+
+
+<p>);</p>
+
+
+
+<p>实例中的工作流程有点复杂，需要将源代码推送到GitHub和BitBucket两个远程库。</p>
+
+
+
+<p>为push操作的任务场景配置也很容易：</p>
+
+
+
+<p>.tom/push-gh.pl6:</p>
+
+
+
+<p># push到 github</p>
+
+
+
+<p>bash &#8220;git push origin master&#8221;;</p>
+
+
+
+<p>.tom/push-bb.pl6:</p>
+
+
+
+<p># push 到bitbucket</p>
+
+
+
+<p>bash &#8220;git push bb master&#8221;;</p>
+
+
+
+<p>.tom/push.pl6:</p>
+
+
+
+<p># push到github和bitbucket</p>
+
+
+
+<p>EVALFILE &#8220;.tom/push-bb.pl6&#8221;</p>
+
+
+
+<p>EVALFILE &#8220;.tom/push-gh.pl6&#8221;</p>
+
+
+
+<h3 class="wp-block-heading">案例2.测试本地源代码。</h3>
+
+
+
+<p>对于许多Perl6项目，会通过<code>zef test</code><code>测试</code>在t/目录中的单元测试用例，本例子中我们还要做Outthentic测试并且验证META6.json文件，看看是否有任何JSON语法错误,任务的配置实例如下：</p>
+
+
+
+<p>.tom/test.pl6:</p>
+
+
+
+<p>task-run &#8220;check json files&#8221;, &#8220;json-lint&#8221;, %( path =&gt;&nbsp; &#8220;{$*CWD}&#8221; );</p>
+
+
+
+<p>bash &#8220;zef test .&#8221;;</p>
+
+
+
+<p>bash &#8220;sh run-test.sh&#8221;;</p>
+
+
+
+<h3 class="wp-block-heading">案例3.安装源代码。</h3>
+
+
+
+<p>该操作简单，只是在当前工作目录的下执行zef install命令。</p>
+
+
+
+<p>.tom/install.pl6:</p>
+
+
+
+<p>bash &#8220;zef install . &#8211;force-install&#8221;;</p>
+
+
+
+<h3 class="wp-block-heading">案例4.打包成CPAN模块，并自动发布</h3>
+
+
+
+<p>实例中我们使用App::Mi6工具将Perl6模块打包并发布到CPAN，执行该操作首先要在它需要通过~/.pause配置CPAN Update的用户和密码，下面是该任务的配置文件：</p>
+
+
+
+<p>.tom/set-pause.pl6:</p>
+
+
+
+<p>my $password = prompt(&#8220;enter your CPAN password: &#8220;);</p>
+
+
+
+<p>template-create &#8220;/home/{%*ENV&lt;USER&gt;}/.pause&#8221;, %(</p>
+
+
+
+<p>&nbsp; mode =&gt; &#8216;700&#8217;,</p>
+
+
+
+<p>&nbsp; variables =&gt; %(</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; password&nbsp; =&gt; $password</p>
+
+
+
+<p>&nbsp; ),</p>
+
+
+
+<p>&nbsp; source =&gt; q:to /TEMPL/</p>
+
+
+
+<p>&nbsp; user&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;[%= user %]</p>
+
+
+
+<p>&nbsp; password&nbsp; [%= password %]</p>
+
+
+
+<p>&nbsp; TEMPL</p>
+
+
+
+<p>);</p>
+
+
+
+<p>发布的任务配置就简单了：</p>
+
+
+
+<p>.tom/release.pl6:</p>
+
+
+
+<p>zef &#8220;App::Mi6&#8221;;</p>
+
+
+
+<p>bash &#8220;mi6 release&#8221;;</p>
+
+
+
+<h2 class="wp-block-heading">工作流程</h2>
+
+
+
+<p>当tomtit场景准备就绪时，开发工作流就变的简单明了，当一切都配置到位的时候：</p>
+
+
+
+<p>1、chekout应用程序源代码：</p>
+
+
+
+<p>git clone $git-repo</p>
+
+
+
+<p>2、安装Tomtit：</p>
+
+
+
+<p>zef intall Tomtit</p>
+
+
+
+<p>3、列出可用的tomtits任务：</p>
+
+
+
+<p>tom &#8211;list</p>
+
+
+
+<p>4、修改源代码</p>
+
+
+
+<p>vim foo/bar/app.pl6</p>
+
+
+
+<p>5、运行测试：</p>
+
+
+
+<p>tom test</p>
+
+
+
+<p>安装应用：</p>
+
+
+
+<p>tom install</p>
+
+
+
+<p>6、设置git repo：</p>
+
+
+
+<p>tom git-setup</p>
+
+
+
+<p>7、提交更改</p>
+
+
+
+<p>git commit -a</p>
+
+
+
+<p>8、推送更改：</p>
+
+
+
+<p>tom push</p>
+
+
+
+<p>9、设置PAUSE帐户凭据：</p>
+
+
+
+<p>tom set-pause</p>
+
+
+
+<p>10、发布到CPAN：</p>
+
+
+
+<p>tom release</p>
+
+
+
+<h2 class="wp-block-heading">结论</h2>
+
+
+
+<p>本文中，我们实现了Perl6开发的自动化任务执行过程，所有操作只需要Tomtit就可以实现。更多典型任务请关注官方文档和探索。</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1076</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Perl 6的自动任务执行模块Tomtit ，勤快好用的趁手山雀！</title>
+		<link>http://ijz.me/?p=1078</link>
+					<comments>http://ijz.me/?p=1078#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Tue, 25 Dec 2018 02:53:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<category><![CDATA[perl6]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=1078</guid>
+
+					<description><![CDATA[Tomtit介绍 Tomtit是基于Perl6语言开发的任务执行器，它方便好用、任务定义快捷简洁，内置数十个常 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="569" height="332" src="http://ijz.me/wp-content/uploads/2025/03/p61.png" alt="" class="wp-image-1079" srcset="http://ijz.me/wp-content/uploads/2025/03/p61.png 569w, http://ijz.me/wp-content/uploads/2025/03/p61-300x175.png 300w" sizes="(max-width: 569px) 100vw, 569px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Tomtit介绍</h2>
+
+
+
+<p>Tomtit是基于Perl6语言开发的任务执行器，它方便好用、任务定义快捷简洁，内置数十个常用场景任务插件，利用该雀儿帮我们自动化Perl/Perl6以及更多的语言开发任务。</p>
+
+
+
+<span id="more-1078"></span>
+
+
+
+<p>最适合Perl5/Perl6开发人员,也支持其他开发场景使用；</p>
+
+
+
+<p>支持Perl6语言的编程API；</p>
+
+
+
+<p>自带许多常见任务任务配置：运行Bash脚本、创建文件和启动/停止服务 ，更多的任务脚本详见：</p>
+
+
+
+<p><a href="https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md">https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md</a></p>
+
+
+
+<p>它有几十个插件，详细列表请访问<a href="http://sparrowhub.org">http://sparrowhub.org</a></p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="854" height="553" src="http://ijz.me/wp-content/uploads/2025/03/p62.png" alt="" class="wp-image-1080" srcset="http://ijz.me/wp-content/uploads/2025/03/p62.png 854w, http://ijz.me/wp-content/uploads/2025/03/p62-300x194.png 300w, http://ijz.me/wp-content/uploads/2025/03/p62-768x497.png 768w, http://ijz.me/wp-content/uploads/2025/03/p62-624x404.png 624w" sizes="(max-width: 854px) 100vw, 854px" /></figure>
+
+
+
+<p>支持扩展， 你可以使用自己喜欢的语言并编写新的插件来满足的特定需求。</p>
+
+
+
+<p></p>
+
+
+
+<p>最重要的是作为底线，它可以帮助我们轻松完成常见的任务，但不限于静态DSL，而是允许你使用现代化的强大的Perl6语言来配置任务场景。说这么多，你一定心动了把，那让咱们开始把。</p>
+
+
+
+<h2 class="wp-block-heading">安装</h2>
+
+
+
+<p>Tomtit是一个标准的Perl6模块，可以使用Perl6模块生态系统包管理软件zef安装。</p>
+
+
+
+<p>zef install &nbsp;Tomtit</p>
+
+
+
+<p>成功安装后，Tomcatit在你的shell环境增加tom -命令行客户端来执行具体的任务。</p>
+
+
+
+<h2 class="wp-block-heading">启动</h2>
+
+
+
+<p>你需要一个系统引启动器（*）来引导Tomtit的内部任务器的运行，实际上就是一个简单的命令</p>
+
+
+
+<p>&nbsp;tom &#8211;bootstrap</p>
+
+
+
+<p>注意：你需要sudo权限来启动该任务器。</p>
+
+
+
+<p>完成启动后，你就可以执行任务脚本，接着让我们来看看典型的tomtit工作流程。</p>
+
+
+
+<h2 class="wp-block-heading">Tomtit工作流程</h2>
+
+
+
+<p>通常使用tomtit的工作流程是先定义方案（任务脚本），然后运行它们时。它基于任务为中心的方法非常便捷，我们可以检查应用程序的源代码并运行一些相关的任务。比如，我们有一个应用程序源代码，我们只需执行3个标准操作：</p>
+
+
+
+<p>build,测试和安装</p>
+
+
+
+<p>我们定以后任务方案后，我们命名他们然后构建，测试和安装。如果使用make程序来构建项目，则方案对应make对应参数的3次调用。让我们创建我们的第一个Tomtit场景：</p>
+
+
+
+<p>git checkout $git-repo</p>
+
+
+
+<p>mkdir .tom</p>
+
+
+
+<p>nano .tom/build.pl6</p>
+
+
+
+<p>nano .tom/test.pl6</p>
+
+
+
+<p>nano .tom/install.pl6</p>
+
+
+
+<p>每个场景的代码和bash命令运行make一样简单：</p>
+
+
+
+<p>.tom/build.pl6:</p>
+
+
+
+<p>bash &#8220;make&#8221;</p>
+
+
+
+<p>.tom/test.pl6:</p>
+
+
+
+<p>bash &#8220;make test&#8221;</p>
+
+
+
+<p>.tom/install.pl6:</p>
+
+
+
+<p>bash &#8220;sudo make install&#8221;</p>
+
+
+
+<h2 class="wp-block-heading">程序化API</h2>
+
+
+
+<p>tomtit的任务方案场景的脚本是用Perl6编写的，对应于调用不同的任务，但这些场景不一定是有限的任务调用，它们只是Perl6程序，基于Perl6的强大功能你可以使用它做任何事情。</p>
+
+
+
+<p>Tomtit中有两种语法不同的任务。你通过任务运行函数调用的第一个是快捷方式，它与task-run几乎相同但具有助记符名称，有时更容易签名。</p>
+
+
+
+<p>在上述make实用程序的场景中，我们使用bash快捷方式调用一段Bash代码。tomtie可调用的完整快捷方式列表，请浏览：</p>
+
+
+
+<p><a href="https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md">https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md</a></p>
+
+
+
+<h2 class="wp-block-heading">任务和插件</h2>
+
+
+
+<p>换句话说，任务运行和快捷方式只是一种调用任务块的方法，如果代码从SparrowHub下载，脚本存储库然后由sparrow内部脚本运行执行，虽然不之前没有提到过，但实际上zoo-repository支持更多的birds！</p>
+
+
+
+<p>这些小脚本或任务也叫Sparrow插件。Tomtits的任务场景基对应于一个执行的Sparrow插件或任务的列表。</p>
+
+
+
+<h2 class="wp-block-heading">命令行API</h2>
+
+
+
+<p>通过运行tom &#8211;list，你可以到当前可用的所有任务场景：</p>
+
+
+
+<p>[scenarios list]</p>
+
+
+
+<p>build</p>
+
+
+
+<p>test</p>
+
+
+
+<p>install</p>
+
+
+
+<p>一旦定义了任务方案，就可以通过tom &#8211;run=$scenario命令运行它们。例如：</p>
+
+
+
+<p>tom run = build，tom run = test等等。</p>
+
+
+
+<p>要回想一下你运行的最后一个场景是什么，可使用tom &#8211;last命令。更多文档，请参考tomtitgithub页面的tom命令行的相关说明。</p>
+
+
+
+<h2 class="wp-block-heading">自定义任务</h2>
+
+
+
+<p>就上上文中我们提到的，我们不必受限于Tomtit场景中运行Bash和官方一些标准的任务场景。我们可以下载和自己开发相关插件，可以实现各种形形色色的任务。</p>
+
+
+
+<p>例如，我们创建一个用用户参数（如用户名和电子邮件）配置本地git存储库的方案。你要clone一个新项目时，通常需要对其做修改并提交修改，最后push到远程库。那么本任务就是帮助你实现这个任务，并能自动缓存用户账号信息，以后不需要再输入用户名和密码（http/https）。</p>
+
+
+
+<p>.tom/git-setup.pl6:</p>
+
+
+
+<p>task-run &#8220;set git&#8221;, &#8220;git-base&#8221;, %(</p>
+
+
+
+<p>&nbsp; email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong@ijz.me&#8217;,</p>
+
+
+
+<p>&nbsp; name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;chongchong&#8217;,</p>
+
+
+
+<p>&nbsp; config_scope&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; &#8216;local&#8217;,</p>
+
+
+
+<p>&nbsp; set_credential_cache =&gt; &#8216;on&#8217;</p>
+
+
+
+<p>);</p>
+
+
+
+<p>通过设置config_scope，我们定义任务为对本地git存储库进行设置，并通过设置set_credential_cache为“on”，我们要求git缓存密码。</p>
+
+
+
+<p>可以在SparrowHub的sparrow插件存储库中找到可在Tomtit方案中使用的插件列表。</p>
+
+
+
+<p>在下面的场景示例中，我们创建任务以通过vsts-build插件远程运行VSTS构建：</p>
+
+
+
+<p>.tom/build-vsts.pl6:</p>
+
+
+
+<p>task_run &#8220;run my build&#8221;, &#8220;vsts-build&#8221;, %(</p>
+
+
+
+<p>&nbsp;&nbsp;&nbsp; definition =&gt; &#8220;BackEndBuild&#8221;</p>
+
+
+
+<p>)</p>
+
+
+
+<p>你可以在Tomtit方案中使用许多其他插件作为任务。 关于更多的插件，请查看SparrowHub存储库<a href="http://sparrowhub.org">SparrowHub</a>。</p>
+
+
+
+<h2 class="wp-block-heading">总结</h2>
+
+
+
+<p>Tomtit为我们提供了大量可用于日常任务的小脚本或插件，尤其是在处理开发类的源代码管理和自动化构建的任务。Tomtit任务场景配置脚本使用的是普通Perl6脚本，用于生成执行任务的动态列表。任务脚本支持语法糖，你可以使用预定义的内置函数集，而不是引用插件，使代码更简洁，更容易阅读。</p>
+
+
+
+<p>如果由于某些原因你找不到解决你特定任务的插件，你可以随时创建自己的插件。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=1078</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Perl 6发布新版本Rakudo Star 2018.01</title>
+		<link>http://ijz.me/?p=998</link>
+					<comments>http://ijz.me/?p=998#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 01 Feb 2018 00:58:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=998</guid>
+
+					<description><![CDATA[1月29日，Rakudo和Perl 6开发组在官方博客 http://rakudo.org/ 发布消息，宣布R [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>1月29日，Rakudo和Perl 6开发组在官方博客 http://rakudo.org/ 发布消息，宣布Rakudo Star 2018.01生产版本正式发布。其源码包已经可下载，<br> 下载地址：https://rakudo.perl6.org/downloads/star/<br> Windows 二进制安装包，MAC 二进制安装包稍后会在同一地址提供下载。<br> 这是继 Perl 6 圣诞版本 v6.c 版本后，又一个生产版本，支持官方 MoarVM 虚拟机向后全功能兼容（对支持平台所有模块的测试都通过）。</p>
+
+
+
+<p><br> 目前 Perl 6 版本发布周期是季度性发布。<br> 需要提及的是，本次发布的 Rakudo Star 版本不能完全向后兼容 JVM 所有功能，只能完全向后兼容 MoarVM。<br> 本地发行包 —— 包括 2018.01 版本的 Rakudo Perl 6 编译器，MoarVM 虚拟机及核心模块、文档以及 Perl 6 社区收集的其他资源。<br> Rakudo 编译器的更新列表，详见安装包 rakudo/docs/announce 目录下的 2017.10、2017.11.md、2017.12.md、2018.01.md 文档里。</p>
+
+
+
+<span id="more-998"></span>
+
+
+
+<p>额外科普：<br> Perl 6 仅仅指语言，Rakudo Star 是官方的 Perl 发行版本，包括编译器、虚拟机和核心功能模块。当然 Perl 6 还有其他官方和第三方的 Perl 6 发行版版本，比如大家都熟悉的春哥的 fanlang 语言就是运行在 Openresty 上的Perl 6 “方言“。<br> MoarVM 是官方的 Perl 6 虚拟机，Perl 的虚拟机还支持 Java 虚拟机的 JVM，用于在 JVM 上跑 Perl 6。<br> Perl 6 文档中文化 —— 笔者在 github 上创建了一个官方文档 Perl 6 doc 中文化项目，欢迎有志的同学一起加入，完善和推广。</p>
+
+
+
+<p><br> 码云的托管地址为：https://gitee.com/ijz/perl6doc</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=998</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>打印特定行范围的多种方法（5-10行）</title>
+		<link>http://ijz.me/?p=985</link>
+					<comments>http://ijz.me/?p=985#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 07 Sep 2017 12:31:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[shell]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=985</guid>
+
+					<description><![CDATA[废话少说，直接撸代码： perl -ne 'print if 5..10' xxoo #感谢flw提醒，忘记这 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>废话少说，直接撸代码：</p>
+
+
+
+<p><code>perl -ne 'print if 5..10' xxoo #感谢flw提醒，忘记这个了<br>perl -ne 'print if $.>=5 and $.&lt;=10' xxoo<br>perl -ne 'print if int($.) ~~ (5..10)'<br>perl -ne 'print if grep { $_ == $. } 5..10'xxoo<br>sed -ne '5,10 p' xxoo<br>awk 'NR==5,NR==10' xxoo<br>head -10 xxoo |tail -6<br>tail -n +5 xxoo | head -n 6<br>grep . -n xxoo |grep -E "^(5|6|7|8|9|10):"|perl -lpe 's/\d+://'</code></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=985</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>关于perl6的若干问题？(Perl6.d版本将会在2018年推出)</title>
+		<link>http://ijz.me/?p=983</link>
+					<comments>http://ijz.me/?p=983#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Fri, 23 Jun 2017 12:20:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=983</guid>
+
+					<description><![CDATA[17年磨一剑，在perl人艰苦卓绝的努力下，perl 6终于在2015年圣诞节推出了正式版本V6.c版本（c代 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>17年磨一剑，在perl人艰苦卓绝的努力下，perl 6终于在2015年圣诞节推出了正式版本V6.c版本（c代表圣诞节）。 期间几度波折，发生了很多很的事情。最令人津津乐道的一条是Perl6 最先成型的pogs版本主程台湾大牛唐宗汉易性为唐凤，另IT界叹为观止，广泛流传。</p>
+
+
+
+<span id="more-983"></span>
+
+
+
+<p>20年积累了宇宙巨能的perl6究竟有啥黑科技？本文借自perl6官方的faq，翻译成中文，以帮助我们揭开perl6的潘多拉宝盒。</p>
+
+
+
+<p>笔者计划一项目perl6doc中文化的项目，这篇文章为perl6doc中文化的第一个成果，如果有什么纰漏和错误，请帮助我指出 。另外有志于学习perl6和参与项目的同仁也大大的欢迎哦。</p>
+
+
+
+<p>项目的地址为：<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/http://git.oschina.net/ijz/perl6doc">http://git.oschina.net/ijz/perl6doc</a></p>
+
+
+
+<p>最新更新是Perl6.d版本将会在2018年推出，让我们期待把！</p>
+
+
+
+<h1 class="wp-block-heading">FAQ perl6最常问到的问题</h1>
+
+
+
+<h1 class="wp-block-heading">一般性问题</h1>
+
+
+
+<h2 class="wp-block-heading">Rakudo和Perl 6 有啥区别?</h2>
+
+
+
+<p>正确的说法是，&nbsp;<a href="http://rakudo.org/">Rakudo</a>&nbsp;是perl6的的实现。它是目前最完全的实现版本，目前还存在其他几个实现，将来也许 会有更多的实现。Perl 6是语言的定义。目前来讲，Perl 6和Rakudo名称可以通用。</p>
+
+
+
+<h2 class="wp-block-heading">第一个perl版本是6.0.0?</h2>
+
+
+
+<p>NO，perl 6 第一个正式发布版是v6.c（c代笔Christmas圣诞节）。 接下来发布的版本是带点版本（比如，v6.3.2）,或者大版本的话（v6.d）</p>
+
+
+
+<p>运行<code>perl6 -v</code>会输出编译器版本号：</p>
+
+
+
+<p>$&nbsp;perl6&nbsp;–v</p>
+
+
+
+<p>输出”This is Rakudo version 2017.07 built on MoarVM version 2017.07 implementing Perl 6.c“。</p>
+
+
+
+<h2 class="wp-block-heading">Perl v6.d 大概什么时候发布?</h2>
+
+
+
+<p>2018年内某时间点。这是实现6.d特性的第一个版本，具体日期后面会发布。 实际上通过使用<code>use v6.d.PREVIEW</code>我们已经在6.c的编译支持了很多6.d的新特性&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language/pragmas">pragma</a>。</p>
+
+
+
+<h2 class="wp-block-heading">perl6开始之旅,我应该安装什么?</h2>
+
+
+
+<p>Mac用可安装Rakudo Star DMG包，下载地址：&nbsp;<a href="http://rakudo.org/downloads/star">http://rakudo.org/downloads/star</a></p>
+
+
+
+<p>Windows用户可以通过Rakudo Star MSI安装. 你必须事先安装Windows Git和Strawberry Perl5 然后用zef包管理软件安装perl6模块。</p>
+
+
+
+<p>Linux用户直接下载Rakudo Star&nbsp;<a href="http://www.perl6.org/downloads/">http://www.perl6.org/downloads/</a>&nbsp;，然后编译安装.</p>
+
+
+
+<p>Linux和Mac用户也可以通过操作系统发行方或者第三方的二进制包安装,发行方包可能版本会老一点.</p>
+
+
+
+<p>我们也提供Rakudo Star docker容器的镜像，地址为&nbsp;<a href="https://hub.docker.com/_/rakudo-star/">https://hub.docker.com/_/rakudo-star/</a></p>
+
+
+
+<h2 class="wp-block-heading">对于perl老司机我对 Rakudo的开发感兴趣，有啥好的建议？</h2>
+
+
+
+<p>X&lt;|rakudobrew (FAQ)&gt;</p>
+
+
+
+<p>最简便的方法是clone仓库<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/rakudo/rakudo">the repository</a>并且对其编译&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/zoffixznet/r#table-of-contents">从源码编译文档</a>。</p>
+
+
+
+<p>部分人也可以选择<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/tadzik/rakudobrew">rakudobrew</a>这允许我们安装多版本 rakudo，从中选择自己喜欢的版本。请先浏览文档&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/tadzik/rakudobrew#making-new-scripts-available">rakudobrew</a>&nbsp;这个工具相当于perl5的perlbrew或者python，ruby的相应的多版本管理工具。</p>
+
+
+
+<h2 class="wp-block-heading">上哪里找Perl6的文档?</h2>
+
+
+
+<p>请浏览<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/">官方文档站</a>(特别是他的<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language.html">“Language”部分</a>。 还有<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://perl6.org/resources/">资源页</a>)。 你可以通过<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://webchat.freenode.net/?channels=#perl6">在线perl6频道</a>寻求帮助 或者通过谷歌<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://www.google.com/search?q=site:irclog.perlgeek.de+inurl:perl6">搜索聊天记录</a>。</p>
+
+
+
+<h2 class="wp-block-heading">Perl6 specification是什么?</h2>
+
+
+
+<p>Perl6 specification是指perl6 官方的测试套件.我们称它为roast，其地址为&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/perl6/roast">hosted on github</a>. 任何编译测试通过的就会加入到Perl 6 specification。</p>
+
+
+
+<p>Roast的主分支对应最新的开发版本，它仍未划入任何的specification。其他分支则对应于不同的specific版本。 例如，”6c.errata”。</p>
+
+
+
+<h2 class="wp-block-heading">有Perl6相关主题的字汇表么?</h2>
+
+
+
+<p>是的, 其链接为<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#language-glossary">glossary</a>.</p>
+
+
+
+<h2 class="wp-block-heading">作为一个perl程序员，我想知道Perl5和Perl6的不同点是啥?</h2>
+
+
+
+<p>本文档的<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language.html">Language部分</a>，有几个<code>5to6-</code>的指导教程。 其中最主要的是<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language/5to6-nutshell">5to6-nutshell guide</a>。</p>
+
+
+
+<h2 class="wp-block-heading">我是一位Ruby程序，我该怎么快速入门perl6?</h2>
+
+
+
+<p>请浏览’rb-nutshell’文档，链接为<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language/rb-nutshell">https://docs.perl6.org/language/rb-nutshell</a></p>
+
+
+
+<h1 class="wp-block-heading">模块</h1>
+
+
+
+<h2 class="wp-block-heading">Perl6有没有CPAN?</h2>
+
+
+
+<p>有，和Per5的<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/http://cpan.org/">CPAN</a>一样,CPAN已经完全支持Perl6。唯一的区别是用<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/http://pause.perl.org/">PAUSE</a>&nbsp;升级模块时候，你必须选择<code>Perl 6</code>为目标目录。<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://modules.perl6.org/l/App::Mi6"><code>App::Mi6</code>工具</a>&nbsp;模块可用于，简化这个更新流程。最新版本的<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://modules.perl6.org/l/zef"><code>zef</code>模块安装</a>&nbsp;自动的检查CPAN上最新版本的模块，以及<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/perl6/ecosystem/">GitHub-based ecosystem</a>。</p>
+
+
+
+<h2 class="wp-block-heading">我能在Perl6中使用perl模块么?</h2>
+
+
+
+<p>没问题，通过&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/niner/Inline-Perl5/">Inline::Perl5</a>可以很好的运行大多数的perl5模块，甚至 包括Catalyst和DBI.</p>
+
+
+
+<h2 class="wp-block-heading">我能在Perl6中执行c和c++么?</h2>
+
+
+
+<p><a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language/nativecall">Nativecall</a>使这工作变的非常简单.</p>
+
+
+
+<h2 class="wp-block-heading">Nativecall不能找到libfoo.so，我的系统中只有libfoo.so.1.2!</h2>
+
+
+
+<p>这是Debian系linux运行Nativecall常见的问题.你需要安装C包，并对缺失的问题设置符号链接。</p>
+
+
+
+<h2 class="wp-block-heading">那些传统的UNIX库函数如何调用?</h2>
+
+
+
+<p>利用Nativecall调用它们非常简单。同时还有一个生态系统模块<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/cspencer/perl6-posix">POSIX</a>也可用.</p>
+
+
+
+<h2 class="wp-block-heading">Rakudo有核心的标准库么?</h2>
+
+
+
+<p><a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://rakudo.perl6.org/downloads/star/">Rakudo Star发行包</a>携带很多有用的了&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/rakudo/star/tree/master/modules">模块</a>。 Rakudo编译器发布仅仅包括一些最常用的<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://docs.perl6.org/language/modules-core">基本模块</a>。 更多的模块在<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/http://modules.perl6.org/">ecosystem</a>。</p>
+
+
+
+<h2 class="wp-block-heading">有没有类似B::Deparse的模块？我如何处理AST?</h2>
+
+
+
+<p>使用<code>--target=optimize</code>命令行选项来预览程序中的AST。例如：&nbsp;<code>perl6 --target=optimize -e 'say "hi"'</code>。 静态优化后，<code>optimize</code>赋给AST处理目标，同时目标&nbsp;<code>ast</code>给予AST前面的步骤。 可通过运行<code>perl6 --stagestats -e ""</code>得到所有可用目标的列表。</p>
+
+
+
+<h1 class="wp-block-heading">语言特性</h1>
+
+
+
+<h2 class="wp-block-heading">我怎么样能dump出Perl6的数据结构 (和perl5的Data::Dumper一样有类似的模块么?）</h2>
+
+
+
+<p>典型地是使用<code>say</code>例程，对”gist” 对象的dump使用<code>gist</code>方法。更多细节可以通过&nbsp;<code>perl</code>方法，这通常会返回&nbsp;<code>EVAL</code>样式的代码表示。</p>
+
+
+
+<p>如果使用是<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/http://rakudo.org/">rakudo implementation</a>，你可以使用其特有的&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/programs/01-debugging#Dumper_function_dd">non-standard&nbsp;<code>dd</code>&nbsp;routine</a>例程来dump 他的输出与<code>perl</code>类似，包含更多多的信息。例如:</p>
+
+
+
+<p>my&nbsp;$foo&nbsp;=&nbsp;{&nbsp;foo&nbsp;=&amp;gt;&nbsp;‘bar’&nbsp;};</p>
+
+
+
+<p>say&nbsp;$foo.perl;# 输出: «${:foo(“bar”)}␤»</p>
+
+
+
+<p>say&nbsp;$foo;# 输出: «{foo =&amp;gt; bar}␤»</p>
+
+
+
+<p># 在rakudo实现中，支持非标准的例程</p>
+
+
+
+<p>dd&nbsp;$foo;# 输出: «Hash $foo = ${:foo(“bar”)}␤»</p>
+
+
+
+<p>同时perl6生态系统也有几个<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://modules.perl6.org/s/dump">专门的模块</a>提供更完善 的数据结构dump，包括支持带彩色的输出等。</p>
+
+
+
+<h2 class="wp-block-heading">Perl6命令行(REPL)下我如何得到输入命令的历史?</h2>
+
+
+
+<p>请安装<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/hoelzro/p6-linenoise/">Linenoise</a>&nbsp;模块.</p>
+
+
+
+<p>对Unix系的操作系统另外还有一个方法就是使用rlwrap。在debian系操作系统可以通过 运行以下命令安装。</p>
+
+
+
+<p>for&nbsp;code&nbsp;:lang&amp;lt;shell&amp;gt;</p>
+
+
+
+<p>sudo&nbsp;apt–get&nbsp;install&nbsp;rlwrap</p>
+
+
+
+<h2 class="wp-block-heading">为什么Rakudo编译这样报错?</h2>
+
+
+
+<p>如果 当前输出是编译时错误，否则是运行时错误。</p>
+
+
+
+<p>例如:</p>
+
+
+
+<p></p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td></td><td>=begin&nbsp;code&nbsp;:skip–testsay&nbsp;1/0;# 试图对0整除sub&nbsp;foo(&nbsp;Int&nbsp;$a,&nbsp;Int&nbsp;$b&nbsp;)&nbsp;{&#8230;}foo(1)# ===抱歉!=== 编译时报错 …=end&nbsp;code</td></tr></tbody></table></figure>
+</blockquote>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>1234567</td><td>=begin&nbsp;code&nbsp;:skip–testsay&nbsp;1/0;# 试图对0整除sub&nbsp;foo(&nbsp;Int&nbsp;$a,&nbsp;Int&nbsp;$b&nbsp;)&nbsp;{&#8230;}foo(1)# ===抱歉!=== 编译时报错 …=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<h2 class="wp-block-heading"><code>(Any)</code>&nbsp;是啥?</h2>
+
+
+
+<p><a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/type/Any">Any</a>是最高层的基类，其它绝大多数类都继承它。<code>Any</code>类型对象最为变量和参数 未明确指类型时候的<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/type/Attribute#index-entry-trait_is_default_%28Attribute%29-Trait_is_default">默认值</a>&nbsp;这意味着当你答应一个没有任何值<code>gist</code>变量时候会输出<code>(Any)</code>。比如使用<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/routine/say"><code>say</code>&nbsp;routine</a>:</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>1234567891011</td><td>=begin&nbsp;codemy&nbsp;$foo;say&nbsp;$foo;&nbsp;# 输出: «(Any)␤»my&nbsp;Int&nbsp;$baz;say&nbsp;$baz;&nbsp;# 输出: «(Int)␤»my&nbsp;$bar&nbsp;=&nbsp;70;say&nbsp;$bar;&nbsp;# 输出: «70␤»=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<p>为了测试一个变量是否具有定义的值，使用L和L例程。其他几个测试定义与否结构有：&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/syntax/with%20orwith%20without"><code>with</code>,&nbsp;<code>orwith</code>,以及<code>without</code></a>语句， [<code>&lt;//&gt;</code>(/routine/$SOLIDUS$SOLIDUS)，<code>andthen</code>,&nbsp;<code>notandthen</code>,以及<code>orelse</code>操作符。还有&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/type/Signature#Constraining_Defined_and_Undefined_Values">type constraint smileys</a>。</p>
+
+
+
+<h2 class="wp-block-heading"><code>so</code>是什么?</h2>
+
+
+
+<p><code>so</code>是一个弱优先级操作符，强制为<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#type-bool">Bool</a>。 它和<code>?</code>&nbsp;前缀操作符具有相同语义，类似于<code>and</code>和低优先级的<code>&amp;&amp;</code>。</p>
+
+
+
+<p>实例:</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12</td><td>say&nbsp;so&nbsp;1|2&nbsp;==&nbsp;2;# 输出: «True␤»</td></tr></tbody></table></figure>
+
+
+
+<p>本例中的，比较的结果(是一个&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#type-junction">Junction</a>),被转化为布尔型打印。</p>
+
+
+
+<h2 class="wp-block-heading"><code>:D</code>&nbsp;和&nbsp;<code>:U</code>&nbsp;修饰的意义?</h2>
+
+
+
+<p>在perl6中，类和其他类型都是对象，并且只能通过其自己类型的类型检查。</p>
+
+
+
+<p>例如,如果你定义一个变量</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12</td><td>my&nbsp;Int&nbsp;$x&nbsp;=&nbsp;42;</td></tr></tbody></table></figure>
+
+
+
+<p>然后你不仅可以给他赋值整数（那就是，类实例Int），还有<code>Int</code>&nbsp;类型对象自己。</p>
+
+
+
+<p>如果你要排除类型对象，你可以附加<code>:D</code>&nbsp;类型笑脸，他带包已”定义”.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>1234567</td><td>=begin&nbsp;code&nbsp;:skip–testmy&nbsp;Int:D&nbsp;$x&nbsp;=&nbsp;42;$x&nbsp;=&nbsp;Int;# 异常退出:# 给$x赋值是类型检查错误;# 期待 Int:D 但是赋值的是Int=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<p>类似的，C&lt;:U&gt; 限制为未定义的值，也就是说，类型对象。如果你限制既不能为类型对象 也不能为实例，你可以用C&lt;:_&gt;.</p>
+
+
+
+<h2 class="wp-block-heading">修饰符&nbsp;<code>--&gt;</code>&nbsp;有啥作用?</h2>
+
+
+
+<p>L«–&gt;|/type/Signature#Constraining_Return_Types» 为限制返回为一个类型或者一个定义的值.</p>
+
+
+
+<p>例子，限制为一个类型:</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>123456789</td><td>=begin&nbsp;code&nbsp;:skip–testsub&nbsp;divide–to–int(&nbsp;Int&nbsp;$a,&nbsp;Int&nbsp;$b&nbsp;—&amp;gt;&nbsp;Int&nbsp;)&nbsp;{return&nbsp;($a&nbsp;/&nbsp;$b).narrow;}divide–to–int(3,&nbsp;2)#&nbsp;&nbsp;返回值类型检查失败期待Int但是返回Rat=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<p>例子，限制为一个定义的返回值:</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>1234</td><td>sub&nbsp;discard–random–number(&nbsp;—&amp;gt;&nbsp;42&nbsp;)&nbsp;{&nbsp;rand&nbsp;}say&nbsp;discard–random–number;# 输出: «42␤»</td></tr></tbody></table></figure>
+
+
+
+<p>在本例中，由于返回值已经定义，所以最终值被抛弃。</p>
+
+
+
+<h2 class="wp-block-heading">我怎么从Junction抽取一个值?</h2>
+
+
+
+<p>如果你想从<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#type-junction">Junction</a>中，抽取值，你可能做错了，你需要的应该是&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#type-set">Set</a>。</p>
+
+
+
+<p>Junctions表示匹配的意思，不用来做操作的。如果你费用坚持这样做，你可以滥用自动线程：</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>123456789</td><td>sub&nbsp;eigenstates(Mu&nbsp;$j)&nbsp;{my&nbsp;@states;–&amp;gt;&nbsp;Any&nbsp;$s&nbsp;{&nbsp;@states.push:&nbsp;$s&nbsp;}.($j);@states;}say&nbsp;eigenstates(1|2|3).join(‘, ‘);# 打印出 1, 2, 3 或者一个置换方法。</td></tr></tbody></table></figure>
+
+
+
+<h2 class="wp-block-heading">如果Str为不可改变,&nbsp;<code>s///</code>&nbsp;如何工作?&nbsp;<code>$i++</code>&nbsp;如何工作?</h2>
+
+
+
+<p>perl6中，许多基本类型的值都是不可改变的，但是存放他们的变量却不是，C&lt;s///&gt; 操作符是对 变量的操作，操作是会生成一个新的字符串对象。同样，C&lt;$i++&gt;也是工作C&lt;$i&gt;变量上，并不是对 值本身的操作。</p>
+
+
+
+<p>知道这点后，我们一般就不会试图去修改一个字符串（比如<code>'hello' ~~ s/h/H/</code>） 但是可能不经意间使用&nbsp;<code>map</code>做了这样事情:</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12345678</td><td>my&nbsp;@foo&nbsp;=&nbsp;&amp;lt;hello&nbsp;world&amp;gt;.map:&nbsp;{&nbsp;s/h/H/&nbsp;}&nbsp;;&nbsp;# 抛出异常，# “Cannot modify an immutable Str (hello)”my&nbsp;@bar&nbsp;=&nbsp;&amp;lt;hello&nbsp;world&amp;gt;».subst–mutate:&nbsp;‘h’,&nbsp;‘H’;&nbsp;# 抛出异常，# “Cannot resolve caller subst-mutate(Str: Str, Str);# the following candidates match the type but require# mutable arguments: …”</td></tr></tbody></table></figure>
+
+
+
+<p>实际上，要做的不是修改原始值，而是返回一个新的值得操作</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>123</td><td>my&nbsp;@foo&nbsp;=&nbsp;&amp;lt;hello&nbsp;world&amp;gt;.map:&nbsp;{&nbsp;S/h/H/&nbsp;};# [‘Hello’,’world’]my&nbsp;@bar&nbsp;=&nbsp;&amp;lt;hello&nbsp;world&amp;gt;».subst:&nbsp;‘h’,&nbsp;‘H’;&nbsp;# [‘Hello’,’world’]</td></tr></tbody></table></figure>
+
+
+
+<p>更多信息，可以浏览&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/language/containers">containers</a>。</p>
+
+
+
+<h2 class="wp-block-heading">数组引用和自动解引用是怎么回事?需要<code>@</code>前缀么？</h2>
+
+
+
+<p>在perl6中，一切皆引用，所以专门谈论引用意义不大。不像perl5，标量变量也能直接包含数组：</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12345678</td><td>my&nbsp;@a&nbsp;=&nbsp;1,&nbsp;2,&nbsp;3;say&nbsp;@a;# 输出: «[1 2 3]␤»say&nbsp;@a.^name;# 输出: «(Array)␤»my&nbsp;$scalar&nbsp;=&nbsp;@a;say&nbsp;$scalar;# 输出: «[1 2 3]␤»say&nbsp;$scalar.^name;# 输出: «(Array)␤»</td></tr></tbody></table></figure>
+
+
+
+<p>最大的不同是插入标量中的数组当为列表上下文的一个值，而数组则会循环迭代。</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>1234567891011121314</td><td>=begin&nbsp;code&nbsp;:skip–testmy&nbsp;@a&nbsp;=&nbsp;1,&nbsp;2,&nbsp;3;my&nbsp;$s&nbsp;=&nbsp;@a;for&nbsp;@a&nbsp;{&nbsp;&#8230;&nbsp;}# 循环3次for&nbsp;$s&nbsp;{&nbsp;&#8230;&nbsp;}# 只会循环一次my&nbsp;@flat&nbsp;=&nbsp;flat&nbsp;@a,&nbsp;@a;say&nbsp;@flat.elems;# 输出: «6␤»my&nbsp;@nested&nbsp;=&nbsp;flat&nbsp;$s,&nbsp;$s;say&nbsp;@nested.elems;# 输出: «2␤»=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<p>你可以用<code>@( ... )</code>&nbsp;或者 用表达式的<code>.list</code>方法，强制展开，或者为成员上下文（不能展开）</p>
+
+
+
+<h2 class="wp-block-heading">为什么要用sigil? 不能没有他们么?</h2>
+
+
+
+<p>有几个原因:</p>
+
+
+
+<ul class="wp-block-list">
+<li>便于解释变量为字符串</li>
+
+
+
+<li>给不同种类的变量和twigils隔离为微命名空间，避免命名冲突</li>
+
+
+
+<li>可以便捷地区分单复数</li>
+
+
+
+<li>就像自然语言中的强制性动名词标记，是大脑最直白处理的方式</li>
+
+
+
+<li>但他也不是强制的，你也可以自定义sigil（如果你介意引起歧义的话）</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Str类型不支持关联索引?</h2>
+
+
+
+<p>你可能是想混用字符解释器和HTML</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12345</td><td>=begin&nbsp;code&nbsp;:skip–testmy&nbsp;$foo&nbsp;=&nbsp;“abc”;say&nbsp;“$foo&amp;lt;html-tag&amp;gt;”;=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<p>perl6认为<code>$foo</code>为一个哈希，而C«&lt;html-tag&gt;»会被当成字符哈希键。我们用一个 大括号来加深理解：</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>123</td><td>my&nbsp;$foo&nbsp;=&nbsp;“abc”;say&nbsp;“{$foo}&amp;lt;html-tag&amp;gt;”;</td></tr></tbody></table></figure>
+
+
+
+<h2 class="wp-block-heading">perl6中有协程么?&nbsp;<code>yield</code>呢?</h2>
+
+
+
+<p>perl6没有像python一样的<code>yield</code>语句，但是它通过懒列表提供类似地函数式功能。 有两种普遍的方法写协程，返回懒列表</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12345678910111213</td><td>=begin&nbsp;code&nbsp;:skip–test# 第一种方法, gather/takemy&nbsp;@values&nbsp;=&nbsp;gather&nbsp;while&nbsp;have_data()&nbsp;{# do some computationstake&nbsp;some_data();# do more computations}# 第二种方法, 对一个懒列表使用.map或者类似的方法my&nbsp;@squares&nbsp;=&nbsp;(1..*).map(–&amp;gt;&nbsp;\x&nbsp;{&nbsp;x²&nbsp;});=end&nbsp;code</td></tr></tbody></table></figure>
+
+
+
+<h2 class="wp-block-heading">为什么我不能从new方法初始一个私有属性，我该怎么操作?</h2>
+
+
+
+<p>诸如下面代码：</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>12345678</td><td>class&nbsp;A&nbsp;{has&nbsp;$!x;method&nbsp;show–x&nbsp;{say&nbsp;$!x;}}A.new(x&nbsp;=&amp;gt;&nbsp;5).show–x;</td></tr></tbody></table></figure>
+
+
+
+<p>输出不为5。私有属性是_private_，这意味着对外不可见。如果默认构造函数可以初始化他们的话， 他们就可能暴露在公共API.</p>
+
+
+
+<p>如果你坚持要这样做，可以增加一个<code>submethod BUILD</code>来初始化他们：</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>123456789</td><td>class&nbsp;B&nbsp;{has&nbsp;$!x;submethod&nbsp;BUILD(:$!x)&nbsp;{&nbsp;}method&nbsp;show–x&nbsp;{say&nbsp;$!x;}}B.new(x&nbsp;=&amp;gt;&nbsp;5).show–x;</td></tr></tbody></table></figure>
+
+
+
+<p><code>BUILD</code>会被默认的构造函数调用（间接地，查看&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#language-objects-object_construction">Object Construction</a>了解更多），构造函数调用 所有用户传递过来的命名的参数。<code>:$!x</code>&nbsp;是命名为<code>x</code>的命名参数，当带&nbsp;<code>x</code>命名参数被调用 时，他的值会被绑定到属性&nbsp;<code>$!x</code>。</p>
+
+
+
+<p>如果不这样做。如果名称是公有的，这样定义<code>$.x</code>也是没有害处。因为默认外部视图是只读的， 你仍然只能通过内部地&nbsp;<code>$!x</code>操作它。</p>
+
+
+
+<h2 class="wp-block-heading"><code>say</code>,&nbsp;<code>put</code>&nbsp;和&nbsp;<code>print</code>&nbsp;有啥区别?</h2>
+
+
+
+<p>最明显地差异是&nbsp;<code>say</code>和&nbsp;<code>put</code>输出会自带换行符，但是<code>print</code>没有。</p>
+
+
+
+<p>其他的不同时：<code>print</code>和<code>put</code>通过调用<code>Str</code>方法把所有参数项会当成一个字符串，<code>say</code>则 是用&nbsp;<code>gist</code>方法。前者适合机器，后者更人性化。</p>
+
+
+
+<p>或者完全的不同，<code>$obj.Str</code>&nbsp;给出一个字符表达，<code>$obj.gist</code>给出一个简单对象总结，适合开发人员 辨别。&nbsp;<code>$obj.perl</code>会给出一个perl式的表达。</p>
+
+
+
+<p>例如：类型对象，也叫做“未定义值”，字符化结果为一个空串，并且给予警告。而<code>gist</code>方法会返回 类型的名称，紧跟着一个空括弧（表示除了类型外没有任何值）。</p>
+
+
+
+<p><code>my Date $x;# $x包含一个Date类型对象<br>print $x;# 输出为空和警告<br>say $x;# 输出: «(Date)␤»</code></p>
+
+
+
+<p>所以，<code>say</code>更适合做调试；显示是人优化过的；&nbsp;<code>print</code>和<code>put</code>更适合给其他应用输出结果。</p>
+
+
+
+<p><code>put</code>是介于<code>print</code>和<code>say</code>之间的调和。和<code>print</code>一样适合为其他程序输出结果，同时也像&nbsp;<code>say</code>一样输出结果自带换行。 and like&nbsp;<code>say</code>, it adds a newline at the end of the output.</p>
+
+
+
+<h2 class="wp-block-heading"><code>token</code>和<code>rule</code>有何不同 ?</h2>
+
+
+
+<p>&lt;regex&gt;,<code>token</code>和<code>rule</code>&nbsp;都用于引入正则表达式，但是语法上略有不同。</p>
+
+
+
+<p><code>token</code>意味着<code>:ratchet</code>或者<code>:r</code>修饰符，这会防止规则被回溯。</p>
+
+
+
+<p><code>rule</code>&nbsp;表示<code>:ratchet</code>和<code>:sigspace</code>（简写为<code>:s</code>）修饰符，意味着规则不可以回溯，并且将 正则表达式中空白符号作为 C«&lt;.ws&gt;» 调用(不捕获)（例如，可以用来匹配空格，除了两单词之间的空格）。 正则表达式开头和每个可选分支|的开头空白会被忽略。</p>
+
+
+
+<p><code>regex</code>&nbsp;定义一个没有任何暗示修饰符的纯正则.</p>
+
+
+
+<h2 class="wp-block-heading"><code>die</code>和<code>fail</code>有啥不同?</h2>
+
+
+
+<p><code>die</code>抛出一个异常.</p>
+
+
+
+<p><code>fail</code>&nbsp;返回一个<code>Failure</code>对象.（如果在词法范围内调用定义过&nbsp;<code>use fatal;</code>），<code>fail</code>抛出一个异常 而不是返回)。</p>
+
+
+
+<p><code>Failure</code>是一个非抛出或者“懒”异常。它一个包含了异常的对象，如果你想用&nbsp;<code>Failure</code>作为普通对象 抛出一个异常。或者在sink上下文中忽略它。</p>
+
+
+
+<p><code>Failure</code>在<code>defined</code>检查中返回<code>False</code>，你可以用&nbsp;<code>exception</code>方法抽取异常。</p>
+
+
+
+<h2 class="wp-block-heading">为什么<code>wantarray</code>和<code>want</code>&nbsp;不见了? 我怎么才能不同上下文中返回不同的类型?</h2>
+
+
+
+<p>perl5用<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#language-5to6-perlfunc-wantarray"><code>wantarray</code></a>函数来测试调用的对象是void， scalar或者列表。perl6没有这样的结构，因为在perl6中上下文不再是关键；例如， 一个例程不需要知道哪个上下文被调用了，因为上下文是惰性的（只有在最后结果被使用时候才会知道）。</p>
+
+
+
+<p>例如，perl6有多调度器，所以，下面的代码：</p>
+
+
+
+<p><code>=begin code :skip–test<br>multi w(Int $x) { say ‘Int’ }<br>multi w(Str $x) { say ‘Str’ }<br>w(f());<br>=end code</code></p>
+
+
+
+<p>没有办法知道调用的 sub&nbsp;<code>f</code>需要一个字符串或者整数，由于它自己现在也不知道会调用啥 一般来讲，这需要解决halting问题，对perl编译器作者也是个头疼的问题。</p>
+
+
+
+<p>实现perl6上下文敏感的一个方法是返回一个对象。它知道如何响应上下文中典型的方法调用。 在perl6中，相比较它听起来，这实际上是一个<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#language-5to6-perlfunc-wantarray">lot easier</a>， 和其他语言的其他特性，既可以减轻首先需要的并且最大可能是覆盖到wantarray的用例。</p>
+
+
+
+<p>例如，regex匹配返回<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://github.com/bollwarm/perl6doc/blob/master/cndoc/cnfaq.md#type-match">匹配对象，知道如何影响列表索引，哈希索引。并且可以变成匹配字符串</a></p>
+
+
+
+<h2 class="wp-block-heading"><code>Pointer</code>和<code>OpaquePointer</code>有什么不同?</h2>
+
+
+
+<p><code>OpaquePointer</code>已经过时，被<code>Pointer</code>取代了.</p>
+
+
+
+<h1 class="wp-block-heading">Perl6实现</h1>
+
+
+
+<h2 class="wp-block-heading">那种perl6实现可用的?</h2>
+
+
+
+<p>目前，开发最完善是Rakudo（支持多虚拟机后端）。曾经的实现包括Niecza (.NET）和 Pugs (Haskell)。 其他客用的实现请浏览<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://www.perl6.org/compilers/">Perl 6 Compilers</a></p>
+
+
+
+<h2 class="wp-block-heading">Rakudo使用什么语言开发的?</h2>
+
+
+
+<p>我们可以最直接告诉你Rakudo基本上都是用perl6开发的。说的细一点的话，Rakudo使用perl和 NQP (“Not Quite Perl”)混合开发的。NQP是一个轻量地类perl6虚拟机环境。它设计用perl6语法来实现高级别 虚拟机（比如MoarVM and JVM）编译器和类库。</p>
+
+
+
+<h2 class="wp-block-heading">NQP使用什么语言开发的?</h2>
+
+
+
+<p>NQP是以下各部分构成 (1) NQP代码, (2) 底层虚拟机使用的各种语言 (3) 一些第三方的 C和库, 以及(4)一些早期编译进程的运行时启动文件</p>
+
+
+
+<h2 class="wp-block-heading">perl6是Lisp嘛?</h2>
+
+
+
+<p>不是说是，也不能说完全不是&nbsp;(not&nbsp;(not&nbsp;Nil))</p>
+
+
+
+<h1 class="wp-block-heading">Meta问题和文化</h1>
+
+
+
+<h2 class="wp-block-heading">为什么Perl6名字要带Perl?</h2>
+
+
+
+<p>关于这个问题教主Larry这样回答的：&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/http://perldoc.perl.org/5.12.4/perlhack.html#DESCRIPTION">Rule 1</a></p>
+
+
+
+<p>… As opposed to some other name that did not imply all the things that the higher number might indicate on other languages.</p>
+
+
+
+<p>… 相比较换个不能说明任何事情的名字，一个高的版本号也可能暗示是一个完全不同语言。</p>
+
+
+
+<p>perl社区认为Perl5和Perl6是姊妹语言，他们有很多共同点，解决了许多相同的问题， 但是Perl6并不为了取代Perl 5。事实上，两种语言互相影。</p>
+
+
+
+<h2 class="wp-block-heading">Perl6怎么样了? 现在可以了么?</h2>
+
+
+
+<p>尽管编程语言和他们的编译不是一个是与非得二元问题。因为还牵扯到语言本身和实现的 问题，他们会变越来越好用。根据个人需求的不同，perl6及编译器可能是可用或者不可用。 （截止目前，目前99.9的功能都实现了，只是还稍微有点慢 __译者）。</p>
+
+
+
+<p>6.c版本（2015圣诞节）是Perl 6首次正式发布版本,发布包括一个验证套件和的编译器。</p>
+
+
+
+<h2 class="wp-block-heading">我为什么要学习Perl6? 他有啥重大改进和特性?</h2>
+
+
+
+<p>perl6实现了通常其他程序中没有的许多伟大的想法。虽然有几种语言提供了这些特性中的部分， 但没有一种语言能支持所有这些：</p>
+
+
+
+<ul class="wp-block-list">
+<li>Perl6提供了过程式，面向对象和函数式编程方法.</li>
+
+
+
+<li>简单一致的语法, 数据结构使用类型前缀标志严格区别.</li>
+
+
+
+<li>全字符Unicode支持，包括 Annex #29.</li>
+
+
+
+<li>清晰，更可读的正则表达式;更多的功能，更深层次的可用性.命名正则表达式提高可用性.</li>
+
+
+
+<li>Junctions允许多种可能的测试; 例如, $a == 1|3|42 ( 表示 $a 等于1，3 或者 42).</li>
+
+
+
+<li>动态变量提供一个可选的词法作用域，对应于全局变量.</li>
+
+
+
+<li>立足于通过组合性和词法范围来阻止“超距行为“; 例如, imports一直为法范围.</li>
+
+
+
+<li>易于理解地一致作用域规则和闭包.</li>
+
+
+
+<li>强大的面向对象，支持类和角色（一切皆对象）。继承，子类型，代码重用.</li>
+
+
+
+<li>对象和元对象的内省机制 (金字塔一样一层层堆起来).</li>
+
+
+
+<li>元对象协议允许元组编程，而无需代码生成和解析.</li>
+
+
+
+<li>子例程和方法签名，方便地位置和命名参数解包。</li>
+
+
+
+<li>基于数量，类型和可选附加代码的不同签名对特定子例程（方法）实现多路指配.</li>
+
+
+
+<li>对未知子例程和不可能调度的编译时错误报告。</li>
+
+
+
+<li>可选地、无额外运行时损耗的渐进类型检测。还支持可选类型注解。</li>
+
+
+
+<li>基于编译/运行状态內省的高级错误报告，实现更有用，更精确地错误信息。</li>
+
+
+
+<li>代码快(比如BEGIN/END)允许代码在范围入口和结尾运行, 循环的first/last/next以及其他很多更特殊的语法。</li>
+
+
+
+<li>高级并发模型,实现隐式、显式多进程处理，超越基本的线程和锁机制。 perl6的并发机制还提供了丰富地（可插拔）工具集。</li>
+
+
+
+<li>多核越来越普遍，perl6的并发可以用隐式（例如，用&gt;&gt;.方法）和显式（start { code }）。摩尔定律都要失效了，支持多核才是硬道理。</li>
+
+
+
+<li>结构化语言支持以实现代码的异步执行。</li>
+
+
+
+<li>Supplies允许事件驱动的代码执行 (比如定时器,信号,或者文件系统事件).</li>
+
+
+
+<li>利用react/whenever/supply关键字方便构建交互，开发事件驱动的应用.</li>
+
+
+
+<li>尽可能惰性求值,需要时时候才即时出值。例如，懒列表，甚至无限懒列表，比如斐波纳契序列或所有素数。</li>
+
+
+
+<li>原生数据类型，更快，更底层地处理。</li>
+
+
+
+<li>非常简单基于NativeCall的对外C/C++的接口。</li>
+
+
+
+<li>Inline::Perl5和Inline::Python接口非常便捷链接Perl5(CPAN)/Python模块。</li>
+
+
+
+<li>可同时安装和加载模块的多个版本。</li>
+
+
+
+<li>便捷的跟新/升级策略，简化系统管理。</li>
+
+
+
+<li>利用Rats（有理数）简单实现精度无损的数值计算（比如1/3，而不是用浮点数来近似估算）。</li>
+
+
+
+<li>实现数据和代码解析的可扩展语法(Perl6就是用他解析自己)。</li>
+
+
+
+<li>Perl6是一个支持多变的语言 (定义自己的函数,操作符,特征和数据类型, 修改自定义的解析器)。</li>
+
+
+
+<li>大量可选的数据类型，加上可自定义的类型。</li>
+
+
+
+<li>多维度构型或者原生数组，合适的边界检查。</li>
+
+
+
+<li>当特定条件发生时，可在语法解析期间任何随时执行代码。</li>
+
+
+
+<li>自定义一个操作符或者增加一个trait特征就像定义子例程一样简单。</li>
+
+
+
+<li>给任何操作数自动生成超操作符(系统的或者自定义的操作皆可)。</li>
+
+
+
+<li>运行在多种后端虚拟机。目前有MoarVM和JVM, 正在开发中的JavaScript,还可能更多的。</li>
+
+
+
+<li>JIT热代码路径运行时优化。</li>
+
+
+
+<li>小系统(例如,树莓派)和大型处理器上的运行。</li>
+
+
+
+<li>垃圾回收机制: 不及时的销毁，所以没有必要的引用计数，使用phasers的时间行为。</li>
+
+
+
+<li>属性可以在运行时混合到任何实例化对象。例如, 允许添加范围外数据。</li>
+
+
+
+<li>具有多路劲分配和自动使用消息生成的MAIN子例程，实现快捷的命令行访问接口。</li>
+
+
+
+<li>用更少的代码实现更紧凑的程序。命名的霍夫曼编码实现更好的可读性。</li>
+
+
+
+<li>用简单的递归接口定义懒列表，任何类通过提供单个方法提供最小化支持。</li>
+
+
+
+<li>perl6秉承了perl一贯原则: “Perl是不同的。简而言之，Perl旨在”使容易的工作变得容易，使困难的工作变得可能”。和”条条大道通罗马”。 现在会有更多-Ofun添加进来。请浏览&nbsp;<a href="https://web.archive.org/web/20241008190307/https://web.archive.org/web/20181124121938/https://perl6.org/compilers/features">特性对比矩阵</a>&nbsp;查看更多实现细节.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Perl6够快么?</h2>
+
+
+
+<p>那要取决于你要拿它做什么。Rakudo开发的秉承“工作的更合适，而不更快”的宗旨。一些部分 已经足够快，还有一些还需要改善。</p>
+
+
+
+<p>相比较其他动态语言perl6提供了很多JIT特性，还有很大性能提升空间。在一些问题上已经比perl5快了。</p>
+
+
+
+<p>perl5程序员应该了解perl了内置了更多的函数，简单的基准性能测试并不能说明什么问题，除非你perl5 测试用例包括了诸如Moose，类型检测模块等复杂的项目。</p>
+
+
+
+<p>下面提供了写粗略的基准脚本，表明如果使用了复杂的模块的任务上Perl6比Perl5要快，与此同时，如果 不涉及这些重模块Perl5则会更快。</p>
+
+
+
+<p>在你的系统运行下面脚本，结果可能会让你大吃一惊。</p>
+
+
+
+<p>例子:</p>
+
+
+
+<p>=begin&nbsp;code&nbsp;:skip–test</p>
+
+
+
+<p># Perl6 版本</p>
+
+
+
+<p>use&nbsp;v6.c;</p>
+
+
+
+<p>class&nbsp;Foo&nbsp;{&nbsp;has&nbsp;$.i&nbsp;is&nbsp;rw&nbsp;};</p>
+
+
+
+<p>for&nbsp;1..1_000_000&nbsp;–&amp;gt;&nbsp;$i&nbsp;{</p>
+
+
+
+<p>my&nbsp;$obj&nbsp;=&nbsp;Foo.new;</p>
+
+
+
+<p>$obj.i&nbsp;=&nbsp;$i;</p>
+
+
+
+<p>}</p>
+
+
+
+<p># Perl5 版本</p>
+
+
+
+<p>package&nbsp;Foo;</p>
+
+
+
+<p>use&nbsp;Moose;</p>
+
+
+
+<p>has&nbsp;i&nbsp;=&amp;gt;&nbsp;(is&nbsp;=&amp;gt;&nbsp;‘rw’);</p>
+
+
+
+<p>__PACKAGE__–&amp;gt;meta–&amp;gt;make_immutable;</p>
+
+
+
+<p>for&nbsp;my&nbsp;$i&nbsp;(1..1_000_000)&nbsp;{</p>
+
+
+
+<p>my&nbsp;$obj&nbsp;=&nbsp;Foo–&amp;gt;new;</p>
+
+
+
+<p>$obj–&amp;gt;i($i);</p>
+
+
+
+<p>}</p>
+
+
+
+<p>1;</p>
+
+
+
+<p># 另一个Perl5版本，相比较Moose/Perl6版本，提供少量仅仅需要特性，更简单程序。</p>
+
+
+
+<p>package&nbsp;Foo;</p>
+
+
+
+<p>use&nbsp;Mojo::Base&nbsp;–base;</p>
+
+
+
+<p>has&nbsp;‘i’;</p>
+
+
+
+<p>for&nbsp;my&nbsp;$i&nbsp;(1..1_000_000)&nbsp;{</p>
+
+
+
+<p>my&nbsp;$obj&nbsp;=&nbsp;Foo–&amp;gt;new;</p>
+
+
+
+<p>$obj–&amp;gt;i($i);</p>
+
+
+
+<p>}</p>
+
+
+
+<p>1;</p>
+
+
+
+<p>#&nbsp;&nbsp;一个脚本运行在perl5 （with perl -Mbigint)和perl6下</p>
+
+
+
+<p>my&nbsp;($prev,&nbsp;$current)&nbsp;=&nbsp;(1,&nbsp;0);</p>
+
+
+
+<p>for&nbsp;(0..100_000)&nbsp;{</p>
+
+
+
+<p>($prev,&nbsp;$current)&nbsp;=&nbsp;($current,&nbsp;$prev&nbsp;+&nbsp;$current);</p>
+
+
+
+<p>}</p>
+
+
+
+<p>print&nbsp;$current;</p>
+
+
+
+<p>=end&nbsp;code</p>
+
+
+
+<p>&lt;/code&gt;&lt;code&gt;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=983</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>网站目录防篡改程序，perl web目录md5文件验证</title>
+		<link>http://ijz.me/?p=925</link>
+					<comments>http://ijz.me/?p=925#comments</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 20 Sep 2016 09:05:20 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[编程]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=925</guid>
+
+					<description><![CDATA[有时候站点，有bug，很容易会被人修改，添加其他乱七八糟的东西，针对这类问题，常见的做法：1、修改升级程序漏洞 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>有时候站点，有bug，很容易会被人修改，添加其他乱七八糟的东西，针对这类问题，常见的做法：1、修改升级程序漏洞。2、用WAF主动防御（用第三方免费cdn，也提供这类防御）。</p>
+<p>这儿介绍第三种方法（如果网站固定文件不变的情况下）<br />
+网站部署好后，通过对站点所有文件的计算MD5值，并保存在一个文件中。然后以后可以手动或者crontab，监控程序等定期对保存文件中的文件生成md5值和已有的md5值对比，如果发现值对不上，则说明文件被篡改了。</p>
+<p><span id="more-925"></span></p>
+<p>程序perl：</p><pre class="crayon-plain-tag">#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Digest::MD5 qw(md5_hex);
+
+
+my $dir=shift;
+# 此处默认为检查md5值。
+md5check($dir);
+# 如果需要开始生成web目录的md5值，注释掉上面一句，把下面一句启用
+#md5init($dir);
+sub md5_sum {
+
+ my ($file_name,$mode)=@_;
+ my ($FD,$ctx, $md5);
+   open ($FD,$file_name) or die "Can't open /'$file_name/': $!";
+     $ctx = Digest::MD5-&gt;new;
+       binmode($FD) if $mode;
+     $ctx-&gt;addfile($FD) || die "$!n";
+    $md5 = $ctx-&gt;hexdigest;
+   close $FD;
+ return $md5;
+}
+
+sub md5check {
+my $file=shift;
+open(my $fd, '&lt;',$file) or die "$file: $!n";
+print $file;
+while (&lt;$fd&gt;){
+        my ($name, $sum) = split /s+/;
+        if ($sum eq md5_sum($name,1)){
+                print "$name OKn";
+        }
+        else{
+          print "$name FAILEDn";
+        }
+}
+
+close $fd;
+
+}
+# 遍历目录计算md5值
+sub md5init {
+
+    my $fd=shift;
+    my $md5value;
+    if ( -f $fd ){
+            if ( -T $fd ) {
+                #print "按照文本模式进行计算MD5!n";
+                $md5value =md5_sum($fd,0);
+                print "$fdt$md5valuen";
+            }elsif( -B $fd ){
+                #print "二进制文件用binmod计算MD5!n";
+                $md5value =md5_sum($fd,1);
+                print "$fdt$md5valuen";
+            }else{
+                #print "其他文件，按照bimmod计算!n";
+                $md5value = md5_sum($fd,1);
+                print "$fdt$md5valuen";
+            }
+     }
+     elsif( -d $fd ){
+        my $file_md5;
+      # print "开始验证目录下所有文件:n";
+       opendir (my $DH,$fd) or die "Can't open dir $fd: $!";
+         for(readdir $DH ){
+         my $file=$fd.'/'.$_;
+      # 上级目录..，本目录. 以及连接文件跳过
+         next if ($file =~ m{/.$} || $file =~ m{/..$} || -l $file );
+         md5chek($file);
+        }
+       closedir $DH;
+    }
+
+}</pre><p>以上程序保存成文件，比如filemd5check.pl</p>
+<p>一、生成web的md5文件是时候：</p>
+<p>注释掉</p><pre class="crayon-plain-tag">#md5check($dir);</pre><p></p><pre class="crayon-plain-tag">md5init($dir);</pre><p>然后执行  web目录  &gt; webmd5-20160920</p>
+<p>web目录换成自己实际的web目录 webmd5-20160920 为保存计算结果的文件，可以自定义</p>
+<p>二、检查时候，用默认文件</p>
+<p>perl filemd5check.pl  webmd5-20160920</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=925</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>批量检查zabbix guest用户登录</title>
+		<link>http://ijz.me/?p=919</link>
+					<comments>http://ijz.me/?p=919#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 18 Aug 2016 00:48:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[自动化&DevOPs&SRE]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=919</guid>
+
+					<description><![CDATA[&#160; 最近又有人挖坑zabbix的sql注入漏洞，此漏洞不在详细说了。此漏洞的利用有个条件必须要登录才 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>最近又有人挖坑zabbix的sql注入漏洞，此漏洞不在详细说了。此漏洞的利用有个条件必须要登录才行。zabbix如果不做安全配置的话，默认是guest用户空密码可以登录的。</p>
+<p>为此写一个脚本检测是否禁用了guest用户，用来批量检查，加固。</p>
+<p><span id="more-919"></span></p><pre class="crayon-plain-tag">use strict;
+use warnings;
+use LWP;
+use Encode;
+use Data::Dumper;
+
+
+my $lwp = LWP::UserAgent-&gt;new;
+
+my @url=qw(
+
+http://192.168.1/zabbix
+http://zabbix.ooxx.com
+http://sb.zabbix.rc/zabbix
+#... 添加和修改更多的地址
+
+
+);
+for (@url) {
+  my $login_url = $_."/dashboard.php";
+  print $login_url,":n";
+  my $respos= $lwp-&gt;get($login_url);
+  if ($respos-&gt;is_success) {
+   my $res=$respos-&gt;content;
+   print "please disable guest accesss!","n" if $res=~/menu_graphs/ms;
+   print "good","n"   if $res=~/(&lt;!-- Login Form --&gt;)|(You are not logged in)/ms;
+   }
+  else {
+        print "Login Error: ",$respos-&gt;status_line,"n";
+   }
+
+ }</pre><p>上面是是多个地址批量检验的，同时没有兼顾新版本的zabbix，新版可能会报 404错误，下面在发一个检测单url的，同时兼顾新版本zabbix的</p><pre class="crayon-plain-tag">use strict;
+use warnings;
+use LWP;
+use Encode;
+use Data::Dumper;
+
+my $url=shift @ARGV;
+my $lwp = LWP::UserAgent-&gt;new;
+
+my $login_url1 = $url."/zabbix.php?action=dashboard.view";
+my $login_url = $url."/dashboard.php";
+
+my $ok=check($login_url);
+   $ok=check($login_url1) unless $ok;
+ print "Login Error: ","n" unless $ok;
+
+sub check {
+
+    my $url=shift;
+     print $url,":n";
+    my $respos= $lwp-&gt;get($url);
+    if ($respos-&gt;is_success) {
+       my $res=$respos-&gt;content;
+       print "please disable guest accesss!","n" if $res=~/menu_graphs|initPMaster/ms;
+       print "good","n"   if $res=~/(&lt;!-- Login Form --&gt;)|(You are not logged in)/ms;
+       return 1;
+       }
+     else {return 0};
+
+}</pre><p>使用方法：以上脚本保存为ztest1.pl</p>
+<p>然后执行 perl ztest1.pl http://zabbix.org/zabbix</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=919</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>利用 Schwartzian Transform(施瓦茨变换)  进行排序</title>
+		<link>http://ijz.me/?p=910</link>
+					<comments>http://ijz.me/?p=910#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 21 Jul 2016 08:42:51 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=910</guid>
+
+					<description><![CDATA[Schwartzian Transform(施瓦茨变换) 是perl中一种高效的排序算法 ，详见http:// [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Schwartzian Transform(施瓦茨变换) 是perl中一种高效的排序算法 ，详见http://en.wikipedia.org/wiki/Schwartzian_transform<br />
+在平时工作中，会有非常复杂的排序需求，比如，对文件所有的含有/RE/的行，按第一列升序，再按第二列降序排，&#8230;<br />
+诸如此类的排序，利用施瓦茨变换可以事半功倍。<br />
+施瓦茨变换的一般格式如下：</p><pre class="crayon-plain-tag">map { code_that_does_something_with( $_ ) } 
+grep { code_that_selects_from( $_ ) }
+sort { code_that_compares( $a, $b ) } @array</pre><p><span id="more-910"></span></p>
+<p>这里我举一个实例来说说明这个变化，有如下的的json数据：</p><pre class="crayon-plain-tag">cat dd
+  [{
+    "createdTime": 11,
+    "versionId": "13a76a74-adc5-4c66-914a-07bb16a486ef"
+  },
+  {
+    "createdTime": 55,
+    "versionId": "99b26fce-2df8-4364-b13f-3fb89144d64b"
+  },
+  {
+    "createdTime": 33,
+    "versionId": "4e9ca6a1-1b1d-4586-9ff5-9411330c722d"
+  },
+  {
+    "createdTime": 44,
+    "versionId": "36859a25-afc4-42c7-bac4-685dc3761c41"
+  }]</pre><p>要求根据createdTime的值，取最大createdTime值的versionId，我们利用施瓦茨变换的perl单行实现排序，然后取第一行</p><pre class="crayon-plain-tag">perl -MJSON -000  -e  '
+map{ print $_-&gt;[2],"n" }
+sort{ $b-&gt;[1] &lt;=&gt; $a-&gt;[1] }
+map{ [$_,$_-&gt;{"createdTime"},$_-&gt;{"versionId"}]} @{decode_json(&lt;&gt;)}' dd|head 1</pre><p>相对比用perl脚本实现，取两个值，以createdTime为键，构造一个哈希，然后对哈希进行排序。</p><pre class="crayon-plain-tag">#!/bin/env perl
+use JSON;
+
+local $/;
+open my $FD,'&lt;','dd' or die;
+my $code = &lt;$FD&gt;;
+close $FD;
+my $obj =  decode_json($code);
+my %hash;
+for(@{$obj}) {
+  $hash{$_-&gt;{'createdTime'}}=$_-&gt;{'versionId'};
+
+}
+
+for (sort keys %hash) {
+  print $hash{$_},"n";
+
+}</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=910</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>快速扫描器（基于zmap扫描）perl包装</title>
+		<link>http://ijz.me/?p=854</link>
+					<comments>http://ijz.me/?p=854#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 14 Jun 2016 06:45:14 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=854</guid>
+
+					<description><![CDATA[之前我们用perl和nmap的一个端口扫描器，但是如果对大量的ip时候扫描会花费很大的时间。能不能先快速的实现 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>之前我们用perl和nmap的一个端口扫描器，但是如果对大量的ip时候扫描会花费很大的时间。能不能先快速的实现扫描呢，有，这就是zmap利器</p>
+<p>号称可以在一小时扫遍整个互联网，真是名副其实的快扫网。</p>
+<p>确保安装了zmap 。centos可以 yum install zmap。<br />
+<span id="more-854"></span></p>
+<p>以下为对zmap包装的脚本，保存为scalzmap.pl 。</p><pre class="crayon-plain-tag">my $port=shift @ARGV;
+my $file=shift @ARGV;
+open $IP,'&lt;',$file or die;
+my @ip=&lt;$IP&gt;;
+close $IP;
+print  "Start scan.n";
+my %result;
+my $out=$port.".txt";
+open my $OUT,'&gt;',$out or  die $!;
+for (@ip)
+{
+  next if /(#|$)/;
+  #print $OUT $_ ;
+  my $result=`zmap -p $port  $_`;
+  print $OUT  $result;
+  print "scan $_ ok!n";
+}
+close $OUT;
+print "All done.n";</pre><p>经过我们打包一层后，使用方法 perl zmap.pl 端口 ip.list</p>
+<p>端口为一个端口比如 22 ，3306，6379 等 ip.list为要扫描的目标ip地址或者段</p>
+<p>格式：<br />
+10.2.134.1/24<br />
+10.2.123.1/28<br />
+等</p>
+<p>&nbsp;<br />
+扫描结果，扫描的结果为端口.txt的ip列表，这个列表的ip表示该端口是通的，这个列表可以用于<br />
+之前我们用perl和nmap的扫描器的扫描目的。继续挖掘更多的信息。。。。更多就不说了</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=854</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>端口扫描（namp扫描）perl自动处理结果</title>
+		<link>http://ijz.me/?p=782</link>
+					<comments>http://ijz.me/?p=782#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Tue, 31 May 2016 07:17:49 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=782</guid>
+
+					<description><![CDATA[确保服务器上装了nmap 并能正常执行， 确保服务器上装了perl chmod u+x scalport.pl [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>确保服务器上装了nmap 并能正常执行，<br />
+确保服务器上装了perl<br />
+chmod u+x scalport.pl</p>
+<p>创建一个ip列表文件（一个ip一行）all.ip</p>
+<p>执行 ./scalport.pl all.ip 开始扫描</p>
+<p>结果保存为all.csv<br />
+<span id="more-782"></span></p><pre class="crayon-plain-tag">#!/usr/bin/env perl
+use warnings;
+use strict;
+my $filename=shift @ARGV;
+open my $IN,'&lt;',$filename or  die $!;
+my @ip=&lt;$IN&gt;;
+
+my $out;
+   $out=(split /./,$filename)[-1] unless defined $out and $out eq "";
+   $out=(split /./,$filename)[-2];
+   $out.=".csv";
+my $port=q(80,8080,3306,9200,6379,11211,21,22);
+my @resul;
+my $host;
+print  "Start scan.n";
+my %result;
+open my $OUT,'&gt;',$out or  die $!;
+for (@ip)
+{
+  chomp;
+  next if /(#|$)/;
+  $host=$_;
+  my $result=`nmap -T3 -sV   -p $port  $_ `;
+  @resul= split /n/ms,$result;
+  for(@resul) {
+  chomp;
+  next if /^$/;
+  next if /Starting Nmap/;
+  next if /Nmap scan report/;
+  next if /PORT/;
+  next if /filtered/;
+  next if /Host is up/;
+  next if /Service detection performed/;
+  next if /Nmap done:/;
+  next if /service unrecognized/;
+  next if /SF/;
+  next if /Service Info/;
+  my $info="$host $_";
+  $info =~s/s+/,/g;
+  $info =~s//tcp//g;
+  print $OUT $info."n";
+  }
+    print "scan $_ ok!n";
+}
+
+close $OUT;</pre><p>扫描过程比较长，尤其是当ip较多时候，建议用 screen 执行</p>
+<p>扫描结果搜索<br />
+显示为open 并且 显示服务名称（比如Tomcat 或者 Mysql） 或者nginx 并有版本显示的需要处理:</p>
+<p>x.x.x.x,51366,open,ssh,OpenSSH,5.3,(protocol,2.0)<br />
+需要封禁sshd端口<br />
+x.x.x.x,3306,open,mysql MySQL 5.6.19<br />
+Mysql需要封禁端口<br />
+x.x.x.x,8080,open,http,Apache,Tomcat/Coyote,JSP,engine,1.1<br />
+Tomcat需要屏蔽版本信息<br />
+x.x.x.x,80,open,http,nginx 1.9.4<br />
+nginx 有版本信息的需要处理</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=782</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

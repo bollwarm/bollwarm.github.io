@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>硬件 &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;cat=10" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:31:05 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>处理器Meltdown(熔断)和Spectre(幽灵)漏洞分析</title>
+		<link>http://ijz.me/?p=990</link>
+					<comments>http://ijz.me/?p=990#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Mon, 08 Jan 2018 00:40:00 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[硬件]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=990</guid>
+
+					<description><![CDATA[Meltdown Meltdown攻击利用现代CPU中乱序执行 （out-of-order execution [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p><strong>Meltdown</strong></p>
+
+
+
+<p>Meltdown攻击利用现代CPU中乱序执行 （out-of-order execution）的特性，乱序执行（out-of-order execution）是指CPU允许将多条指令不按程序规定的顺序分开发送给各CPU单元处理的技术，我们通过参考资料[2]中的示例代码来说明这一攻击的原理。</p>
+
+
+
+<span id="more-990"></span>
+
+
+
+<p>一个简化的Meltdown攻击指令序列：</p>
+
+
+
+<p><code>; rcx = kernel address<br> ; rbx = probe array<br> retry:mov al, byte [rcx]<br> shl rax, 0xc<br> jz retry<br> mov rbx, qword [rbx + rax]</code><br> 1、rcx寄存器指向用户代码不可访问的内核地址<br> 2、攻击者在指令4中访问内核内存地址，由于访问了内核地址，这一条指令将会触发异常，但由于指令4在CPU内部执行时并不受权限检测，所以读取到的内核数据被存放在了CPU缓存中<br> 3、在等待CPU完成执行指令4的同时，后两条指令因为乱序执行机制实际上已经在CPU的内部执行单元中被执行<br> 4、在CPU内部执行单元执行过的指令5将会把获取到的内核数据（1个字节）乘以4096，并在指令6中将其作为offset来对数组probe array进行访问<br> 5、由于一个内存页的大小是4KB，不同的数据将会导致不同的内存页被访问并存放到CPU缓存中，所以，另一个攻击者进程（任务）就可以通过缓存侧信道攻击（已经被缓存的内存读取时间会更快），来了解哪个内存页被访问过了，从而推断出被访问的内核内存数据。<br> <strong>Spectre</strong><br> Spectre攻击利用了现代CPU中推测执行（Speculative Execution）的机制来对系统进行攻击。推测执行（Speculative Execution）同样是一种CPU优化特性。在执行类似if () {}这类分支指令，并且在分支指令执行结束之前，CPU会预测哪一个分支会被运行，提取相应的指令代码并执行，以提高CPU指令执行的性能。当预测执行发现预测错误时，预测执行的结果将会被丢弃，CPU的状态会被重置。然而，与乱序执行类似，预测执行时CPU获取到的内存数据会被保留在CPU缓存中（包括越权获取的数据，虽然这些数据用户代码无权访问），我们通过参考资料[3]中的示例代码来说明这一攻击的原理。</p>
+
+
+
+<p>1、首先申请一块内存，并写入如下数据<br> <code>char * secret="www.ijz.me";</code><br> 2、获取secret和array1的相对偏移量malicious_x<br><code> int main(int argc, const char **argv) {<br> size_t malicious_x=(size_t)(secret-(char*)array1);<br> /* default for malicious_x */<br> int i, score[2], len=10;<br> uint8_t value[2]</code></p>
+
+
+
+<p>3、循环调用readMemoryByte函数，分别将malicious递增值作为其中一个参数</p>
+
+
+
+<p><code>while (--len &gt;= 0) {<br> printf("Reading at malicious_x = %p... ", (void*)malicious_x);<br> readMemoryByte(malicious_x++, value, score);<br> printf("%s: ", (score[0] &gt;= 2*score[1] ? "Success" : "Unclear"));<br> printf("0x%02X=’%c’ score=%d ", value[0],<br> (value[0] &gt; 31 &amp;&amp; value[0] &lt; 127 ? value[0] : ’?’), score[0]); if (score[1] &gt; 0)<br> printf("(second best: 0x%02X score=%d)", value[1], score[1]);<br> printf("\n");<br> }<br> return (0);</code></p>
+
+
+
+<p>4、调用漏洞函数victim_function，利用CPU的预测执行机制将越权读取的数据cache到CPU缓存中<br> <code>void victim_function(size_t x) {<br> if (x &lt; array1_size) {<br> temp &amp;= array2[array1[x] * 512];<br> }</code><br> 5、由于array2[array1[x]*512]的值被缓存，所以代码中通过rdtscp函数计算指令执行时间来判断哪个内存页被访问过（缓存的字节被当做另一系列被预测执行指令访问的数组下标，被访问的数组同样是在CPU中被预测读取），从而推断出被访问的secret内存数据<br><code> 2018/* Time reads. Order is lightly mixed up to prevent stride prediction */<br> for (i = 0; i &lt; 256; i++) {<br> mix_i = ((i * 167) + 13) &amp; 255;<br> addr = &amp;array2[mix_i * 512];<br> time1 = __rdtscp(&amp;junk);<br> /* READ TIMER */<br> junk = *addr;<br> /* MEMORY ACCESS TO TIME */<br> time2 = __rdtscp(&amp;junk) - time1;<br> /* READ TIMER &amp; COMPUTE ELAPSED TIME */<br> if (time2 &lt;= CACHE_HIT_THRESHOLD &amp;&amp; mix_i != array1[tries % array1_size])<br> results[mix_i]++;<br> /* cache hit - add +1 to score for this value */<br> }</code><br> 6、POC验证执行结果，读取进程内的机密数据</p>
+
+
+
+<p><strong>限制条件</strong></p>
+
+
+
+<p>本质上讲Meltdown和Spectra都是基于侧信道的攻击，主要用于信息泄露，并不能对目标内存地址进行任意修改，以下分别介绍两种攻击的限制条件。</p>
+
+
+
+<p><strong>Meltdown</strong></p>
+
+
+
+<p>Meltdown攻击目前仅限于在Intel系列的现代CPU中访问受限内存，包括内核的地址空间<br>
+由于Meltdown攻击所使用的特殊代码无法在浏览器JIT中生成，所以该攻击几乎只能在本地进行<br>
+Spectre</p>
+
+
+
+<p>Spectre攻击需要目标程序具有特殊结构（比如浏览器JIT即时编译出的代码具有Spectra攻击所需要的特殊结构），所以受到目标软件的限制<br> Spectre攻击虽然适用于远程攻击，但是浏览器类JIT代码生成的Spectra攻击只能获取当前进程的内存数据，无法获取内核数据<br> Spectre攻击在Intel系列CPU上也可以读取目标内核内存数据</p>
+
+
+
+<p><br><strong> Meltdown和Spectre影响/防御对比</strong></p>
+
+
+
+<p><br> 我们整理下两类攻击的影响范围和防御方式，如下：<br> Meltdown Spectre<br> 读取系统内核层数据 是 是（测试Intel CPU）<br> 通过KAISER/KTPI技术修复 是 否<br> 读取任意用户层数据 是 是<br> 远程攻击 极难 容易<br> 主要影响范围 内核所有数据 浏览器进程数据<br> 受影响CPU厂商 Intel Intel AMD ARM等</p>
+
+
+
+<p><strong>参考资料</strong><br> [1] https://meltdownattack.com/meltdown.pdf</p>
+
+
+
+<p>[2] https://spectreattack.com/spectre.pdf</p>
+
+
+
+<p>[3] https://github.com/Pl4gue/spectre-attack-demo</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=990</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>如何判断 Linux 是否运行在虚拟机上/zz/</title>
+		<link>http://ijz.me/?p=685</link>
+					<comments>http://ijz.me/?p=685#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 14 Nov 2014 07:56:25 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[硬件]]></category>
+		<category><![CDATA[虚拟化]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=685</guid>
+
+					<description><![CDATA[  在 WebHostingTalk 论坛上有些国外奸商会把虚拟机当作独立服务器卖，去年7月份的时候就有一位中 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p><strong> </strong></p>
+<p>在 WebHostingTalk 论坛上有些国外奸商会把虚拟机当作独立服务器卖，去年7月份的时候就有一位中国同胞上当受骗， 并在 WHT 上发帖声讨，证据确凿，甚至连服务商自己也承认，回帖达355篇。这家独立服务器/VPS 提供商 HostATree.com 居然大胆的把 OpenVZ VPS 这种一看就知道是虚拟机的虚拟机当作独立服务器卖，晕，至少也要弄个 VMWare/KVM/Xen HVM 吧（更难发现是虚拟机），用 OpenVZ 这种容器也太欺负人了：）昨天恰好收到网友一封邮件问到了如何判断自己买的是独立服务器还是虚拟机的问题。这里 VPSee 简单介绍一下市面上常用虚拟技术（包括容器技术）的判别小技巧。</p>
+<p><span id="more-685"></span></p>
+<p><strong>判断 OpenVZ/Xen PV/UML</strong></p>
+<p>判断 OpenVZ/Xen PV/UML 是最容易的，直接检查 /proc 下的相关目录和文件就可以知道，比如 OpenVZ VPS 上会有 /proc/vz 这个文件；Xen PV 虚拟机上会有 /proc/xen/ 这个目录，并且目录下有一些东西；UML 上打印 /proc/cpuinfo 会找到 UML 标志。写了一个简单的 Python 脚本来检测：</p>
+<p>#!/usr/bin/python</p>
+<p># check if a linux system running on a virtual machine (openvz/xen pv/uml)</p>
+<p># written by http://www.vpsee.com</p>
+<p>&nbsp;</p>
+<p>import sys, os</p>
+<p>&nbsp;</p>
+<p>def main():</p>
+<p>if os.getuid() != 0:</p>
+<p>print &#8220;must be run as root&#8221;</p>
+<p>sys.exit(0)</p>
+<p>&nbsp;</p>
+<p># check OpenVZ/Virtuozzo</p>
+<p>if os.path.exists(&#8220;/proc/vz&#8221;):</p>
+<p>if not os.path.exists(&#8220;/proc/bc&#8221;):</p>
+<p>print &#8220;openvz container&#8221;</p>
+<p>else:</p>
+<p>print &#8220;openvz node&#8221;</p>
+<p>&nbsp;</p>
+<p># check Xen</p>
+<p>if os.path.exists(&#8220;/proc/xen/capabilities&#8221;):</p>
+<p>if (os.path.getsize(&#8220;/proc/xen/capabilities&#8221;) &gt; 0):</p>
+<p>print &#8220;xen dom0&#8221;</p>
+<p>else:</p>
+<p>print &#8220;xen domU&#8221;</p>
+<p>&nbsp;</p>
+<p># check User Mode Linux (UML)</p>
+<p>f = open(&#8220;/proc/cpuinfo&#8221;, &#8220;r&#8221;); t = f.read(); f.close()</p>
+<p>if (t.find(&#8220;UML&#8221;) &gt; 0):</p>
+<p>print &#8220;uml&#8221;</p>
+<p>&nbsp;</p>
+<p>if __name__==&#8221;__main__&#8221;:</p>
+<p>main()</p>
+<p><strong>判断 VMware/Xen HVM/KVM</strong></p>
+<p>如果使用的是 VMware/Xen HVM/KVM 这样的全虚拟就更难判断一些，最准确的办法是读取 CPUID 来判断，Xen 源代码下面有一段检测是否是 Xen 的 C 语言代码 tools/misc/xen-detect.c，这段代码提供了一个很好的例子，VPSee 重写了代码，用宏替代了函数，增加了对 VMware 和 KVM 的识别，用 gcc 编译后就可以运行：</p>
+<p>/*</p>
+<p>* check if a linux system running on a virtual machine (vmware/xen hvm/kvm)</p>
+<p>* written by http://www.vpsee.com</p>
+<p>*/</p>
+<p>#include stdio.h</p>
+<p>#include string.h</p>
+<p>&nbsp;</p>
+<p>#define HYPERVISOR_INFO 0x40000000</p>
+<p>&nbsp;</p>
+<p>#define CPUID(idx, eax, ebx, ecx, edx) </p>
+<p>asm volatile ( </p>
+<p>&#8220;test %1,%1 ; jz 1f ; ud2a ; .ascii &#8220;xen&#8221; ; 1: cpuid&#8221; </p>
+<p>: &#8220;=b&#8221; (*ebx), &#8220;=a&#8221; (*eax), &#8220;=c&#8221; (*ecx), &#8220;=d&#8221; (*edx) </p>
+<p>: &#8220;0&#8221; (idx) );</p>
+<p>&nbsp;</p>
+<p>int main(void)</p>
+<p>{</p>
+<p>unsigned int eax, ebx, ecx, edx;</p>
+<p>char string[13];</p>
+<p>&nbsp;</p>
+<p>CPUID(HYPERVISOR_INFO, &amp;eax, &amp;ebx, &amp;ecx, &amp;edx);</p>
+<p>*(unsigned int *)(string+0) = ebx;</p>
+<p>*(unsigned int *)(string+4) = ecx;</p>
+<p>*(unsigned int *)(string+8) = edx;</p>
+<p>&nbsp;</p>
+<p>string[12] = 0;</p>
+<p>if (strncmp(string, &#8220;XenVMMXenVMM&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;xen hvmn&#8221;);</p>
+<p>} else if (strncmp(string, &#8220;VMwareVMware&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;vmwaren&#8221;);</p>
+<p>} else if (strncmp(string, &#8220;KVMKVMKVM&#8221;, 12) == 0) {</p>
+<p>printf(&#8220;kvmn&#8221;);</p>
+<p>} else</p>
+<p>printf(&#8220;bare hardwaren&#8221;);</p>
+<p>&nbsp;</p>
+<p>return 0;</p>
+<p>}</p>
+<p><strong>判断 VirtualBox/Virtual PC</strong></p>
+<p>什么？这种家用桌面虚拟机自己装的还会不知道？！如果不知道的话也有办法，在 Linux 下运行 dmidecode 工具然后查找 Manufacturer: innotek GmbH, Manufacturer: Microsoft Corporation 关键字就能对应上 VirtualBox 和 Virtual PC.</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=685</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Linux内核报错日志与硬盘I/O故障对应关系/zz/</title>
+		<link>http://ijz.me/?p=626</link>
+					<comments>http://ijz.me/?p=626#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 17 Jul 2014 02:40:50 +0000</pubDate>
+				<category><![CDATA[安全]]></category>
+		<category><![CDATA[硬件]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=626</guid>
+
+					<description><![CDATA[&#160; &#160; 日志信息 故障现象描述 与硬盘关系 scsi1: ERROR on channel [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table>
+<tbody>
+<tr>
+<td><strong>日志信息</strong></td>
+<td width="219"><strong>故障现象描述</strong></td>
+<td width="120"><strong>与硬盘关系</strong></td>
+</tr>
+<tr>
+<td>scsi1: ERROR on channel 0, id 7, lun 0, CDB: Read (10) 00 73 fc 62 bf 00 00 80 00</p>
+<p>Info fld=0x73fc6326, Current sdi: sense key Medium Error</p>
+<p>Additional sense: Unrecovered read error</td>
+<td width="219">SMART规范定义“Medium Error”错误是一种不可恢复的错误，可能由于介质的缺陷或记录的数据错误。该错误有别于“Hardware Error”。</p>
+<p>出现Medium Error的主要原因是硬盘坏，或者硬盘的数据无法读写。</td>
+<td width="120">
+<ol>
+<li>硬盘扇区坏</li>
+<li>硬盘与磁盘控制器连接信号质量不稳定，导致数据出现异常</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>mptbase: ioc1: IOCStatus=804b LogInfo=31080000</p>
+<p>Originator={PL}, Code={SATA NCQ Fail All Commands After Error}, SubCode(0×0000)</td>
+<td width="219">原生指令排序(Native Command Queuing，简称NCQ)，原先是改善服务器硬盘存取控制技术,应用在SCSI和SATA 1.0/2.0/3.0接口硬盘读写的加速技术，其接口开启磁盘阵列RAID亦有所提升。透过硬盘固件、硬盘控制器以及操作系统三者的互相配合，改善硬盘内部磁区的读取顺序，可以提高硬盘效能约30%，亦能够轻微减轻硬盘损耗的速率。NCQ对用于服务器上的硬盘的效率提升尤为明显。</p>
+<p>PL：Protocol Layer，指磁盘控制器中的协议层</td>
+<td width="120">该信息与硬盘是否故障无直接联系</td>
+</tr>
+<tr>
+<td>end_request: I/O error, dev sdi, sector 1945920256</p>
+<p>EXT2-fs error (device sdi1): read_inode_bitmap: Cannot read inode bitmap – block_group = 222, inode_bitmap = 14547217</p>
+<p>EXT2-fs error (device sdi1): ext2_get_inode: unable to read inode block – inode=951895, block=15202501</td>
+<td width="219">内核不能从硬盘上的文件系统读取数据。</td>
+<td width="120">
+<ol>
+<li>硬盘扇区坏。</li>
+<li>硬盘与磁盘控制器连接信号质量不稳定，导致数据出现异常。</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>mptbase: ioc1: IOCStatus=8000 LogInfo=31110d00</p>
+<p>Originator={PL}, Code={Reset}, SubCode(0x0d00)</p>
+<p>mptbase: ioc1: IOCStatus=804b LogInfo=31110d00</p>
+<p>Originator={PL}, Code={Reset}, SubCode(0x0d00)</td>
+<td width="219">驱动准备让磁盘控制器IOC单元复位，出现该操作原因为驱动发现多次读写硬盘数据失败。</p>
+<p>IOCStatus=0×8000</p>
+<p>磁盘控制器配置页面处于共享的递归方式。</p>
+<p>IOCStatus=0×8048</p>
+<p>尝试读取不存在的超级配置数据。</p>
+<p>IOCStatus=0x804b</p>
+<p>超级数据序列号由0xffffffff变为0</td>
+<td width="120">该信息不能作为硬盘故障的依据。打印该信息的原因，与硬盘/磁盘控制器IOC单元/硬盘与控制器之间的链路有关。IOC错误码含义见前面。</td>
+</tr>
+<tr>
+<td>mptscsih: ioc1: attempting task abort! (sc=000001007b4cf340)</p>
+<p>scsi1 : destination target 8, lun 0</p>
+<p>command = Read (10) 00 5f 2a 4d 3f 00 10 00 00</td>
+<td width="219">磁盘控制器驱动尝试取消读写任务。本示例代码中，表明取消在target 8，lun 0的读数据任务。</td>
+<td width="120">该信息与硬盘是否故障无直接联系</td>
+</tr>
+<tr>
+<td>mptbase: ioc1: IOCStatus=8048 LogInfo=31130000</p>
+<p>Originator={PL}, Code={IO Not Yet Executed}, SubCode(0×0000)</td>
+<td width="219">磁盘控制器驱动报告报告当前IOC（I/O Controller）单元状态码</td>
+<td width="120">该信息与硬盘是否故障无直接联系</td>
+</tr>
+<tr>
+<td>mptscsih: ioc1: task abort: SUCCESS (sc=000001007b4cf340)</td>
+<td width="219">磁盘控制器驱动报告读写任务取消成功</td>
+<td width="120">该信息与硬盘是否故障无直接联系</td>
+</tr>
+<tr>
+<td>mptscsih: ioc1: attempting target reset!</p>
+<p>mptscsih: ioc1: attempting bus reset! (sc=000001007b4cf340)</p>
+<p>mptscsih: ioc1: Attempting host reset! (sc=000001007b4cf340)</p>
+<p>mptbase: Initiating ioc1 recovery</td>
+<td width="219">磁盘控制器驱动尝试复位target/bus/host，并重新恢复IOC（I/O Controller）单元</td>
+<td width="120">该信息不能作为硬盘故障的依据。打印该信息的原因，与硬盘/磁盘控制器IOC单元/硬盘与控制器之间的链路有关。</td>
+</tr>
+<tr>
+<td>scsi: Device offlined – not ready after error recovery: host 1 channel 0 id 8 lun 0</td>
+<td width="219">硬盘offline，硬盘的位置为host 1 channel 0 id 8 lun 0</td>
+<td width="120">硬盘处于故障状态或丢失</td>
+</tr>
+<tr>
+<td>SCSI error : &lt;1 0 8 0&gt; return code = 0×10000</p>
+<p>end_request: I/O error, dev sdj, sector 1596607807</p>
+<p>scsi1 (8:0): rejecting I/O to offline device</td>
+<td width="219">SCSI层报告在host 1 channel 0 id 8 lun 0设备上读写错误，返回码为0×10000，表明设备已不在位。</td>
+<td width="120">硬盘处于故障状态或丢失</td>
+</tr>
+<tr>
+<td>mptsas: ioc1: attaching sata device, channel 0, id 11, lun 0, phy 0</td>
+<td width="219">系统新加入新的硬盘，硬盘所在位置为phy 0，即第一个物理槽位。</td>
+<td width="120">插入新的硬盘</td>
+</tr>
+<tr>
+<td>mptsas: ioc0: removing sata device, channel 0, id 21, phy 2</td>
+<td width="219">从系统中拔掉一块硬盘，硬盘对应的物理位置为phy 2，即第3个物理槽位。</td>
+<td width="120">拔除一块硬盘</td>
+</tr>
+<tr>
+<td>Remounting filesystem read-only</td>
+<td width="219">文件系统变为只读，原因为文件系统遭到破坏</td>
+<td width="120">与硬盘是否故障无直接关系</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=626</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

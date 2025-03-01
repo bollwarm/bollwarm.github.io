@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>perl One-liners &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=perl-one-liners" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 12:34:18 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>打印特定行范围的多种方法（5-10行）</title>
+		<link>http://ijz.me/?p=985</link>
+					<comments>http://ijz.me/?p=985#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 07 Sep 2017 12:31:00 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[shell]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=985</guid>
+
+					<description><![CDATA[废话少说，直接撸代码： perl -ne 'print if 5..10' xxoo #感谢flw提醒，忘记这 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>废话少说，直接撸代码：</p>
+
+
+
+<p><code>perl -ne 'print if 5..10' xxoo #感谢flw提醒，忘记这个了<br>perl -ne 'print if $.>=5 and $.&lt;=10' xxoo<br>perl -ne 'print if int($.) ~~ (5..10)'<br>perl -ne 'print if grep { $_ == $. } 5..10'xxoo<br>sed -ne '5,10 p' xxoo<br>awk 'NR==5,NR==10' xxoo<br>head -10 xxoo |tail -6<br>tail -n +5 xxoo | head -n 6<br>grep . -n xxoo |grep -E "^(5|6|7|8|9|10):"|perl -lpe 's/\d+://'</code></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=985</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>利用perl-oneline快速定位网站攻击源并处理</title>
+		<link>http://ijz.me/?p=844</link>
+					<comments>http://ijz.me/?p=844#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Fri, 26 Feb 2016 08:18:38 +0000</pubDate>
+				<category><![CDATA[iptables]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=844</guid>
+
+					<description><![CDATA[1、问题发现 在查看网站攻击信息，发现一个时间段流量徒增，猜测可能有攻击，记下当时的时间点，并截图 这是百度免 [&#8230;]]]></description>
+										<content:encoded><![CDATA[<header class="entry-header"></header>
+<div class="entry-content">
+<p>1、问题发现</p>
+<p>在查看网站攻击信息，发现一个时间段流量徒增，猜测可能有攻击，记下当时的时间点，并截图</p>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446.png" rel="attachment wp-att-833"><img decoding="async" class="alignnone size-medium wp-image-833" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446-300x121.png" sizes="(max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-300x121.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-768x310.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-624x252.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446.png 958w" alt="QQ图片20160216162446" width="300" height="121" /></a></p>
+<p>这是百度免费cdn的免费统计信息，可见今天早上1点到2点有异常流量。<br />
+<span id="more-844"></span></p>
+<p>2、问题定位</p>
+<p>(1)分析网站acc<b>e</b><b>s</b><b>s</b>的日志，分析1点日志</p>
+<div id="crayon-56e41d4b60705514274851" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -ln&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;/[16/F&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;b/2016:01/ and print&#8217; acc&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;_nginx.log</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b60705514274851-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b60705514274851-1" class="crayon-line"><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">ln<b>e</b></span> <span class="crayon-s">&#8216;/[16/F<b>e</b>b/2016:01/ and print&#8217;</span> <span class="crayon-v">acc<b>e</b><b>s</b><b>s</b>_nginx</span><span class="crayon-sy">.</span><span class="crayon-v">log</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045.png" rel="attachment wp-att-834"><img decoding="async" class="alignnone size-medium wp-image-834" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045-300x143.png" sizes="(max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-300x143.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-768x365.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-1024x487.png 1024w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-624x297.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045.png 1033w" alt="QQ图片20160216163045" width="300" height="143" /></a></p>
+<p>可见确实有大量不同寻常的访问，可判断为对xmlrpc.php的攻击。</p>
+<p>(2)对来源ip进行定位并统计次数</p>
+<div id="crayon-56e41d4b6071a600458748" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -ln&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;/[16/F&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;b/2016:01/ and print&#8217; acc&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;_nginx.log|p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -lan&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;print $F[0]&#8217;|&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;ort|uniq -c|&lt;b style=&#8217;color:black;background-color:#ffff66&#8217;&gt;s&lt;/b&gt;ort -n</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b6071a600458748-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b6071a600458748-1" class="crayon-line"><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">ln<b>e</b></span> <span class="crayon-s">&#8216;/[16/F<b>e</b>b/2016:01/ and print&#8217;</span> <span class="crayon-v">acc<b>e</b><b>s</b><b>s</b>_nginx</span><span class="crayon-sy">.</span><span class="crayon-v">log</span><span class="crayon-o">|</span><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">lan<b>e</b></span> <span class="crayon-s">&#8216;print $F[0]&#8217;</span><span class="crayon-o">|</span><span class="crayon-v"><b>s</b>ort</span><span class="crayon-o">|</span><span class="crayon-v">uniq</span> <span class="crayon-o">&#8211;</span><span class="crayon-v">c</span><span class="crayon-o">|</span><span class="crayon-v"><b>s</b>ort</span> <span class="crayon-o">&#8211;</span><span class="crayon-v">n</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" rel="attachment wp-att-835"><img decoding="async" class="alignnone size-full wp-image-835" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" alt="QQ图片20160216163426" width="254" height="147" /></a></p>
+<p>可以明确看到是这两个ip在攻击，来源地都是美国</p>
+<p>(3)对两个ip单独分析，分析其行为</p>
+<div id="crayon-56e41d4b60724200519498" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">p&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;rl -ln&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt; &#8216;/141.101.75.65/ and print&#8217; acc&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt;_nginx.log|h&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;ad -n 10</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b60724200519498-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b60724200519498-1" class="crayon-line"><span class="crayon-v">p<b>e</b>rl</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">ln<b>e</b></span> <span class="crayon-s">&#8216;/141.101.75.65/ and print&#8217;</span> <span class="crayon-v">acc<b>e</b><b>s</b><b>s</b>_nginx</span><span class="crayon-sy">.</span><span class="crayon-v">log</span><span class="crayon-o">|</span><span class="crayon-v">h<b>e</b>ad</span> <span class="crayon-o">&#8211;</span><span class="crayon-i">n</span> <span class="crayon-cn">10</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649.png" rel="attachment wp-att-837"><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-837" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649-300x66.png" sizes="auto, (max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-300x66.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-768x170.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-624x138.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649.png 908w" alt="QQ图片20160216163649" width="300" height="66" /></a></p>
+<p>可见，这两个ip先通过搜索文章作者(访问/?author=x)，找到用户名，然后对用户名和密码进行尝试攻击。</p>
+<p>3、处理和后续扩展<br />
+首先对两个ip进行封禁</p>
+<div id="crayon-56e41d4b6072e333457972" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
+<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"></div>
+<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" readonly="readonly" wrap="soft" data-settings="dblclick">iptabl&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; -I INPUT -&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; 141.101.75.65 -&lt;a name=&#8221;qihoosnap3&#8243;&gt;&lt;/a&gt;&lt;b style=&#8217;color:#ffff66;background-color:#8080ff&#8217;&gt;j&lt;/b&gt; DROP&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;<br />
+iptabl&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/b&gt;&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; -I INPUT -&lt;b style=&#8217;color:black;background-color:#ffff66&#8242;&gt;s&lt;/b&gt; 162.158.90.40 -&lt;b style=&#8217;color:#ffff66;background-color:#8080ff&#8217;&gt;j&lt;/b&gt; DROP</textarea></div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-56e41d4b6072e333457972-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-56e41d4b6072e333457972-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-56e41d4b6072e333457972-1" class="crayon-line"><span class="crayon-v">iptabl<b>e</b><b>s</b></span> <span class="crayon-o">&#8211;</span><span class="crayon-i">I</span> <span class="crayon-v">INPUT</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>s</b></span> <span class="crayon-cn">141.101.75.65</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>j</b></span> <span class="crayon-e">DROP</span></div>
+<div id="crayon-56e41d4b6072e333457972-2" class="crayon-line crayon-striped-line"><span class="crayon-v">iptabl<b>e</b><b>s</b></span> <span class="crayon-o">&#8211;</span><span class="crayon-i">I</span> <span class="crayon-v">INPUT</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>s</b></span> <span class="crayon-cn">162.158.90.40</span> <span class="crayon-o">&#8211;</span><span class="crayon-i"><b>j</b></span> <span class="crayon-v">DROP</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>由于xmlrpc.php并没有实际中用到，直接删除，或者改名。</p>
+<p>当然可以写一个自动处理脚本根据日志判断攻击ip，然后自动封禁，作为一个可持续的方案不错。</p>
+<p>4、关于wp防护</p>
+<p>注意多升级，可以尽可能的消除安全漏洞。<br />
+注意不用系统默认的用户。<br />
+用一些安全插件比如<strong>WPSecurty</strong> <b>Scan，Better wp Securiry </b>等<br />
+可以用一些开源ids，比如snort等。</p>
+</div>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=844</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>perl 实现打印匹配模式行及上下行的操作</title>
+		<link>http://ijz.me/?p=846</link>
+					<comments>http://ijz.me/?p=846#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 21 Jan 2016 21:25:39 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=846</guid>
+
+					<description><![CDATA[这个可能用的着，在看日志时候，比如搜索tomcat 错误日志的时候 1、perl One-liner实现 [c [&#8230;]]]></description>
+										<content:encoded><![CDATA[<header class="entry-header"></header>
+<div class="entry-content">
+<p>这个可能用的着，在看日志时候，比如搜索tomcat 错误日志的时候<br />
+1、perl One-l<b>i</b>ner实现</p><pre class="crayon-plain-tag">perl -ne '/RE/ and {push @a,$.};push @b,$_;END{for(@a){print $b[$_-2];print $b[$_-1];print $b[$_]}}' file</pre><p>实现原理:把每一行保存在一个数组@b里，把匹配的行号保存在素组@a里，然后在END模块打印出来</p>
+<p>2、perl脚本实现</p><pre class="crayon-plain-tag">#!/usr/bin/env perl
+$re=shift;
+$file=shift;
+open $line,"&lt;",$file or die;
+while(&lt;$line&gt;)
+{
+   push @b,$_;
+   $i++;
+   chomp;
+   /$re/ and push(@a,$i) ;
+}
+close $line;
+for(@a)
+{
+print $b[$_-2];
+print $b[$_-1];
+print $b[$_];
+}</pre><p>保存为xx.pl 然后chmod u+x xx.pl<br />
+./xx.pl RE f<b>i</b>le</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=846</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>屏蔽ssh恶意扫描ip的脚本</title>
+		<link>http://ijz.me/?p=731</link>
+					<comments>http://ijz.me/?p=731#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 16 Aug 2015 09:39:15 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<category><![CDATA[shell]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=731</guid>
+
+					<description><![CDATA[近来发现有ip恶意扫描服务器，写个脚本自动对恶意攻击的ip进行封禁。主要原理是定期crontab任务分析sec [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>近来发现有ip恶意扫描服务器，写个脚本自动对恶意攻击的ip进行封禁。主要原理是定期crontab任务分析secure日志（扫描尝试登陆的会有错误日志），超过错误次数就将其加入iptables DROP 链接。可以在一定程度上访问恶意攻击提供，安全性。附上脚本（代码另存为<code>/root/block_ssh.sh</code>。执行<code>echo "*/5 * * * * root /root/block_ssh.sh" &gt;&gt;/etc/crontab</code> 每5分钟检查一次文件。）<span id="more-731"></span></p><pre class="crayon-plain-tag">#!/bin/bash
+#echo "*/5 * * * * root /root/block_ssh.sh" &gt;&gt;/etc/crontab
+LIMIT=30
+LOGFILE="/data/block_ip.log"
+TIME=$(date '+%b %e %H')
+BLOCK_IP=`perl -lane 'print $F[-4] if /Failed password/' /var/log/secure|sort|uniq -c|perl -lane  'print "$F[0]:$F[1]"  if ($F[0] &gt; "'$LIMIT'")'`
+
+for i in $BLOCK_IP
+do
+
+  echo $i
+     IP=`echo $i|perl -F: -lane 'print $F[1]'`
+     echo $IP
+     iptables-save|grep INPUT|grep DROP|grep $IP&gt;/dev/null     #先判断下是否已经被屏蔽
+     if [ $? -gt 0 ];then
+          iptables -I INPUT -s $IP -j DROP     #屏蔽ip
+          NOW=$(date '+%Y-%m-%d %H:%M')
+          echo -e "$NOW : $IP" &gt;&gt;${LOGFILE}
+     fi
+done</pre><p>&nbsp;</p>
+<p><code> </code></p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=731</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>linux 一条语句查杀php木马</title>
+		<link>http://ijz.me/?p=712</link>
+					<comments>http://ijz.me/?p=712#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Mon, 23 Mar 2015 01:47:23 +0000</pubDate>
+				<category><![CDATA[linux]]></category>
+		<category><![CDATA[perl]]></category>
+		<category><![CDATA[安全]]></category>
+		<category><![CDATA[find]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=712</guid>
+
+					<description><![CDATA[根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。   fi [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。<br />
+<code>  find ./ -name "*.php" |xargs egrep "phpspy|c99sh|milw0rm|eval(gunerpress|eval(base64_decoolcode|spider_bc"&gt; /tmp/php.txt</code></p>
+<p><span id="more-712"></span></p>
+<p>如果只列出含木马的文件</p>
+<p><code>      find ./ -name "*.php" -type f -print0 | xargs -0 egrep "(phpspy|c99sh|milw0rm|eval(gzuncompress(base64_decoolcode|eval(base64_decoolcode|spider_bc|gzinflate)" | awk -F: '{print $1}' | sort | uniq</code></p>
+<p><code>    find . -type f -name "*.php"|xargs grep  'versio:b.01'  -l &gt;list.0320</code></p>
+<p>需要注意的是，以上查出来的文件，有可能是正常的php文件，需要你根据实际甄别处理（批量替换），不要误杀了（处理以前注意备份俄）。</p>
+<p>grep方法：<br />
+# grep -r &#8211;include=*.php  &#8216;[^a-z]eval($_POST&#8217; . &gt; /tmp/eval.txt</p>
+<p># grep -r &#8211;include=*.php  &#8216;file_put_contents(.*$_POST[.*]);&#8217; . &gt; /tmp/file_put_contents.txt</p>
+<p>查找最近一天被修改的PHP文件</p>
+<p>#   find -mtime -1 -type f -name *.php</p>
+<p>修改网站的权限</p>
+<p># find -type f -name *.php -exec chmod 444 {} ;</p>
+<p># find ./ -type d -exec chmod 555{} ;</p>
+<p>附：linux下的批量查找和替换。<br />
+find . -type f -name &#8220;*.html&#8221;|xargs grep ‘yourstring’</p>
+<p>2：查找并用perl One-liners替换</p>
+<p>find -name &#8216;要查找的文件名&#8217; | xargs perl -pi -e &#8216;s|被替换的字符串|替换后的字符串|g&#8217;<br />
+下 面这个例子就是将当前目录及所有子目录下的所有*.shtml文件中的”&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;“替换为”(空)“.</p>
+<p>find . -type f -name &#8220;*.shtml&#8221;|xargs perl -pi -e &#8216;s|&lt;iframe src=http://com-indexl.com/ask/admin.html width=0 height=0&gt;&lt;/iframe&gt;| |g&#8217;</p>
+<p>perl -pi -e<br />
+在Perl 命令中加上-e 选项，后跟一行代码，那它就会像运行一个普通的Perl 脚本那样运行该代码.</p>
+<p>从命令行中使用Perl 能够帮助实现一些强大的、实时的转换。认真研究正则表达式，并正确地使用，将会为您省去大量的手工编辑工作。</p>
+<div id="main"></div>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=712</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>perl one-liners explained 中文版 （七）正则表达式</title>
+		<link>http://ijz.me/?p=670</link>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Thu, 25 Sep 2014 08:25:51 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=670</guid>
+
+					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第六部分——正则表达式</p>
+<p>原文地址：http://www.catonmat.net/download/perl1line.txt</p>
+<p>原书blog地址：http://www.catonmat.net/blog/perl-book/</p>
+<p>本翻译项目地址：<a href="https://github.com/bollwarm/perlonelinecn">https://github.com/bollwarm/perlonelinecn</a></p>
+<p><span id="more-670"></span></p>
+<h1>正则表达式</h1>
+<h2><a id="user-content-112匹配貌似邮件的正则表达式" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#112%E5%8C%B9%E9%85%8D%E8%B2%8C%E4%BC%BC%E9%82%AE%E4%BB%B6%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"></a>112.匹配貌似邮件的正则表达式</h2>
+<p></p><pre class="crayon-plain-tag">/^d{1,3}.d{1,3}.d{1,3}.d{1,3}$/</pre><p>这个正则表达式不能保证匹配都是合法的ip地址，匹配成功只不过貌似ip地址的字串。比如，它可以匹配一个合法的ip地址81.198.240.140，同时也能匹配一个非法ip地址比如923.844.1.999。 下面解释他是如何工作的。正则开始的^符号是一个锚字符，用来匹配一个字串的开始。接着d{1,3}匹配一个，两个或者三个连续数字。“.”匹配一个点。最后的$也是一个锚字符匹配字段的结尾。使用^和$锚字符非常有必要，否则的话诸如“foo213.3.1.2bar”一样的字串也会被匹配上。 这个正则可以简单的把开始部分d{1,3}.重复三次的到同样功能的表达式：</p><pre class="crayon-plain-tag">/^(d{1,3}.){3}d{1,3}$/</pre><p></p>
+<h2><a id="user-content-113测试数字是否在0-255的范围内" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#113%E6%B5%8B%E8%AF%95%E6%95%B0%E5%AD%97%E6%98%AF%E5%90%A6%E5%9C%A80-255%E7%9A%84%E8%8C%83%E5%9B%B4%E5%86%85"></a>113.测试数字是否在0-255的范围内</h2>
+<p></p><pre class="crayon-plain-tag">/^([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/</pre><p>让我来看这个正则是如何工作的。此范围内的数可以为一个，两个或者三个数字。如果是一个数字，我们可以让它为任何[0-9]。如果是两个数字，我们也允许它为任何[0-9][0-9]的组合。然而如果它是三个数字的，则他必须为100多或者200多的数。如果为100多的，可以用1[0-9][0-9]匹配它。如果是200多的数字，如果是小于250的，可以用2[0-4][0-9]匹配。或者250-255的，用25[0-5]匹配。</p>
+<h2><a id="user-content-114匹配ip地址" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#114%E5%8C%B9%E9%85%8Dip%E5%9C%B0%E5%9D%80"></a>114.匹配IP地址</h2>
+<p></p><pre class="crayon-plain-tag">my $ip_part = qr|([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|;
+if ($ip =~ /^($ip_part.){3}$ip_part$/) {
+say &quot;valid ip&quot;;
+}</pre><p>本正则组合了前面的两个。它用my $ip_part=qr/…/操作把正则表达式组合到一起，并且存到$ip_part变量中。接着用这个变量去匹配IP地址的四个部分。</p>
+<h2><a id="user-content-115检查字符串是否貌似email地址" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#115%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E8%B2%8C%E4%BC%BCemail%E5%9C%B0%E5%9D%80"></a>115.检查字符串是否貌似email地址。</h2>
+<p></p><pre class="crayon-plain-tag">/.+@.+..+/</pre><p>这个正则确保字符串看起来像一个邮件地址。注意到这说的是看“起来像”。它不能保证确实是一个邮件地址。他的匹配过程是：首先匹配一些字符后跟个@符号，接着匹配任意字符然后到发现一个点，接着匹配更多个字符。如果这个匹配成功，那么这个字符串至少看起来就像个个邮件地址，他有@和.。 例如,<a href="mailto:admin@ijz.me">admin@ijz.me</a>可以匹配，但是admin@ijzme不会匹配，因为他匹配不到点.，这是必须的。 其实更可靠检测合法邮件地址的方法是是用Email::Valid 模块：</p><pre class="crayon-plain-tag">use Email::Valid;
+print (Email::Valid-&gt;address('john@example.com') ? 'valid email' : 'invalid email');</pre><p></p>
+<h2><a id="user-content-116检测字符串为十进制数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#116%E6%A3%80%E6%B5%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%BA%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0"></a>116.检测字符串为十进制数。</h2>
+<p>检测字串是否是数字非常难。我基于正则并且在Perl Cookbook对其做了解释。</p><pre class="crayon-plain-tag">/^d+$/</pre><p>这个正则匹配一个或者更多的数字d为了开始符^和结尾符$。但是它不能匹配诸如+3和-3这样的数字。让我们调整一下，匹配他们：</p><pre class="crayon-plain-tag">/^[+-]?d+$/</pre><p>此处[+-]?意思是在数字前匹配一个可选的正号或者负号。这个可以匹配+3或者-3，但是还不能匹配-0.3。让我们加上它：</p><pre class="crayon-plain-tag">/^[+-]?d+.?d*$/</pre><p>我们在前一个正则的基础上加了.?d*，这匹配了一个可选的.在0或者其他数字后面。现在这个正则可以匹配诸如-0.3或者0.3的数字了。 更好的方式是是使用Regexp::Common模块，它提供了各种非常有用的正则表达式。比如，匹配一个整数你可以用$RE{num}{int}。 那么怎么匹配一个正16进制数字呢？见下式：</p><pre class="crayon-plain-tag">/^0x[0-9a-f]+$/i</pre><p>这可以匹配十六进制前缀0x，紧跟着数字。模式结尾的/i标志确保匹配是不区分大小写的。例如0x57af匹配，0X5Fa也匹配，但是97匹配不了，由于他是一个十进制数。</p>
+<p>当然最后是用模块$RE{num}{hex},它会支持负数，小数和逗点的数字组。 那么八进制呢？见下：</p><pre class="crayon-plain-tag">/^0[0-7]+$/</pre><p>8进制数前缀是0，其后紧跟八进制数字0-7。例如，013匹配，但是09不会匹配，因为9不是一个合法的八进制数。 更好的方式是使用$RE{num}{oct}，好处同上。</p>
+<p>最后2进制：</p><pre class="crayon-plain-tag">/^[01]+$/</pre><p>二进制只包含0和1.例如，0101101匹配，但是210101不能，因为2不是合法的二进制数字。</p>
+<p>更好的方式是使用$RE{num}{bin}。</p>
+<h2><a id="user-content-117检测一个单词在字符串总出现了两次" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#117%E6%A3%80%E6%B5%8B%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%80%BB%E5%87%BA%E7%8E%B0%E4%BA%86%E4%B8%A4%E6%AC%A1"></a>117.检测一个单词在字符串总出现了两次。</h2>
+<p></p><pre class="crayon-plain-tag">/(word).*1/</pre><p>这个正则匹配了word紧跟着任意字符，随后是同样的word。此处（word）捕捉了word 分组1，并用1引用了分组1的内容，因此这个和写作/（word）.<em>word/的模式一样。例如，“silly things are silly”会匹配/(silly).</em>1/，但是“silly things are boring”不会匹配，因为后面这个字串中silly没有重复。</p>
+<h2><a id="user-content-118给字串中的所有数字加1" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#118%E7%BB%99%E5%AD%97%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E6%95%B0%E5%AD%97%E5%8A%A01"></a>118.给字串中的所有数字加1.</h2>
+<p></p><pre class="crayon-plain-tag">$str =~ s/(d+)/$1+1/ge</pre><p>此处我们使用替换操作符s///。他匹配所有的数字（d+）,把他们捕捉到组1，接着把他们的值替换其值加1后的值。g标志确保它会知道字串中的所有的数字，e标志使得$1+1作为一个Perl表达式执行。 例如，“this 1234 is awesome 444”会被替换为“this 1235 is awesome 445”。</p>
+<h2><a id="user-content-119-提取http头中用户客户端字串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#119-%E6%8F%90%E5%8F%96http%E5%A4%B4%E4%B8%AD%E7%94%A8%E6%88%B7%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%97%E4%B8%B2"></a>119. 提取HTTP头中用户客户端字串</h2>
+<p></p><pre class="crayon-plain-tag">/^User-Agent: (.+)$/</pre><p>HTTP头以键值对的格式表示的。操作这些字串很简单，你只要叫正则机保存值部分在$1组变量。 例如，如果HTTP头包含，</p><pre class="crayon-plain-tag">Host: localhost:8000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_0_0; en-US)
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: en-US,en;q=0.8
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+.</pre><p>那么正则表示式将会提取Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_0_0; en-US)字串</p>
+<h2><a id="user-content-120匹配可打印字符" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#120%E5%8C%B9%E9%85%8D%E5%8F%AF%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6"></a>120.匹配可打印字符。</h2>
+<p></p><pre class="crayon-plain-tag">/[ -~]/</pre><p>这个一个非常巧妙的表达式。为了理解他，看下ascii的说明。你可以发现空格符起始于0x20，符号~是0x7e。所有的空格和~之间的字符的都是可以打印字符。这个正则表达式恰好匹配了这些。[ -~]定义了一个从空格到的~字符范围。这一直是我最喜欢的正则表达式。 /[^ -~]/</p>
+<p>这个匹配恰好和[ -~]相反。</p>
+<h2><a id="user-content-121匹配两个html签之间的文本" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#121%E5%8C%B9%E9%85%8D%E4%B8%A4%E4%B8%AAhtml%E7%AD%BE%E4%B9%8B%E9%97%B4%E7%9A%84%E6%96%87%E6%9C%AC"></a>121.匹配两个HTML签之间的文本</h2>
+<p></p><pre class="crayon-plain-tag">m|([^&lt;]*)|</pre><p>这个正则表达式匹配了所有&#8230; 签之间的内容。此处技巧是([^&lt;]*)，它匹配会匹配尽可能多的字符知道发现一个&lt;字符，他会开始另一个标签。 另外你也可以写成：</p><pre class="crayon-plain-tag">m|(.*?)|</pre><p>但是这个有点不一样了。例如，如果HTML内容是 hello 则第一个正则不能匹配，但是第二个正则表达会匹配到hello，由于(.*?)匹配尽可能少的内容知道发现。这恰好是hello。 但是我们一般不建议用正则表达式去匹配和处理HTML。使用诸如HTML::TreeBuilder 模块去做这项工作，是更明智的选择。</p>
+<h2><a id="user-content-122替换所有的签为" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#122%E6%9B%BF%E6%8D%A2%E6%89%80%E6%9C%89%E7%9A%84%E7%AD%BE%E4%B8%BA"></a>122.替换所有的签为</h2>
+<p></p><pre class="crayon-plain-tag">$html =~ s|&lt;(/)?b&gt;|&lt;$1strong&gt;|g</pre><p>此处我假设HTML内容保存在变量$html中。接着&lt;(/)?b&gt;匹配了起始和结束的签，捕捉可选的可选签在组$1，接着用 或者 替换匹配的签，这取决于匹配的是一个起始或者结束tag签。</p>
+<h2><a id="user-content-123提取正则表达式中所有匹配的部分" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md#123%E6%8F%90%E5%8F%96%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E6%89%80%E6%9C%89%E5%8C%B9%E9%85%8D%E7%9A%84%E9%83%A8%E5%88%86"></a>123.提取正则表达式中所有匹配的部分。</h2>
+<p></p><pre class="crayon-plain-tag">my @matches = $text =~ /regex/g;</pre><p>此处正则表达式在list上下文中，使得他返回所有匹配。匹配的内容被放进@matches数组中。 例如，下面的正则表达式提取了一个字符串中所有的数字。</p><pre class="crayon-plain-tag">my $t = &quot;10 hello 25 moo 31 foo&quot;;
+my @nums = $text =~ /d+/g;
+@nums 现在包含了(10, 25, 30)。</pre><p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>perl one-liners explained 中文版 （六）有选择的打印或者删除行</title>
+		<link>http://ijz.me/?p=651</link>
+					<comments>http://ijz.me/?p=651#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 14 Sep 2014 11:18:36 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=651</guid>
+
+					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="text-align: left;">perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第六部分——有选择的打印或者删除行</p>
+<p style="text-align: left;">原文地址：http://www.catonmat.net/download/perl1line.txt</p>
+<p style="text-align: left;">原书blog地址：http://www.catonmat.net/blog/perl-book</p>
+<p style="text-align: left;">本翻译项目地址：<a href="https://github.com/bollwarm/perlonelinecn">https://github.com/bollwarm/perlonelinecn</a></p>
+<p style="text-align: left;"><span id="more-651"></span></p>
+<h1>有选择的打印或者删除行</h1>
+<h2><a id="user-content-85打印文件的首行模仿head--1" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#85%E6%89%93%E5%8D%B0%E6%96%87%E4%BB%B6%E7%9A%84%E9%A6%96%E8%A1%8C%E6%A8%A1%E4%BB%BFhead--1"></a>85.打印文件的首行(模仿head -1)</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print; exit'</pre><p>本行代码迄今为止最简单一个。此处由于使用-n参数Perl读了第一行到$_，接着调用print语句输出 $_变量的内容。接着推出。就这样，第一行就被打印出来了，而这恰好就是我们需要的。</p>
+<h2><a id="user-content-86打印文件开始的10行模仿head--10" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#86%E6%89%93%E5%8D%B0%E6%96%87%E4%BB%B6%E5%BC%80%E5%A7%8B%E7%9A%8410%E8%A1%8C%E6%A8%A1%E4%BB%BFhead--10"></a>86.打印文件开始的10行（模仿head -10）</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if $. &lt;= 10'</pre><p>本行代码是使用了$.特殊变量。这个变量带包“当前行序号”。每次Perl读下一行的时候，$.的值为自动加一。因此本行代码非常好理解：当行序号等于或者小于10的时候，打印出行内容。 本行代码也可以用不带if语句的方法：</p><pre class="crayon-plain-tag">perl -ne '$. &lt;= 10 &amp;&amp; print'</pre><p>此处，只有当$.&lt;=10布尔表达式为true时执行打印语句，而只有行号小于或者等于10时候表达式为真。</p>
+<h2><a id="user-content-87打印最后一行模仿tail--1" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#87%E6%89%93%E5%8D%B0%E6%9C%80%E5%90%8E%E4%B8%80%E8%A1%8C%E6%A8%A1%E4%BB%BFtail--1"></a>87.打印最后一行（模仿tail -1）</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '$last = $_; END { print $last }'</pre><p>打印最后一行的代码需要一点技巧，因为你一直需要把前一行保存在内存里。本行代码总我们一直把当前行保存到$last变量。当Perl代码结束时候，总会执行END块的。现在当读完最后一行，执行END块，退出的时候，我们打印出$last变量，这就是最后一行的内容。 另外一种同样同能代码是，</p><pre class="crayon-plain-tag">perl -ne 'print if eof'</pre><p>本行代码使用eof函数，这个函数在下一次读到文件的末尾时候返回1。由于读到文件最后一行的时候，下一行读（文件末尾）返回eof为真，所以本代码作出了我们期望所做的事情。</p>
+<h2><a id="user-content-88打印文件的最后10行模拟tail--10" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#88%E6%89%93%E5%8D%B0%E6%96%87%E4%BB%B6%E7%9A%84%E6%9C%80%E5%90%8E10%E8%A1%8C%E6%A8%A1%E6%8B%9Ftail--10"></a>88.打印文件的最后10行（模拟tail -10）</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'push @a, $_; @a = @a[@a-10..$#a]; END { print @a }'</pre><p>这个有点复杂。此处我们把每一行都put到数组@a中，然后用他的数组切片代替他。我们做 @a = @a[@a-10..$#a]，这表示用@a的最后10个元素取代他自己。@a-10在标量上下文被估值，他返回值为数组元素个数减10。#$a是@a数组的最后一个下标。@a[@a-10..#$a]取得了数组的最后10个元素的下标，所以@a保存了最后10个元素。</p>
+<p>举例子假设数组@a保存(&#8220;line1&#8221;, &#8220;line2&#8221;, &#8220;line3&#8221;, &#8220;line4&#8221;)。我们想要打印文件最后4行。当我们读到滴5行时候，数组变成了(&#8220;line1&#8221;, &#8220;line2&#8221;, &#8220;line3&#8221;, &#8220;line4&#8221;, &#8220;line5&#8221;)。这时，由于@a在标量环境下估值为5，@a-4值为1。#$a值为4。数组切片@a[@a-4..$#a]则为@a[1..4],这去掉了数组中的第一个元素。当作为替换后@a就变成了(&#8220;line2&#8221;, &#8220;line3&#8221;, &#8220;line4&#8221;, &#8220;line5&#8221;)。</p>
+<h2><a id="user-content-89仅打印匹配模式的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#89%E4%BB%85%E6%89%93%E5%8D%B0%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%A1%8C"></a>89.仅打印匹配模式的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '/regex/ &amp;&amp; print'</pre><p>此处/regex/是$_ =~ /regex/的缩写。由于-n操作符会把每一行都放到$_变量中，所有匹配模式的行/regex/会返回true，就会打印出行内容。</p>
+<h2><a id="user-content-90仅打印模式不匹配的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#90%E4%BB%85%E6%89%93%E5%8D%B0%E6%A8%A1%E5%BC%8F%E4%B8%8D%E5%8C%B9%E9%85%8D%E7%9A%84%E8%A1%8C"></a>90.仅打印模式不匹配的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '!/regex/ &amp;&amp; print'</pre><p>本行和尚一行基本上一样，但是模式表达被取反了。于是会打印所有不匹配的行。</p>
+<h2><a id="user-content-91打印匹配行之前的一行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#91%E6%89%93%E5%8D%B0%E5%8C%B9%E9%85%8D%E8%A1%8C%E4%B9%8B%E5%89%8D%E7%9A%84%E4%B8%80%E8%A1%8C"></a>91.打印匹配行之前的一行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '/regex/ &amp;&amp; $last &amp;&amp; print $last; $last = $_'</pre><p>本行代码中我们把每一行的内容保存到$last变量中。当行匹配模式的时候，$last中是其上一行的内容，于是打印$last，接着把当前行的内容复赋值给$last变量。</p>
+<h2><a id="user-content-92打印模式匹配行之后的一行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#92%E6%89%93%E5%8D%B0%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E8%A1%8C%E4%B9%8B%E5%90%8E%E7%9A%84%E4%B8%80%E8%A1%8C"></a>92.打印模式匹配行之后的一行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'if ($p) { print; $p = 0 } $p++ if /regex/'</pre><p>此处如果行匹配模式的话我们设置变量$p的值。用它指示下一行将会被打印。当下一行被读到，$p被设置，于是这行被打印，并且$p被又被设置为0，重置其状态。</p>
+<h2><a id="user-content-93打印任意顺序匹配aaa和bbb的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#93%E6%89%93%E5%8D%B0%E4%BB%BB%E6%84%8F%E9%A1%BA%E5%BA%8F%E5%8C%B9%E9%85%8Daaa%E5%92%8Cbbb%E7%9A%84%E8%A1%8C"></a>93.打印任意顺序匹配AAA和BBB的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '/AAA/ &amp;&amp; /BBB/ &amp;&amp; print'</pre><p>本行代码基本上和此前例86一样，只不过这儿测试的模式变成了两个，如果一个行匹配了两个模式，他就会被打印出来。</p>
+<h2><a id="user-content-94打印不匹配aaa和bbb模式的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#94%E6%89%93%E5%8D%B0%E4%B8%8D%E5%8C%B9%E9%85%8Daaa%E5%92%8Cbbb%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%A1%8C"></a>94.打印不匹配AAA和BBB模式的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '!/AAA/ &amp;&amp; !/BBB/ &amp;&amp; print'</pre><p>本行代码基本上和此前例87一样，此处测试行是否不匹配任意顺序两个模式。如果不匹配/AAA/ 并且不匹配/BBB/,我们打印出这行。</p>
+<h2><a id="user-content-95打印匹配模式aaa接着模式bbb再接着模式ccc的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#95%E6%89%93%E5%8D%B0%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8Faaa%E6%8E%A5%E7%9D%80%E6%A8%A1%E5%BC%8Fbbb%E5%86%8D%E6%8E%A5%E7%9D%80%E6%A8%A1%E5%BC%8Fccc%E7%9A%84%E8%A1%8C"></a>95.打印匹配模式AAA接着模式BBB，再接着模式CCC的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '/AAA.*BBB.*CCC/ &amp;&amp; print'</pre><p>此处简单的将三个模式AAA，BBB,CCC用“.*”连了起来，表示匹配这所有的或者不匹配。如果AAA跟着BBB又跟着CCC模式，这行就会被打印。他也会匹配AAABBBCCC这样的。</p>
+<h2><a id="user-content-96打印所有80字符或者大于80字符的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#96%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%8980%E5%AD%97%E7%AC%A6%E6%88%96%E8%80%85%E5%A4%A7%E4%BA%8E80%E5%AD%97%E7%AC%A6%E7%9A%84%E8%A1%8C"></a>96.打印所有80字符或者大于80字符的行</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if length &gt;= 80'</pre><p>本行代码打印所有大于或者等于80字符的行。Perl中你时常可以省略掉函数调用时候的括弧（）。此处我们省略了长度函数的括弧。实际上，length,length() 和length($_)都是一样的。</p>
+<h2><a id="user-content-97打印小于80字符的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#97%E6%89%93%E5%8D%B0%E5%B0%8F%E4%BA%8E80%E5%AD%97%E7%AC%A6%E7%9A%84%E8%A1%8C"></a>97.打印小于80字符的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if length &lt; 80'</pre><p>这和前一行代码相反。检测行长度是否小于80字符。</p>
+<h2><a id="user-content-98仅带打印13行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#98%E4%BB%85%E5%B8%A6%E6%89%93%E5%8D%B013%E8%A1%8C"></a>98.仅带打印13行</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '$. == 13 &amp;&amp; print &amp;&amp; exit'</pre><p>和此前例13介绍的一样，$.变量表示当前行数。所以，如果$.等于13，我们就打印了13行，并退出。</p>
+<h2><a id="user-content-99打印除27行外的所有行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#99%E6%89%93%E5%8D%B0%E9%99%A427%E8%A1%8C%E5%A4%96%E7%9A%84%E6%89%80%E6%9C%89%E8%A1%8C"></a>99.打印除27行外的所有行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '$. != 27 &amp;&amp; print'</pre><p>和上一行代码类似，我们检测当前行是否为27行，如果不是我们打印它，否则跳过。 另一种实现同样功能的方式是颠倒print和$.!=27,使用if语句。</p><pre class="crayon-plain-tag">perl -ne 'print if $. != 27'</pre><p></p>
+<h2><a id="user-content-100仅打印1319和67行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#100%E4%BB%85%E6%89%93%E5%8D%B01319%E5%92%8C67%E8%A1%8C"></a>100.仅打印13，19和67行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if $. == 13 || $. == 19 || $. == 67'</pre><p>如果你是用Perl 5.10或者更新版本你可以使用~~~智能匹配符，</p><pre class="crayon-plain-tag">perl -ne 'print if int($.) ~~ (13, 19, 67)'</pre><p>智能匹配符“~~”仅在Perl 5.10才推出。你可以用它做所有类型的智能模式匹配。例如，检查是否两个数组是一样的；是否一个数组包含一个元素，以及其他很多用法（见perldoc perlsyn）。在本行代码中我们使用 int($.）(13,19,67) 用来检测是否数值$.在列表（13，19，67）中。这基本上是对代码 grep {$_==int($.)} (13,19,67)缩写。如果检测成功，行就会被打印。</p>
+<h2><a id="user-content-101打印匹配两个模式之间的所有行包括匹配模式的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#101%E6%89%93%E5%8D%B0%E5%8C%B9%E9%85%8D%E4%B8%A4%E4%B8%AA%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E6%89%80%E6%9C%89%E8%A1%8C%E5%8C%85%E6%8B%AC%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%A1%8C"></a>101.打印匹配两个模式之间的所有行（包括匹配模式的行）</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if /regex1/../regex2/'</pre><p>本行代码使用触发操作符，当某行匹配regex1他变为ture，当其后另一行匹配了regex2时候变为false。因此这个行代码就会打印出匹配了两个模式之间的所有行。</p>
+<h2><a id="user-content-102打印17到30之间所有行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#102%E6%89%93%E5%8D%B017%E5%88%B030%E4%B9%8B%E9%97%B4%E6%89%80%E6%9C%89%E8%A1%8C"></a>102.打印17到30之间所有行</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if $. &gt;= 17 &amp;&amp; $. &lt;= 30'</pre><p>本行代码非常容易理解。$.变量表示当前行号，于是它检测是否当前行号大于等于17并且小于等于30。 另一种写法是，</p><pre class="crayon-plain-tag">perl -ne 'print if int($.) ~~ (17..30)'</pre><p>这行代码使用Perl5.10(或者更新版本)的智能匹配操作符~~。这主要是说，当前行号在列表(17, 18, 19, &#8230;, 30)。如果是，智能模式符匹配成功，行就会被打印。 在老Perl版本你可以用下面的代码代替，</p><pre class="crayon-plain-tag">perl -ne 'print if grep { $_ == $. } 17..30'</pre><p>这主要是用grep过程探测，是否当前行号在列表(17, 18, 19, &#8230;, 30)。如果是，返回列表中的一个元素，而有一个元素的列表表示为真，所以行就会被打印。否则的话返回一个空列表，代表为false，就不会得到打印。</p>
+<h2><a id="user-content-103打印最长的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#103%E6%89%93%E5%8D%B0%E6%9C%80%E9%95%BF%E7%9A%84%E8%A1%8C"></a>103.打印最长的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '$l = $_ if length($_) &gt; length($l); END { print $l }'</pre><p>本行代码保存目前看得见最长的行到$l变量中。一旦当前行$_超过了迄今最长的行，就替换它。最后退出之前，在END块执行打印出最长的行$l。</p>
+<h2><a id="user-content-104打印最短的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#104%E6%89%93%E5%8D%B0%E6%9C%80%E7%9F%AD%E7%9A%84%E8%A1%8C"></a>104.打印最短的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne '$s = $_ if $. == 1; $s = $_ if length($_) &lt; length($s); END { print $s }'</pre><p>本行代码和上一例正好相反。但是我们要找到最短的并且由于$s在首行没有定义，我们必须显式的指定其为第一行，不然后面的小于判断都会失败，得不到想要的结果。</p>
+<h2><a id="user-content-105打印包含数字的所有行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#105%E6%89%93%E5%8D%B0%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E7%9A%84%E6%89%80%E6%9C%89%E8%A1%8C"></a>105.打印包含数字的所有行</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if /d/'</pre><p>本行代码使用正则表达式d,这表示匹配一个数字，检查是否包含，如果包含，检测成功，打印出行。</p>
+<h2><a id="user-content-106发现仅仅包含一个数字的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#106%E5%8F%91%E7%8E%B0%E4%BB%85%E4%BB%85%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%97%E7%9A%84%E8%A1%8C"></a>106.发现仅仅包含一个数字的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if /^d+$/'</pre><p>本行代码和一例相似，不过匹配的不是一行中有个数字，而是锚定行的开始和结束。正则表达式^d+$表示匹配在行首和行尾之间的一个或者多个数字。</p>
+<h2><a id="user-content-107打印仅仅包含字母的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#107%E6%89%93%E5%8D%B0%E4%BB%85%E4%BB%85%E5%8C%85%E5%90%AB%E5%AD%97%E6%AF%8D%E7%9A%84%E8%A1%8C"></a>107.打印仅仅包含字母的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if /^[[:alpha:]]+$/'</pre><p>本行代码检测是否行中只含有字母，如果是打印出行。此处[[:alpha:]]表示匹配所有的字母。你也可以写为[a-zA-Z]。</p>
+<h2><a id="user-content-108隔行打印" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#108%E9%9A%94%E8%A1%8C%E6%89%93%E5%8D%B0"></a>108.隔行打印。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if $. % 2'</pre><p>本行代码打印第一，三，五，七等等行。因为$. % 2当当然行号为奇数时候返回真，当前行为偶数时候返回false。</p>
+<h2><a id="user-content-109从第二行开始隔行打印" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#109%E4%BB%8E%E7%AC%AC%E4%BA%8C%E8%A1%8C%E5%BC%80%E5%A7%8B%E9%9A%94%E8%A1%8C%E6%89%93%E5%8D%B0"></a>109.从第二行开始隔行打印</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if $. % 2 == 0'</pre><p>本行代码和上一例非常相似，但是打印的不是，1，3，5，7，而是2，4，6，8等偶数行。这由于当行号为偶数时候$. % 2 == 0为真。</p>
+<h2><a id="user-content-110打印所有重复的行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#110%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%89%E9%87%8D%E5%A4%8D%E7%9A%84%E8%A1%8C"></a>110.打印所有重复的行。</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print if ++$a{$_} == 2'</pre><p>本行代码用哈希%a保存了目前为止的所有行，并且计算这些行出现的次数。如果某行出现2次，他就会被打印出，因为此时++$a{$_} == 2为真。如果此行计数多余两次，他不会做任何操作，因为此行已经超过2行，打印检测为false。</p>
+<h2><a id="user-content-111不重复的打印所有行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%9C%89%E9%80%89%E6%8B%A9%E7%9A%84%E6%89%93%E5%8D%B0%E6%88%96%E8%80%85%E5%88%A0%E9%99%A4%E8%A1%8C.md#111%E4%B8%8D%E9%87%8D%E5%A4%8D%E7%9A%84%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%89%E8%A1%8C"></a>111.不重复的打印所有行</h2>
+<p></p><pre class="crayon-plain-tag">perl -ne 'print unless $a{$_}++'</pre><p>此处，只有行的哈希值$a{$_}为0时候才会打印。每一次Perl读进一行，都会将这个值增加1，所以这使得只有之前都没有出现过的行被打印。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=651</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>perl one-liners explained 中文版 （五）文本转化和替换</title>
+		<link>http://ijz.me/?p=645</link>
+					<comments>http://ijz.me/?p=645#comments</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 17 Aug 2014 10:29:12 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=645</guid>
+
+					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第五部分——文本转化和替换</p>
+<p>原文地址：http://www.catonmat.net/download/perl1line.txt</p>
+<p>原书blog地址：http://www.catonmat.net/blog/perl-book/</p>
+<p>本翻译项目地址：<a href="https://github.com/bollwarm/perlonelinecn">https://github.com/bollwarm/perlonelinecn</a></p>
+<p><span id="more-645"></span></p>
+<h1>文本转化和替换</h1>
+<h2><a id="user-content-63rot13化字串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#63rot13%E5%8C%96%E5%AD%97%E4%B8%B2"></a>63.ROT13化字串</h2>
+<p></p><pre class="crayon-plain-tag">'y/A-Za-z/N-ZA-Mn-za-m/'</pre><p>本行代码使用y操作符（或者页脚tr操作符）做ROT13转化。y和tr操作做会对搜索列表的字符以替换列表对应位置的字符逐字替换。</p>
+<p>本行代码A-Aa-z生成如下的字符列表：</p>
+<p>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</p>
+<p>而N-ZA-Mn-za-m 生成的列表为：</p>
+<p>NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm</p>
+<p>如果你观察的比较仔细的话，就可以看出来第二行列表实际上和第一个列表偏移了13个字符。于是用y操作符把第一个列表所有字符用第二列表替换，你正好就执行了ROT13操作。</p>
+<p>如果你要对整个文件做ROT13：</p><pre class="crayon-plain-tag">perl -lpe 'y/A-Za-z/N-ZA-Mn-za-m/' file</pre><p>-p参数会把文件的每行都放到$_变量中，y做ROT13操作，在用-p输出$_out.-l参数附加一个换行符。 注意：ROT13两次会得到同样的字符。例如，ROT14（ROT13（string））==string。</p>
+<h2><a id="user-content-64base64加密" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#64base64%E5%8A%A0%E5%AF%86"></a>64.Base64加密</h2>
+<p></p><pre class="crayon-plain-tag">perl -MMIME::Base64 -e 'print encode_base64(&quot;string&quot;)'</pre><p>本行代码使用MIME::Base64模块（Perl核心自带，无需额外安装）。这个模块的encode_base64函数接受字串为参数，对其做Base64加密。 如果对整个文件做加密，使用下面代码：</p><pre class="crayon-plain-tag">perl -MMIME::Base64 -0777 -ne 'print encode_base64($_)' file</pre><p>此处-0777参数和-n用在一起导致Perl加载整个文件到$_变量。接着对其中base64加密，就像上面的字串的例子一样的。 如果我们不加载整个文件，而是通过逐行加密的话结果会混乱。</p>
+<h2><a id="user-content-65base64解码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#65base64%E8%A7%A3%E7%A0%81"></a>65.base64解码</h2>
+<p></p><pre class="crayon-plain-tag">perl -MMIME::Base64 -le 'print decode_base64(&quot;base64string&quot;)'</pre><p>MIME::Base64模块也有解码函数decode_base64.decode_base64函数接收base64加密的字串，对其进行解码。</p>
+<p>对这个文件解码也可以很简单：</p><pre class="crayon-plain-tag">perl -MMIME::Base64 -ne 'print decode_base64($_)' file</pre><p>此处不需要加载整个文件到$_，因为base64加密的文件每一行都恰好为76个字符，很好解码。</p>
+<h2><a id="user-content-66对字串url转码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#66%E5%AF%B9%E5%AD%97%E4%B8%B2url%E8%BD%AC%E7%A0%81"></a>66.对字串URL转码</h2>
+<p></p><pre class="crayon-plain-tag">perl -MURI::Escape -le 'print uri_escape($string)'</pre><p>你需要安装另外URI::Escape模块，这个模块输出两个函数uri_escape 和uri_unescape，第一做url转码，另一个做URL解码。</p>
+<h2><a id="user-content-67对字串url解码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#67%E5%AF%B9%E5%AD%97%E4%B8%B2url%E8%A7%A3%E7%A0%81"></a>67.对字串URL解码</h2>
+<p></p><pre class="crayon-plain-tag">perl -MURI::Escape -le 'print uri_unescape($string)'</pre><p>本行代码使用uri_unescape函数做URL解码。</p>
+<h2><a id="user-content-68对字串做html转码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#68%E5%AF%B9%E5%AD%97%E4%B8%B2%E5%81%9Ahtml%E8%BD%AC%E7%A0%81"></a>68.对字串做HTML转码</h2>
+<p></p><pre class="crayon-plain-tag">perl -MHTML::Entities -le 'print encode_entities($string)'</pre><p>本行代码使用HTML::Entities 模块的encode_entities函数。这个函数用来转码HTML实体。例如，把 &lt; 和 &gt;转化为&lt;和&gt;</p>
+<h2><a id="user-content-69对字串做html解码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#69%E5%AF%B9%E5%AD%97%E4%B8%B2%E5%81%9Ahtml%E8%A7%A3%E7%A0%81"></a>69.对字串做HTML解码</h2>
+<p></p><pre class="crayon-plain-tag">perl -MHTML::Entities -le 'print decode_entities($string)'</pre><p>本行代码使用HTML::Entities 模块的deencode_entities函数。</p>
+<h2><a id="user-content-70所有文本大写" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#70%E6%89%80%E6%9C%89%E6%96%87%E6%9C%AC%E5%A4%A7%E5%86%99"></a>70.所有文本大写</h2>
+<p></p><pre class="crayon-plain-tag">perl -nle 'print uc'</pre><p>本行代码使用uc函数，它默认对$_变量进行操作，并且返回其大写形式。</p>
+<p>另外一种方法是用-p命令行选项使其自动打印$_变量并且对其就地处理：</p><pre class="crayon-plain-tag">perl -ple '$_=uc'</pre><p>也可通过使用U转义序列的方法达到同样的功能：</p><pre class="crayon-plain-tag">perl -nle 'print &quot;U$_&quot;'</pre><p>这会让其后所有的字符（或者直到出现E为止）都大写。</p>
+<h2><a id="user-content-71所有文本小写" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#71%E6%89%80%E6%9C%89%E6%96%87%E6%9C%AC%E5%B0%8F%E5%86%99"></a>71.所有文本小写</h2>
+<p></p><pre class="crayon-plain-tag">perl -nle 'print lc'</pre><p>本行代码和前一例完全相似，不过此处使用的lc函数爸$_的内容转化为小写。 或者，使用转义序列L做字符改写：</p><pre class="crayon-plain-tag">perl -nle 'print &quot;L$_&quot;'</pre><p>此处L会让其后所有的字符（或者直到出现E为止）都小写。</p>
+<h2><a id="user-content-72对每行的首字母大写" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#72%E5%AF%B9%E6%AF%8F%E8%A1%8C%E7%9A%84%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99"></a>72.对每行的首字母大写</h2>
+<p></p><pre class="crayon-plain-tag">perl -nle 'print ucfirst lc'</pre><p>本行代码使用lc函数使输入的转化为小写，并利用ucfirst函数似的第一个字字符大写。</p>
+<p>也能用转义码文本转换的方法实现同样的功能：</p><pre class="crayon-plain-tag">perl -nle 'print &quot;uL$_&quot;'</pre><p>第一个L使整行都小写，u使得第一个字符大写。</p>
+<h2><a id="user-content-73大小写转化" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#73%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E5%8C%96"></a>73.大小写转化</h2>
+<p></p><pre class="crayon-plain-tag">perl -ple 'y/A-Za-z/a-zA-Z/'</pre><p>本行代码把大写字母A-Z转化为小写a-z，而把小写字母大写，从而实现了大小写转化。</p>
+<h2><a id="user-content-74每行进行驼峰大小写转化" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#74%E6%AF%8F%E8%A1%8C%E8%BF%9B%E8%A1%8C%E9%A9%BC%E5%B3%B0%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E5%8C%96"></a>74.每行进行驼峰大小写转化</h2>
+<p></p><pre class="crayon-plain-tag">perl -ple 's/(w+)/u$1/g'</pre><p>这是一个差劲的驼峰表示法行代码。它会把每个单词的首字母都大写。对诸如“fried’s car”会转化有误，会把它转化为“ Friend&#8217;S Car”。</p>
+<p>一个改进是：</p><pre class="crayon-plain-tag">s/(?&amp;lt;!['])(w+)/u1/g</pre><p>它会检查是否一个单词前的字符是不是单引号“’”。但是在某些更特殊的情况下它可能仍然会失败。</p>
+<h2><a id="user-content-75去除每行前面的空白空格tab等" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#75%E5%8E%BB%E9%99%A4%E6%AF%8F%E8%A1%8C%E5%89%8D%E9%9D%A2%E7%9A%84%E7%A9%BA%E7%99%BD%E7%A9%BA%E6%A0%BCtab%E7%AD%89"></a>75.去除每行前面的空白(空格，tab等)</h2>
+<p></p><pre class="crayon-plain-tag">perl -ple 's/^[ t]+//'</pre><p>本行代码删除了所有的每行前面的所有空格。他使用替换操作符s。对一个模式s/REGEX/REPLACE/会把匹配的REGEX用REPLACE字串代替。在本例中REGEX是^[ t]+,意思是在字符串的开始匹配一个或者更多个空格或者tab；REPLACE为空，意思是把匹配部分替换为空字串（删除）。</p>
+<p>正则类[ t]实际上可以用s+来替换，s+匹配任何的空格（包括tabs和空格）：</p><pre class="crayon-plain-tag">perl -ple 's/^s+//'</pre><p></p>
+<h2><a id="user-content-76删除每行的每行末的空白" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#76%E5%88%A0%E9%99%A4%E6%AF%8F%E8%A1%8C%E7%9A%84%E6%AF%8F%E8%A1%8C%E6%9C%AB%E7%9A%84%E7%A9%BA%E7%99%BD"></a>76.删除每行的每行末的空白</h2>
+<p></p><pre class="crayon-plain-tag">perl -ple 's/[ t]+$//'</pre><p>本行代码删除了每行末所有空白字符。</p>
+<h2><a id="user-content-77删除每行开始和结束的空白" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#77%E5%88%A0%E9%99%A4%E6%AF%8F%E8%A1%8C%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F%E7%9A%84%E7%A9%BA%E7%99%BD"></a>77.删除每行开始和结束的空白</h2>
+<p></p><pre class="crayon-plain-tag">perl -ple 's/^[ t]+|[ t]+$//g'</pre><p>本行代码结合了前面两例。注意到，它给操作符指定了全局的/g标记。这是必须的，由于我们期望删掉开始和结束的空白。如果我们不指定，他将只能删除开始的（假设存在的话），而不会删除最后的。</p>
+<h2><a id="user-content-77转化unix换行符为doswindows换行符" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#77%E8%BD%AC%E5%8C%96unix%E6%8D%A2%E8%A1%8C%E7%AC%A6%E4%B8%BAdoswindows%E6%8D%A2%E8%A1%8C%E7%AC%A6"></a>77.转化Unix换行符为DOS/Windows换行符</h2>
+<p></p><pre class="crayon-plain-tag">perl -pe 's|n|rn|'</pre><p>本行代码替换Unix换行符n LF为windows换行符rn CRLF。记住s操作符可以使用任何字符作为分隔符。本行代码用竖线作为分隔符，以增加代码的可读性。</p>
+<h2><a id="user-content-78转化doswindows换行符为unix换行符" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#78%E8%BD%AC%E5%8C%96doswindows%E6%8D%A2%E8%A1%8C%E7%AC%A6%E4%B8%BAunix%E6%8D%A2%E8%A1%8C%E7%AC%A6"></a>78.转化DOS/Windows换行符为UNIX换行符。</h2>
+<p></p><pre class="crayon-plain-tag">perl -pe 's|rn|n|'</pre><p>本行代码做了前一例的逆操作。操作window 换行发CRLF,并把它转化为换行符LF。</p>
+<h2><a id="user-content-79转化unix换行符为mac换行符" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#79%E8%BD%AC%E5%8C%96unix%E6%8D%A2%E8%A1%8C%E7%AC%A6%E4%B8%BAmac%E6%8D%A2%E8%A1%8C%E7%AC%A6"></a>79.转化Unix换行符为Mac换行符。</h2>
+<p></p><pre class="crayon-plain-tag">perl -pe 's|n|r|'</pre><p>苹果使用r CR作为换行符。本行代码转化Unix的LF为苹果的CR。</p>
+<h2><a id="user-content-80替换行中foo为bar查找替换" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#80%E6%9B%BF%E6%8D%A2%E8%A1%8C%E4%B8%ADfoo%E4%B8%BAbar%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2"></a>80.替换行中foo为bar（查找替换）</h2>
+<p></p><pre class="crayon-plain-tag">perl -pe 's/foo/bar/'</pre><p>本行代码使用s/REGEX/REPLACE/对每行中foo的替换为bar</p>
+<p>替换行中所有foo为bar，则需要增加/g标记：</p><pre class="crayon-plain-tag">perl -pe 's/foo/bar/g'</pre><p></p>
+<h2><a id="user-content-81替换匹配baz的行中的foo为bar" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#81%E6%9B%BF%E6%8D%A2%E5%8C%B9%E9%85%8Dbaz%E7%9A%84%E8%A1%8C%E4%B8%AD%E7%9A%84foo%E4%B8%BAbar"></a>81.替换匹配“baz”的行中的foo为bar</h2>
+<p></p><pre class="crayon-plain-tag">perl -pe '/baz/ &amp;amp;&amp;amp; s/foo/bar/'</pre><p>本行代码等价于：</p><pre class="crayon-plain-tag">while (defined($line = &amp;lt;&amp;gt;)) {
+if ($line =~ /baz/) {
+$line =~ s/foo/bar/
+}
+}</pre><p>他先检查每行是否匹配“baz”，如果匹配，则替换行中foo为bar。</p>
+<h2><a id="user-content-82逆序输出段落" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#82%E9%80%86%E5%BA%8F%E8%BE%93%E5%87%BA%E6%AE%B5%E8%90%BD"></a>82.逆序输出段落</h2>
+<p></p><pre class="crayon-plain-tag">perl -00 -e 'print reverse &amp;lt;&amp;gt;' file</pre><p>本行代码使用了-00参数，这在例7讨论过，用来开启大段落模式，意味着Perl将通过段落的方式读取文本，而不是默认的按行的方式。接着使用&lt;&gt;操作符使得Perl用指定的文件或者标准输入获得输入。本处我们指定file作为参数，所以Perl读取file的文本段落（由于-00）。当Perl读完文件，它将所有段落作为一个列表返回，并且调用reverse函数颠倒段列表的顺序。最后打印出反序的段落列表。</p>
+<h2><a id="user-content-83逆序输出所有行" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#83%E9%80%86%E5%BA%8F%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89%E8%A1%8C"></a>83.逆序输出所有行</h2>
+<p></p><pre class="crayon-plain-tag">perl -lne 'print scalar reverse $_'</pre><p>本行代码在标量上下文下reverse操作。在上一例中，对整个列表在在列表上下文中执行reverse，结果是对列表元素顺序进行反序。对标量变量，比如包含整行的$<em>你要实现同样的功能必须在标量上下文进行reverse操作。否则，它执行的将会对一个元素的列表rreverse，得到结果还会是他自己！作为操作后，打印出反序的行。你可以去掉代码中$</em>，执行结果一样的。因为reverse默认的变量就是$_。换句话说，行代码可以写为：</p><pre class="crayon-plain-tag">perl -lne 'print scalar reverse'</pre><p>或者你可以用-p替换-n，修改$_变量，使其值为倒序：</p><pre class="crayon-plain-tag">perl -lpe '$_ = reverse $_'</pre><p>也可以简写为：</p><pre class="crayon-plain-tag">perl -lpe '$_ = reverse'</pre><p>要说明的是在Perl的操作符如果没有指定参数的话，大多数情况下默认都是对$_操作。</p>
+<h2><a id="user-content-84以逆序方式打印列" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%8C%96%E5%92%8C%E6%9B%BF%E6%8D%A2.md#84%E4%BB%A5%E9%80%86%E5%BA%8F%E6%96%B9%E5%BC%8F%E6%89%93%E5%8D%B0%E5%88%97"></a>84.以逆序方式打印列</h2>
+<p></p><pre class="crayon-plain-tag">perl -alne 'print &quot;@{[reverse @F]}&quot;'</pre><p>本行代码对文件中的列逆序转化。-a命令行参数用空格为分隔符切割每一行为列并存在@F数组中。接着对其逆序并且打印。</p>
+<p>本行代码在以有过类似的例子，@{[&#8230;]}结果，为了解释其作用，我们假设在其中插入了双引号，给予下面的输入文件：</p>
+<p>one two three four five six seven eight</p>
+<p>其输出为：</p>
+<p>four three two one eight seven six five</p>
+<p>如果输入的行的各列直接不是空格而是其他的分隔符，则我们必须用-F命令行设置为特殊的字符，如果给输入文件为：</p>
+<p>one2&#xfe0f;&#x20e3;three:four five6&#xfe0f;&#x20e3;seven:eight</p>
+<p>这我们增加-F:参数，给行代码：</p><pre class="crayon-plain-tag">perl -F: -alne 'print &quot;@{[reverse @F]}&quot;'</pre><p>它的输出为：</p>
+<p>four three two one eight seven six five</p>
+<p>注意到，在输出的时候没有带:字符,为了使其带上，我们需要对本行修改，设置$”变量为“:”，如下：</p><pre class="crayon-plain-tag">perl -F: -alne '$&quot; = &quot;:&quot;; print &quot;@{[reverse @F]}&quot;'</pre><p>他会输出我们所期望的结果：</p>
+<p>four3&#xfe0f;&#x20e3;two:one eight7&#xfe0f;&#x20e3;six:five</p>
+<p>变量$”用于改变在双引号环境下对数组进行变量内插打印时元素间默认的分割字符（空格）。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=645</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>perl one-liners explained 中文版 （四）字符和数组生成</title>
+		<link>http://ijz.me/?p=640</link>
+					<comments>http://ijz.me/?p=640#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Sun, 10 Aug 2014 14:26:42 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=640</guid>
+
+					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第四部分——数组和字符生成</p>
+<p>原文地址：http://www.catonmat.net/download/perl1line.txt</p>
+<p>原书blog地址：http://www.catonmat.net/blog/perl-book/</p>
+<p>本翻译项目地址：<a href="https://github.com/bollwarm/perlonelinecn">https://github.com/bollwarm/perlonelinecn</a></p>
+<p><span id="more-640"></span></p>
+<h1>字符和数组生成</h1>
+<h2><a id="user-content-50生成和打印首字母表" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#50%E7%94%9F%E6%88%90%E5%92%8C%E6%89%93%E5%8D%B0%E9%A6%96%E5%AD%97%E6%AF%8D%E8%A1%A8"></a>50.生成和打印首字母表</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print a..z'</pre><p>本行代码打印所有从a到z的字母“abcdefghijklmnopqrstuvwxyz”。本例中应用了范围操作符“&#8230;”生成字母。当范围操作符用在字符列表上下文的时候，会从左边使用魔力自增算法向前递增一个字符，直到范围右边的字符。于是这行代码通过a..z的范围依次递增从a到z的整个字母表。 由于使用了裸字符 a和z，如果你开启strict模式，这行代码将会报错。从语法角度，更正确的版本是：</p><pre class="crayon-plain-tag">perl -le 'print (&quot;a&quot;..&quot;z&quot;)'</pre><p>记住访问操作符..生成是一个列表值。如果你愿意，你可以打印出他们，之间通过“$,”指定的分割符间隔开来，比如：</p><pre class="crayon-plain-tag">perl -le '$, = &quot;,&quot;; print (&quot;a&quot;..&quot;z&quot;)'</pre><p>从语法上讲，更好的方法是采用join方法来将列表的元素之间分割。</p><pre class="crayon-plain-tag">perl -le 'print join &quot;,&quot;, (&quot;a&quot;..&quot;z&quot;)'</pre><p>上面通过join函数吧a..z列表用逗号隔开并打印出了。</p>
+<h2><a id="user-content-51生成并打印从a到zz的所有字串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#51%E7%94%9F%E6%88%90%E5%B9%B6%E6%89%93%E5%8D%B0%E4%BB%8Ea%E5%88%B0zz%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%97%E4%B8%B2"></a>51.生成并打印从“a”到“zz”的所有字串。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print (&quot;a&quot;..&quot;zz&quot;)'</pre><p>本例我们又实用了范围操作符“..”。这次不是终止于“z”而是，更前进一个字符生成“aa”，接着继续往前生成“ab”，“ac”,…,达到 “az”。在这个点上往前到了“ba”，接着继续,直到达到“zz”。 同样地，你可以生成从“aa”到“zz”的左右字符：</p><pre class="crayon-plain-tag">perl -le 'print &quot;aa&quot;..&quot;zz&quot;'</pre><p></p>
+<h2><a id="user-content-52生成一个16进制查询表" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#52%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA16%E8%BF%9B%E5%88%B6%E6%9F%A5%E8%AF%A2%E8%A1%A8"></a>52.生成一个16进制查询表。</h2>
+<p></p><pre class="crayon-plain-tag">@hex = (0..9, &quot;a&quot;..&quot;f&quot;)</pre><p>此处，数组@hex会保存0, 1, 2, 3, 4, 5, 6, 7, 8, 9以及字母a,b,c,d,e,f等值。</p><pre class="crayon-plain-tag">perl -le '$num = 255; @hex = (0..9, &quot;a&quot;..&quot;f&quot;); while ($num) { $s = $hex[($num%16)&amp;amp;15].$s; $num = int $num/16 } print $s'</pre><p>很明显，转化一个数字为16进制的更简单的方法是用%x格式符的printf函数（或者sprintf函数）。（上例演示了使用我们用访问操作符生成的16进制查询表）。</p><pre class="crayon-plain-tag">perl -le '$hex = sprintf("%x", 255); print $hex'</pre><p></p>
+<h2><a id="user-content-53把16进制数字转换回10进制使用hex函数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#53%E6%8A%8A16%E8%BF%9B%E5%88%B6%E6%95%B0%E5%AD%97%E8%BD%AC%E6%8D%A2%E5%9B%9E10%E8%BF%9B%E5%88%B6%E4%BD%BF%E7%94%A8hex%E5%87%BD%E6%95%B0"></a>53.把16进制数字转换回10进制，使用hex函数：</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '$num = &quot;ff&quot;; print hex $num'</pre><p>hex函数输入一个10进制字符（可以是“0x”开头或者不是），并把它转化为10进制。</p>
+<h2><a id="user-content-53生成一个8字符的随机密码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#53%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA8%E5%AD%97%E7%AC%A6%E7%9A%84%E9%9A%8F%E6%9C%BA%E5%AF%86%E7%A0%81"></a>53.生成一个8字符的随机密码。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print map { (&quot;a&quot;..&quot;z&quot;)[rand 26] } 1..8'</pre><p>此处，map函数执行(&#8220;a&#8221;..&#8221;z&#8221;)[rand 26]代码8次（由于要在虚拟的范围1..8循环）。每一次循环代码会从字母表中随机选出一个字母。当map执行完循环，返回生成的字符列表，并连接在一起打印出来。 如果和你还希望在密码中包含数字，可以把0..9增加到字符列表，并且选择范围从26变为36，因为有36个不同的字符以供选择：</p><pre class="crayon-plain-tag">perl -le 'print map { (&quot;a&quot;..&quot;z&quot;, 0..9)[rand 36] } 1..8'</pre><p>如果你需要更长的密码，可以把1..8变为1..20生成一个20个字符串的长密码。</p>
+<h2><a id="user-content-54生成一个特定长度的字串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#54%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E7%89%B9%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%AD%97%E4%B8%B2"></a>54.生成一个特定长度的字串。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print &quot;a&quot;x50'</pre><p>操作符“X”是重复操作符。本行代码生成一个50个字符“a”组成的自串，并打印出来。 如果重复操作符用于列表上下文，他将生成由所给元素重复次数的一个列表（而不是标量）。</p><pre class="crayon-plain-tag">perl -le '@list = (1,2)x20; print &quot;@list&quot;'</pre><p>本行代码生成一个20次重复（1，2）的列表（看起来像（1，2，1，2,…））。</p>
+<h2><a id="user-content-55有一个字符串生成一个数组" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#55%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84"></a>55.有一个字符串生成一个数组。</h2>
+<p></p><pre class="crayon-plain-tag">@months = split ' ', &quot;Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec&quot;</pre><p>此处@months会保存包含来自于字符串中的月份名称的值。由于每一个月份名又空格隔开，split函数分割开他们并保存在@months数组中。于是$months[0]包含”Jan”, $months[1]包含”Feb”，…， $months[11]包含”Dec”。</p>
+<p>另外一种方法是使用qw//操作符：</p><pre class="crayon-plain-tag">@months = qw/Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec/</pre><p>qw//操作符接收一个空格分割的字符，生成一个数组，每一个单词为数组中的一个元素。</p>
+<h2><a id="user-content-56由一个数组生成一个字符串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#56%E7%94%B1%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2"></a>56.由一个数组生成一个字符串。</h2>
+<p>@stuff = (&#8220;hello&#8221;, 0..9, &#8220;world&#8221;); $string = join &#8216;-&#8216;, @stuff</p>
+<p>此处，数组@stuff的所有值缩为一个字符串$string，之间用连字符分隔开。把一个数组转化为字符串使用join函数，join函数接收一个分隔符和一个列表，把列表中的所有元素连接为一个字符串，之间用指定分隔符隔开。</p>
+<h2><a id="user-content-57找出字串中字符的区位码" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#57%E6%89%BE%E5%87%BA%E5%AD%97%E4%B8%B2%E4%B8%AD%E5%AD%97%E7%AC%A6%E7%9A%84%E5%8C%BA%E4%BD%8D%E7%A0%81"></a>57.找出字串中字符的区位码</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print join &quot;, &quot;, map { ord } split //, &quot;hello world&quot;'</pre><p>本行代码引入字符串“hello world”，利用split//，”hello world”把其分割为字符列表，接着用ord函数map每一个字符为8为区位码数字（比如ASCII或者 EBCDIC）。最后所有数字join连接在一起，用逗号隔开，并打印出来。 另一种实现同样功能的方法是使用unpack函数，指定C*作为unpack模板（C意思是无符号字符，*指所有字符）：</p><pre class="crayon-plain-tag">perl -le 'print join &quot;, &quot;, unpack(&quot;C*&quot;, &quot;hello world&quot;)'</pre><p></p>
+<h2><a id="user-content-58转换ascii码值列表为一个字串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#58%E8%BD%AC%E6%8D%A2ascii%E7%A0%81%E5%80%BC%E5%88%97%E8%A1%A8%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E4%B8%B2"></a>58.转换ASCII码值列表为一个字串。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '@ascii = (99, 111, 100, 105, 110, 103); print pack(&quot;C*&quot;, @ascii)'</pre><p>和上例我们看克unpack一个字串为值列表一样，我们也可以反过来他们pack回一个字串。 另一种方法，是利用chr函数，以码值为参数，返回相对应的字符：</p><pre class="crayon-plain-tag">perl -le '@ascii = (99, 111, 100, 105, 110, 103); print map { chr } @ascii'</pre><p>和上面$55例相似，利用chr函数的map每一个@ascii的值为字符。</p>
+<h2><a id="user-content-59生成1到100所有奇数的数组" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#59%E7%94%9F%E6%88%901%E5%88%B0100%E6%89%80%E6%9C%89%E5%A5%87%E6%95%B0%E7%9A%84%E6%95%B0%E7%BB%84"></a>59.生成1到100所有奇数的数组。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '@odd = grep {$_ % 2 == 1} 1..100; print &quot;@odd&quot;'</pre><p>本行代码生成从1到99的奇数组成的数组（1，3，5，7，9,…,99）。我们使用grep筛选列表1到100的各个元素，筛选代码用的是$_ % 2 ==。只有筛选代码评判为true的元素会返回。在本例中测试是否除2余数为1，如果是，这个数字为奇数，他会加到@odd数组中。 另外一种方法基于奇数具有低字节位为1的事实，并以此为测试：</p><pre class="crayon-plain-tag">perl -le '@odd = grep { $_ &amp;amp; 1 } 1..100; print &quot;@odd&quot;'</pre><p>表达式$_ &amp; 1 分离出低字节位出来，并且grep筛选低字节位为1（奇数）。 关于字节见explanation of bit-hacks。</p>
+<h2><a id="user-content-60生成1到100所有偶数的数组" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#60%E7%94%9F%E6%88%901%E5%88%B0100%E6%89%80%E6%9C%89%E5%81%B6%E6%95%B0%E7%9A%84%E6%95%B0%E7%BB%84"></a>60.生成1到100所有偶数的数组</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '@even = grep {$_ % 2 == 0} 1..100; print &quot;@even&quot;'</pre><p>本行代码和上例基本上一样，除了grep test条件是偶数（能被2整除）。</p>
+<h2><a id="user-content-61计算字串的长度" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#61%E8%AE%A1%E7%AE%97%E5%AD%97%E4%B8%B2%E7%9A%84%E9%95%BF%E5%BA%A6"></a>61.计算字串的长度。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print length &quot;one-liners are great&quot;'</pre><p>作为结束，length子程序返回字符串的长度。</p>
+<h2><a id="user-content-62计算数组元素个数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90.md#62%E8%AE%A1%E7%AE%97%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E4%B8%AA%E6%95%B0"></a>62.计算数组元素个数</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '@array = (&quot;a&quot;..&quot;z&quot;); print scalar @array'</pre><p>在标量上下文评估一个数组（或者哈希）的值会返回数组元素的数量。 另外一种计算方法是数组最后一个元素下表值加1：</p><pre class="crayon-plain-tag">perl -le '@array = (&quot;a&quot;..&quot;z&quot;); print $#array + 1'</pre><p>此处，$#array返回数组@array的最后一个元素的下标值，由于下标由0开始所以最后一个元素的下标比数组个数小1，所以通过加1就可以获数组的元素个数。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=640</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>perl one-liners explained 中文版 （三）数值计算</title>
+		<link>http://ijz.me/?p=638</link>
+					<comments>http://ijz.me/?p=638#respond</comments>
+		
+		<dc:creator><![CDATA[桔子]]></dc:creator>
+		<pubDate>Wed, 06 Aug 2014 11:58:03 +0000</pubDate>
+				<category><![CDATA[perl]]></category>
+		<category><![CDATA[perl One-liners]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=638</guid>
+
+					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第三部分——数值计算</p>
+<p>原文地址：http://www.catonmat.net/download/perl1line.txt</p>
+<p>原书blog地址：http://www.catonmat.net/blog/perl-book/</p>
+<p>本翻译项目地址：<a href="https://github.com/bollwarm/perlonelinecn">https://github.com/bollwarm/perlonelinecn</a></p>
+<p><span id="more-638"></span></p>
+<h1>数值计算</h1>
+<h2><a id="user-content-21检查一个数字是否是质数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#21%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%97%E6%98%AF%E5%90%A6%E6%98%AF%E8%B4%A8%E6%95%B0"></a>21.检查一个数字是否是质数</h2>
+<p></p><pre class="crayon-plain-tag">perl -lne '(1x$_) !~ /^1?$|^(11+?)1+$/ &amp;&amp; print "$_ is prime"'</pre><p>这行代码巧妙使用一个正则表达式判断给予的数字是不是质数。不要想得太复杂了，我引用这个例子主要为了说明其他的技巧性。首先，这个数字通过“1x$_”被转变为他一元表达式。例如,5被转化了“1&#215;5”，也就是“11111”。接着，对这个一元表达式进行用独特的正则表达式进行匹配，如果不匹配这个数字是个质数，否则他就是是个合数。</p>
+<p>这个正则表达式由两部分组成：“^1?$”和“^(11+?)1+$”。</p>
+<p>第一个部分匹配“1”和空字符串。很明显，空字串和1不是质数，因此，这个表达式匹配了则表明这个数字不是一个质数。</p>
+<p>第二部分检测是否两次或者更多次重复的1的组成了这个数字，正则匹配了，意味着数字由这样的多个1的重复组成的，否则的话，它是一个质数。</p>
+<p>下面我们以5和6为例子，说明第二部分这个正则。</p>
+<p>5的一元的表达式为“11111”。“(11+?)”首先会匹配两个1 “11”。后面引用“1”变成“11”,于是整个正则表达式变成了“^11(11)+$”。这个不会匹配11111，于是匹配失败。由于正则部分使用了“+?”，它会回溯，接着匹配三个1“111”。1于是变成了“111”这个正则表达式变成了“^111(111)+$”。这个也不会匹配。于是又重复用“1111”和“11111”匹配，当然也不会匹配。直到所有模式都尝试一遍都失败，因此这个数字是个质数。</p>
+<p>数字6的一元表达式为“111111”。“(11+?)”首先匹配两个1 “11”，整个正则表达式为“^11(11)+$”。这个会匹配“111111”，所以数字不是一个质数。</p>
+<p>“-lne”在第一部分和第二部分已经解释过，不再赘述。</p>
+<h2><a id="user-content-22打印一行中所有的域的和" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#22%E6%89%93%E5%8D%B0%E4%B8%80%E8%A1%8C%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84%E5%9F%9F%E7%9A%84%E5%92%8C"></a>22.打印一行中所有的域的和。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=sum -alne 'print sum @F'</pre><p>这行代码使用了一个域自动切割的命令行选项“-a”，并且通过“-MList::Util=sum”引入了“List::Util”模块的“sum”求和函数。List::Util”模块是Perl核心模块，不需要担心额外安装的问题。</p>
+<p>作为一个自动分割的结果，分割的域保存在“@F”数组中，“sum”函数只不过对其求和而已。-Mmodule=arg选项引入了一个模块，相当于语句use module qw(arg),这行代码相当于： use List::Util qw(sum);while (&lt;&gt;) { @F = split(&#8216; &#8216;); print sum @F, &#8220;n&#8221;;}</p>
+<h2><a id="user-content-23打印所有行所有域的值" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#23%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%89%E8%A1%8C%E6%89%80%E6%9C%89%E5%9F%9F%E7%9A%84%E5%80%BC"></a>23.打印所有行所有域的值</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=sum -alne 'push @S,@F; END { print sum @S }'</pre><p>这行代码通过push操作把每行分割的@F数组保存到@S数组中去，当所有行都输入后，perl退出前END{}块被执行，调用sum函数对@S的所有成员求和。这个和就是所有行所有域的和。</p>
+<p>这个方案不是最好选择。它生成了一个额外的数组@S,最好的方式是是下面的：</p><pre class="crayon-plain-tag">perl -MList::Util=sum -alne '$s += sum @F; END { print $s }'</pre><p></p>
+<h2><a id="user-content-24以随机顺序显示每行的各个域" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#24%E4%BB%A5%E9%9A%8F%E6%9C%BA%E9%A1%BA%E5%BA%8F%E6%98%BE%E7%A4%BA%E6%AF%8F%E8%A1%8C%E7%9A%84%E5%90%84%E4%B8%AA%E5%9F%9F"></a>24.以随机顺序显示每行的各个域。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=shuffle -alne 'print &quot;@{[shuffle @F]}&quot;'</pre><p>本行和例22基本上相同，只不过本例使用shuffle函数将行域顺序随机打乱，并显示出来。</p>
+<p>“@{[shuffle @F]}” 结构创建了一个指向“shuffle @F”内容的数组引用，并且通过“@ {…}”将其解引用成其内容。这是一个执行插入到引用中代码的常用技巧。这方法于我们需要把@F顺序打乱，并以空格分割输出是必须的。</p>
+<p>另一种方法可以实现同样的功能，是通过join把@F的各个元素和空格连接起来，但是代码会更长一点：</p><pre class="crayon-plain-tag">perl -MList::Util=shuffle -alne 'print join &quot; &quot;, shuffle @F'</pre><p></p>
+<h2><a id="user-content-25找到每一行的最小的元素" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#25%E6%89%BE%E5%88%B0%E6%AF%8F%E4%B8%80%E8%A1%8C%E7%9A%84%E6%9C%80%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0"></a>25.找到每一行的最小的元素</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=min -alne 'print min @F'</pre><p>本行代码使用了“List::Util”模块的“min”函数，形式和前面几例都相似。每行通过“-a”选项自动分割，并用“min”函数求出最小的元素并打印出来。</p>
+<h2><a id="user-content-26找到所有行中最小的元素" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#26%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E8%A1%8C%E4%B8%AD%E6%9C%80%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0"></a>26.找到所有行中最小的元素。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=min -alne '@M = (@M, @F); END { print min @M }'</pre><p>这行代码是上一例子以及例23的整合。“@M=（@M,@F）”结构相当于“push @M,@F”,把@F的内容附加到数组@M中。</p>
+<p>本代码需要把所有数据都存进内存。如果你用它去处理10T大的文件，他肯定会挂掉。因此，因此更好一点的方法是只把最小等数存进内存，最后输出：</p><pre class="crayon-plain-tag">perl -MList::Util=min -alne '$min = min @F; $rmin = $min unless defined $rmin &amp;&amp; $min &gt; $rmin; END { print $rmin }'</pre><p>代码会找出每一个行最小的一个并存进 $min,接着检查他是不是比当前最小数$rmin还小。最后打印当前最小数，保证了在所有的输人中他是最小的一个值。</p>
+<h2><a id="user-content-27找出一行中最大的数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#27%E6%89%BE%E5%87%BA%E4%B8%80%E8%A1%8C%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E6%95%B0"></a>27.找出一行中最大的数</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=max -alne 'print max @F'</pre><p>和例25完全相同，只不过函数用最大函数“max”。</p>
+<h2><a id="user-content-28找出所有行中最小的一个" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#28%E6%89%BE%E5%87%BA%E6%89%80%E6%9C%89%E8%A1%8C%E4%B8%AD%E6%9C%80%E5%B0%8F%E7%9A%84%E4%B8%80%E4%B8%AA"></a>28.找出所有行中最小的一个</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::Util=max -alne '@M = (@M, @F); END { print max @M }'</pre><p>和例子26一样，也有另一种形式：</p><pre class="crayon-plain-tag">perl -MList::Util=max -alne '$max = max @F; $rmax = $max unless defined $rmax &amp;amp;&amp;amp; $max &amp;lt; $rmax; END { print $rmax }'</pre><p></p>
+<h2><a id="user-content-29对所有的域的值用其绝对值代替" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#29%E5%AF%B9%E6%89%80%E6%9C%89%E7%9A%84%E5%9F%9F%E7%9A%84%E5%80%BC%E7%94%A8%E5%85%B6%E7%BB%9D%E5%AF%B9%E5%80%BC%E4%BB%A3%E6%9B%BF"></a>29.对所有的域的值用其绝对值代替</h2>
+<p></p><pre class="crayon-plain-tag">perl -alne 'print &quot;@{[map { abs } @F]}&quot;'</pre><p>本行代码，先通过“-a”命令行参数自动分割行的各个域，接着调用绝对值函数“abs”，通过map对其进行整体操作。最后利用匿名数组方式将各个域连接。@{ &#8230; }解释见例24.</p>
+<h2><a id="user-content-30找到每行域个数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#30%E6%89%BE%E5%88%B0%E6%AF%8F%E8%A1%8C%E5%9F%9F%E4%B8%AA%E6%95%B0"></a>30.找到每行域个数</h2>
+<p></p><pre class="crayon-plain-tag">perl -alne 'print scalar @F'</pre><p>本行代码强制@F到标量上下文，这在perl中就是@F的元素个数。因此输出结果就是每行的域个数。</p>
+<h2><a id="user-content-31输出每行并在每行前面显示域数量" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#31%E8%BE%93%E5%87%BA%E6%AF%8F%E8%A1%8C%E5%B9%B6%E5%9C%A8%E6%AF%8F%E8%A1%8C%E5%89%8D%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%9F%9F%E6%95%B0%E9%87%8F"></a>31.输出每行，并在每行前面显示域数量。</h2>
+<p></p><pre class="crayon-plain-tag">perl -alne 'print scalar @F, &quot; $_&quot;'</pre><p>本例和例30基本上一样，除了把每行的内容“$_”也打印出来了。（提示，“-n”选项会导致进行输入循环，并把每行的内容存储在$_变量）。</p>
+<h2><a id="user-content-32计算所有行的域总数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#32%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E8%A1%8C%E7%9A%84%E5%9F%9F%E6%80%BB%E6%95%B0"></a>32.计算所有行的域总数</h2>
+<p></p><pre class="crayon-plain-tag">perl -alne '$t += @F; END { print $t}'</pre><p>在这我们仅仅通过把每行的域的数量累加，并用变量“$t”保存，最后输出。结果就是所有域的总数。</p>
+<h2><a id="user-content-33打印出匹配模式的域总数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#33%E6%89%93%E5%8D%B0%E5%87%BA%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%9F%9F%E6%80%BB%E6%95%B0"></a>33.打印出匹配模式的域总数。</h2>
+<p></p><pre class="crayon-plain-tag">perl -alne 'map { /regex/ &amp;amp;&amp;amp; $t++ } @F; END { print $t }'</pre><p>这行代码使用map函数对@F数组的各个元素进行操作。本例中是检查其是否匹配模式/regex/，如果是的话，给变量$t加1。在最后END模块中打印出$t的值，即为匹配的域的总数。</p>
+<p>还有一种比较好的方法是：</p><pre class="crayon-plain-tag">perl -alne '$t += /regex/ for @F; END { print $t }'</pre><p>每一个@F的元素用/regex/模式检验。如果匹配/regex/会返回值1（表示真），我们用+=操作符累加并赋值给$t.用这种方式使得匹配的数量会被保存在$t。 最好的方式是利用标量上下文的grep：</p><pre class="crayon-plain-tag">perl -alne '$t += grep /regex/, @F; END { print $t }'</pre><p>在标量上下文grep会返回匹配的数量，数量也用$t进行累加。</p>
+<h2><a id="user-content-34打印所有匹配模式的行总数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#34%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%89%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%A1%8C%E6%80%BB%E6%95%B0"></a>34.打印所有匹配模式的行总数</h2>
+<p></p><pre class="crayon-plain-tag">perl -lne '/regex/ &amp;amp;&amp;amp; $t++; END { print $t }'</pre><p>如果当前行输出匹配正则模式，/regex/为true。/regex/ &amp;&amp; $t++相当于if ($_ =~ /regex/) { $t++ }，如果模式匹配，$t值就会加1.最后END模块输出$t值，就是匹配模式的行的数量。</p>
+<h2><a id="user-content-35打印pi的值到n位小数点后" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#35%E6%89%93%E5%8D%B0pi%E7%9A%84%E5%80%BC%E5%88%B0n%E4%BD%8D%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E"></a>35.打印PI的值到n位小数点后。</h2>
+<p></p><pre class="crayon-plain-tag">perl -Mbignum=bpi -le 'print bpi(21)'</pre><p>bignum库的bpi函数可以计算输出PI常量到所需足够精确地值。本例打印PI到小数点后20位。 bignum库也可以直接输出PI常量，这个数值保留39位的精确度：</p><pre class="crayon-plain-tag">perl -Mbignum=PI -le 'print PI'</pre><p></p>
+<h2><a id="user-content-36打印e的值到n为小数点后" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#36%E6%89%93%E5%8D%B0e%E7%9A%84%E5%80%BC%E5%88%B0n%E4%B8%BA%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E"></a>36.打印E的值到n为小数点后。</h2>
+<p></p><pre class="crayon-plain-tag">perl -Mbignum=bexp -le 'print bexp(1,21)'</pre><p>Bignum库也可以利用bexp函数，来计算和输出e及其n方幂的精确值，他的两个参数为幂值n以及精确位。本里打印了e的值（1一次方）到20位小数点后。</p>
+<h2><a id="user-content-37打印e的平方到31位精确值" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#37%E6%89%93%E5%8D%B0e%E7%9A%84%E5%B9%B3%E6%96%B9%E5%88%B031%E4%BD%8D%E7%B2%BE%E7%A1%AE%E5%80%BC"></a>37.打印e的平方到31位精确值：</h2>
+<p></p><pre class="crayon-plain-tag">perl -Mbignum=bexp -le 'print bexp(2,31)'</pre><p>和PI一样，binum也支持输出常量e，值也保持39位的精确度。</p><pre class="crayon-plain-tag">perl -Mbignum=e -le 'print e'</pre><p></p>
+<h2><a id="user-content-38打印unix-时间值自从1970年一月一日-000000-utc后累计秒的值" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#38%E6%89%93%E5%8D%B0unix-%E6%97%B6%E9%97%B4%E5%80%BC%E8%87%AA%E4%BB%8E1970%E5%B9%B4%E4%B8%80%E6%9C%88%E4%B8%80%E6%97%A5-000000-utc%E5%90%8E%E7%B4%AF%E8%AE%A1%E7%A7%92%E7%9A%84%E5%80%BC"></a>38.打印Unix 时间值（自从1970年一月一日, 00:00:00 UTC后累计秒的值）</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print time'</pre><p>内建的函数“time”返回公元以来的秒数。</p>
+<h2><a id="user-content-39打印gmt格林威治时间和本机时间" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#39%E6%89%93%E5%8D%B0gmt%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%97%B6%E9%97%B4%E5%92%8C%E6%9C%AC%E6%9C%BA%E6%97%B6%E9%97%B4"></a>39.打印GMT（格林威治时间）和本机时间。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le 'print scalar gmtime'</pre><p>“gmtime”函数是Perl内建的函数。如果使用标量上下文，他会打印格林威治时区（0时区）标准时间。</p><pre class="crayon-plain-tag">perl -le 'print scalar localtime'</pre><p>“localtime”内建函数，表现和“gmtime”大致一样，不过他显示的计算机本地的时间。 “gmtime”和“localtime”均返回9元素的列表（tm结构体），包含下述元素：</p><pre class="crayon-plain-tag">($second,[0]$minute,[1]$hour,[2]$month_day,[3]$month,[4]$year,[5]$week_day,[6]$year_day,
+[7]$is_daylight_saving[8])</pre><p>根据实际的需要信息，你可以对此列表做切片，或者打印单个元素。例如，为了打印H:M:S，切割出localtime的2，1和0元素：</p><pre class="crayon-plain-tag">perl -le 'print join &quot;:&quot;, (localtime)[2,1,0]'</pre><p></p>
+<h2><a id="user-content-40-打印昨天的日期" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#40-%E6%89%93%E5%8D%B0%E6%98%A8%E5%A4%A9%E7%9A%84%E6%97%A5%E6%9C%9F"></a>40. 打印昨天的日期</h2>
+<p></p><pre class="crayon-plain-tag">perl -MPOSIX -le '@now = localtime; $now[3] -= 1; print scalar localtime mktime @now'</pre><p>上例说了localtime返回一个9元素的各种时间项。其中第4项是当前日期数。如果我们对其减去1就得到昨天。“mktime”函数利用修改过的9项目列表构建一个Unix时间戳。最后“scalar localtime”打印了这个新的日期，就是昨天。</p>
+<p>因为使用到了mktime函数，POSIX包是必须的，他应该是用于规范化负值。</p>
+<h2><a id="user-content-41打印14个月9天7秒前的日期" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#41%E6%89%93%E5%8D%B014%E4%B8%AA%E6%9C%889%E5%A4%A97%E7%A7%92%E5%89%8D%E7%9A%84%E6%97%A5%E6%9C%9F"></a>41.打印14个月9天7秒前的日期</h2>
+<p></p><pre class="crayon-plain-tag">perl -MPOSIX -le '@now = localtime; $now[0] -= 7; $now[4] -= 14; $now[7] -= 9; 
+print scalar localtime mktime @now'</pre><p>本行代码修改了@now列表的第1个，第5个以及第8个元素。第1个是秒数，第5个是月，第8个是日（见上面时间9元素表）. 接着利用mktime生成把它转化成了Unix时间戳，再利用标量上下文的localtime打印日期：14个月9天7秒钟前。</p>
+<h2><a id="user-content-42计算阶乘" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#42%E8%AE%A1%E7%AE%97%E9%98%B6%E4%B9%98"></a>42.计算阶乘。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MMath::BigInt -le 'print Math::BigInt-&amp;gt;new(5)-&amp;gt;bfac()'</pre><p>本行代码使用Math::BigInt模块的bfac（）函数，这个模块内置与Perl核心（不必另行安装）。</p>
+<p>Math::BigInt-&gt;new(5)结构创建一个新的Math::BigInt对象，构造参数为5。接着用bfac（）方法调用新创建的对象计算5的阶乘。如果计算其他数的阶乘，只需要在创建对象时候，更换构造参数的值为所希望的值即可。</p>
+<p>另一种计算阶乘的方法是直接累乘从1到n的值：</p><pre class="crayon-plain-tag">perl -le '$f = 1; $f *= $_ for 1..5; print $f'</pre><p>我们给$f初始化赋值为1.接着做一个从1到5的循环，对$f进行各个值的累乘。结果是1<em>2</em>3<em>4</em>5,这就是5的阶乘。</p>
+<h2><a id="user-content-43计算最大公约数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#43%E8%AE%A1%E7%AE%97%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0"></a>43.计算最大公约数。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MMath::BigInt=bgcd -le 'print bgcd(@list_of_numbers)'</pre><p>Math::BigInt还内带有其他好多个非常有用的数学函数。这其中之一是bgcd，用来计算一列数字的最大公约数。</p><pre class="crayon-plain-tag">perl -MMath::BigInt=bgcd -le 'print bgcd(20,60,30)'</pre><p>当然，你也可以使用欧几里德算法（即辗转相除法）。给予两个数字$n和$m,这行代码找出两者的gcd。结果保存在$m中。</p><pre class="crayon-plain-tag">perl -le '$n = 20; $m = 35; ($m,$n) = ($n,$m%$n) while $n; print $m'</pre><p></p>
+<h2><a id="user-content-44计算最小公倍数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#44%E8%AE%A1%E7%AE%97%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0"></a>44.计算最小公倍数。</h2>
+<p>另外一个函数是lcm，计算最小公倍数，一下行代码计算（35，20，8）的最小公倍数。</p><pre class="crayon-plain-tag">perl -MMath::BigInt=blcm -le 'print blcm(35,20,8)'</pre><p>如果你了解一些数字定理，你应该能知道gcd和lcm之间是有联系的。给定两个数字$n和$m,他们的lcm等于$n*$m/gcd($n,$m),因此，也就是另一种计算最小公倍数的行代码：</p><pre class="crayon-plain-tag">perl -le '$a = $n = 20; $b = $m = 35; ($m,$n) = ($n,$m%$n) while $n; print $a*$b/$m'</pre><p></p>
+<h2><a id="user-content-45生成5到15之间包括15的10个随机数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#45%E7%94%9F%E6%88%905%E5%88%B015%E4%B9%8B%E9%97%B4%E5%8C%85%E6%8B%AC15%E7%9A%8410%E4%B8%AA%E9%9A%8F%E6%9C%BA%E6%95%B0"></a>45.生成5到15之间（包括15）的10个随机数</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '$n=10; $min=5; $max=15; $, = " ";print map { int(rand($max-$min))+$min } 1..$n'</pre><p>你能通过改变$n,$min,$max调整此行代码。变量$n表示要生成多少个随机数，[$min,$max)表示生成数的访问。</p>
+<p>变量$,设为空格，用来格式化输出的域间隔，默认没有设置。所以如果我们不设置它为空格，打印的数字将会连在一起。</p>
+<h2><a id="user-content-46找出列表的所有排列方式并打印出来" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#46%E6%89%BE%E5%87%BA%E5%88%97%E8%A1%A8%E7%9A%84%E6%89%80%E6%9C%89%E6%8E%92%E5%88%97%E6%96%B9%E5%BC%8F%E5%B9%B6%E6%89%93%E5%8D%B0%E5%87%BA%E6%9D%A5"></a>46.找出列表的所有排列方式并打印出来。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MAlgorithm::Permute -le '$l = [1,2,3,4,5]; $p = Algorithm::Permute-&gt;new($l);
+print @r while @r = $p-&gt;next'</pre><p>这行代码使用面向对象的接口Algorithm::Permute模块来找出排列（所有重新组合元素的方法）。</p>
+<p>Algorithm::Permute的构造方法接受一个数组引用参数来排列。本例中元素为1,2,3,4,5。</p>
+<p>对象方法的方法next返回下一个排列。循环调用这个方法可以获得所有可能的排列。</p>
+<p>我们可以注意到很快就能输出大量的列表。对一个n个元素的列表来说有n!种排列。</p>
+<p>另一种方法是使用permute子函数。</p><pre class="crayon-plain-tag">perl -MAlgorithm::Permute -le '@l = (1,2,3,4,5);Algorithm::Permute::permute { print &quot;@l&quot; } @l'</pre><p></p>
+<h2><a id="user-content-47生成幂集" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#47%E7%94%9F%E6%88%90%E5%B9%82%E9%9B%86"></a>47.生成幂集。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MList::PowerSet=powerset -le '@l = (1,2,3,4,5); for (@{powerset(@l)}) { print &quot;@$_&quot; }'</pre><p>本例，我使用了CPAN的List::PowerSet模块。我输出powerset函数，本函数以一列表做为参数，返回一个引用，该应用为指向子集列表的引用的列表。 在for循环调用了powerset函数，传递给它@l的列表元素。接着，解引用返回powerset的值，这个值是一个指向子集列表的引用。最后，解引用每一个子集@$_并打印它。</p>
+<p>对一个n元素的集合，他的幂集有2n个子集。</p>
+<h2><a id="user-content-48转换ip地址为无符号整数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#48%E8%BD%AC%E6%8D%A2ip%E5%9C%B0%E5%9D%80%E4%B8%BA%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0"></a>48.转换IP地址为无符号整数。</h2>
+<p></p><pre class="crayon-plain-tag">perl -le '$i=3; $u += ($_&amp;lt;&amp;lt;8*$i--) for &quot;127.0.0.1&quot; =~ /(d+)/g; print $u'</pre><p>本行代码转换127.0.0.1的IP地址为无符号整数（他恰巧是2130706433）。</p>
+<p>首先对IP地址做了个（d+）全局匹配。做一个for循环做全局匹配的迭代，使所有数字得到匹配，匹配了IP地址的四个部分。 接着把匹配的数字加起来保存在$u中，其中第一部分位移8<em>3=24位，第二部分位移2</em>8=16位，第三部分8位，最后一部分直接加给$u。 但是本行代码没有对IP地址做任何的格式检验。你也可以使用一个更复杂一点正则表达式来检测，比如/^(d+).(d+).(d+).(d+)$/g。 经过和朋友一起讨论，我们想出另外一些方法：</p><pre class="crayon-plain-tag">perl -le '$ip=&quot;127.0.0.1&quot;; $ip =~ s/(d+).?/sprintf(&quot;%02x&quot;, $1)/ge; print hex($ip)'</pre><p>这个行代码巧妙地利用127.0.0.1可以被容易的转化为十六进程 7f000001的事实，再利用Perl的hex函数转化为十进制。</p>
+<p>另一种方法是利用unpack：</p><pre class="crayon-plain-tag">perl -le 'print unpack(&quot;N&quot;, 127.0.0.1)'</pre><p>这个行代码大概是能达到最短的一个。它利用vstring语法（版本字符）表达IP地址。Vstring格式是指用特定顺序值组成的字符串。接着，利用网络字节顺序（Big-Endian顺序）新的格式化字符串被解包为一个数字，并把它打印出来。</p>
+<p>如果有一个IP的字符串（不是一个vstring），你首先就要用inet_aton函数转化这个字符串为字节的形式：</p><pre class="crayon-plain-tag">perl -MSocket -le 'print unpack(&quot;N&quot;, inet_aton(&quot;127.0.0.1&quot;))'</pre><p>这儿inet_aton函数转化字符串“127.0.0.1 ”为字节的形式（这恰恰和纯vstring 127.0.0.1是一样的），接着unpack它。</p>
+<h2><a id="user-content-49转化一个无符号整数为ip地址" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.md#49%E8%BD%AC%E5%8C%96%E4%B8%80%E4%B8%AA%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E4%B8%BAip%E5%9C%B0%E5%9D%80"></a>49.转化一个无符号整数为IP地址。</h2>
+<p></p><pre class="crayon-plain-tag">perl -MSocket -le 'print inet_ntoa(pack(&quot;N&quot;, 2130706433))'</pre><p>本例中整数2130706433首先被pack为一个Big-Endian数字，并且利用inet_ntoa函数转化这个数字为IP地址。</p>
+<p>另外一种方法是用位移和逐字节打印的方式：</p><pre class="crayon-plain-tag">perl -le '$ip = 2130706433; print join ".", map { (($ip&gt;&gt;8*($_))&amp;0xFF) } reverse 0..3'</pre><p>随便说一下，join “.”可以被特殊变量$,代替，它专门用来做为打印语句的默认分割符：</p><pre class="crayon-plain-tag">perl -le '$ip = 2130706433; $, = "."; print map { (($ip&gt;&gt;8*($_))&amp;0xFF) } reverse 0..3'</pre><p>&nbsp;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=638</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

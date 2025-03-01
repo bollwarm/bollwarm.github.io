@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="zh-Hans">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="zh-Hans">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="zh-Hans">
+<!--<![endif]-->
+
+<!-- Mirrored from ijz.me/?p=102 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:40:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>利用单元测试对PHP代码进行检查 /zz/ | 虫虫之家</title>
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="pingback" href="xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://ijz.me/wp-content/themes/twentytwelve/js/html5.js?ver=3.7.0" type="text/javascript"></script>
+<![endif]-->
+<meta name='robots' content='max-image-preview:large' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel='dns-prefetch' href='index.html' />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; Feed" href="indexd784.html?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; 评论 Feed" href="indexa6da.html?feed=comments-rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; 利用单元测试对PHP代码进行检查 /zz/ 评论 Feed" href="index1a35.html?feed=rss2&amp;p=102" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/ijz.me\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.2"}};
+/*! This file is auto-generated */
+!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83d\udc26\u200d\u2b1b","\ud83d\udc26\u200b\u2b1b")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<link rel='stylesheet' id='crayon-css' href='wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min653d.css?ver=2.7.1' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='wp-includes/css/dist/block-library/style.mind1c0.css?ver=6.7.2' type='text/css' media='all' />
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote:where(.has-text-align-right){border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote:where(.has-text-align-center){border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote:where(.is-style-plain){border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #21759b;--wp--preset--color--dark-gray: #444;--wp--preset--color--medium-gray: #9f9f9f;--wp--preset--color--light-gray: #e6e6e6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='twentytwelve-fonts-css' href='wp-content/themes/twentytwelve/fonts/font-open-sans6a62.css?ver=20230328' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css' href='wp-content/themes/twentytwelve/style3eda.css?ver=20241112' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-block-style-css' href='wp-content/themes/twentytwelve/css/blocks2676.css?ver=20240812' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css' href='http://ijz.me/wp-content/themes/twentytwelve/css/ie.css?ver=20240722' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" id="crayon_js-js-extra">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/ijz.me\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002","minimize":"\u70b9\u51fb\u5c55\u5f00\u4ee3\u7801"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min653d.js?ver=2.7.1" id="crayon_js-js"></script>
+<script type="text/javascript" src="wp-content/themes/twentytwelve/js/navigation66f2.js?ver=20141205" id="twentytwelve-navigation-js" defer="defer" data-wp-strategy="defer"></script>
+<link rel="https://api.w.org/" href="index52f0.json?rest_route=/" /><link rel="alternate" title="JSON" type="application/json" href="index6ce1.json?rest_route=/wp/v2/posts/102" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.php?rsd" />
+<meta name="generator" content="WordPress 6.7.2" />
+<link rel="canonical" href="indexc5eb.html?p=102" />
+<link rel='shortlink' href='indexc5eb.html?p=102' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="index83d0.json?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D102" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="indexafba.php?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D102&amp;format=xml" />
+</head>
+
+<body class="post-template-default single single-post postid-102 single-format-standard wp-embed-responsive full-width custom-font-enabled">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header">
+		<hgroup>
+			<h1 class="site-title"><a href="index.html" rel="home">虫虫之家</a></h1>
+			<h2 class="site-description">略懂技术</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation">
+			<button class="menu-toggle">菜单</button>
+			<a class="assistive-text" href="#content">跳至正文</a>
+			<div class="menu-top-container"><ul id="menu-top" class="nav-menu"><li id="menu-item-969" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-969"><a href="index5b0d.html?cat=12">编程</a></li>
+<li id="menu-item-970" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-970"><a href="index0fbe.html?cat=21">perl</a></li>
+<li id="menu-item-971" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-971"><a href="index9035.html?cat=22">php</a></li>
+<li id="menu-item-972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-972"><a href="index2d79.html?cat=26">web</a></li>
+<li id="menu-item-973" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-973"><a href="indexc728.html?cat=7">工具</a></li>
+<li id="menu-item-974" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-974"><a href="indexb0b7.html?cat=6">安全</a></li>
+<li id="menu-item-975" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-975"><a href="index3f7b.html?cat=2">linux</a></li>
+<li id="menu-item-976" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-976"><a href="indexaa1e.html?cat=4">古文</a></li>
+<li id="menu-item-977" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-977"><a href="indexc055.html?cat=17">随感</a></li>
+<li id="menu-item-978" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-978"><a href="index54cb.html?cat=23">rex</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-102" class="post-102 post type-post status-publish format-standard hentry category-php tag-php">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">利用单元测试对PHP代码进行检查 /zz/</h1>
+										<div class="comments-link">
+					<a href="indexc5eb.html?p=102#respond"><span class="leave-reply">发表评论</span></a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p><strong>利用单元测试在每个层上对 PHP 代码进行检查</strong></p>
+<p><em>在模块、数据库和 UI 层对 PHP 代码进行单元测试</em></p>
+<p>测试驱动的开发和单元测试是确保代码在经过修改和重大调整之后依然能如我们期望的一样工作的最新方法。在本文中，您将学习到如何在模块、数据库和用户界面（UI）层对自己的 PHP 代码进行单元测试。</p>
+<p><span id="more-102"></span></p>
+<p><a href="http://www.ibm.com/developerworks/cn/opensource/os-php-unit/#authorN10019">Jack D. Herrington</a>, 资深软件工程师, Leverage Software Inc.</p>
+<p>&nbsp;</p>
+<p>现在是凌晨 3 点。我们怎样才能知道自己的代码依然在工作呢？</p>
+<p>Web 应用程序是 24&#215;7 不间断运行的，因此我的程序是否还在运行这个问题会在晚上一直困扰我。单元测试已经帮我对自己的代码建立了足够的信心 —— 这样我就可以安稳地睡个好觉了。</p>
+<p><em>单元测试</em> 是一个为代码编写测试用例并自动运行这些测试的框架。<em>测试驱动的开发</em> 是一种单元测试方法，其思想是应该首先编写测试程序，并验证这些测试可以发现错误，然后才开始编写需要通过这些测试的代码。当所有测试都通过时，我们开发 的特性也就完成了。这些单元测试的价值是我们可以随时运行它们 —— 在签入代码之前，重大修改之后，或者部署到正在运行的系统之后都可以。</p>
+<p><strong>PHP </strong><strong>单元测试</strong></p>
+<p>对于 PHP 来说，单元测试框架是 PHPUnit2。可以使用 PEAR 命令行作为一个 PEAR 模块来安装这个系统：% pear install PHPUnit2。</p>
+<p>在安装这个框架之后，可以通过创建派生于 PHPUnit2_Framework_TestCase的测试类来编写单元测试。</p>
+<p><strong>模块单元测试</strong></p>
+<p>我发现开始单元测试最好的地方是在应用程序的业务逻辑模块中。我使用了一个简单的例子：这是一个对两个数字进行求和的函数。为了开始测试，我们首先编写测试用例，如下所示。</p>
+<p><strong>清单 1. TestAdd.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once &#8216;Add.php&#8217;;</p>
+<p>require_once &#8216;PHPUnit2/Framework/TestCase.php&#8217;;</p>
+<p>&nbsp;</p>
+<p>class TestAdd extends PHPUnit2_Framework_TestCase</p>
+<p>{</p>
+<p>function test1() { $this-&gt;assertTrue( add( 1, 2 ) == 3 ); }</p>
+<p>function test2() { $this-&gt;assertTrue( add( 1, 1 ) == 2 ); }</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>这个 TestAdd类有两个方法，都使用了 test前缀。每个方法都定义了一个测试，这个测试可以与清单 1 一样简单，也可以十分复杂。在本例中，我们在第一个测试中只是简单地断定 1 加 2 等于 3，在第二个测试中是 1 加 1 等于 2。</p>
+<p>PHPUnit2 系统定义了 assertTrue()方法，它用来测试参数中包含的条件值是否为真。然后，我们又编写了 Add.php 模块，最初让它产生错误的结果。</p>
+<p><strong>清单 2. Add.php</strong></p>
+<p>&lt;?php</p>
+<p>function add( $a, $b ) { return 0; }</p>
+<p>?&gt;</p>
+<p>现在运行单元测试时，这两个测试都会失败。</p>
+<p><strong>清单 3. 测试失败</strong></p>
+<p>% phpunit TestAdd.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>FF</p>
+<p>&nbsp;</p>
+<p>Time: 0.0031270980834961</p>
+<p>There were 2 failures:</p>
+<p>1) test1(TestAdd)</p>
+<p>&nbsp;</p>
+<p>2) test2(TestAdd)</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>FAILURES!!!</p>
+<p>Tests run: 2, Failures: 2, Errors: 0, Incomplete Tests: 0.</p>
+<p>现在我知道这两个测试都可以正常工作了。因此，可以修改 add()函数来真正地做实际的事情了。</p>
+<p>&lt;?php</p>
+<p>function add( $a, $b ) { return $a+$b; }</p>
+<p>?&gt;</p>
+<p>现在这两个测试都可以通过了。</p>
+<p><strong>清单 4. 测试通过</strong></p>
+<p>% phpunit TestAdd.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>..</p>
+<p>&nbsp;</p>
+<p>Time: 0.0023679733276367</p>
+<p>&nbsp;</p>
+<p>OK (2 tests)</p>
+<p>%</p>
+<p>尽管这个测试驱动开发的例子非常简单，但是我们可以从中体会到它的思想。我们首先创建了测试用例，并且有足够多的代码让这个测试运行起来，不过结果是错误的。然后我们验证测试的确是失败的，接着实现了实际的代码使这个测试能够通过。</p>
+<p>我发现在实现代码时我会一直不断地添加代码，直到拥有一个覆盖所有代码路径的完整测试为止。在本文的最后，您会看到有关编写什么测试和如何编写这些测试的一些建议。</p>
+<p><strong>数据库测试</strong></p>
+<p>在进行模块测试之后，就可以进行数据库访问测试了。<em>数据库访问测试</em> 带来了两个有趣的问题。首先，我们必须在每次测试之前将数据库恢复到某个已知点。其次，要注意这种恢复可能会对现有数据库造成破坏，因此我们必须对非生产数据库进行测试，或者在编写测试用例时注意不能影响现有数据库的内容。</p>
+<p>数据库的单元测试是从数据库开始的。为了阐述这个问题，我们需要使用下面的简单模式。</p>
+<p><strong>清单 5. Schema.sql</strong></p>
+<p>DROP TABLE IF EXISTS authors;</p>
+<p>CREATE TABLE authors (</p>
+<p>id MEDIUMINT NOT NULL AUTO_INCREMENT,</p>
+<p>name TEXT NOT NULL,</p>
+<p>PRIMARY KEY ( id )</p>
+<p>);</p>
+<p>清单 5 是一个 authors 表，每条记录都有一个相关的 ID。</p>
+<p>接下来，就可以编写测试用例了。</p>
+<p><strong>清单 6. TestAuthors.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once &#8216;dblib.php&#8217;;</p>
+<p>require_once &#8216;PHPUnit2/Framework/TestCase.php&#8217;;</p>
+<p>&nbsp;</p>
+<p>class TestAuthors extends PHPUnit2_Framework_TestCase</p>
+<p>{</p>
+<p>function test_delete_all() {</p>
+<p>$this-&gt;assertTrue( Authors::delete_all() );</p>
+<p>}</p>
+<p>function test_insert() {</p>
+<p>$this-&gt;assertTrue( Authors::delete_all() );</p>
+<p>$this-&gt;assertTrue( Authors::insert( &#8216;Jack&#8217; ) );</p>
+<p>}</p>
+<p>function test_insert_and_get() {</p>
+<p>$this-&gt;assertTrue( Authors::delete_all() );</p>
+<p>$this-&gt;assertTrue( Authors::insert( &#8216;Jack&#8217; ) );</p>
+<p>$this-&gt;assertTrue( Authors::insert( &#8216;Joe&#8217; ) );</p>
+<p>$found = Authors::get_all();</p>
+<p>$this-&gt;assertTrue( $found != null );</p>
+<p>$this-&gt;assertTrue( count( $found ) == 2 );</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>这组测试覆盖了从表中删除作者、向表中插入作者以及在验证作者是否存在的同时插入作者等功能。这是一个累加的测 试，我发现对于寻找错误来说这非常有用。观察一下哪些测试可以正常工作，而哪些测试不能正常工作，就可以快速地找出哪些地方出错了，然后就可以进一步理解 它们之间的区别。</p>
+<p>最初产生失败的 dblib.php PHP 数据库访问代码版本如下所示。</p>
+<p><strong>清单 7. dblib.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once(&#8216;DB.php&#8217;);</p>
+<p>&nbsp;</p>
+<p>class Authors</p>
+<p>{</p>
+<p>public static function get_db()</p>
+<p>{</p>
+<p>$dsn = &#8216;mysql://root:password@localhost/unitdb&#8217;;</p>
+<p>$db =&amp; DB::Connect( $dsn, array() );</p>
+<p>if (PEAR::isError($db)) { die($db-&gt;getMessage()); }</p>
+<p>return $db;</p>
+<p>}</p>
+<p>public static function delete_all()</p>
+<p>{</p>
+<p>return false;</p>
+<p>}</p>
+<p>public static function insert( $name )</p>
+<p>{</p>
+<p>return false;</p>
+<p>}</p>
+<p>public static function get_all()</p>
+<p>{</p>
+<p>return null;</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>对清单 8 中的代码执行单元测试会显示这 3 个测试全部失败了：</p>
+<p><strong>清单 8. dblib.php</strong></p>
+<p>% phpunit TestAuthors.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>FFF</p>
+<p>&nbsp;</p>
+<p>Time: 0.007500171661377</p>
+<p>There were 3 failures:</p>
+<p>1) test_delete_all(TestAuthors)</p>
+<p>&nbsp;</p>
+<p>2) test_insert(TestAuthors)</p>
+<p>&nbsp;</p>
+<p>3) test_insert_and_get(TestAuthors)</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>FAILURES!!!</p>
+<p>Tests run: 3, Failures: 3, Errors: 0, Incomplete Tests: 0.</p>
+<p>%</p>
+<p>现在我们可以开始添加正确访问数据库的代码 —— 一个方法一个方法地添加 —— 直到所有这 3 个测试都可以通过。最终版本的 dblib.php 代码如下所示。</p>
+<p><strong>清单 9. 完整的 dblib.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once(&#8216;DB.php&#8217;);</p>
+<p>&nbsp;</p>
+<p>class Authors</p>
+<p>{</p>
+<p>public static function get_db()</p>
+<p>{</p>
+<p>$dsn = &#8216;mysql://root:password@localhost/unitdb&#8217;;</p>
+<p>$db =&amp; DB::Connect( $dsn, array() );</p>
+<p>if (PEAR::isError($db)) { die($db-&gt;getMessage()); }</p>
+<p>return $db;</p>
+<p>}</p>
+<p>public static function delete_all()</p>
+<p>{</p>
+<p>$db = Authors::get_db();</p>
+<p>$sth = $db-&gt;prepare( &#8216;DELETE FROM authors&#8217; );</p>
+<p>$db-&gt;execute( $sth );</p>
+<p>return true;</p>
+<p>}</p>
+<p>public static function insert( $name )</p>
+<p>{</p>
+<p>$db = Authors::get_db();</p>
+<p>$sth = $db-&gt;prepare( &#8216;INSERT INTO authors VALUES (null,?)&#8217; );</p>
+<p>$db-&gt;execute( $sth, array( $name ) );</p>
+<p>return true;</p>
+<p>}</p>
+<p>public static function get_all()</p>
+<p>{</p>
+<p>$db = Authors::get_db();</p>
+<p>$res = $db-&gt;query( &#8220;SELECT * FROM authors&#8221; );</p>
+<p>$rows = array();</p>
+<p>while( $res-&gt;fetchInto( $row ) ) { $rows []= $row; }</p>
+<p>return $rows;</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>在对这段代码运行测试时，所有的测试都可以没有问题地运行，这样我们就可以知道自己的代码可以正确工作了。</p>
+<p><strong>HTML </strong><strong>测试</strong></p>
+<p>对整个 PHP 应用程序进行测试的下一个步骤是对前端的超文本标记语言（HTML）界面进行测试。要进行这种测试，我们需要一个如下所示的 Web 页面。</p>
+<p><strong>图 1. 测试 Web 页面</strong></p>
+<p>这个页面对两个数字进行求和。为了对这个页面进行测试，我们首先从单元测试代码开始入手。</p>
+<p><strong>清单 10. TestPage.php</strong></p>
+<p>&lt;?php</p>
+<p>require_once &#8216;HTTP/Client.php&#8217;;</p>
+<p>require_once &#8216;PHPUnit2/Framework/TestCase.php&#8217;;</p>
+<p>&nbsp;</p>
+<p>class TestPage extends PHPUnit2_Framework_TestCase</p>
+<p>{</p>
+<p>function get_page( $url )</p>
+<p>{</p>
+<p>$client = new HTTP_Client();</p>
+<p>$client-&gt;get( $url );</p>
+<p>$resp = $client-&gt;currentResponse();</p>
+<p>return $resp[&#8216;body&#8217;];</p>
+<p>}</p>
+<p>function test_get()</p>
+<p>{</p>
+<p>$page = TestPage::get_page( &#8216;http://localhost/unit/add.php&#8217; );</p>
+<p>$this-&gt;assertTrue( strlen( $page ) &gt; 0 );</p>
+<p>$this-&gt;assertTrue( preg_match( &#8216;/&lt;html&gt;/&#8217;, $page ) == 1 );</p>
+<p>}</p>
+<p>function test_add()</p>
+<p>{</p>
+<p>$page = TestPage::get_page( &#8216;http://localhost/unit/add.php?a=10&amp;b=20&#8217; );</p>
+<p>$this-&gt;assertTrue( strlen( $page ) &gt; 0 );</p>
+<p>$this-&gt;assertTrue( preg_match( &#8216;/&lt;html&gt;/&#8217;, $page ) == 1 );</p>
+<p>preg_match( &#8216;/&lt;span id=&#8221;result&#8221;&gt;(.*?)&lt;/span&gt;/&#8217;, $page, $out );</p>
+<p>$this-&gt;assertTrue( $out[1]==&#8217;30&#8217; );</p>
+<p>}</p>
+<p>}</p>
+<p>?&gt;</p>
+<p>这个测试使用了 PEAR 提供的 HTTP Client 模块。我发现它比内嵌的 PHP Client URL Library（CURL）更简单一点儿，不过也可以使用后者。</p>
+<p>有一个测试会检查所返回的页面，并判断这个页面是否包含 HTML。第二个测试会通过将值放到请求的 URL 中来请求计算 10 和 20 的和，然后检查返回的页面中的结果。</p>
+<p>这个页面的代码如下所示。</p>
+<p><strong>清单 11. TestPage.php</strong></p>
+<p>&lt;html&gt;&lt;body&gt;&lt;form&gt;</p>
+<p>&lt;input type=&#8221;text&#8221; name=&#8221;a&#8221; value=&#8221;&lt;?php echo($_REQUEST[&#8216;a&#8217;]); ?&gt;&#8221; /&gt; +</p>
+<p>&lt;input type=&#8221;text&#8221; name=&#8221;b&#8221; value=&#8221;&lt;?php echo($_REQUEST[&#8216;b&#8217;]); ?&gt;&#8221; /&gt; =</p>
+<p>&lt;span id=&#8221;result&#8221;&gt;&lt;?php echo($_REQUEST[&#8216;a&#8217;]+$_REQUEST[&#8216;b&#8217;]); ?&gt;&lt;/span&gt;</p>
+<p>&lt;br/&gt;</p>
+<p>&lt;input type=&#8221;submit&#8221; value=&#8221;Add&#8221; /&gt;</p>
+<p>&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;</p>
+<p>这个页面相当简单。两个输入域显示了请求中提供的当前值。结果 span 显示了这两个值的和。&lt;span&gt;标记标出了所有区别：它对于用户来说是不可见的，但是对于单元测试来说却是可见的。因此单元测试并不需要复杂的逻辑来找到这个值。相反，它会检索一个特定 &lt;span&gt;标记的值。这样当界面发生变化时，只要 span 存在，测试就可以通过。</p>
+<p>与前面一样，首先编写测试用例，然后创建一个失败版本的页面。我们对失败情况进行测试，然后修改页面的内容使其可以工作。结果如下：</p>
+<p><strong>清单 12. 测试失败情况，然后修改页面</strong></p>
+<p>% phpunit TestPage.php</p>
+<p>PHPUnit 2.2.1 by Sebastian Bergmann.</p>
+<p>&nbsp;</p>
+<p>..</p>
+<p>&nbsp;</p>
+<p>Time: 0.25711488723755</p>
+<p>&nbsp;</p>
+<p>OK (2 tests)</p>
+<p>%</p>
+<p>这两个测试都可以通过，这就意味着测试代码可以正常工作。</p>
+<p>不过对 HTML 前端的测试有一个缺陷：JavaScript。超文本传输协议（HTTP）客户机代码对页面进行检索，但是却没有执行 JavaScript。因此如果我们在 JavaScript 中有很多代码，就必须创建用户代理级的单元测试。我发现实现这种功能的最佳方法是使用 Microsoft® Internet Explorer® 内嵌的自动化层功能。通过使用 PHP 编写的 Microsoft Windows® 脚本，可以使用组件对象模型（COM）接口来控制 Internet Explorer，让它在页面之间进行导航，然后使用文档对象模型（DOM）方法在执行特定用户操作之后查找页面中的元素。</p>
+<p>这是我了解的对前端 JavaScript 代码进行单元测试的惟一一种方法。我承认它并不容易编写和维护，这些测试即使在对页面稍微进行改动时也很容易遭到破坏。</p>
+<p><strong>编写哪些测试以及如何编写这些测试</strong></p>
+<p>在编写测试时，我喜欢覆盖以下情况：</p>
+<p><strong>所有正面测试</strong></p>
+<p>这组测试可以确保所有的东西都如我们期望的一样工作。</p>
+<p><strong>所有负面测试</strong></p>
+<p>逐一使用这些测试，从而确保每个失效或异常情况都被测试到了。</p>
+<p><strong>正面序列测试</strong></p>
+<p>这组测试可以确保按照正确顺序的调用可以像我们期望的一样工作。</p>
+<p><strong>负面序列测试</strong></p>
+<p>这组测试可以确保当不按正确顺序进行调用时就会失败。</p>
+<p><strong>负载测试</strong></p>
+<p>在适当情况下，可以执行一小组测试来确定这些测试的性能在我们期望的范围之内。例如，2,000 次调用应该在 2 秒之内完成。</p>
+<p><strong>资源测试</strong></p>
+<p>这些测试确保应用编程接口（API）可以正确地分配并释放资源 —— 例如，连续几次调用打开、写入以及关闭基于文件的 API，从而确保没有文件依然是被打开的。</p>
+<p><strong>回调测试</strong></p>
+<p>对于具有回调方法的 API 来说，这些测试可以确保如果没有定义回调函数，代码可以正常运行。另外，这些测试还可以确保在定义了回调函数但是这些回调函数操作有误或产生异常时，代码依然可以正常运行。</p>
+<p>这是有关单元测试的几点想法。有关如何编写单元测试，我也有几点建议：</p>
+<p><strong>不要使用随机数据</strong></p>
+<p>尽 管在一个界面中产生随机数据看起来貌似一个好主意，但是我们要避免这样做，因为这些数据会变得非常难以调试。如果数据是在每次调用时随机生成的，那么就可 能产生一次测试时出现了错误而另外一次测试却没有出现错误的情况。如果测试需要随机数据，可以在一个文件中生成这些数据，然后每次运行时都使用这个文件。 采用这种方法，我们就获得了一些 “噪音” 数据，但是仍然可以对错误进行调试。</p>
+<p><strong>分组测试</strong></p>
+<p>我们很容易累积起数千个测试，需要几个小时才能执行完。这没什么问题，但是对这些测试进行分组使我们可以快速运行某组测试并对主要关注的问题进行检查，然后晚上运行完整的测试。</p>
+<p><strong>编写稳健的 API 和稳健的测试</strong></p>
+<p>编写 API 和测试时要注意它们不能在增加新功能或修改现有功能时很容易就会崩溃，这一点非常重要。这里没有通用的绝招，但是有一条准则是那些 “振荡的” 测试（一会儿失败，一会儿成功，反复不停的测试）应该很快地丢弃。</p>
+<p><strong>结束语</strong></p>
+<p>单元测试对于工程师来说意义重大。它们是敏捷开发过程（这个过程非常强调编码的作用，因为文档需要一些证据证明代码是按照规范进行工作的）的一个基础。单元测试就提供了这种证据。这个过程从单元测试开始入手，这定义了代码<em>应该</em> 实现但目前<em>尚未</em> 实现的功能。因此，所有的测试最初都会失败。然后当代码接近完成时，测试就通过了。当所有测试全部通过时，代码也就变得非常完善了。</p>
+<p>我 从来没有在不使用单元测试的情况下编写大型代码或修改大型或复杂的代码块。我通常都是在修改代码之前就为现有代码编写了单元测试，这样可以确保自己清楚在 修改代码时破坏了什么（或者没有破坏什么）。这为我对自己提供给客户的代码提供了很大的信心，相信它们正在正确运行 —— 即便是在凌晨 3 点。</p>
+<p>&nbsp;</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			本条目发布于<a href="indexc5eb.html?p=102" title="上午12:00" rel="bookmark"><time class="entry-date" datetime="2013-11-30T00:00:00+08:00">2013年11月30日</time></a>。属于<a href="index9035.html?cat=22" rel="category">php</a>分类，被贴了 <a href="indexf9f1.html?tag=php" rel="tag">php</a> 标签。<span class="by-author">作者是<span class="author vcard"><a class="url fn n" href="index3f71.html?author=2" title="查看所有由桔子发布的文章" rel="author">桔子</a></span>。</span>								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">文章导航</h3>
+					<span class="nav-previous"><a href="indexfcc0.html?p=439" rel="prev"><span class="meta-nav">&larr;</span> 1年创业要点回顾总结！/zz/</a></span>
+					<span class="nav-next"><a href="indexb950.html?p=159" rel="next">袋鼠妈妈，袋鼠妈妈有个袋袋 <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">发表回复 <small><a rel="nofollow" id="cancel-comment-reply-link" href="indexc5eb.html?p=102#respond" style="display:none;">取消回复</a></small></h3><form action="http://ijz.me/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">您的邮箱地址不会被公开。</span> <span class="required-field-message">必填项已用 <span class="required">*</span> 标注</span></p><p class="comment-form-comment"><label for="comment">评论 <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">显示名称 <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required="required" /></p>
+<p class="comment-form-email"><label for="email">邮箱 <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required="required" /></p>
+<p class="comment-form-url"><label for="url">网站</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" autocomplete="url" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">在此浏览器中保存我的显示名称、邮箱地址和网站地址，以便下次评论时使用。</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论" /> <input type='hidden' name='comment_post_ID' value='102' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p></form>	</div><!-- #respond -->
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://cn.wordpress.org/" class="imprint" title="优雅的个人发布平台">
+				自豪地采用WordPress			</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type="text/javascript" src="wp-includes/js/comment-reply.mind1c0.js?ver=6.7.2" id="comment-reply-js" async="async" data-wp-strategy="async"></script>
+</body>
+
+<!-- Mirrored from ijz.me/?p=102 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:40:15 GMT -->
+</html>

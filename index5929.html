@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>awk &#8211; 虫虫之家</title>
+	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=awk" rel="self" type="application/rss+xml" />
+	<link>http://ijz.me</link>
+	<description>略懂技术</description>
+	<lastBuildDate>Sat, 01 Mar 2025 15:30:00 +0000</lastBuildDate>
+	<language>zh-Hans</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>生信单行脚本</title>
+		<link>http://ijz.me/?p=981</link>
+					<comments>http://ijz.me/?p=981#respond</comments>
+		
+		<dc:creator><![CDATA[lin123]]></dc:creator>
+		<pubDate>Thu, 22 Jun 2017 12:01:00 +0000</pubDate>
+				<category><![CDATA[shell]]></category>
+		<category><![CDATA[awk]]></category>
+		<guid isPermaLink="false">http://ijz.me/?p=981</guid>
+
+					<description><![CDATA[本文总结了，生物信息处理过程中常见一些工具和单行命令等。 awk和sed基础 提取文件中的2, 4, and  [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p></p>
+
+
+
+<p>本文总结了，生物信息处理过程中常见一些工具和单行命令等。</p>
+
+
+
+<span id="more-981"></span>
+
+
+
+<p><strong>awk和sed基础</strong></p>
+
+
+
+<p>提取文件中的2, 4, and 5 列:</p>
+
+
+
+<p>awk &#8216;{print $2,$4,$5}&#8217; file.txt</p>
+
+
+
+<p>输出第五列等于abc123的行:</p>
+
+
+
+<p>awk &#8216;$5 == &#8220;abc123&#8243;&#8216; file.txt</p>
+
+
+
+<p>输出第五列不是abc123的行:</p>
+
+
+
+<p>awk &#8216;$5 != &#8220;abc123&#8243;&#8216; file.txt</p>
+
+
+
+<p>输出第七列以字母a-f开头的行:</p>
+
+
+
+<p>awk &#8216;$7 ~ /^[a-f]/&#8217; file.txt</p>
+
+
+
+<p>输出第七列不是以字母a-f开头的行:</p>
+
+
+
+<p>awk &#8216;$7 !~ /^[a-f]/&#8217; file.txt</p>
+
+
+
+<p>计算第二列不重复的值保存在哈希arr中 (一个值只保存一次):</p>
+
+
+
+<p>awk &#8216;!arr[$2]++&#8217; file.txt</p>
+
+
+
+<p>输出第三列的值比第五列大的行:</p>
+
+
+
+<p>计算文件中第一列的累加值，输出最后的结果:</p>
+
+
+
+<p>awk &#8216;{sum+=$1} END {print sum}&#8217; file.txt</p>
+
+
+
+<p>计算第二列的平均值:</p>
+
+
+
+<p>awk &#8216;{x+=$2}END{print x/NR}&#8217; file.txt</p>
+
+
+
+<p>用bar替换文件中所有的foo:</p>
+
+
+
+<p>sed &#8216;s/foo/bar/g&#8217; file.txt</p>
+
+
+
+<p>消除行开头空和格制表符:</p>
+
+
+
+<p>sed &#8216;s/^[ \t]*//&#8217; file.txt</p>
+
+
+
+<p>消除行结尾的空格和制表符:</p>
+
+
+
+<p>sed &#8216;s/[ \t]*$//&#8217; file.txt</p>
+
+
+
+<p>消除行中开头和结尾的空格和制表符:</p>
+
+
+
+<p>sed &#8216;s/^[ \t]<em>//;s/[ \t]</em>$//&#8217; file.txt</p>
+
+
+
+<p>删除空行:</p>
+
+
+
+<p>删除包含‘EndOfUsefulData’的行及其后所有的行:</p>
+
+
+
+<p>sed -n &#8216;/EndOfUsefulData/,$!p&#8217; file.txt<br>生信sed,awk单行应用</p>
+
+
+
+<p>Returns all lines on Chr 1 between 1MB and 2MB in file.txt. (assumes) chromosome in column 1 and position in column 3 (this same concept can be used to return only variants that above specific allele frequencies):</p>
+
+
+
+<p>输出Chr为1在1M和2M之间的所有行。（假设）染色体在第一列，位点在第三列（基于同样的假设可以用来返回类似特定等位基因频率的变异）</p>
+
+
+
+<p>cat file.txt | awk &#8216;$1==&#8221;1&#8243;&#8216; | awk &#8216;$3&gt;=1000000&#8217; | awk &#8216;$3&lt;=2000000&#8217;</p>
+
+
+
+<p>Basic sequence statistics. Print total number of reads, total number unique reads, percentage of unique reads, most abundant sequence, its frequency, and percentage of total in file.fq: 基本序列统计。输出总的reads数，不重复的reads总数，不重复reads百分比，最大冗余的序列及其频度以及总占比百分数。</p>
+
+
+
+<p>cat myfile.fq | awk ‘((NR-2)%4==0){read=$1;total++;count[read]++}END{for(read in count){if(!max||count[read]&gt;max) {max=count[read];maxRead=read};if(count[read]==1){unique++}};print total,unique,unique<em>100/total,maxRead,count[maxRead],count[maxRead]</em>100/total}’</p>
+
+
+
+<p>转换.bam为.fastq:</p>
+
+
+
+<p>samtools view file.bam | awk &#8216;BEGIN {FS=&#8221;\t&#8221;} {print &#8220;@&#8221; $1 &#8220;\n&#8221; $10 &#8220;\n+\n&#8221; $11}&#8217; &gt; file.fq</p>
+
+
+
+<p>Keep only top bit scores in blast hits (best bit score only): 只取blast采样中的顶级位点的分数（最高的位点分）</p>
+
+
+
+<p>awk &#8216;{ if(!x[$1]++) {print $0; bitscore=($14-1)} else { if($14&gt;bitscore) print $0} }&#8217; blastout.txt</p>
+
+
+
+<p>Keep only top bit scores in blast hits (5 less than the top): 只取blast采样中的顶级位点的分数（比顶级少于5的）</p>
+
+
+
+<p>awk &#8216;{ if(!x[$1]++) {print $0; bitscore=($14-6)} else { if($14&gt;bitscore) print $0} }&#8217; blastout.txt</p>
+
+
+
+<p>分割多序列FASTA文件为单序列FASTA文件</p>
+
+
+
+<p>awk &#8216;/^&gt;/{s=++d&#8221;.fa&#8221;} {print &gt; s}&#8217; multi.fa</p>
+
+
+
+<p>输出fasta文件中的每条序列的序列名称和长度</p>
+
+
+
+<p>cat file.fa | awk &#8216;$0 ~ &#8220;&gt;&#8221; {print c; c=0;printf substr($0,2,100) &#8220;\t&#8221;; } $0 !~ &#8220;&gt;&#8221; {c+=length($0);} END { print c; }&#8217;</p>
+
+
+
+<p>转化FASTQ文件为FASTA:</p>
+
+
+
+<p>sed -n &#8216;1~4s/^@/&gt;/p;2~4p&#8217; file.fq &gt; file.fa</p>
+
+
+
+<p>从第二行开始每四行取值（从FASTQ文件提取序列）。</p>
+
+
+
+<p>输出中剔除第一行：</p>
+
+
+
+<p>输出20-80行:</p>
+
+
+
+<p>awk &#8216;NR&gt;=20&amp;&amp;NR&lt;=80&#8217; input.txt</p>
+
+
+
+<p>计算二，三行列的和并追加到每行后输出</p>
+
+
+
+<p>awk &#8216;{print $0,$2+$3}&#8217; input.txt</p>
+
+
+
+<p>计算fastq文件平均reads的长度</p>
+
+
+
+<p>awk &#8216;NR%4==2{sum+=length($0)}END{print sum/(NR/4)}&#8217; input.fastq</p>
+
+
+
+<p>转化VSF文件为BED文件</p>
+
+
+
+<p>sed -e &#8216;s/chr//&#8217; file.vcf | awk &#8216;{OFS=&#8221;\t&#8221;; if (!/^#/){print 1,2-1,2,4&#8243;/&#8221;$5,&#8221;+&#8221;}}&#8217;<br>sort, uniq, cut等杂项</p>
+
+
+
+<p>输出带行号的内容:</p>
+
+
+
+<p>去重复行计数</p>
+
+
+
+<p>cat file.txt | sort -u | wc -l</p>
+
+
+
+<p>找到两文件都有的行（假设两个文件都是无重复行，重定向执行‘wd -l’计算同样行的行数）</p>
+
+
+
+<p>sort file1 file2 | uniq -d</p>
+
+
+
+<h1 class="wp-block-heading">安全的方法</h1>
+
+
+
+<p>sort -u file1 &gt; a</p>
+
+
+
+<p>sort -u file2 &gt; b</p>
+
+
+
+<p>sort a b | uniq -d</p>
+
+
+
+<h1 class="wp-block-heading">用comm的方法</h1>
+
+
+
+<p>comm -12 file1 file2</p>
+
+
+
+<p>对文件按照第九列数字顺序排序（g按照常规数值，k列）</p>
+
+
+
+<p>找到第二列出现最多的字符串</p>
+
+
+
+<p>cut -f2 file.txt | sort | uniq -c | sort -k1nr | head</p>
+
+
+
+<p>从文件中随机取10行</p>
+
+
+
+<p>shuf file.txt | head -n 10</p>
+
+
+
+<p>输出所有三个所可能的DNA序列</p>
+
+
+
+<p>echo {A,C,T,G}{A,C,T,G}{A,C,T,G}</p>
+
+
+
+<p>Untangle an interleaved paired-end FASTQ file. If a FASTQ file has paired-end reads intermingled, and you want to separate them into separate /1 and /2 files, and assuming the /1 reads precede the /2 reads:</p>
+
+
+
+<p>解开一列交错paired-end fastq文件。如果fastq文件有乱序paired-end reads，你想将其分离成单独的/1，/2的文件保存，这里假设/1 reads 在/2 前面：</p>
+
+
+
+<p>cat interleaved.fq |paste &#8211; &#8211; &#8211; &#8211; &#8211; &#8211; &#8211; &#8211; | tee &gt;(cut -f 1-4 | tr &#8220;\t&#8221; &#8220;\n&#8221; &gt; deinterleaved_1.fq) | cut -f 5-8 | tr &#8220;\t&#8221; &#8220;\n&#8221; &gt; deinterleaved_2.fq</p>
+
+
+
+<p>Take a fasta file with a bunch of short scaffolds, e.g., labeled &gt;Scaffold12345, remove them, and write a new fasta without them:</p>
+
+
+
+<p>将一个fasta文件转成一系列短的scaffolds。比如，标签 “&gt;Scaffold12345″，然后移出他们，保存一个去掉他们的新文件：</p>
+
+
+
+<p>samtools faidx genome.fa &amp;&amp; grep -v Scaffold genome.fa.fai | cut -f1 | xargs -n1 samtools faidx genome.fa &gt; genome.noscaffolds.fa</p>
+
+
+
+<p>Display hidden control characters:</p>
+
+
+
+<p>显示一个隐藏的控制字符：</p>
+
+
+
+<p>python -c &#8220;f = open(&#8216;file.txt&#8217;, &#8216;r&#8217;); f.seek(0); file = f.readlines(); print file&#8221;<br>find, xargs,和GNU parallel</p>
+
+
+
+<p>通过 https://www.gnu.org/software/parallel/. 载 GNU parallel</p>
+
+
+
+<p>搜索文件夹及其子目录中名称为 .bam 文件（目录也算）:</p>
+
+
+
+<p>删除上面搜到的文件列表(不可逆的危险操作，谨慎使用！删除之前请自习确认)</p>
+
+
+
+<p>find . -name &#8220;*.bam&#8221; | xargs rm</p>
+
+
+
+<p>将所有.txt 文件修改为.bak(例如在对*.txt做操作之前用于文件备份)</p>
+
+
+
+<p>find . -name &#8220;*.txt&#8221; | sed &#8220;s/.txt$//&#8221; | xargs -i echo mv {}.txt {}.bak | sh</p>
+
+
+
+<p>Chastity filter raw Illumina data (grep reads containing :N:, append (-A) the three lines after the match containing the sequence and quality info, and write a new filtered fastq file):</p>
+
+
+
+<p>对Illumina数据做Chastity过滤（grep 查询 包含:N:，用（-A）选项第三列信息附加在匹配的包含一个序列质量信息后，并保存为一个新的fasta文件）</p>
+
+
+
+<p>find <em>fq | parallel &#8220;cat {} | grep -A 3 &#8216;^@.</em>[^:]<em>:N:[^:]</em>:&#8217; | grep -v &#8216;^&#8211;$&#8217; &gt; {}.filt.fq&#8221;</p>
+
+
+
+<p>通过parallel并行运行12个FASTQC任务</p>
+
+
+
+<p>find *.fq | parallel -j 12 &#8220;fastqc {} &#8211;outdir .&#8221;</p>
+
+
+
+<p>通过parallel给bam做索引，通过–dry-run打印测试这些命令，实际上并未做执行。</p>
+
+
+
+<p>find *.bam | parallel &#8211;dry-run &#8216;samtools index {}&#8217;<br>seqtk</p>
+
+
+
+<p>Seqtk项目托管地址https://github.com/lh3/seqtk。Seqtk是一个快捷轻量的处理FASTA和FASTQ格式基因序列的工具。他可以是先FASTA和FASTQ无缝处理和转化，同时支持gzip格式的压缩文件。</p>
+
+
+
+<p>把FASTQ转化为FASTA:</p>
+
+
+
+<p>seqtk seq -a in.fq.gz &gt; out.fa</p>
+
+
+
+<p>转化ILLUMINA 1.3+ 格式FASTQ为FASTA，并且以小于20的mask bases获得小写字母(第一命令行)或者到N（第二）。 seqtk seq -aQ64 -q20 in.fq &gt; out.fa seqtk seq -aQ64 -q20 -n N in.fq &gt; out.fa</p>
+
+
+
+<p>折叠长FASTA/Q行，并且去除其注释：</p>
+
+
+
+<p>seqtk seq -Cl60 in.fa &gt; out.fa</p>
+
+
+
+<p>转化多行FASTQ到四行FASTQ:</p>
+
+
+
+<p>seqtk seq -l0 in.fq &gt; out.fq</p>
+
+
+
+<p>反转FASTA/Q序列:</p>
+
+
+
+<p>seqtk seq -r in.fq &gt; out.fq</p>
+
+
+
+<p>用序列文件中的名称（比如name.1st）提取序列,一个虚列名一行:</p>
+
+
+
+<p>seqtk subseq in.fq name.lst &gt; out.fq</p>
+
+
+
+<p>利用序列文件中的”reg.bed“r信息提取地理信息的序列:</p>
+
+
+
+<p>seqtk subseq in.fa reg.bed &gt; out.fa</p>
+
+
+
+<p>编码‘reg.bed’信息为小写</p>
+
+
+
+<p>seqtk seq -M reg.bed in.fa &gt; out.fa</p>
+
+
+
+<p>从两个大的paired FASTQ文件提取10000个read pairs（记得用同样的随机种子保持 paire）</p>
+
+
+
+<p>seqtk sample -s100 read1.fq 10000 &gt; sub1.fq</p>
+
+
+
+<p>seqtk sample -s100 read2.fq 10000 &gt; sub2.fq</p>
+
+
+
+<p>利用Phred公式从两头修剪低质量bases:</p>
+
+
+
+<p>seqtk trimfq in.fq &gt; out.fq</p>
+
+
+
+<p>从左端修剪5bp，从右端修剪10bp的。</p>
+
+
+
+<p>seqtk trimfq -b 5 -e 10 in.fa &gt; out.fa</p>
+
+
+
+<p>seqtk seq -l0 -1 interleaved.fq &gt; deinterleaved_1.fq</p>
+
+
+
+<p>seqtk seq -l0 -2 interleaved.fq &gt; deinterleaved_2.fq<br>GFF3 Annotations</p>
+
+
+
+<p>输出GFF3文件中标注的所有的序列</p>
+
+
+
+<p>cut -s -f 1,9 yourannots.gff3 | grep $&#8217;\t&#8217; | cut -f 1 | sort | uniq</p>
+
+
+
+<p>检测GFF3文件中标注的所有性状类型。</p>
+
+
+
+<p>grep -v &#8216;^#&#8217; yourannots.gff3 | cut -s -f 3 | sort | uniq</p>
+
+
+
+<p>检测GFF3文件中标注的基因数量。</p>
+
+
+
+<p>grep -c $&#8217;\tgene\t&#8217; yourannots.gff3</p>
+
+
+
+<p>从GFF3文件中提取所有的基因ID</p>
+
+
+
+<p>grep $&#8217;\tgene\t&#8217; yourannots.gff3 | perl -ne &#8216;/ID=([^;]+)/ and printf(&#8220;%s\n&#8221;, $1)&#8217;</p>
+
+
+
+<p>输出GFF3文件每个基因的长度</p>
+
+
+
+<p>grep $&#8217;\tgene\t&#8217; yourannots.gff3 | cut -s -f 4,5 | perl -ne &#8216;@v = split(/\t/); printf(&#8220;%d\n&#8221;, $v[1] &#8211; $v[0] + 1)&#8217;</p>
+
+
+
+<p>FASTA头列转化为GFF格式（假设头的长度，附加在”_length“ ,和Velvet assembled transcripts)）</p>
+
+
+
+<p>grep &#8216;&gt;&#8217; file.fasta | awk -F &#8220;<em>&#8221; &#8216;BEGIN{i=1; print &#8220;##gff-version 3&#8243;}{ print $0&#8243;\t BLAT\tEXON\t1\t&#8221;$10&#8243;\t95\t+\t.\tgene_id=&#8221;$0&#8221;;transcript_id=Transcript</em>&#8220;i;i++ }&#8217; &gt; file.gff<br>有用的别名(.bashrc)</p>
+
+
+
+<p>提示符修改为user@hostname:/full/path/cwd/:$ 形式</p>
+
+
+
+<p>export PS1=”\u@\h:\w\$ ”</p>
+
+
+
+<p>避免反复敲诸如cd ../../..的命令（也可以用[autojump](https://github.com/joelthelion/autojump），让你在飞速的转换目录</p>
+
+
+
+<p>alias ..=&#8217;cd ..&#8217;</p>
+
+
+
+<p>alias …=&#8217;cd ../../&#8217;</p>
+
+
+
+<p>alias ….=&#8217;cd ../../../&#8217;</p>
+
+
+
+<p>alias …..=&#8217;cd ../../../../&#8217;</p>
+
+
+
+<p>alias ……=&#8217;cd ../../../../../&#8217;</p>
+
+
+
+<p>向前和向后浏览</p>
+
+
+
+<p>alias u=&#8217;clear; cd ../; pwd; ls -lhGgo&#8217;</p>
+
+
+
+<p>alias d=&#8217;clear; cd -; ls -lhGgo&#8217;</p>
+
+
+
+<p>覆盖文件时候，先确认</p>
+
+
+
+<p>alias mv=&#8221;mv -i&#8221;</p>
+
+
+
+<p>alias cp=&#8221;cp -i&#8221;</p>
+
+
+
+<p>alias rm=&#8221;rm -i&#8221;</p>
+
+
+
+<p>我最喜欢的”ls“别名</p>
+
+
+
+<p>alias ls=&#8221;ls -1p &#8211;color=auto&#8221;</p>
+
+
+
+<p>alias l=&#8221;ls -lhGgo&#8221;</p>
+
+
+
+<p>alias ll=&#8221;ls -lh&#8221;</p>
+
+
+
+<p>alias la=&#8221;ls -lhGgoA&#8221;</p>
+
+
+
+<p>alias lt=&#8221;ls -lhGgotr&#8221;</p>
+
+
+
+<p>alias lS=&#8221;ls -lhGgoSr&#8221;</p>
+
+
+
+<p>alias l.=&#8221;ls -lhGgod .*&#8221;</p>
+
+
+
+<p>alias lhead=&#8221;ls -lhGgo | head&#8221;</p>
+
+
+
+<p>alias ltail=&#8221;ls -lhGgo | tail&#8221;</p>
+
+
+
+<p>alias lmore=&#8217;ls -lhGgo | more&#8217;</p>
+
+
+
+<p>对cut空格和逗号，分割文件</p>
+
+
+
+<p>alias cuts=&#8221;cut -d \&#8221; \&#8221;&#8221;</p>
+
+
+
+<p>alias cutc=&#8221;cut -d \&#8221;,\&#8221;&#8221;</p>
+
+
+
+<p>解压缩tar包</p>
+
+
+
+<p>alias tarup=&#8221;tar -zcf&#8221;</p>
+
+
+
+<p>alias tardown=&#8221;tar -zxf&#8221;</p>
+
+
+
+<p>或者可以用更普遍的‘extract’函数</p>
+
+
+
+<p>源于ABSG(Advanced Bash Scripting Guide)中 Mendel Cooper的建议</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p>extract () {</p>
+
+
+
+<p>if [ -f $1 ] ; then</p>
+
+
+
+<p>case $1 in</p>
+
+
+
+<p>*.tar.bz2) tar xvjf $1 ;;</p>
+
+
+
+<p>*.tar.gz) tar xvzf $1 ;;</p>
+
+
+
+<p>*.tar.xz) tar Jxvf $1 ;;</p>
+
+
+
+<p>*.bz2) bunzip2 $1 ;;</p>
+
+
+
+<p>*.rar) unrar x $1 ;;</p>
+
+
+
+<p>*.gz) gunzip $1 ;;</p>
+
+
+
+<p>*.tar) tar xvf $1 ;;</p>
+
+
+
+<p>*.tbz2) tar xvjf $1 ;;</p>
+
+
+
+<p>*.tgz) tar xvzf $1 ;;</p>
+
+
+
+<p>*.zip) unzip $1 ;;</p>
+
+
+
+<p>*.Z) uncompress $1 ;;</p>
+
+
+
+<p>*.7z) 7z x $1 ;;</p>
+
+
+
+<p>*) echo &#8220;don&#8217;t know how to extract &#8216;$1&#8217;&#8230;&#8221; ;;</p>
+
+
+
+<p>esac</p>
+
+
+
+<p>else</p>
+
+
+
+<p>echo &#8220;&#8216;$1&#8217; is not a valid file!&#8221;</p>
+
+
+
+<p>fi</p>
+
+
+
+<p>}</p>
+</blockquote>
+
+
+
+<p>使用别名”mcd”创建一个目录，并且cd到该目录</p>
+
+
+
+<p>function mcd { mkdir -p &#8220;$1&#8221; &amp;&amp; cd &#8220;$1&#8221;;}</p>
+
+
+
+<p>跳转到上级目录，并且列出其内容</p>
+
+
+
+<p>一个好看的grep</p>
+
+
+
+<p>alias grep=&#8221;grep &#8211;color=auto&#8221;</p>
+
+
+
+<p>刷新你的.bashrc</p>
+
+
+
+<p>alias refresh=&#8221;source ~/.bashrc&#8221;</p>
+
+
+
+<p>编辑你的.bashrc</p>
+
+
+
+<p>常用错误别称</p>
+
+
+
+<p>alias mf=&#8221;mv -i&#8221;</p>
+
+
+
+<p>alias mroe=&#8221;more&#8221;</p>
+
+
+
+<p>alias c=&#8217;clear&#8217;</p>
+
+
+
+<p>使用 pandoc转化markdown文档为PDF格式:</p>
+
+
+
+<h1 class="wp-block-heading">用法: mdpdf document.md document.md.pdf</h1>
+
+
+
+<p>alias mdpdf=&#8221;pandoc -s -V geometry:margin=1in -V documentclass:article -V fontsize=12pt&#8221;</p>
+
+
+
+<p>对当前目录搜索关键词(ft “mytext” *.txt):</p>
+
+
+
+<p>function ft { find . -name &#8220;$2&#8221; -exec grep -il &#8220;$1&#8221; {} \;; }</p>
+
+
+
+<p>Etc</p>
+
+
+
+<p>重复运行上一条命令:</p>
+
+
+
+<p>sudo !!</p>
+
+
+
+<p>&#8216;ALT+.&#8217; or &#8216;&lt;ESC&gt; .&#8217;</p>
+
+
+
+<p>敲出了部分命令，删除这些输入，查你忘记的明亮，拉回命令，继续输入(删除光标之前的输入，恢复上个C-U删除字符)</p>
+
+
+
+<p>&lt;CTRL+u&gt; […] &lt;CTRL+y&gt;</p>
+
+
+
+<p>跳到一个目录，执行命令，然后返回当前目录(()的用法)</p>
+
+
+
+<p>记时秒表 (输入Enter or ctrl-d 停止):</p>
+
+
+
+<p>把上次执行的命令生成一个脚本</p>
+
+
+
+<p>重用上次命令的所有参数</p>
+
+
+
+<p>列出或者删除一个目录中所有不匹配的特定后缀的文件（例如，列出所有不是压缩的文件，删除所有不以.foo和.bar后缀的文件）</p>
+
+
+
+<p>ls !(*.gz)</p>
+
+
+
+<p>rm !(<em>.foo|</em>.bar)</p>
+
+
+
+<p>利用上次的命令，但是不需要他的的参数（重新输入参数）:</p>
+
+
+
+<p>!:- &lt;new_last_argument&gt;</p>
+
+
+
+<p>激活一个快捷的编辑器，输入，编辑长的，复杂，巧妙的命令:</p>
+
+
+
+<p>输出一个特定的行（比如 42行）</p>
+
+
+
+<p>终结一个冻结的ssh session(会车换行，敲~键，在敲下.键）</p>
+
+
+
+<p>利用grep去除文件的空行，结果保存到新文件</p>
+
+
+
+<p>grep . filename &gt; newfilename</p>
+
+
+
+<p>查找大文件（例如，大于500M的）</p>
+
+
+
+<p><code>find . -type f -size +500M</code></p>
+
+
+
+<p>利用截取列（例如，一个tab分割文件的第五个域）</p>
+
+
+
+<p><code>cut -f5 --complement</code></p>
+
+
+
+<p>查找包含特定字符的文件（-l 只输出文件名, -i 忽略大小写 -r 遍历子目录）</p>
+
+
+
+<p><code>grep -lir "some text" *</code></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=981</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

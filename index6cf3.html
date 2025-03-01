@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="zh-Hans">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="zh-Hans">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="zh-Hans">
+<!--<![endif]-->
+
+<!-- Mirrored from ijz.me/?p=71 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:47:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>uClinux 启动过程详细分析2/zz/ | 虫虫之家</title>
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="pingback" href="xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://ijz.me/wp-content/themes/twentytwelve/js/html5.js?ver=3.7.0" type="text/javascript"></script>
+<![endif]-->
+<meta name='robots' content='max-image-preview:large' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel='dns-prefetch' href='index.html' />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; Feed" href="indexd784.html?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; 评论 Feed" href="indexa6da.html?feed=comments-rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; uClinux 启动过程详细分析2/zz/ 评论 Feed" href="indexfa39.html?feed=rss2&amp;p=71" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/ijz.me\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.2"}};
+/*! This file is auto-generated */
+!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83d\udc26\u200d\u2b1b","\ud83d\udc26\u200b\u2b1b")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<link rel='stylesheet' id='crayon-css' href='wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min653d.css?ver=2.7.1' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='wp-includes/css/dist/block-library/style.mind1c0.css?ver=6.7.2' type='text/css' media='all' />
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote:where(.has-text-align-right){border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote:where(.has-text-align-center){border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote:where(.is-style-plain){border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #21759b;--wp--preset--color--dark-gray: #444;--wp--preset--color--medium-gray: #9f9f9f;--wp--preset--color--light-gray: #e6e6e6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='twentytwelve-fonts-css' href='wp-content/themes/twentytwelve/fonts/font-open-sans6a62.css?ver=20230328' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css' href='wp-content/themes/twentytwelve/style3eda.css?ver=20241112' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-block-style-css' href='wp-content/themes/twentytwelve/css/blocks2676.css?ver=20240812' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css' href='http://ijz.me/wp-content/themes/twentytwelve/css/ie.css?ver=20240722' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" id="crayon_js-js-extra">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/ijz.me\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002","minimize":"\u70b9\u51fb\u5c55\u5f00\u4ee3\u7801"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min653d.js?ver=2.7.1" id="crayon_js-js"></script>
+<script type="text/javascript" src="wp-content/themes/twentytwelve/js/navigation66f2.js?ver=20141205" id="twentytwelve-navigation-js" defer="defer" data-wp-strategy="defer"></script>
+<link rel="https://api.w.org/" href="index52f0.json?rest_route=/" /><link rel="alternate" title="JSON" type="application/json" href="indexf58f.json?rest_route=/wp/v2/posts/71" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.php?rsd" />
+<meta name="generator" content="WordPress 6.7.2" />
+<link rel="canonical" href="index6cf3.html?p=71" />
+<link rel='shortlink' href='index6cf3.html?p=71' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="indexa137.json?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D71" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="index79ab.php?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D71&amp;format=xml" />
+</head>
+
+<body class="post-template-default single single-post postid-71 single-format-standard wp-embed-responsive full-width custom-font-enabled">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header">
+		<hgroup>
+			<h1 class="site-title"><a href="index.html" rel="home">虫虫之家</a></h1>
+			<h2 class="site-description">略懂技术</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation">
+			<button class="menu-toggle">菜单</button>
+			<a class="assistive-text" href="#content">跳至正文</a>
+			<div class="menu-top-container"><ul id="menu-top" class="nav-menu"><li id="menu-item-969" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-969"><a href="index5b0d.html?cat=12">编程</a></li>
+<li id="menu-item-970" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-970"><a href="index0fbe.html?cat=21">perl</a></li>
+<li id="menu-item-971" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-971"><a href="index9035.html?cat=22">php</a></li>
+<li id="menu-item-972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-972"><a href="index2d79.html?cat=26">web</a></li>
+<li id="menu-item-973" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-973"><a href="indexc728.html?cat=7">工具</a></li>
+<li id="menu-item-974" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-974"><a href="indexb0b7.html?cat=6">安全</a></li>
+<li id="menu-item-975" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-975"><a href="index3f7b.html?cat=2">linux</a></li>
+<li id="menu-item-976" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-976"><a href="indexaa1e.html?cat=4">古文</a></li>
+<li id="menu-item-977" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-977"><a href="indexc055.html?cat=17">随感</a></li>
+<li id="menu-item-978" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-978"><a href="index54cb.html?cat=23">rex</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-71" class="post-71 post type-post status-publish format-standard hentry category-linux">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">uClinux 启动过程详细分析2/zz/</h1>
+										<div class="comments-link">
+					<a href="index6cf3.html?p=71#respond"><span class="leave-reply">发表评论</span></a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p>上面的代码输出信息，是跟踪linux代码分析后得到的，进入init目录下的main.c的start_kernel启动函数。</p>
+<p>uclinux使用的是linux内核版本为2.4.22。linux source code代码中start_kernel中输出的linux_banner信息。这个信息是每个linux kernel都会打印一下的信息，如果你没有把这句去掉的话。</p>
+<p><span id="more-71"></span></p>
+<p>Found bootloader memory map at 0x10000fc0.</p>
+<p>bootloader经过内存映射后的地址为：0x10000fc0, 按上面的地址换算方法，1后面有7个0，那么虚拟地址256M左右处。</p>
+<p>Processor: ARM pt110 revision 0</p>
+<p>pT110是ARM微处理器arm核的一种，另一种为pT100。此处为显示ARM的类型。</p>
+<p>On node 0 totalpages: 20480zone(0): 20480 pages.zone(0): Set minimum memory threshold to 12288KBWarning: wrong zone alignment (0x90080000, 0x0000000c, 0x00001000)zone(1): 0 pages.zone(2): 0 pages.</p>
+<p>预留内存大小，在节点0上总共20页, zone(0) 设置最小内存为12MB, zone(1)和zone(2)为0页。警告：对齐不正确。</p>
+<p>Kernel command line: root=/dev/mtdblock3</p>
+<p>Kernel 启动命令设为：/dev/mtdblock3（在后面的说明中会看到mtdblock3是指的flash上的romfs分区。），用来指定根文件系统所在的位置，kernel会将块设备mtdblock3当作文件系统来处理。也就是说，内核会根据上面的kernel命令行，知道只读文件系统romfs将是根文件系统rootfs。</p>
+<p>start_kernel(void) 中输出的上面的这句信息。这行命令是在linux内核启动过程中都会输出的一句。</p>
+<p>Console: colour dummy device 80&#215;30</p>
+<p>代码中console_init()的输出信息, 显示控制台属性：一般使用VGA text console，标准是80 X 25行列的文本控制台，这里是对属性进行了设置。</p>
+<p>serial_xx: setup_console @ 115</p>
+<p>串口设置值为115200，此为波特率输出信息。对串口设置的信息做一个打印的动作，在调试时会非常有用。</p>
+<p>Calibrating delay loop&#8230; 82.94 BogoMIPS<br />
+<img decoding="async" src="../linux.chinaunix.net/mirror/www.ibm.com/i/c.gif" alt="" width="10" height="1" /></p>
+<p>Bogomips</p>
+<p>Bogomips,是由linus Torvalds写的, 是Linux操作系统中衡量计算机处理器运行速度的一种尺度。提供这种度量的程序被称为BogoMips，当启动计算机时，BogoMips能显示系统选项是否处于最佳性能。</p>
+<p>linux 内核中有一个函数calibrate_delay（）,它可以计算出cpu在一秒钟内执行了多少次一个极短的循环，计算出来的值经过处理后得到 BogoMIPS值。你可以将计算机的bogomips与计算机处理器的bogomips进行比较。Torvalds称这个程序为BogoMips来暗示两台计算机间的性能度量是错误的，因为并非所有起作用因素都能被显示出来或被认可。尽管计算机基准中经常用到MIPS，但环境的变化容易导致度量的错误。 Bogomips能测出一秒钟内某程序运行了多少次。察看/proc/cpuinfo文件中的最后一行也能得到这个数值。</p>
+<p>Calibrate:校准, 进入时延校准循环。检查CPU的MIPS(每秒百万条指令)，Bogo是Bogus(伪)的意思。这里是对CPU进行一个实时测试，来得到一个大体的MIPS数值。</p>
+<p>上面这个输出，在所有的linux系统启动中都会打印出来。</p>
+<p>进入内存初始化：<code>mem_init(void), [arch/i386/mm/init.c] </code></p>
+<p>Memory: 80MB = 80MB totalMemory: 76592KB available (1724K code, 2565K data, 72K init)</p>
+<p>当前内存使用情况，将列出总的内存大小, 及分配给内核的内存大小:包括代码部分，数据部分，初始化部分,总共刚好4M。请留意此处的内核的内存大小的各个值。</p>
+<p>进入虚拟文件系统VFS初始化：<code>vfs_caches_init()</code></p>
+<p>Dentry cache hash table entries: 16384 (order: 5, 131072 bytes)Inode cache hash table entries: 8192 (order: 4, 65536 bytes)Mount cache hash table entries: 512 (order: 0, 4096 bytes)Buffer cache hash table entries: 4096 (order: 2, 16384 bytes)Page-cache hash table entries: 32768 (order: 5, 131072 bytes)<br />
+<img decoding="async" src="../linux.chinaunix.net/mirror/www.ibm.com/i/c.gif" alt="" width="10" height="1" /></p>
+<p>名词：</p>
+<ul>
+<li>① Dentry：目录数据结构</li>
+<li>② Inode：i节点</li>
+<li>③ Mount cache：文件系统加载缓冲</li>
+<li>④ buffer cache：内存缓冲区</li>
+<li>⑤ Page Cache：页缓冲区</li>
+</ul>
+<p>Dentry目录数据结构(目录入口缓存),提供了一个将路径名转化为特定的dentry的一个快的查找机制,Dentry只存在于RAM中；i节点 (inode)数据结构存放磁盘上的一个文件或目录的信息，i节点存在于磁盘驱动器上;存在于RAM中的i节点就是VFS的i节点，dentry所包含的指针指向的就是它；buffer cache内存缓冲区，类似kupdated，用来在内存与磁盘间做缓冲处理；</p>
+<p>在内存中建立各个缓冲hash表，为kernel对文件系统的访问做准备。</p>
+<p>VFS（virtual filesystem switch）虚拟文件切换目录树有用到类似这样的结构表。</p>
+<p>上面的输出信息，在一般的linux启动过程中都会看到。</p>
+<p>POSIX conformance testing by UNIFI103fX</p>
+<p>conformance:顺应, 一致。即POSIX适应性检测。UNIFIX是一家德国的技术公司，Linux 原本要基于 POSIX.1 的, 但是 POSIX 不是免费的, 而且 POSIX.1 证书相当昂贵. 这使得 Linux 基于 POSIX 开发相当困难. Unifix公司(Braunschweig, 德国) 开发了一个获得了 FIPS 151-2 证书的 Linux 系统. 这种技术用于 Unifix 的发行版 Unifix Linux 2.0 和 Lasermoon 的 Linux-FT。</p>
+<p>在2.6的内核中就将上面的这句输出给拿掉了。</p>
+<p>第二节：用户模式( user_mode )开始，start_kernel结束</p>
+<p><strong>图 3：用户模式初始化</strong><br />
+<img fetchpriority="high" decoding="async" src="../linux.chinaunix.net/mirror/www.ibm.com/developerworks/cn/linux/l-cn-uclinuxboot/image003.jpg" alt="用户模式初始化" width="269" height="531" /><br />
+PCI: bus0: Fast back to back transfers disabledPCI: Configured XX as a PCI slave with 128MB PCI memoryPCI: Each Region size is 16384KBPCI: Reserved memory from 0x10080000 to 0x15080000 for DMA and mapped to 0x12000000</p>
+<p>设备的初始化 <code>init()---&gt;do_basic_init()---&gt;pci_init()</code>，初始化PCI，检测系统的PCI设备。</p>
+<p>Linux NET4.0 for Linux 2.4Based upon Swansea University Computer Society NET3.039</p>
+<p>英国威尔士，斯旺西大学的NET3.039, TCP/IP 协议栈。</p>
+<p>此信息，在linux启动过程中都会出现。</p>
+<p>Initializing RT netlink socket</p>
+<p>对Socket的初始化， socket_init()，Netlink 一种路由器管理协议(linux-2.4.22netcoreRtnetlink.c，Routing netlink socket interface: protocol independent part。其中RT是route路由的意思。这句输出是在create产生rtnetlink的socket套接字时的一个调试输出。)</p>
+<p>此信息，在linux启动过程中都会出现。</p>
+<p>Starting kswapd</p>
+<p>启动交换守护进程kswapd，进程IO操作例程kpiod。</p>
+<p>kswapd 可以配合kpiod运行。进程有时候无事可做，当它运行时也不一定需要把其所有的代码和数据都放在内存中。这就意味着我们可以通过把运行中程序不用的内容切换到交换分区来更好的是利用内存。大约每隔1秒，kswapd醒来并检查内存情况。如果在硬盘的东西要读入内存，或者内存可用空间不足，kpiod就会被调用来做移入/移出操作。kswapd负责检查，kpiod负责移动。</p>
+<p>Journalled Block Device driver loaded</p>
+<p>加载日志块设备驱动。</p>
+<p>日志块设备是用来对文件系统进行日志记录的一个块设备。日志文件系统是在传统文件系统的基础上，加入文件系统更改的日志记录。</p>
+<p>它的设计思想是：跟踪记录文件系统的变化，并将变化内容记录入日志。日志文件系统在磁盘分区中保存有日志记录，写操作首先是对记录文件进行操作，若整个写操作由于某种原因(如系统掉电)而中断，系统重启时，会根据日志记录来恢复中断前的写操作。在日志文件系统中，所有的文件系统的变化都被记录到日志，每隔一定时间，文件系统会将更新后的元数据及文件内容写入磁盘。在对元数据做任何改变以前，文件系统驱动程序会向日志中写入一个条目，这个条目描述了它将要做些什么，然后它修改元数据。</p>
+<p>devfs: v1.12c (20020818) Richard Gooch (rgooch@atnf.csiro.au)devfs: boot_options: 0x1</p>
+<p>Devfs模块的输出信息。设备文件系统devfs，版本1.12c</p>
+<p>pty: 256 Unix98 ptys configured</p>
+<p>Pty模块的输出信息，与控制台操作有关的设置。</p>
+<p>将通过 devpts 文件系统使用 Unix98 PTYs，（Pseudo-ttys (telnet etc) device是伪ttys设备的缩写。</p>
+<ul>
+<li>① TTY(/dev/tty)是TeleTYpe的一个老缩写，为用户输入提供不同控制台的设备驱动程序。它的名字来源于实际挂接到 UNIX系统的、被称为电传打字机(teletype)的终端。在Linux下，这些文件提供对虚拟控制台的支持，可以通过按＜Alt103f-F1＞到＜Alt -F6＞键来访问这些虚拟控制台。这些虚拟控制台提供独立的、同时进行的本地登录对话过程</li>
+<li>② ttys(/dev/ttys)是计算机终端的串行接口。/dev/ttyS0对应MS-DOS下的 COM1。</li>
+</ul>
+<p>使用 make dev脚本MAKEDEV来建立pty文件。这样系统内核就支持Unix98风格的pty了。在进行Telnet登录时将要用到/dev/pty设备。 pty是伪终端设备，在远程登录等需要以终端方式进行连接，但又并非真实终端的应用程序中必须使用这种设备，如telnet或xterm等程序。 Linux 2.2以后增添了UNIX98风格的Pty设备，它使用一个新的文件系统(devpts针对伪终端的文件系统)和一个克隆的设备cloning device来实现其功能。</p>
+<p><code>linux-2.4.22driverscharPty.c</code>, 在<code>devfs_mk_dir (NULL, "pts", NULL);</code>时会输出上面的信息。</p>
+<p>loop: loaded (max 8 devices)</p>
+<p>加载返还块设备驱动，最多支持8个设备。</p>
+<p>8139too Fast Ethernet driver 0.9.27eth0: RealTek RTL8139 at 0x60112000, 00:10:0d:42:a0:03, IRQ 14eth0: Identified 8139 chip type &#8216;RTL-8100B/8139D&#8217;<br />
+<img decoding="async" src="../linux.chinaunix.net/mirror/www.ibm.com/i/c.gif" alt="" width="10" height="1" /> RTL8139 的接收路径设计成一个环形缓冲区（一段线性的内存，映射成一个环形内存）。当设备接收到数据时，数据的内容就保存在这个环形缓冲区内并更新下个存储数据的地址（第一个数据包的开始地址＋第一个数据包的长度）。设备会一直保留缓冲区内的数据直到整个缓冲区耗尽。这样，设备会再次重写缓冲区内起始位置的内容，就像一个环那样。</p>
+<p>网卡驱动，基地址为：0x60112000， MAC地址:00:10:0d:42:a0:03, 中断号：14</p>
+<p>从 2.2 版内核升级到 2.4 版时, RTL-8139 支持模块已不再叫 rtl8139，而叫它 8139too，现在你再看到8139too就不会不明白它的来由了吧。</p>
+<p>SCSI subsystem driver Revision: 1.00</p>
+<p>USB设备信息，USB会被当做SCSI来处理。</p>
+<p>mumk_register_tasklet: (1) tasklet 0x905bf9c0 status @0x9025e974</p>
+<p>软中断信息输出。Tasklet是在2.4中才出现，它是为了更好地利用多CPU。</p>
+<p>Probing XX Flash Memory</p>
+<p>探测 XX的闪存（Flash Memory）,&#8221;NOR NAND Flash Memory Technology&#8221;。</p>
+<p>Amd/Fujitsu Extended Query Table v1.3 at 0x0040number of CFI chips: 1</p>
+<p>AMD与富士通合资设立的Flash供货商Spansion。AMD因获利不佳,已经退出Flash市场，后续由Spansion合资公司经营.主要生产NOR类型的flash,特点是容量小，速度快。Spansion商标的flash，在我们开发中会经常看到。以后大家看到Spansion的芯片，就能了解到它和AMD还有富士通的来龙去脉了。</p>
+<p>Common flash Interface (CFI)是指一个统一的flash访问接口，表示这种flash是这种接口类型的。</p>
+<p>Using buffer write method</p>
+<p>使用flash写缓冲方式。</p>
+<p>flash 提供了写BUFFER的命令来加快对flash上块的操作。对Flash擦除和写数据是很慢的。如果用写BUFFER的命令会快一点。据手册上说，会快 20倍。Buffer Size ：5 bytes的buffer缓冲不是每个块都有，是整个flash只有一个5 bytes的buffer，用写BUFFER命令对所有的块进行写操作，都要用同一个buffer,写Buffer是主要检查buffer是否 available，其实buffer起缓冲作用，来提高工作效率。</p>
+<p>比如某flash有128个128K字节块。允许用户对任意块进行字节编程和写缓冲器字节编程操作，每字节编程时间为210μs；若采用写缓冲器字节编程方式，32字节编程共需218μs，每字节编程时间仅为6.8μs。芯片的块擦除时间为1s，允许在编程或块擦除操作的同时进行悬挂中断去进行读操作，待读操作完成后，写入悬挂恢复103f命令，再继续编程或块擦除。</p>
+<p>Creating 3 MTD partitions on &#8220;XX mapped flash&#8221;:0x00000000-0x00020000 : &#8220;BootLoader&#8221;0x00020000-0x00040000 : &#8220;Config&#8221;0x00040000-0x01000000 : &#8220;Romfs&#8221;<br />
+<img decoding="async" src="../linux.chinaunix.net/mirror/www.ibm.com/i/c.gif" alt="" width="10" height="1" /></p>
+<p>uclinux内核的块设备驱动</p>
+<p>对于linux 的根文件系统，目前有三种块设备的驱动可以选择，它们分别是：</p>
+<ul>
+<li>a） Blkmem 驱动</li>
+<li>b） MTD 驱动</li>
+<li>c) RAM disk 驱动</li>
+</ul>
+<p>Blkmem 驱动是专门为uclinux 开发的一种块设备驱动，它是uclinux系统中最为古老和通用的块设备驱动。它原理相对简单但是配置比较复杂，需要根据你即的Flash的分区使用情况来修改代码。当然修改的结果是它可以对一些NOR型的Flash进行读写操作。不过目前支持的Flash类型不够多。如果新加入对一种Flash的支持需要作的工作量比较大。</p>
+<p>Linux的MTD驱动是标准Linux的Flash驱动。它支持大量的设备，有足够的功能来定义Flash的分区，进行地址映射等等。使用MTD你可以在一个系统中使用不同类型的Flash。它可以将不同的Flash组合成一个线性的地址让你来使用。在标准的Linux 2.4内核中MTD有一系列的选项，你可以根据个人系统的需要来选择，定制。</p>
+<p>另外一种选择就是RAM disk 驱动。在PC上它经常用于没有硬盘的Linux的启动过程。它和Flash没有直接的关系。不过当Flash上启动的是经过压缩的内核时。RAM disk 可以作为根文件系统。MTD 驱动提供了对Flash强大的支持,你通过它甚至可以在Flash上运行一个可以读写的真正的文件系统，比如JFFS2。而Blkmem驱动则望尘莫及。</p>
+<p>此处为重要信息部分，需要特别留意。在内存中映射过的flash,创建三个MTD分区：</p>
+<p>flash上的内容将被映射到内存中的对应地址</p>
+<p>前128K为BootLoader&#8212;&gt;0x00000000-0x00020000接着的128K为系统配置信息Config存放的位置&#8212;&gt;0x00020000-0x00040000再后面的 16M &#8211; 2X128K 为romfs的存放处.&#8212;&gt;0x00040000-0x01000000上面的内容，大家可以根据前面的换算公式得到。</p>
+<p>A&gt; 编译的bootloader一般大小约50K左右；</p>
+<p>B&gt; 在此处就知道了配置信息config是放在第2分区中的；</p>
+<p>C&gt; 制作的romfs的大小,一般为8M或10M左右，所以能放得下；</p>
+<p>NET4: Linux TCP/IP 1.0 for NET4.0</p>
+<p>调用inet_init [ linux-2.4.22netipv4Af_inet.c ]时的输出信息, 在启动过程中被socket.c调用到。</p>
+<p>IP Protocols: ICMP, UDP, TCP, IGMP</p>
+<p>列出可以支持的IP协议，此处为kernel源代码inet_add_protocol(p);的输出。在linux启动过程中，都会看到这句的输出。</p>
+<p>IP: routing cache hash table of 512 buckets, 4Kbytes</p>
+<p>IP路由代码的输出信息。</p>
+<p><code>ip_rt_init [ linux-2.4.22netipv4＼Route.c ]</code>，设置 IP module，路由缓冲hash表</p>
+<p>TCP: Hash tables configured (established 8192 bind 8192)</p>
+<p>TCP协议初始化输出信息。<code>tcp_init [ linux-2.4.22netipv4Tcp.c ]</code>,</p>
+<p>NET4: Unix domain sockets 1.0/SMP for Linux NET4.0.</p>
+<p>UNIX网络协议信息。</p>
+<p><code>af_unix_init[ linux-2.4.22netunixAf_unix.c ]</code>, 多种连接的一种(IPv4, UNIX　domain sockets, IPv6和IrDA). SMP　对称多处理器—Symmetrical Multi　Processing，这里主要是指UNIX的一些网络协议。</p>
+<p>上面的关于网络的输出信息是在linux启动信息中都会出现的。</p>
+<p>cramfs: wrong magic</p>
+<p>加载各种文件系统。</p>
+<p>会出现“cramfs: wrong magic”，别担心这没有什么害处，这个是kernel的</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			本条目发布于<a href="index6cf3.html?p=71" title="上午12:00" rel="bookmark"><time class="entry-date" datetime="2013-11-30T00:00:00+08:00">2013年11月30日</time></a>。属于<a href="index3f7b.html?cat=2" rel="category">linux</a>分类。<span class="by-author">作者是<span class="author vcard"><a class="url fn n" href="index3f71.html?author=2" title="查看所有由桔子发布的文章" rel="author">桔子</a></span>。</span>								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">文章导航</h3>
+					<span class="nav-previous"><a href="indexfcc0.html?p=439" rel="prev"><span class="meta-nav">&larr;</span> 1年创业要点回顾总结！/zz/</a></span>
+					<span class="nav-next"><a href="indexb950.html?p=159" rel="next">袋鼠妈妈，袋鼠妈妈有个袋袋 <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">发表回复 <small><a rel="nofollow" id="cancel-comment-reply-link" href="index6cf3.html?p=71#respond" style="display:none;">取消回复</a></small></h3><form action="http://ijz.me/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">您的邮箱地址不会被公开。</span> <span class="required-field-message">必填项已用 <span class="required">*</span> 标注</span></p><p class="comment-form-comment"><label for="comment">评论 <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">显示名称 <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required="required" /></p>
+<p class="comment-form-email"><label for="email">邮箱 <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required="required" /></p>
+<p class="comment-form-url"><label for="url">网站</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" autocomplete="url" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">在此浏览器中保存我的显示名称、邮箱地址和网站地址，以便下次评论时使用。</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论" /> <input type='hidden' name='comment_post_ID' value='71' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p></form>	</div><!-- #respond -->
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://cn.wordpress.org/" class="imprint" title="优雅的个人发布平台">
+				自豪地采用WordPress			</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type="text/javascript" src="wp-includes/js/comment-reply.mind1c0.js?ver=6.7.2" id="comment-reply-js" async="async" data-wp-strategy="async"></script>
+</body>
+
+<!-- Mirrored from ijz.me/?p=71 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:47:45 GMT -->
+</html>

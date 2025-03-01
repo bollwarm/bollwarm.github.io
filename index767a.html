@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="zh-Hans">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="zh-Hans">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="zh-Hans">
+<!--<![endif]-->
+
+<!-- Mirrored from ijz.me/?p=670 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:54:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>perl one-liners explained 中文版 （七）正则表达式 | 虫虫之家</title>
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="pingback" href="xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://ijz.me/wp-content/themes/twentytwelve/js/html5.js?ver=3.7.0" type="text/javascript"></script>
+<![endif]-->
+<meta name='robots' content='max-image-preview:large' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel='dns-prefetch' href='index.html' />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; Feed" href="indexd784.html?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="虫虫之家 &raquo; 评论 Feed" href="indexa6da.html?feed=comments-rss2" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/ijz.me\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.2"}};
+/*! This file is auto-generated */
+!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83d\udc26\u200d\u2b1b","\ud83d\udc26\u200b\u2b1b")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<link rel='stylesheet' id='crayon-css' href='wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min653d.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-classic-css' href='wp-content/plugins/crayon-syntax-highlighter/themes/classic/classic653d.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css' href='wp-content/plugins/crayon-syntax-highlighter/fonts/monaco653d.css?ver=2.7.1' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='wp-includes/css/dist/block-library/style.mind1c0.css?ver=6.7.2' type='text/css' media='all' />
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote:where(.has-text-align-right){border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote:where(.has-text-align-center){border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote:where(.is-style-plain){border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #21759b;--wp--preset--color--dark-gray: #444;--wp--preset--color--medium-gray: #9f9f9f;--wp--preset--color--light-gray: #e6e6e6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='twentytwelve-fonts-css' href='wp-content/themes/twentytwelve/fonts/font-open-sans6a62.css?ver=20230328' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css' href='wp-content/themes/twentytwelve/style3eda.css?ver=20241112' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-block-style-css' href='wp-content/themes/twentytwelve/css/blocks2676.css?ver=20240812' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css' href='http://ijz.me/wp-content/themes/twentytwelve/css/ie.css?ver=20240722' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" id="crayon_js-js-extra">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/ijz.me\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002","minimize":"\u70b9\u51fb\u5c55\u5f00\u4ee3\u7801"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min653d.js?ver=2.7.1" id="crayon_js-js"></script>
+<script type="text/javascript" src="wp-content/themes/twentytwelve/js/navigation66f2.js?ver=20141205" id="twentytwelve-navigation-js" defer="defer" data-wp-strategy="defer"></script>
+<link rel="https://api.w.org/" href="index52f0.json?rest_route=/" /><link rel="alternate" title="JSON" type="application/json" href="index9e5f.json?rest_route=/wp/v2/posts/670" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.php?rsd" />
+<meta name="generator" content="WordPress 6.7.2" />
+<link rel="canonical" href="index767a.html?p=670" />
+<link rel='shortlink' href='index767a.html?p=670' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="index2d42.json?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D670" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="index5802.php?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=http%3A%2F%2Fijz.me%2F%3Fp%3D670&amp;format=xml" />
+</head>
+
+<body class="post-template-default single single-post postid-670 single-format-standard wp-embed-responsive full-width custom-font-enabled">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header">
+		<hgroup>
+			<h1 class="site-title"><a href="index.html" rel="home">虫虫之家</a></h1>
+			<h2 class="site-description">略懂技术</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation">
+			<button class="menu-toggle">菜单</button>
+			<a class="assistive-text" href="#content">跳至正文</a>
+			<div class="menu-top-container"><ul id="menu-top" class="nav-menu"><li id="menu-item-969" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-969"><a href="index5b0d.html?cat=12">编程</a></li>
+<li id="menu-item-970" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-970"><a href="index0fbe.html?cat=21">perl</a></li>
+<li id="menu-item-971" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-971"><a href="index9035.html?cat=22">php</a></li>
+<li id="menu-item-972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-972"><a href="index2d79.html?cat=26">web</a></li>
+<li id="menu-item-973" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-973"><a href="indexc728.html?cat=7">工具</a></li>
+<li id="menu-item-974" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-974"><a href="indexb0b7.html?cat=6">安全</a></li>
+<li id="menu-item-975" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-975"><a href="index3f7b.html?cat=2">linux</a></li>
+<li id="menu-item-976" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-976"><a href="indexaa1e.html?cat=4">古文</a></li>
+<li id="menu-item-977" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-977"><a href="indexc055.html?cat=17">随感</a></li>
+<li id="menu-item-978" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-978"><a href="index54cb.html?cat=23">rex</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-670" class="post-670 post type-post status-publish format-standard hentry category-perl tag-perl tag-perl-one-liners">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">perl one-liners explained 中文版 （七）正则表达式</h1>
+								</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第六部分——正则表达式</p>
+<p>原文地址：http://www.catonmat.net/download/perl1line.txt</p>
+<p>原书blog地址：http://www.catonmat.net/blog/perl-book/</p>
+<p>本翻译项目地址：<a href="https://github.com/bollwarm/perlonelinecn">https://github.com/bollwarm/perlonelinecn</a></p>
+<p><span id="more-670"></span></p>
+<h1>正则表达式</h1>
+<h2><a id="user-content-112匹配貌似邮件的正则表达式" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#112%E5%8C%B9%E9%85%8D%E8%B2%8C%E4%BC%BC%E9%82%AE%E4%BB%B6%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"></a>112.匹配貌似邮件的正则表达式</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7e7990709424" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+ /^d{1,3}.d{1,3}.d{1,3}.d{1,3}$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7e7990709424-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7e7990709424-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7e7990709424-1"><span class="crayon-h"> </span>/^<span class="crayon-e">d</span><span class="crayon-sy">{</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">.</span><span class="crayon-i">d</span><span class="crayon-sy">{</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">.</span><span class="crayon-i">d</span><span class="crayon-sy">{</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">.</span><span class="crayon-i">d</span><span class="crayon-sy">{</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7e7990709424-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0002 seconds] -->
+<p>这个正则表达式不能保证匹配都是合法的ip地址，匹配成功只不过貌似ip地址的字串。比如，它可以匹配一个合法的ip地址81.198.240.140，同时也能匹配一个非法ip地址比如923.844.1.999。 下面解释他是如何工作的。正则开始的^符号是一个锚字符，用来匹配一个字串的开始。接着d{1,3}匹配一个，两个或者三个连续数字。“.”匹配一个点。最后的$也是一个锚字符匹配字段的结尾。使用^和$锚字符非常有必要，否则的话诸如“foo213.3.1.2bar”一样的字串也会被匹配上。 这个正则可以简单的把开始部分d{1,3}.重复三次的到同样功能的表达式：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7ed060531369" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^(d{1,3}.){3}d{1,3}$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7ed060531369-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7ed060531369-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7ed060531369-1">/^<span class="crayon-sy">(</span><span class="crayon-e">d</span><span class="crayon-sy">{</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">.</span><span class="crayon-sy">)</span><span class="crayon-sy">{</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-e">d</span><span class="crayon-sy">{</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7ed060531369-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p></p>
+<h2><a id="user-content-113测试数字是否在0-255的范围内" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#113%E6%B5%8B%E8%AF%95%E6%95%B0%E5%AD%97%E6%98%AF%E5%90%A6%E5%9C%A80-255%E7%9A%84%E8%8C%83%E5%9B%B4%E5%86%85"></a>113.测试数字是否在0-255的范围内</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7ef239464574" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7ef239464574-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7ef239464574-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7ef239464574-1">/^<span class="crayon-sy">(</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-cn">1</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-cn">2</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">4</span><span class="crayon-sy">]</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-cn">25</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">5</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span><span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7ef239464574-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0002 seconds] -->
+<p>让我来看这个正则是如何工作的。此范围内的数可以为一个，两个或者三个数字。如果是一个数字，我们可以让它为任何[0-9]。如果是两个数字，我们也允许它为任何[0-9][0-9]的组合。然而如果它是三个数字的，则他必须为100多或者200多的数。如果为100多的，可以用1[0-9][0-9]匹配它。如果是200多的数字，如果是小于250的，可以用2[0-4][0-9]匹配。或者250-255的，用25[0-5]匹配。</p>
+<h2><a id="user-content-114匹配ip地址" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#114%E5%8C%B9%E9%85%8Dip%E5%9C%B0%E5%9D%80"></a>114.匹配IP地址</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7f2541402107" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+my $ip_part = qr|([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|;
+if ($ip =~ /^($ip_part.){3}$ip_part$/) {
+say "valid ip";
+}
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7f2541402107-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7f2541402107-2">2</div><div class="crayon-num" data-line="crayon-67c32dc51d7f2541402107-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7f2541402107-4">4</div><div class="crayon-num" data-line="crayon-67c32dc51d7f2541402107-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7f2541402107-1"><span class="crayon-i">my</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-i">ip_part</span><span class="crayon-h"> </span>=<span class="crayon-h"> </span><span class="crayon-i">qr</span><span class="crayon-sy">|</span><span class="crayon-sy">(</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-cn">1</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-cn">2</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">4</span><span class="crayon-sy">]</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9</span><span class="crayon-sy">]</span><span class="crayon-sy">|</span><span class="crayon-cn">25</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">5</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span><span class="crayon-sy">|</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7f2541402107-2"><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-sy">$</span><span class="crayon-i">ip</span><span class="crayon-h"> </span>=<span class="crayon-sy">~</span><span class="crayon-h"> </span>/^<span class="crayon-sy">(</span><span class="crayon-sy">$</span><span class="crayon-i">ip_part</span><span class="crayon-sy">.</span><span class="crayon-sy">)</span><span class="crayon-sy">{</span><span class="crayon-cn">3</span><span class="crayon-sy">}</span><span class="crayon-sy">$</span><span class="crayon-i">ip_part</span><span class="crayon-sy">$</span>/<span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-67c32dc51d7f2541402107-3"><span class="crayon-i">say</span><span class="crayon-h"> </span><span class="crayon-s">"valid ip"</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7f2541402107-4"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-67c32dc51d7f2541402107-5">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p>本正则组合了前面的两个。它用my $ip_part=qr/…/操作把正则表达式组合到一起，并且存到$ip_part变量中。接着用这个变量去匹配IP地址的四个部分。</p>
+<h2><a id="user-content-115检查字符串是否貌似email地址" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#115%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E8%B2%8C%E4%BC%BCemail%E5%9C%B0%E5%9D%80"></a>115.检查字符串是否貌似email地址。</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7f4091090416" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/.+@.+..+/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7f4091090416-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7f4091090416-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7f4091090416-1">/<span class="crayon-sy">.</span>+<span class="crayon-sy">@</span><span class="crayon-sy">.</span>+<span class="crayon-sy">.</span><span class="crayon-sy">.</span>+/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7f4091090416-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>这个正则确保字符串看起来像一个邮件地址。注意到这说的是看“起来像”。它不能保证确实是一个邮件地址。他的匹配过程是：首先匹配一些字符后跟个@符号，接着匹配任意字符然后到发现一个点，接着匹配更多个字符。如果这个匹配成功，那么这个字符串至少看起来就像个个邮件地址，他有@和.。 例如,<a href="mailto:admin@ijz.me">admin@ijz.me</a>可以匹配，但是admin@ijzme不会匹配，因为他匹配不到点.，这是必须的。 其实更可靠检测合法邮件地址的方法是是用Email::Valid 模块：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7f6292953687" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+use Email::Valid;
+print (Email::Valid-&gt;address('john@example.com') ? 'valid email' : 'invalid email');</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7f6292953687-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7f6292953687-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7f6292953687-1"><span class="crayon-st">use</span><span class="crayon-h"> </span><span class="crayon-i">Email</span><span class="crayon-sy">:</span><span class="crayon-sy">:</span><span class="crayon-i">Valid</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7f6292953687-2"><span class="crayon-e">print</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-i">Email</span><span class="crayon-sy">:</span><span class="crayon-sy">:</span><span class="crayon-i">Valid</span>-<span class="crayon-h">&gt;</span><span class="crayon-e">address</span><span class="crayon-sy">(</span><span class="crayon-s">'john@example.com'</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">?</span><span class="crayon-h"> </span><span class="crayon-s">'valid email'</span><span class="crayon-h"> </span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-s">'invalid email'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0002 seconds] -->
+<p></p>
+<h2><a id="user-content-116检测字符串为十进制数" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#116%E6%A3%80%E6%B5%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%BA%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0"></a>116.检测字符串为十进制数。</h2>
+<p>检测字串是否是数字非常难。我基于正则并且在Perl Cookbook对其做了解释。</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7f8711726866" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^d+$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7f8711726866-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7f8711726866-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7f8711726866-1">/^<span class="crayon-i">d</span>+<span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7f8711726866-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>这个正则匹配一个或者更多的数字d为了开始符^和结尾符$。但是它不能匹配诸如+3和-3这样的数字。让我们调整一下，匹配他们：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7fa675952011" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^[+-]?d+$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7fa675952011-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7fa675952011-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7fa675952011-1">/^<span class="crayon-sy">[</span>+-<span class="crayon-sy">]</span><span class="crayon-sy">?</span><span class="crayon-i">d</span>+<span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7fa675952011-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>此处[+-]?意思是在数字前匹配一个可选的正号或者负号。这个可以匹配+3或者-3，但是还不能匹配-0.3。让我们加上它：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7fc314631302" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^[+-]?d+.?d*$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7fc314631302-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7fc314631302-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7fc314631302-1">/^<span class="crayon-sy">[</span>+-<span class="crayon-sy">]</span><span class="crayon-sy">?</span><span class="crayon-i">d</span>+<span class="crayon-sy">.</span><span class="crayon-sy">?</span><span class="crayon-e ">d*</span><span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7fc314631302-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>我们在前一个正则的基础上加了.?d*，这匹配了一个可选的.在0或者其他数字后面。现在这个正则可以匹配诸如-0.3或者0.3的数字了。 更好的方式是是使用Regexp::Common模块，它提供了各种非常有用的正则表达式。比如，匹配一个整数你可以用$RE{num}{int}。 那么怎么匹配一个正16进制数字呢？见下式：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d7fe417282065" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^0x[0-9a-f]+$/i
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d7fe417282065-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d7fe417282065-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d7fe417282065-1">/^<span class="crayon-cn">0x</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">9a</span>-<span class="crayon-i">f</span><span class="crayon-sy">]</span>+<span class="crayon-sy">$</span>/<span class="crayon-i">i</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d7fe417282065-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>这可以匹配十六进制前缀0x，紧跟着数字。模式结尾的/i标志确保匹配是不区分大小写的。例如0x57af匹配，0X5Fa也匹配，但是97匹配不了，由于他是一个十进制数。</p>
+<p>当然最后是用模块$RE{num}{hex},它会支持负数，小数和逗点的数字组。 那么八进制呢？见下：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d800769151392" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^0[0-7]+$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d800769151392-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d800769151392-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d800769151392-1">/^<span class="crayon-cn">0</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span>-<span class="crayon-cn">7</span><span class="crayon-sy">]</span>+<span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d800769151392-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>8进制数前缀是0，其后紧跟八进制数字0-7。例如，013匹配，但是09不会匹配，因为9不是一个合法的八进制数。 更好的方式是使用$RE{num}{oct}，好处同上。</p>
+<p>最后2进制：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d801274461051" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^[01]+$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d801274461051-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d801274461051-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d801274461051-1">/^<span class="crayon-sy">[</span><span class="crayon-cn">01</span><span class="crayon-sy">]</span>+<span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d801274461051-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>二进制只包含0和1.例如，0101101匹配，但是210101不能，因为2不是合法的二进制数字。</p>
+<p>更好的方式是使用$RE{num}{bin}。</p>
+<h2><a id="user-content-117检测一个单词在字符串总出现了两次" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#117%E6%A3%80%E6%B5%8B%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%80%BB%E5%87%BA%E7%8E%B0%E4%BA%86%E4%B8%A4%E6%AC%A1"></a>117.检测一个单词在字符串总出现了两次。</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d803963823120" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/(word).*1/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d803963823120-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d803963823120-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d803963823120-1">/<span class="crayon-sy">(</span><span class="crayon-t">word</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span>*<span class="crayon-cn">1</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d803963823120-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>这个正则匹配了word紧跟着任意字符，随后是同样的word。此处（word）捕捉了word 分组1，并用1引用了分组1的内容，因此这个和写作/（word）.<em>word/的模式一样。例如，“silly things are silly”会匹配/(silly).</em>1/，但是“silly things are boring”不会匹配，因为后面这个字串中silly没有重复。</p>
+<h2><a id="user-content-118给字串中的所有数字加1" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#118%E7%BB%99%E5%AD%97%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E6%95%B0%E5%AD%97%E5%8A%A01"></a>118.给字串中的所有数字加1.</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d806735348264" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+$str =~ s/(d+)/$1+1/ge
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d806735348264-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d806735348264-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d806735348264-1"><span class="crayon-sy">$</span><span class="crayon-i">str</span><span class="crayon-h"> </span>=<span class="crayon-sy">~</span><span class="crayon-h"> </span><span class="crayon-i">s</span>/<span class="crayon-sy">(</span><span class="crayon-i">d</span>+<span class="crayon-sy">)</span>/<span class="crayon-sy">$</span><span class="crayon-cn">1</span>+<span class="crayon-cn">1</span>/<span class="crayon-i">ge</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d806735348264-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>此处我们使用替换操作符s///。他匹配所有的数字（d+）,把他们捕捉到组1，接着把他们的值替换其值加1后的值。g标志确保它会知道字串中的所有的数字，e标志使得$1+1作为一个Perl表达式执行。 例如，“this 1234 is awesome 444”会被替换为“this 1235 is awesome 445”。</p>
+<h2><a id="user-content-119-提取http头中用户客户端字串" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#119-%E6%8F%90%E5%8F%96http%E5%A4%B4%E4%B8%AD%E7%94%A8%E6%88%B7%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%97%E4%B8%B2"></a>119. 提取HTTP头中用户客户端字串</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d808211278591" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/^User-Agent: (.+)$/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d808211278591-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d808211278591-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d808211278591-1">/^<span class="crayon-i">User</span>-<span class="crayon-i">Agent</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-sy">.</span>+<span class="crayon-sy">)</span><span class="crayon-sy">$</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d808211278591-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>HTTP头以键值对的格式表示的。操作这些字串很简单，你只要叫正则机保存值部分在$1组变量。 例如，如果HTTP头包含，</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d80a906161419" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+Host: localhost:8000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_0_0; en-US)
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: en-US,en;q=0.8
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+.
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d80a906161419-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d80a906161419-2">2</div><div class="crayon-num" data-line="crayon-67c32dc51d80a906161419-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d80a906161419-4">4</div><div class="crayon-num" data-line="crayon-67c32dc51d80a906161419-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d80a906161419-6">6</div><div class="crayon-num" data-line="crayon-67c32dc51d80a906161419-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d80a906161419-8">8</div><div class="crayon-num" data-line="crayon-67c32dc51d80a906161419-9">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d80a906161419-1"><span class="crayon-i">Host</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">localhost</span><span class="crayon-sy">:</span><span class="crayon-cn">8000</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d80a906161419-2"><span class="crayon-i">Connection</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">keep</span>-<span class="crayon-e">alive</span></div><div class="crayon-line" id="crayon-67c32dc51d80a906161419-3"><span class="crayon-i">User</span>-<span class="crayon-i">Agent</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">Mozilla</span>/<span class="crayon-cn">5.0</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-i">Macintosh</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-i">U</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-e">Intel </span><span class="crayon-e">Mac </span><span class="crayon-i">OS</span><span class="crayon-h"> </span><span class="crayon-i">X</span><span class="crayon-h"> </span><span class="crayon-cn">10_0_0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-i">en</span>-<span class="crayon-i">US</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d80a906161419-4"><span class="crayon-i">Accept</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">application</span>/<span class="crayon-i">xml</span><span class="crayon-sy">,</span><span class="crayon-i">application</span>/<span class="crayon-i">xhtml</span>+<span class="crayon-i">xml</span><span class="crayon-sy">,</span><span class="crayon-i">text</span>/<span class="crayon-i">html</span><span class="crayon-sy">;</span><span class="crayon-i">q</span>=<span class="crayon-cn">0.9</span><span class="crayon-sy">,</span><span class="crayon-i">text</span>/<span class="crayon-i">plain</span><span class="crayon-sy">;</span><span class="crayon-i">q</span>=<span class="crayon-cn">0.8</span><span class="crayon-sy">,</span><span class="crayon-i">image</span>/<span class="crayon-i">png</span><span class="crayon-sy">,</span>*/*<span class="crayon-sy">;</span><span class="crayon-i">q</span>=<span class="crayon-cn">0.5</span></div><div class="crayon-line" id="crayon-67c32dc51d80a906161419-5"><span class="crayon-i">Accept</span>-<span class="crayon-i">Encoding</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">gzip</span><span class="crayon-sy">,</span><span class="crayon-i">deflate</span><span class="crayon-sy">,</span><span class="crayon-e">sdch</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d80a906161419-6"><span class="crayon-i">Accept</span>-<span class="crayon-i">Language</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">en</span>-<span class="crayon-i">US</span><span class="crayon-sy">,</span><span class="crayon-i">en</span><span class="crayon-sy">;</span><span class="crayon-i">q</span>=<span class="crayon-cn">0.8</span></div><div class="crayon-line" id="crayon-67c32dc51d80a906161419-7"><span class="crayon-i">Accept</span>-<span class="crayon-i">Charset</span><span class="crayon-sy">:</span><span class="crayon-h"> </span><span class="crayon-i">ISO</span>-<span class="crayon-cn">8859</span>-<span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-i">utf</span>-<span class="crayon-cn">8</span><span class="crayon-sy">;</span><span class="crayon-i">q</span>=<span class="crayon-cn">0.7</span><span class="crayon-sy">,</span>*<span class="crayon-sy">;</span><span class="crayon-i">q</span>=<span class="crayon-cn">0.3</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d80a906161419-8"><span class="crayon-sy">.</span></div><div class="crayon-line" id="crayon-67c32dc51d80a906161419-9">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p>那么正则表示式将会提取Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_0_0; en-US)字串</p>
+<h2><a id="user-content-120匹配可打印字符" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#120%E5%8C%B9%E9%85%8D%E5%8F%AF%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6"></a>120.匹配可打印字符。</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d80c849645448" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+/[ -~]/
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d80c849645448-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d80c849645448-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d80c849645448-1">/<span class="crayon-sy">[</span><span class="crayon-h"> </span>-<span class="crayon-sy">~</span><span class="crayon-sy">]</span>/</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d80c849645448-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>这个一个非常巧妙的表达式。为了理解他，看下ascii的说明。你可以发现空格符起始于0x20，符号~是0x7e。所有的空格和~之间的字符的都是可以打印字符。这个正则表达式恰好匹配了这些。[ -~]定义了一个从空格到的~字符范围。这一直是我最喜欢的正则表达式。 /[^ -~]/</p>
+<p>这个匹配恰好和[ -~]相反。</p>
+<h2><a id="user-content-121匹配两个html签之间的文本" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#121%E5%8C%B9%E9%85%8D%E4%B8%A4%E4%B8%AAhtml%E7%AD%BE%E4%B9%8B%E9%97%B4%E7%9A%84%E6%96%87%E6%9C%AC"></a>121.匹配两个HTML签之间的文本</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d80e365993135" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+m|([^&lt;]*)|</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d80e365993135-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d80e365993135-1"><span class="crayon-i">m</span><span class="crayon-sy">|</span><span class="crayon-sy">(</span><span class="crayon-sy">[</span>^<span class="crayon-h">&lt;</span><span class="crayon-sy">]</span>*<span class="crayon-sy">)</span><span class="crayon-sy">|</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>这个正则表达式匹配了所有&#8230; 签之间的内容。此处技巧是([^&lt;]*)，它匹配会匹配尽可能多的字符知道发现一个&lt;字符，他会开始另一个标签。 另外你也可以写成：</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d811836393725" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+m|(.*?)|
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d811836393725-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d811836393725-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d811836393725-1"><span class="crayon-i">m</span><span class="crayon-sy">|</span><span class="crayon-sy">(</span><span class="crayon-sy">.</span>*<span class="crayon-sy">?</span><span class="crayon-sy">)</span><span class="crayon-sy">|</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d811836393725-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>但是这个有点不一样了。例如，如果HTML内容是 hello 则第一个正则不能匹配，但是第二个正则表达会匹配到hello，由于(.*?)匹配尽可能少的内容知道发现。这恰好是hello。 但是我们一般不建议用正则表达式去匹配和处理HTML。使用诸如HTML::TreeBuilder 模块去做这项工作，是更明智的选择。</p>
+<h2><a id="user-content-122替换所有的签为" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#122%E6%9B%BF%E6%8D%A2%E6%89%80%E6%9C%89%E7%9A%84%E7%AD%BE%E4%B8%BA"></a>122.替换所有的签为</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d812612919975" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+$html =~ s|&lt;(/)?b&gt;|&lt;$1strong&gt;|g</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d812612919975-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d812612919975-1"><span class="crayon-sy">$</span><span class="crayon-i">html</span><span class="crayon-h"> </span>=<span class="crayon-sy">~</span><span class="crayon-h"> </span><span class="crayon-i">s</span><span class="crayon-sy">|</span><span class="crayon-h">&lt;</span><span class="crayon-sy">(</span>/<span class="crayon-sy">)</span><span class="crayon-sy">?</span><span class="crayon-i">b</span><span class="crayon-h">&gt;</span><span class="crayon-sy">|</span><span class="crayon-h">&lt;</span><span class="crayon-sy">$</span><span class="crayon-cn">1strong</span><span class="crayon-h">&gt;</span><span class="crayon-sy">|</span><span class="crayon-i">g</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>此处我假设HTML内容保存在变量$html中。接着&lt;(/)?b&gt;匹配了起始和结束的签，捕捉可选的可选签在组$1，接着用 或者 替换匹配的签，这取决于匹配的是一个起始或者结束tag签。</p>
+<h2><a id="user-content-123提取正则表达式中所有匹配的部分" class="anchor" href="https://github.com/bollwarm/perlonelinecn/blob/master/正则表达式.md#123%E6%8F%90%E5%8F%96%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E6%89%80%E6%9C%89%E5%8C%B9%E9%85%8D%E7%9A%84%E9%83%A8%E5%88%86"></a>123.提取正则表达式中所有匹配的部分。</h2>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d814493299683" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+my @matches = $text =~ /regex/g;
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d814493299683-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d814493299683-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d814493299683-1"><span class="crayon-i">my</span><span class="crayon-h"> </span><span class="crayon-sy">@</span><span class="crayon-i">matches</span><span class="crayon-h"> </span>=<span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-i">text</span><span class="crayon-h"> </span>=<span class="crayon-sy">~</span><span class="crayon-h"> </span>/<span class="crayon-i">regex</span>/<span class="crayon-i">g</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d814493299683-2">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0001 seconds] -->
+<p>此处正则表达式在list上下文中，使得他返回所有匹配。匹配的内容被放进@matches数组中。 例如，下面的正则表达式提取了一个字符串中所有的数字。</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-67c32dc51d816143383072" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="切换是否显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="点击展开代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="复制代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+my $t = "10 hello 25 moo 31 foo";
+my @nums = $text =~ /d+/g;
+@nums 现在包含了(10, 25, 30)。
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-67c32dc51d816143383072-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d816143383072-2">2</div><div class="crayon-num" data-line="crayon-67c32dc51d816143383072-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-67c32dc51d816143383072-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-67c32dc51d816143383072-1"><span class="crayon-i">my</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-i">t</span><span class="crayon-h"> </span>=<span class="crayon-h"> </span><span class="crayon-s">"10 hello 25 moo 31 foo"</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d816143383072-2"><span class="crayon-i">my</span><span class="crayon-h"> </span><span class="crayon-sy">@</span><span class="crayon-i">nums</span><span class="crayon-h"> </span>=<span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-i">text</span><span class="crayon-h"> </span>=<span class="crayon-sy">~</span><span class="crayon-h"> </span>/<span class="crayon-i">d</span>+/<span class="crayon-i">g</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-67c32dc51d816143383072-3"><span class="crayon-sy">@</span><span class="crayon-i">nums</span><span class="crayon-h"> </span>现在包含了<span class="crayon-sy">(</span><span class="crayon-cn">10</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">25</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">30</span><span class="crayon-sy">)</span>。</div><div class="crayon-line crayon-striped-line" id="crayon-67c32dc51d816143383072-4">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0002 seconds] -->
+<p></p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			本条目发布于<a href="index767a.html?p=670" title="下午4:25" rel="bookmark"><time class="entry-date" datetime="2014-09-25T16:25:51+08:00">2014年9月25日</time></a>。属于<a href="index0fbe.html?cat=21" rel="category">perl</a>分类，被贴了 <a href="indexafcb.html?tag=perl" rel="tag">perl</a>、<a href="index2f97.html?tag=perl-one-liners" rel="tag">perl One-liners</a> 标签。<span class="by-author">作者是<span class="author vcard"><a class="url fn n" href="index3f71.html?author=2" title="查看所有由桔子发布的文章" rel="author">桔子</a></span>。</span>								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">文章导航</h3>
+					<span class="nav-previous"><a href="index197a.html?p=666" rel="prev"><span class="meta-nav">&larr;</span> bash重大漏洞用rex批量升级服务器</a></span>
+					<span class="nav-next"><a href="index8374.html?p=675" rel="next">mysql忘记root密码重置 <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://cn.wordpress.org/" class="imprint" title="优雅的个人发布平台">
+				自豪地采用WordPress			</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+</body>
+
+<!-- Mirrored from ijz.me/?p=670 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Mar 2025 15:54:53 GMT -->
+</html>
