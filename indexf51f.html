@@ -9,8 +9,8 @@
 
 <channel>
 	<title>tomcat &#8211; 虫虫之家</title>
-	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=tomcat" rel="self" type="application/rss+xml" />
-	<link>http://ijz.me</link>
+	<atom:link href="/?feed=rss2&#038;tag=tomcat" rel="self" type="application/rss+xml" />
+	<link></link>
 	<description>略懂技术</description>
 	<lastBuildDate>Tue, 18 Aug 2015 10:22:14 +0000</lastBuildDate>
 	<language>zh-Hans</language>
@@ -21,15 +21,15 @@
 	<generator>https://wordpress.org/?v=6.7.2</generator>
 	<item>
 		<title>tomcat 只监听一个端口</title>
-		<link>http://ijz.me/?p=759</link>
-					<comments>http://ijz.me/?p=759#respond</comments>
+		<link>/?p=759</link>
+					<comments>/?p=759#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Tue, 18 Aug 2015 10:22:14 +0000</pubDate>
 				<category><![CDATA[web]]></category>
 		<category><![CDATA[安全]]></category>
 		<category><![CDATA[tomcat]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=759</guid>
+		<guid isPermaLink="false">/?p=759</guid>
 
 					<description><![CDATA[tomcat默认会监听3个端口： 一个主端口，默认为8080 一个shutdown端口，默认8005 还有一个 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>tomcat默认会监听3个端口：</p>
@@ -44,7 +44,7 @@ AJP端口用来在应用服务器交互时候用，比如apache链接tomcat等�
 enableLookups="false" redirectPort="*" protocol="AJP/1.3" /&gt;--&gt;</pre><p>shown端口是写在Server参数里的，直接去掉是不管用，也是会默认启动的，一般在安全设置时候建议把端口修改为其他端口，shutdown修改为其他复杂字串。实际上这个端口是可以直接屏蔽不监听的。设置时候将其port值修改为-1即可：</p><pre class="crayon-plain-tag">&lt;Server port="-1" shutdown="SHUTDOWN"&gt;</pre><p></p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=759</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=759</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		

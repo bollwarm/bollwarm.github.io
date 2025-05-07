@@ -9,8 +9,8 @@
 
 <channel>
 	<title>perl One-liners &#8211; 虫虫之家</title>
-	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=perl-one-liners" rel="self" type="application/rss+xml" />
-	<link>http://ijz.me</link>
+	<atom:link href="/?feed=rss2&#038;tag=perl-one-liners" rel="self" type="application/rss+xml" />
+	<link></link>
 	<description>略懂技术</description>
 	<lastBuildDate>Sat, 01 Mar 2025 12:34:18 +0000</lastBuildDate>
 	<language>zh-Hans</language>
@@ -21,15 +21,15 @@
 	<generator>https://wordpress.org/?v=6.7.2</generator>
 	<item>
 		<title>打印特定行范围的多种方法（5-10行）</title>
-		<link>http://ijz.me/?p=985</link>
-					<comments>http://ijz.me/?p=985#respond</comments>
+		<link>/?p=985</link>
+					<comments>/?p=985#respond</comments>
 		
 		<dc:creator><![CDATA[lin123]]></dc:creator>
 		<pubDate>Thu, 07 Sep 2017 12:31:00 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[shell]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=985</guid>
+		<guid isPermaLink="false">/?p=985</guid>
 
 					<description><![CDATA[废话少说，直接撸代码： perl -ne 'print if 5..10' xxoo #感谢flw提醒，忘记这 [&#8230;]]]></description>
 										<content:encoded><![CDATA[
@@ -40,15 +40,15 @@
 <p><code>perl -ne 'print if 5..10' xxoo #感谢flw提醒，忘记这个了<br>perl -ne 'print if $.>=5 and $.&lt;=10' xxoo<br>perl -ne 'print if int($.) ~~ (5..10)'<br>perl -ne 'print if grep { $_ == $. } 5..10'xxoo<br>sed -ne '5,10 p' xxoo<br>awk 'NR==5,NR==10' xxoo<br>head -10 xxoo |tail -6<br>tail -n +5 xxoo | head -n 6<br>grep . -n xxoo |grep -E "^(5|6|7|8|9|10):"|perl -lpe 's/\d+://'</code></p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=985</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=985</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>利用perl-oneline快速定位网站攻击源并处理</title>
-		<link>http://ijz.me/?p=844</link>
-					<comments>http://ijz.me/?p=844#respond</comments>
+		<link>/?p=844</link>
+					<comments>/?p=844#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 26 Feb 2016 08:18:38 +0000</pubDate>
@@ -56,14 +56,14 @@
 		<category><![CDATA[perl]]></category>
 		<category><![CDATA[安全]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=844</guid>
+		<guid isPermaLink="false">/?p=844</guid>
 
 					<description><![CDATA[1、问题发现 在查看网站攻击信息，发现一个时间段流量徒增，猜测可能有攻击，记下当时的时间点，并截图 这是百度免 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<header class="entry-header"></header>
 <div class="entry-content">
 <p>1、问题发现</p>
 <p>在查看网站攻击信息，发现一个时间段流量徒增，猜测可能有攻击，记下当时的时间点，并截图</p>
-<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446.png" rel="attachment wp-att-833"><img decoding="async" class="alignnone size-medium wp-image-833" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446-300x121.png" sizes="(max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-300x121.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-768x310.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446-624x252.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216162446.png 958w" alt="QQ图片20160216162446" width="300" height="121" /></a></p>
+<p><a href="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446.png" rel="attachment wp-att-833"><img decoding="async" class="alignnone size-medium wp-image-833" src="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216162446-300x121.png" sizes="(max-width: 300px) 100vw, 300px" srcset="/wp-content/uploads/2016/02/QQ图片20160216162446-300x121.png 300w, /wp-content/uploads/2016/02/QQ图片20160216162446-768x310.png 768w, /wp-content/uploads/2016/02/QQ图片20160216162446-624x252.png 624w, /wp-content/uploads/2016/02/QQ图片20160216162446.png 958w" alt="QQ图片20160216162446" width="300" height="121" /></a></p>
 <p>这是百度免费cdn的免费统计信息，可见今天早上1点到2点有异常流量。<br />
 <span id="more-844"></span></p>
 <p>2、问题定位</p>
@@ -90,7 +90,7 @@
 </table>
 </div>
 </div>
-<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045.png" rel="attachment wp-att-834"><img decoding="async" class="alignnone size-medium wp-image-834" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045-300x143.png" sizes="(max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-300x143.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-768x365.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-1024x487.png 1024w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045-624x297.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163045.png 1033w" alt="QQ图片20160216163045" width="300" height="143" /></a></p>
+<p><a href="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045.png" rel="attachment wp-att-834"><img decoding="async" class="alignnone size-medium wp-image-834" src="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163045-300x143.png" sizes="(max-width: 300px) 100vw, 300px" srcset="/wp-content/uploads/2016/02/QQ图片20160216163045-300x143.png 300w, /wp-content/uploads/2016/02/QQ图片20160216163045-768x365.png 768w, /wp-content/uploads/2016/02/QQ图片20160216163045-1024x487.png 1024w, /wp-content/uploads/2016/02/QQ图片20160216163045-624x297.png 624w, /wp-content/uploads/2016/02/QQ图片20160216163045.png 1033w" alt="QQ图片20160216163045" width="300" height="143" /></a></p>
 <p>可见确实有大量不同寻常的访问，可判断为对xmlrpc.php的攻击。</p>
 <p>(2)对来源ip进行定位并统计次数</p>
 <div id="crayon-56e41d4b6071a600458748" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
@@ -115,7 +115,7 @@
 </table>
 </div>
 </div>
-<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" rel="attachment wp-att-835"><img decoding="async" class="alignnone size-full wp-image-835" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" alt="QQ图片20160216163426" width="254" height="147" /></a></p>
+<p><a href="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" rel="attachment wp-att-835"><img decoding="async" class="alignnone size-full wp-image-835" src="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163426.png" alt="QQ图片20160216163426" width="254" height="147" /></a></p>
 <p>可以明确看到是这两个ip在攻击，来源地都是美国</p>
 <p>(3)对两个ip单独分析，分析其行为</p>
 <div id="crayon-56e41d4b60724200519498" class="crayon-syntax crayon-theme-github-copy crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover">
@@ -140,7 +140,7 @@
 </table>
 </div>
 </div>
-<p><a href="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649.png" rel="attachment wp-att-837"><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-837" src="http://ijz.me/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649-300x66.png" sizes="auto, (max-width: 300px) 100vw, 300px" srcset="http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-300x66.png 300w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-768x170.png 768w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649-624x138.png 624w, http://ijz.me/wp-content/uploads/2016/02/QQ图片20160216163649.png 908w" alt="QQ图片20160216163649" width="300" height="66" /></a></p>
+<p><a href="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649.png" rel="attachment wp-att-837"><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-837" src="/wp-content/uploads/2016/02/QQ%E5%9B%BE%E7%89%8720160216163649-300x66.png" sizes="auto, (max-width: 300px) 100vw, 300px" srcset="/wp-content/uploads/2016/02/QQ图片20160216163649-300x66.png 300w, /wp-content/uploads/2016/02/QQ图片20160216163649-768x170.png 768w, /wp-content/uploads/2016/02/QQ图片20160216163649-624x138.png 624w, /wp-content/uploads/2016/02/QQ图片20160216163649.png 908w" alt="QQ图片20160216163649" width="300" height="66" /></a></p>
 <p>可见，这两个ip先通过搜索文章作者(访问/?author=x)，找到用户名，然后对用户名和密码进行尝试攻击。</p>
 <p>3、处理和后续扩展<br />
 首先对两个ip进行封禁</p>
@@ -180,21 +180,21 @@ iptabl&lt;b style=&#8217;color:#324692;background-color:#ffc0cb&#8217;&gt;e&lt;/
 <p>&nbsp;</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=844</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=844</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>perl 实现打印匹配模式行及上下行的操作</title>
-		<link>http://ijz.me/?p=846</link>
-					<comments>http://ijz.me/?p=846#respond</comments>
+		<link>/?p=846</link>
+					<comments>/?p=846#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Thu, 21 Jan 2016 21:25:39 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=846</guid>
+		<guid isPermaLink="false">/?p=846</guid>
 
 					<description><![CDATA[这个可能用的着，在看日志时候，比如搜索tomcat 错误日志的时候 1、perl One-liner实现 [c [&#8230;]]]></description>
 										<content:encoded><![CDATA[<header class="entry-header"></header>
@@ -223,15 +223,15 @@ print $b[$_];
 </div>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=846</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=846</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>屏蔽ssh恶意扫描ip的脚本</title>
-		<link>http://ijz.me/?p=731</link>
-					<comments>http://ijz.me/?p=731#respond</comments>
+		<link>/?p=731</link>
+					<comments>/?p=731#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Sun, 16 Aug 2015 09:39:15 +0000</pubDate>
@@ -239,7 +239,7 @@ print $b[$_];
 		<category><![CDATA[安全]]></category>
 		<category><![CDATA[perl One-liners]]></category>
 		<category><![CDATA[shell]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=731</guid>
+		<guid isPermaLink="false">/?p=731</guid>
 
 					<description><![CDATA[近来发现有ip恶意扫描服务器，写个脚本自动对恶意攻击的ip进行封禁。主要原理是定期crontab任务分析sec [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>近来发现有ip恶意扫描服务器，写个脚本自动对恶意攻击的ip进行封禁。主要原理是定期crontab任务分析secure日志（扫描尝试登陆的会有错误日志），超过错误次数就将其加入iptables DROP 链接。可以在一定程度上访问恶意攻击提供，安全性。附上脚本（代码另存为<code>/root/block_ssh.sh</code>。执行<code>echo "*/5 * * * * root /root/block_ssh.sh" &gt;&gt;/etc/crontab</code> 每5分钟检查一次文件。）<span id="more-731"></span></p><pre class="crayon-plain-tag">#!/bin/bash
@@ -266,15 +266,15 @@ done</pre><p>&nbsp;</p>
 <p>&nbsp;</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=731</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=731</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>linux 一条语句查杀php木马</title>
-		<link>http://ijz.me/?p=712</link>
-					<comments>http://ijz.me/?p=712#respond</comments>
+		<link>/?p=712</link>
+					<comments>/?p=712#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Mon, 23 Mar 2015 01:47:23 +0000</pubDate>
@@ -283,7 +283,7 @@ done</pre><p>&nbsp;</p>
 		<category><![CDATA[安全]]></category>
 		<category><![CDATA[find]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=712</guid>
+		<guid isPermaLink="false">/?p=712</guid>
 
 					<description><![CDATA[根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。   fi [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>根据php木马中的一些特征字段进行搜索，就可以搜出可能含有木马的的文件，特征字段可自行根据需要添加。<br />
@@ -313,20 +313,20 @@ find . -type f -name &#8220;*.html&#8221;|xargs grep ‘yourstring’</p>
 <div id="main"></div>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=712</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=712</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>perl one-liners explained 中文版 （七）正则表达式</title>
-		<link>http://ijz.me/?p=670</link>
+		<link>/?p=670</link>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Thu, 25 Sep 2014 08:25:51 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=670</guid>
+		<guid isPermaLink="false">/?p=670</guid>
 
 					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第六部分——正则表达式</p>
@@ -383,14 +383,14 @@ my @nums = $text =~ /d+/g;
 			</item>
 		<item>
 		<title>perl one-liners explained 中文版 （六）有选择的打印或者删除行</title>
-		<link>http://ijz.me/?p=651</link>
-					<comments>http://ijz.me/?p=651#respond</comments>
+		<link>/?p=651</link>
+					<comments>/?p=651#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Sun, 14 Sep 2014 11:18:36 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=651</guid>
+		<guid isPermaLink="false">/?p=651</guid>
 
 					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p style="text-align: left;">perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第六部分——有选择的打印或者删除行</p>
@@ -456,21 +456,21 @@ my @nums = $text =~ /d+/g;
 <p></p><pre class="crayon-plain-tag">perl -ne 'print unless $a{$_}++'</pre><p>此处，只有行的哈希值$a{$_}为0时候才会打印。每一次Perl读进一行，都会将这个值增加1，所以这使得只有之前都没有出现过的行被打印。</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=651</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=651</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>perl one-liners explained 中文版 （五）文本转化和替换</title>
-		<link>http://ijz.me/?p=645</link>
-					<comments>http://ijz.me/?p=645#comments</comments>
+		<link>/?p=645</link>
+					<comments>/?p=645#comments</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Sun, 17 Aug 2014 10:29:12 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=645</guid>
+		<guid isPermaLink="false">/?p=645</guid>
 
 					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第五部分——文本转化和替换</p>
@@ -556,21 +556,21 @@ $line =~ s/foo/bar/
 <p>&nbsp;</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=645</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=645</wfw:commentRss>
 			<slash:comments>1</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>perl one-liners explained 中文版 （四）字符和数组生成</title>
-		<link>http://ijz.me/?p=640</link>
-					<comments>http://ijz.me/?p=640#respond</comments>
+		<link>/?p=640</link>
+					<comments>/?p=640#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Sun, 10 Aug 2014 14:26:42 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=640</guid>
+		<guid isPermaLink="false">/?p=640</guid>
 
 					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第四部分——数组和字符生成</p>
@@ -611,21 +611,21 @@ $line =~ s/foo/bar/
 <p></p><pre class="crayon-plain-tag">perl -le '@array = (&quot;a&quot;..&quot;z&quot;); print scalar @array'</pre><p>在标量上下文评估一个数组（或者哈希）的值会返回数组元素的数量。 另外一种计算方法是数组最后一个元素下表值加1：</p><pre class="crayon-plain-tag">perl -le '@array = (&quot;a&quot;..&quot;z&quot;); print $#array + 1'</pre><p>此处，$#array返回数组@array的最后一个元素的下标值，由于下标由0开始所以最后一个元素的下标比数组个数小1，所以通过加1就可以获数组的元素个数。</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=640</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=640</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>perl one-liners explained 中文版 （三）数值计算</title>
-		<link>http://ijz.me/?p=638</link>
-					<comments>http://ijz.me/?p=638#respond</comments>
+		<link>/?p=638</link>
+					<comments>/?p=638#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Wed, 06 Aug 2014 11:58:03 +0000</pubDate>
 				<category><![CDATA[perl]]></category>
 		<category><![CDATA[perl One-liners]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=638</guid>
+		<guid isPermaLink="false">/?p=638</guid>
 
 					<description><![CDATA[perl one-liners explained，是继《Famous Awk One-Liners Expl [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>perl one-liners explained，是继《<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">Famous Awk One-Liners Explained</a>》和《<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">Famous Sed One-Liners Explained</a>》，后Peteris Krumin推出的又一个系列文章，并已经出书了。本blog会陆续对其进行翻译成中文，以便大家学习。本篇是第三部分——数值计算</p>
@@ -723,7 +723,7 @@ print @r while @r = $p-&gt;next'</pre><p>这行代码使用面向对象的接口
 <p>另外一种方法是用位移和逐字节打印的方式：</p><pre class="crayon-plain-tag">perl -le '$ip = 2130706433; print join ".", map { (($ip&gt;&gt;8*($_))&amp;0xFF) } reverse 0..3'</pre><p>随便说一下，join “.”可以被特殊变量$,代替，它专门用来做为打印语句的默认分割符：</p><pre class="crayon-plain-tag">perl -le '$ip = 2130706433; $, = "."; print map { (($ip&gt;&gt;8*($_))&amp;0xFF) } reverse 0..3'</pre><p>&nbsp;</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=638</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=638</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		

@@ -9,8 +9,8 @@
 
 <channel>
 	<title>mysql &#8211; 虫虫之家</title>
-	<atom:link href="http://ijz.me/?feed=rss2&#038;tag=mysql" rel="self" type="application/rss+xml" />
-	<link>http://ijz.me</link>
+	<atom:link href="/?feed=rss2&#038;tag=mysql" rel="self" type="application/rss+xml" />
+	<link></link>
 	<description>略懂技术</description>
 	<lastBuildDate>Sat, 11 Oct 2014 06:53:54 +0000</lastBuildDate>
 	<language>zh-Hans</language>
@@ -21,13 +21,13 @@
 	<generator>https://wordpress.org/?v=6.7.2</generator>
 	<item>
 		<title>mysql忘记root密码重置</title>
-		<link>http://ijz.me/?p=675</link>
-					<comments>http://ijz.me/?p=675#respond</comments>
+		<link>/?p=675</link>
+					<comments>/?p=675#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Sat, 11 Oct 2014 06:53:54 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=675</guid>
+		<guid isPermaLink="false">/?p=675</guid>
 
 					<description><![CDATA[如果忘记了root密码，通过禁止认证模式启动mysql 然后重置root密码 win下： 1：进入cmd，停止 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>如果忘记了root密码，通过禁止认证模式启动mysql 然后重置root密码</p>
@@ -51,20 +51,20 @@
 <p>重启mysql : /etc/init.d/mysqld restart。</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=675</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=675</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>/zz/MySQL 常见的数据存储引擎的介绍和应用</title>
-		<link>http://ijz.me/?p=11</link>
-					<comments>http://ijz.me/?p=11#respond</comments>
+		<link>/?p=11</link>
+					<comments>/?p=11#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=11</guid>
+		<guid isPermaLink="false">/?p=11</guid>
 
 					<description><![CDATA[以下的文章主要讲述的是MySQL存储引擎的实际应用以及对MySQL数据库中各主要存储引擎的独特特点的描述，希望 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>以下的文章主要讲述的是<a href="http://database.51cto.com/art/200510/8400.htm">MySQL</a>存储引擎的实际应用以及对MySQL数据库中各主要存储引擎的独特特点的描述，希望你浏览完此文章你会在选择数据库存储引擎时带来一些帮助。以下就是文章的具体内容。</p>
@@ -122,20 +122,20 @@
 <p>以上的相关内容就是对如何选择合适的MySQL存储引擎以及MySQL各主要存储引擎特点的介绍，望你能有所收获。</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=11</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=11</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>/zz/MySQL数据库Concat和outfile函数妙用</title>
-		<link>http://ijz.me/?p=12</link>
-					<comments>http://ijz.me/?p=12#respond</comments>
+		<link>/?p=12</link>
+					<comments>/?p=12#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=12</guid>
+		<guid isPermaLink="false">/?p=12</guid>
 
 					<description><![CDATA[大家有没有接触过这样的需求，采集历史数据库中或者其他数据库中的某些信息，这些信息是另一个服务器需要执行sql的 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>大家有没有接触过这样的需求，采集历史数据库中或者其他数据库中的某些信息，这些信息是另一个服务器需要执行sql的条件。通常我们的处理手段是把这个信息通过sql找出来或导出，然后使用脚本或者手工拼凑新的新的sql语句。在很多紧急情况下(产品bug、数据错乱)会产生这样的需求，这个时候处理的是在线数据库，不能有一点马虎、如果数据量稍微大一点，DBA们就够焦头烂额了。我之前也多次遇见这种情况，我把一些经验介绍给大家。</p>
@@ -148,22 +148,22 @@
 <p>生成杀连接的语句，当然你可以使用where条件过滤某些类型的连接。</p><pre class="crayon-plain-tag">select&nbsp;concat('KILL&nbsp;',id,';')&nbsp;from&nbsp;information_schema.processlist&nbsp;into&nbsp;outfile&nbsp;&nbsp;'/tmp/kill.txt';source&nbsp;/tmp/kill.txt;</pre><p>&nbsp;</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=12</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=12</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Linux下通过FTP来备份Mysql数据/zz/</title>
-		<link>http://ijz.me/?p=35</link>
-					<comments>http://ijz.me/?p=35#respond</comments>
+		<link>/?p=35</link>
+					<comments>/?p=35#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[linux]]></category>
 		<category><![CDATA[shell]]></category>
 		<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=35</guid>
+		<guid isPermaLink="false">/?p=35</guid>
 
 					<description><![CDATA[#!/bin/bash host=202.100.222.2   #FTP主机 UserName=test   [&#8230;]]]></description>
 										<content:encoded><![CDATA[<section class="mod-page-body">
@@ -208,20 +208,20 @@ Iint<br />
 echo &#8220;ftp back ok!&#8221;</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=35</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=35</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>mysql slow query log及应用</title>
-		<link>http://ijz.me/?p=41</link>
-					<comments>http://ijz.me/?p=41#respond</comments>
+		<link>/?p=41</link>
+					<comments>/?p=41#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=41</guid>
+		<guid isPermaLink="false">/?p=41</guid>
 
 					<description><![CDATA[mysql有个slow query log功能就是记录运行比较慢的sql语句到日志里面，通过这个日志可以对数据 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>mysql有个slow query log功能就是记录运行比较慢的sql语句到日志里面，通过这个日志可以对数据库运行状态进行分析或者数据库调优。</p>
@@ -235,20 +235,20 @@ long_query_time 是指执行超过多久的sql会被log下来，这里是1秒。
 <p>-s，是排序方法，后面可以带c,t,l,r和ac,at,al,ar等数值，分别指按照query次数，时间，lock的时间和返回</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=41</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=41</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>MySQL 性能跟踪语句/zz/</title>
-		<link>http://ijz.me/?p=42</link>
-					<comments>http://ijz.me/?p=42#respond</comments>
+		<link>/?p=42</link>
+					<comments>/?p=42#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=42</guid>
+		<guid isPermaLink="false">/?p=42</guid>
 
 					<description><![CDATA[本文载自：http://blog.chinaunix.net/u/29134/showart_480834.h [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>本文载自：<a href="http://blog.chinaunix.net/u/29134/showart_480834.html">http://blog.chinaunix.net/u/29134/showart_480834.html</a></p>
@@ -384,21 +384,21 @@ Records: 2097152 Duplicates: 0 Warnings: 0</p>
 1 row in set (1.51 sec)</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=42</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=42</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>oracle和 mysql的几点区别/zz/</title>
-		<link>http://ijz.me/?p=45</link>
-					<comments>http://ijz.me/?p=45#respond</comments>
+		<link>/?p=45</link>
+					<comments>/?p=45#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[数据库]]></category>
 		<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=45</guid>
+		<guid isPermaLink="false">/?p=45</guid>
 
 					<description><![CDATA[Oracle数据库与MySQL数据库的区别是本文我们主要介绍的内容，希望能够对您有所帮助。 1.组函数用法规则 [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>Oracle数据库与MySQL数据库的区别是本文我们主要介绍的内容，希望能够对您有所帮助。</p>
@@ -434,21 +434,21 @@ Records: 2097152 Duplicates: 0 Warnings: 0</p>
 <p><strong>9.程序和函数里，操作数据库的工作完成后请注意结果集和指针的释放。</strong></p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=45</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=45</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>php和mysql时间互换</title>
-		<link>http://ijz.me/?p=53</link>
-					<comments>http://ijz.me/?p=53#respond</comments>
+		<link>/?p=53</link>
+					<comments>/?p=53#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[php]]></category>
 		<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=53</guid>
+		<guid isPermaLink="false">/?p=53</guid>
 
 					<description><![CDATA[在mysql中有三种时间字段类型：DATETIME，DATE和TIMESTAMP。DATETIME以YYYY- [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>在mysql中有三种时间字段类型：DATETIME，DATE和TIMESTAMP。DATETIME以YYYY-MM-DD HH:MM:SS格式的字符串来保存数据；DATE则是只有年月日以YYYY-MM-DD形式的字串；TIMESTAMP类型和PHP中的TIMESTAMP类型名字一样，但是两者基本上是不同的。PHP是延用了UNIX时间签的类型为一个整数，而在mysql中TIMESTAMP字段则是随着记录变化而一个自动更新为当时时间的DATETIMP字段。在mysql4.1版本之后TIMESTAMP格式DATETIME格式基本上是一致了。</p>
@@ -463,20 +463,20 @@ Records: 2097152 Duplicates: 0 Warnings: 0</p>
 <p>第三种方法：就是mysql中使用整数字段来保存php的timestamp类型。</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=53</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=53</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>总结MYSQL的优化/zz/</title>
-		<link>http://ijz.me/?p=122</link>
-					<comments>http://ijz.me/?p=122#respond</comments>
+		<link>/?p=122</link>
+					<comments>/?p=122#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=122</guid>
+		<guid isPermaLink="false">/?p=122</guid>
 
 					<description><![CDATA[本文载自：http://blog.chinaunix.net/u/29134/showart_264480.h [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>本文载自：<a href="http://blog.chinaunix.net/u/29134/showart_264480.html">http://blog.chinaunix.net/u/29134/showart_264480.html</a></p>
@@ -532,20 +532,20 @@ Records: 2097152 Duplicates: 0 Warnings: 0</p>
 当CPU要将更多的数据存放到CPU的缓存中来的话,内存的带宽就成了瓶颈.</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=122</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=122</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>/zz/MySQL 字符串函数：字符串截取</title>
-		<link>http://ijz.me/?p=10</link>
-					<comments>http://ijz.me/?p=10#respond</comments>
+		<link>/?p=10</link>
+					<comments>/?p=10#respond</comments>
 		
 		<dc:creator><![CDATA[桔子]]></dc:creator>
 		<pubDate>Fri, 29 Nov 2013 16:00:00 +0000</pubDate>
 				<category><![CDATA[mysql]]></category>
-		<guid isPermaLink="false">http://ijz.me/?p=10</guid>
+		<guid isPermaLink="false">/?p=10</guid>
 
 					<description><![CDATA[MySQL 字符串截取函数：left(), right(), substring(), substring_i [&#8230;]]]></description>
 										<content:encoded><![CDATA[<p>MySQL 字符串截取函数：left(), right(), substring(), substring_index()。还有 mid(), substr()。其中，mid(), substr() 等价于 substring() 函数，substring() 的功能非常强大和灵活。</p>
@@ -573,7 +573,7 @@ Records: 2097152 Duplicates: 0 Warnings: 0</p>
 <p>mysql&gt; select substring_index(&#8216;www.sqlstudy.com.cn&#8217;, &#8216;.coc&#8217;, 1);+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+| substring_index(&#8216;www.sqlstudy.com.cn&#8217;, &#8216;.coc&#8217;, 1) |+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+| www.sqlstudy.com.cn |+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>http://ijz.me/?feed=rss2&#038;p=10</wfw:commentRss>
+					<wfw:commentRss>/?feed=rss2&#038;p=10</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
